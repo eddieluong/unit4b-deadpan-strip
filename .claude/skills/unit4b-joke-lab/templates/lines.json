@@ -1,0 +1,5 @@
+[
+ {"id": "NN_01_penny", "char": "penny", "expr": "deadpan", "text": "Repairs are a premium feature."},
+ {"id": "NN_02_steve", "char": "steve", "expr": "shocked", "text": "My kitchen is underwater!"},
+ {"id": "NN_03_penny", "char": "penny", "expr": "fake_sweet", "text": "Then you'll love Repair Plus. Nine ninety-nine a month."}
+]

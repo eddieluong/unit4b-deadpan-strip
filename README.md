@@ -34,6 +34,8 @@ styles/deadpan-strip/        the Lemo-Opuscar style
   expressions/               26-expression sheets for every character
   voice-samples/elevenlabs/  180 ready-made ElevenLabs clips (36 deliveries x 5 characters)
 bible/index.html             interactive series bible: every face, every voice, scripts
+episodes/                    written episodes (script.md + lines.json [+ voice/]) and BANK.md of used jokes
+.claude/skills/unit4b-joke-lab/   Claude Code skill: research topics and write scored jokes for the cast
 ```
 
 ## 1. Install Lemo-Opuscar
@@ -105,7 +107,40 @@ python demo/elevenlabs_tts.py --audition-expr ted out/ted        # hear all 36 d
 
 Output matches Lemo-Opuscar's own TTS step: `out/voice/<id>.wav`, `dur.json`, plus `captions.json` for subtitles.
 
-## 5. The series bible
+## 5. Write new jokes with the Joke Lab skill
+
+The repo ships a Claude Code skill, `unit4b-joke-lab`. Open Claude Code **in this repo** and it is
+available automatically (to use it everywhere, copy `.claude/skills/unit4b-joke-lab` to `~/.claude/skills/`).
+
+Ask in plain words, for example:
+
+> Give me 5 joke ideas for this week.
+
+> Write the next episode about something people are annoyed about right now.
+
+> Write 3 episodes with Nana and Penny, sarcastic, 25 seconds each.
+
+The skill:
+1. researches current and evergreen relatable topics (web search; trend and community sources in `references/research.md`),
+2. drops anything that wouldn't survive subtitles or that punches down,
+3. matches each topic to the character whose comic engine fits it,
+4. writes several premises and 5+ alternative punchlines each, scores them with `references/scorecard.md` (keeps ≥ 32/40),
+5. writes the short (hook, punchline timing, silent beat, button) with an `expr` for every line,
+6. saves `episodes/NN-slug/script.md` and `lines.json`, adds the joke to `episodes/BANK.md` so it is never reused,
+7. validates `lines.json` against the voice config with a dry run.
+
+Then generate the voices and render:
+
+```bash
+cd styles/deadpan-strip
+python demo/elevenlabs_tts.py ../../episodes/08-repair-plus/lines.json ../../episodes/08-repair-plus/voice --fx
+```
+
+> Make this short in the deadpan-strip style from episodes/08-repair-plus/script.md.
+
+Episode 08 "Repair Plus" is a worked example made by the skill, with its voices already generated.
+
+## 6. The series bible
 
 Open `bible/index.html` in a browser (or turn on GitHub Pages for this repo) to see every character,
 click through all 36 faces and voices, and read the joke playbook and sample scripts.

@@ -1,0 +1,15 @@
+# Joke bank
+
+Every episode written so far. The joke lab reads this before writing and never reuses a premise or a punchline.
+Add one row per new episode.
+
+| # | Title | Premise | Punchline | Format | Cast | Topic | Date |
+|---|---|---|---|---|---|---|---|
+| 01 | The Listing | Penny shows Steve the apartment; the ghost "is included" | Ted behind Steve: "Hello." / tag: "Deposit is non-refundable." | normalized absurdity + extra panel | Penny, Steve, Ted, Snuggles | apartment hunting, "cozy" listings | 2026-10-17 |
+| 02 | The Thermostat | Steve keeps turning the heat up, Ted keeps turning it down | silent: Ted hugging the removed thermostat | escalation ×3, silent third | Steve, Ted | thermostat wars | 2026-10-17 |
+| 03 | Walking Home | Steve warns Nana it's dangerous to walk home alone | "I wasn't talking about me." / tag: muggers left their shoes | sweet face, dark line | Steve, Nana, Snuggles | neighborhood safety | 2026-10-17 |
+| 04 | The Complaint | Steve lists everything broken; Penny raises the rent | "The hat was expensive." / Snuggles: "Worth it." | anti-climax | Steve, Penny, Snuggles | landlords who never fix things | 2026-10-17 |
+| 05 | 3 A.M. | Snuggles narrates Ted staring at cheese he can't taste | "And the cheese... looks back." (loops) | fourth-wall noir + loop | Snuggles, Ted | 3 a.m. fridge visits | 2026-10-17 |
+| 06 | Dying Here | Steve says his job is killing him | Ted: "Welcome. Meetings are on Tuesdays." | literal idiom | Steve, Ted, Penny | work burnout | 2026-10-17 |
+| 07 | For the Boos | Ted's ghost party pun | Penny: "No." / Nana: "I've buried men for less." | dad joke + crushing reaction | Ted, Steve, Penny, Nana, Snuggles | dad jokes | 2026-10-17 |
+| 08 | Repair Plus | Steve's kitchen floods; Penny upsells a repair subscription | silent: the free plan is a bucket / Snuggles: "Free plan. Classic." | anti-climax + silent visual punch | Penny, Steve, Snuggles | landlords + everything is a subscription | 2026-10-17 |
