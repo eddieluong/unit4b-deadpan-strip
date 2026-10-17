@@ -1,0 +1,705 @@
+{
+ "_about": "ElevenLabs casting for UNIT 4B. Fill each voice_id after creating the voice (Voice Design prompt below) or picking one from the Voice Library. Read by demo/elevenlabs_tts.py.",
+ "model_id": "eleven_v3",
+ "fallback_model_id": "eleven_multilingual_v2",
+ "output_format": "pcm_24000",
+ "_stability_note": "Eleven v3 stability works in three bands: 0.0 Creative (most expressive, follows audio tags hardest), 0.5 Natural, 1.0 Robust (steady, ignores many tags). Deadpan modes sit high, big emotions sit low.",
+ "characters": {
+  "steve": {
+   "voice_id": "Y9z2nW5YxRRbI3XaIf8x",
+   "design_prompt": "Comedic cartoon voice of a young American man in his late twenties. High-strung, panicky and slightly nasal, always on the verge of a meltdown. His voice cracks and squeaks when stressed, he rambles fast, laughs nervously and gasps a lot. Animated sitcom energy, wildly expressive and exaggerated, never formal.",
+   "library_search": "young american male, nervous, comedic, awkward",
+   "fx": "",
+   "modes": {
+    "nervous": {
+     "use": "default; asking the reasonable question",
+     "tags": "[nervously]",
+     "stability": 0.5,
+     "similarity_boost": 0.75,
+     "style": 0.3,
+     "speed": 1.06
+    },
+    "panic": {
+     "use": "the reveal hits; the scream",
+     "tags": "[panicking]",
+     "stability": 0.0,
+     "similarity_boost": 0.7,
+     "style": 0.6,
+     "speed": 1.12
+    },
+    "weak_sarcasm": {
+     "use": "trying to be sarcastic and failing",
+     "tags": "[sarcastic][nervous laugh]",
+     "stability": 0.5,
+     "similarity_boost": 0.75,
+     "style": 0.4,
+     "speed": 1.0
+    },
+    "dad_joke_bomb": {
+     "use": "tells a pun, instantly regrets it",
+     "tags": "[hopeful]",
+     "stability": 0.5,
+     "similarity_boost": 0.75,
+     "style": 0.35,
+     "speed": 1.0,
+     "tail": "[awkward pause] ...sorry."
+    },
+    "apology": {
+     "use": "apologizing to a ghost, a cat, a child",
+     "tags": "[sheepishly]",
+     "stability": 0.5,
+     "similarity_boost": 0.75,
+     "style": 0.25,
+     "speed": 1.04
+    }
+   },
+   "base_speed": 1.06,
+   "flavor": "",
+   "expression_lines": {
+    "neutral": "Hi. I'm Steve. I just moved into 4B.",
+    "deadpan": "Great. The ghost took the good pillow again.",
+    "side_eye": "Why is there a cat in a hat in my kitchen?",
+    "smug": "Look who fixed the Wi-Fi. This guy.",
+    "skeptical": "The rent includes a ghost? Is that legal?",
+    "happy": "My deposit came back! I'm a real adult!",
+    "grin": "Okay, I have a plan, and it's actually good!",
+    "laughing": "He tripped over his own sheet!",
+    "proud": "I assembled the shelf. Only three screws left over.",
+    "shocked": "Wait. You're eight?!",
+    "horrified": "Why is the ghost holding my toothbrush?!",
+    "nervous": "Haha, yep, totally fine, everything's fine.",
+    "awkward": "So... you were dead this whole time. Cool. Cool.",
+    "embarrassed": "Please forget you saw me dancing.",
+    "confused": "Hang on. Who signed my lease?",
+    "sad": "I just wanted one normal day.",
+    "crying": "It was my favorite mug!",
+    "angry": "Who ate my leftovers? I labeled them!",
+    "furious": "That is the LAST time you change the thermostat!",
+    "disgusted": "Ew. Why is the doorknob warm?",
+    "evil": "Fine. Two can play the thermostat game.",
+    "dead_inside": "Cool. Rent's up again. Cool cool cool.",
+    "sleepy": "Five more minutes. Ghosts can wait.",
+    "cringe": "Oh no. Oh no, he's telling another joke.",
+    "dizzy": "Who turned the floor on?",
+    "knocked_out": "Tell my landlord... I paid on time.",
+    "sarcastic": "Oh great. A ghost roommate. Just what my anxiety needed.",
+    "mock_excited": "Wow! A rent increase! My favorite surprise!",
+    "fake_sweet": "No, no, take the last slice. I'll just eat my feelings.",
+    "condescending": "It's called a thermostat, Ted. You turn it. Up.",
+    "eye_roll": "Yes, Penny. I read the fine print. All forty pages.",
+    "mock_sympathy": "Aw, the poor ghost can't taste cheese. Tragic.",
+    "slow_clap": "Wow. You broke the microwave. Again. Amazing.",
+    "passive_aggressive": "Totally fine that you used my towel. Totally. Fine.",
+    "mocking_mimic": "'I died in this apartment, Steve.' Yeah, yeah, we know.",
+    "fake_gasp": "No way. The landlord raised the rent? I'm shocked."
+   },
+   "design_sample": "Okay. Okay okay okay. Haha, yep, totally fine, everything's fine! Wait. WAIT. You're eight?! And the ghost is included in the rent?! Oh no. Oh no no no. I'm sweating. Why am I always sweating?!",
+   "design_preview": 3
+  },
+  "nana": {
+   "voice_id": "4m2IGvkby0duGcRUvLDs",
+   "design_prompt": "Comedic cartoon voice of a tiny elderly British grandmother. Sweet, sing-song, wobbly old-lady voice that suddenly drops into a low, gravelly, menacing whisper, then bounces right back to sweet. Cheeky cackle, theatrical timing, wildly expressive, animated comedy style.",
+   "library_search": "old british woman, grandma, warm, sweet",
+   "fx": "",
+   "modes": {
+    "sweet": {
+     "use": "default; offering biscuits, being lovely",
+     "tags": "[warmly]",
+     "stability": 0.5,
+     "similarity_boost": 0.8,
+     "style": 0.3,
+     "speed": 0.9
+    },
+    "deadpan_threat": {
+     "use": "the dark line, said like a recipe",
+     "tags": "[calmly]",
+     "stability": 1.0,
+     "similarity_boost": 0.8,
+     "style": 0.1,
+     "speed": 0.86
+    },
+    "menace_whisper": {
+     "use": "the extra panel; a secret",
+     "tags": "[whispers]",
+     "stability": 0.5,
+     "similarity_boost": 0.8,
+     "style": 0.4,
+     "speed": 0.85
+    },
+    "cackle": {
+     "use": "laughing at her own dark joke",
+     "tags": "[chuckles]",
+     "stability": 0.0,
+     "similarity_boost": 0.75,
+     "style": 0.6,
+     "speed": 0.9,
+     "tail": "[giggles]"
+    },
+    "nostalgic": {
+     "use": "'back in my day' stories that go very wrong",
+     "tags": "[wistfully]",
+     "stability": 0.5,
+     "similarity_boost": 0.8,
+     "style": 0.35,
+     "speed": 0.86
+    }
+   },
+   "base_speed": 0.88,
+   "flavor": "[warmly]",
+   "expression_lines": {
+    "neutral": "Hello, dear. Mind the third stair, it creaks.",
+    "deadpan": "I've buried men for less, dear.",
+    "side_eye": "And what exactly is in that bag, young man?",
+    "smug": "I told the mailman not to run. He ran.",
+    "skeptical": "A 'self-defense class'? Who's teaching it, dear?",
+    "happy": "Oh, you brought biscuits! How lovely!",
+    "grin": "Oh, I know exactly where to hide it!",
+    "laughing": "He thought I couldn't climb the fence!",
+    "proud": "Forty years, and they never caught me knitting.",
+    "shocked": "Oh my! Somebody took my parking spot!",
+    "horrified": "Not the good china!",
+    "nervous": "That passport? Oh, that's my... cousin's.",
+    "awkward": "Funny story, that's not tomato sauce.",
+    "embarrassed": "Oh, don't look at the old photos, dear.",
+    "confused": "A tick-tock? Is that a kind of bomb, dear?",
+    "sad": "My hip isn't what it used to be.",
+    "crying": "They cancelled my favorite quiz show!",
+    "angry": "Who's been parking in front of my door?",
+    "furious": "Nobody touches my biscuit tin!",
+    "disgusted": "Store-bought pastry. In this house.",
+    "evil": "Oh, he'll be moving out. Very soon.",
+    "dead_inside": "Another birthday. Wonderful.",
+    "sleepy": "Just resting my eyes, dear.",
+    "cringe": "Oh dear, the ghost is doing his little dance.",
+    "dizzy": "That wasn't decaf, was it?",
+    "knocked_out": "Wake me when it's teatime.",
+    "sarcastic": "Oh yes, dear, I'm just a harmless little old lady.",
+    "mock_excited": "Ooh, another visit from the landlord! What a treat!",
+    "fake_sweet": "Bless your heart, you think you can outrun me.",
+    "condescending": "That's adorable, dear. You think that's a knife.",
+    "eye_roll": "Back in my day, we didn't need an app to lie.",
+    "mock_sympathy": "Oh, sweetheart. You lost your parking spot? Tragic.",
+    "slow_clap": "Lovely. You burned the toast. Truly gifted.",
+    "passive_aggressive": "No, use my good china. I only have it for funerals.",
+    "mocking_mimic": "'I'm calling the police!' Go on then, dear.",
+    "fake_gasp": "A hidden camera? In my teapot? How did that get there?"
+   },
+   "design_sample": "Hello, dearie! Mind the third stair, it creaks. Oh, and don't touch my biscuit tin. I've buried men for less, dear. Hehehe! Now, who wants a lovely cup of tea?",
+   "design_preview": 3
+  },
+  "penny": {
+   "voice_id": "uLjMe2KKO62jRu3id160",
+   "design_prompt": "Comedic cartoon voice performed by an adult woman for a bossy cartoon landlord: small, high-pitched, squeaky and nasal, extremely sassy, bored and condescending, snappy clipped delivery with dramatic eye-roll sighs. Animated sitcom style, wildly expressive, never formal.",
+   "library_search": "young girl, child, confident, clear",
+   "fx": "",
+   "_note": "Child voices may be restricted in Voice Design and the Voice Library. If no child voice is available, design a small, high, youthful adult female voice and pitch it up +2 to +3 semitones in post with formants preserved.",
+   "modes": {
+    "corporate": {
+     "use": "default; fees, fine print, 'per my last email'",
+     "tags": "[matter-of-fact]",
+     "stability": 1.0,
+     "similarity_boost": 0.8,
+     "style": 0.1,
+     "speed": 1.06
+    },
+    "bored_sarcasm": {
+     "use": "reacting to adults being adults",
+     "tags": "[sarcastic]",
+     "stability": 0.5,
+     "similarity_boost": 0.8,
+     "style": 0.4,
+     "speed": 1.0
+    },
+    "unimpressed": {
+     "use": "after Ted's dad joke: 'No.'",
+     "tags": "[deadpan]",
+     "stability": 1.0,
+     "similarity_boost": 0.8,
+     "style": 0.0,
+     "speed": 0.95
+    },
+    "kid_slip": {
+     "use": "the mask drops: juice box, bedtime, giggle",
+     "tags": "[excited]",
+     "stability": 0.0,
+     "similarity_boost": 0.75,
+     "style": 0.6,
+     "speed": 1.1,
+     "tail": "[giggles]"
+    },
+    "negotiation": {
+     "use": "closing a deal, slow and certain",
+     "tags": "[slowly]",
+     "stability": 1.0,
+     "similarity_boost": 0.8,
+     "style": 0.15,
+     "speed": 0.92
+    }
+   },
+   "base_speed": 1.04,
+   "flavor": "[crisp]",
+   "expression_lines": {
+    "neutral": "Rent is due on the first. No exceptions.",
+    "deadpan": "No.",
+    "side_eye": "Is that a second toothbrush? That's a guest fee.",
+    "smug": "I own the building. And the building next door.",
+    "skeptical": "You call that a reason to be late?",
+    "happy": "A juice box! For me? Contract approved!",
+    "grin": "Late fees are my favorite holiday.",
+    "laughing": "You thought I'd fix the sink!",
+    "proud": "Raised the rent and took a nap. Productive day.",
+    "shocked": "You want me to pay for the repairs?!",
+    "horrified": "Who touched my clipboard?!",
+    "nervous": "Bedtime? Now? During a board meeting?",
+    "awkward": "Yes, I sleep with a teddy bear. It's an investment.",
+    "embarrassed": "That was my mom. She calls me pumpkin.",
+    "confused": "What's a 'refund'?",
+    "sad": "Someone paid on time. There's no fee.",
+    "crying": "My balloon flew away!",
+    "angry": "Who parked a bike in my hallway?",
+    "furious": "Per my LAST email!",
+    "disgusted": "Broccoli is not on the menu. Or in the lease.",
+    "evil": "Let's discuss... the fine print.",
+    "dead_inside": "Another tenant meeting. Thrilling.",
+    "sleepy": "Nap time is a business strategy.",
+    "cringe": "Please stop calling me 'kiddo'.",
+    "dizzy": "Too much birthday cake.",
+    "knocked_out": "Wake me for the rent.",
+    "sarcastic": "Oh sure. I'll fix the sink. Right after never.",
+    "mock_excited": "Yay! A complaint! My favorite kind of paperwork!",
+    "fake_sweet": "Of course you can have a pet. For a small monthly fee.",
+    "condescending": "It's called a lease. Grown-ups read them.",
+    "eye_roll": "Ugh. Fine. You can have one extra day. Plus interest.",
+    "mock_sympathy": "Aww, your heater's broken? Have you tried being warmer?",
+    "slow_clap": "Wow. You paid on time. Do you want a sticker?",
+    "passive_aggressive": "Per my last email. And the one before that.",
+    "mocking_mimic": "'But Penny, it's raining in my kitchen.' Not my problem.",
+    "fake_gasp": "Gasp. The tenant wants a refund. How original."
+   },
+   "design_sample": "Ugh. Rent is due on the first. No exceptions. Is that a second toothbrush? That's a guest fee. No. No. Absolutely not. Ooh, is that a juice box? For me? Contract approved!",
+   "design_preview": 3
+  },
+  "ted": {
+   "voice_id": "izA0O6Rq9ZDMyG36oEyJ",
+   "design_prompt": "Comedic cartoon voice of a middle-aged British man playing a grumpy, whiny ghost. Theatrical sighs and overdramatic groans, passive-aggressive and mopey, giggles at his own terrible puns, with a wobbly spooky quality. Animated comedy style, wildly expressive, never formal.",
+   "library_search": "middle aged british man, dry, weary, sarcastic",
+   "fx": "highpass=f=140,aecho=0.8:0.7:70|140:0.25|0.14",
+   "modes": {
+    "passive_aggressive": {
+     "use": "default; dishes, thermostat, 'the walls are thin, Steve'",
+     "tags": "[sighs]",
+     "stability": 0.5,
+     "similarity_boost": 0.8,
+     "style": 0.3,
+     "speed": 0.9
+    },
+    "dry_sarcasm": {
+     "use": "the one-word comeback: 'And yet.'",
+     "tags": "[dryly]",
+     "stability": 1.0,
+     "similarity_boost": 0.8,
+     "style": 0.1,
+     "speed": 0.88
+    },
+    "dad_joke": {
+     "use": "his specialty: delivers a pun, very pleased",
+     "tags": "[proudly]",
+     "stability": 0.5,
+     "similarity_boost": 0.8,
+     "style": 0.45,
+     "speed": 0.92,
+     "tail": "[chuckles]"
+    },
+    "melancholy": {
+     "use": "the cheese, the past, being dead",
+     "tags": "[wistfully][softly]",
+     "stability": 0.5,
+     "similarity_boost": 0.8,
+     "style": 0.35,
+     "speed": 0.84
+    },
+    "boo": {
+     "use": "a half-hearted spooky 'boo' out of obligation",
+     "tags": "[flatly]",
+     "stability": 1.0,
+     "similarity_boost": 0.8,
+     "style": 0.0,
+     "speed": 0.85
+    }
+   },
+   "base_speed": 0.9,
+   "flavor": "[weary]",
+   "expression_lines": {
+    "neutral": "Evening. I'm Ted. I used to live here. I still do.",
+    "deadpan": "I'm already dead, Steve.",
+    "side_eye": "Someone moved my armchair. Again.",
+    "smug": "I don't pay rent. Perks of being deceased.",
+    "skeptical": "You call this tea?",
+    "happy": "Someone remembered my death-day!",
+    "grin": "I've got a new pun. You'll hate it.",
+    "laughing": "Boo! Get it? Boo!",
+    "proud": "Why did the ghost go to the party? For the boos.",
+    "shocked": "Somebody touched the thermostat!",
+    "horrified": "An exorcist? On a Tuesday?",
+    "nervous": "Is that a vacuum cleaner? Keep it away from me.",
+    "awkward": "Sorry. Didn't mean to walk through you.",
+    "embarrassed": "That was a draft. I'm not that transparent.",
+    "confused": "What's a 'streaming service'?",
+    "sad": "I can't taste cheese anymore. I just look at it.",
+    "crying": "They threw out my old slippers!",
+    "angry": "The walls are thin, Steve. I would know.",
+    "furious": "Who touched my thermostat?",
+    "disgusted": "You put milk in first? In my apartment?",
+    "evil": "Let's see how he likes cold showers.",
+    "dead_inside": "Another Monday. For eternity.",
+    "sleepy": "Ghosts don't sleep. We just... rest.",
+    "cringe": "That's my old cardigan. On the cat.",
+    "dizzy": "Somebody vacuumed me.",
+    "knocked_out": "I think I died again.",
+    "sarcastic": "Oh, wonderful. Another tenant. I'll alert the other ghosts.",
+    "mock_excited": "Ooh, you moved my armchair! Bold new direction!",
+    "fake_sweet": "Help yourself to my mug, Steve. It's only been mine since 1987.",
+    "condescending": "That's not how you make tea. That's how you insult it.",
+    "eye_roll": "Yes, yes, walk through the wall, very spooky, very original.",
+    "mock_sympathy": "Aw, you had a bad day? I'm dead, Steve.",
+    "slow_clap": "Bravo. You turned the heat up. Again. Marvelous.",
+    "passive_aggressive": "No, it's fine. I'll just haunt the cold side of the room.",
+    "mocking_mimic": "'Ted, can you not float over my bed.' Can you not breathe?",
+    "fake_gasp": "An exorcist? For little old me? You shouldn't have."
+   },
+   "design_sample": "Ohhh, not again. Someone touched my thermostat. I died in this apartment, Steve. I think I get to choose the temperature! Hey, why did the ghost go to the party? For the boos! Hehe. Boos!",
+   "design_preview": 3
+  },
+  "snuggles": {
+   "voice_id": "l4SjkRNDNFXHMWSAVCoK",
+   "design_prompt": "Comedic cartoon voice of a gruff, gravelly American tough-guy detective in a 1940s film noir parody. Overdramatic, deep and raspy narration with long tense pauses and sudden bursts of outrage, deadpan and self-important. Animated comedy style, wildly expressive.",
+   "library_search": "noir narrator, deep american male, gravelly, detective",
+   "fx": "lowpass=f=6500,aecho=0.8:0.5:35:0.15",
+   "modes": {
+    "noir": {
+     "use": "default; narration, the loop line",
+     "tags": "[low, slow narration]",
+     "stability": 0.5,
+     "similarity_boost": 0.8,
+     "style": 0.4,
+     "speed": 0.86
+    },
+    "sarcastic_aside": {
+     "use": "the fourth-wall button: 'Worth it.'",
+     "tags": "[sarcastic]",
+     "stability": 0.5,
+     "similarity_boost": 0.8,
+     "style": 0.4,
+     "speed": 0.9
+    },
+    "dramatic": {
+     "use": "overblown stakes about tuna",
+     "tags": "[dramatically]",
+     "stability": 0.0,
+     "similarity_boost": 0.75,
+     "style": 0.6,
+     "speed": 0.82
+    },
+    "cat_pun": {
+     "use": "the rare purr-fect pun, delivered like a confession",
+     "tags": "[deadpan]",
+     "stability": 1.0,
+     "similarity_boost": 0.8,
+     "style": 0.1,
+     "speed": 0.85
+    },
+    "smug": {
+     "use": "he was right all along",
+     "tags": "[smugly][purrs]",
+     "stability": 0.5,
+     "similarity_boost": 0.8,
+     "style": 0.45,
+     "speed": 0.88
+    }
+   },
+   "base_speed": 0.86,
+   "flavor": "[low, gravelly]",
+   "expression_lines": {
+    "neutral": "Apartment 4B. Three a.m. Somebody's awake.",
+    "deadpan": "The tuna was gone. So was my faith in humanity.",
+    "side_eye": "The new guy had a secret. I could smell it. It was ham.",
+    "smug": "They call me Snuggles. I let them.",
+    "skeptical": "A 'vet appointment'. Sure. And I'm a dog.",
+    "happy": "The can opener sang. It was a beautiful song.",
+    "grin": "Somebody left the fridge open. Christmas came early.",
+    "laughing": "The ghost tripped over his own sheet.",
+    "proud": "I knocked the glass off the table. Case closed.",
+    "shocked": "The red dot. It was back.",
+    "horrified": "The vacuum. It found me.",
+    "nervous": "The carrier came out. That means one thing.",
+    "awkward": "I sat on the keyboard. Sent an email to the landlord.",
+    "embarrassed": "I missed the jump. Nobody saw. Everybody saw.",
+    "confused": "The cucumber was just sitting there. Why.",
+    "sad": "The box was empty. Like my bowl.",
+    "crying": "They bought the cheap tuna.",
+    "angry": "Somebody sat in my sunbeam.",
+    "furious": "The dog next door. Again.",
+    "disgusted": "Diet cat food. In this economy.",
+    "evil": "Three a.m. Time to knock things off shelves.",
+    "dead_inside": "Another nap. Another day.",
+    "sleepy": "The sunbeam was warm. The case could wait.",
+    "cringe": "The ghost wore my hat. I'll never be clean again.",
+    "dizzy": "Too much catnip. The walls are talking.",
+    "knocked_out": "Tell the tuna... I loved it.",
+    "sarcastic": "Another can of dry food. They're really spoiling me.",
+    "mock_excited": "The vet. My favorite place. I'll pack my bags.",
+    "fake_sweet": "Pet me, human. Go on. I promise not to bite. Much.",
+    "condescending": "That's a laser pointer, kid. I'm a professional.",
+    "eye_roll": "The ghost is crying about cheese again. Classic.",
+    "mock_sympathy": "Poor Steve. His sock went missing. I wonder who.",
+    "slow_clap": "Bravo, human. You found the hairball. Detective work.",
+    "passive_aggressive": "No, take my sunbeam. I'll just sit in the dark.",
+    "mocking_mimic": "'Who's a good kitty?' Not me, pal. Never me.",
+    "fake_gasp": "The tuna's gone? Who could have done this? Certainly not me."
+   },
+   "design_sample": "Apartment 4B. Three a.m. The city was asleep. Then I heard it. The can opener. Somebody was opening tuna, and it wasn't for me. They call me Snuggles. I let them. For now.",
+   "design_preview": 1
+  }
+ },
+ "expressions": {
+  "neutral": {
+   "tags": "",
+   "stability": 0.5,
+   "style": 0.2,
+   "speed": 1.0,
+   "flavor": true
+  },
+  "deadpan": {
+   "tags": "[deadpan]",
+   "stability": 1.0,
+   "style": 0.0,
+   "speed": 0.92,
+   "flavor": true
+  },
+  "side_eye": {
+   "tags": "[suspiciously]",
+   "stability": 0.5,
+   "style": 0.35,
+   "speed": 0.95,
+   "flavor": true
+  },
+  "smug": {
+   "tags": "[smugly]",
+   "stability": 0.5,
+   "style": 0.45,
+   "speed": 0.95,
+   "flavor": true
+  },
+  "skeptical": {
+   "tags": "[skeptical]",
+   "stability": 0.5,
+   "style": 0.35,
+   "speed": 0.96,
+   "flavor": true
+  },
+  "happy": {
+   "tags": "[cheerfully]",
+   "stability": 0.5,
+   "style": 0.4,
+   "speed": 1.04
+  },
+  "grin": {
+   "tags": "[excited]",
+   "stability": 0.0,
+   "style": 0.55,
+   "speed": 1.08
+  },
+  "laughing": {
+   "tags": "[laughs]",
+   "stability": 0.0,
+   "style": 0.6,
+   "speed": 1.0,
+   "tail": "[laughs harder]"
+  },
+  "proud": {
+   "tags": "[proudly]",
+   "stability": 0.5,
+   "style": 0.45,
+   "speed": 0.95,
+   "flavor": true
+  },
+  "shocked": {
+   "tags": "[gasps]",
+   "stability": 0.0,
+   "style": 0.6,
+   "speed": 1.1
+  },
+  "horrified": {
+   "tags": "[screaming]",
+   "stability": 0.0,
+   "style": 0.7,
+   "speed": 1.15
+  },
+  "nervous": {
+   "tags": "[nervously]",
+   "stability": 0.5,
+   "style": 0.4,
+   "speed": 1.1
+  },
+  "awkward": {
+   "tags": "[awkward laugh]",
+   "stability": 0.5,
+   "style": 0.35,
+   "speed": 1.0
+  },
+  "embarrassed": {
+   "tags": "[embarrassed]",
+   "stability": 0.5,
+   "style": 0.4,
+   "speed": 1.02
+  },
+  "confused": {
+   "tags": "[confused]",
+   "stability": 0.5,
+   "style": 0.35,
+   "speed": 0.95,
+   "flavor": true
+  },
+  "sad": {
+   "tags": "[sadly]",
+   "stability": 0.5,
+   "style": 0.4,
+   "speed": 0.88,
+   "flavor": true
+  },
+  "crying": {
+   "tags": "[crying]",
+   "stability": 0.0,
+   "style": 0.65,
+   "speed": 0.9
+  },
+  "angry": {
+   "tags": "[angrily]",
+   "stability": 0.5,
+   "style": 0.5,
+   "speed": 1.02
+  },
+  "furious": {
+   "tags": "[shouting]",
+   "stability": 0.0,
+   "style": 0.7,
+   "speed": 1.1
+  },
+  "disgusted": {
+   "tags": "[disgusted]",
+   "stability": 0.5,
+   "style": 0.45,
+   "speed": 0.95
+  },
+  "evil": {
+   "tags": "[mischievously]",
+   "stability": 0.5,
+   "style": 0.5,
+   "speed": 0.9,
+   "tail": "[evil laugh]"
+  },
+  "dead_inside": {
+   "tags": "[monotone]",
+   "stability": 1.0,
+   "style": 0.0,
+   "speed": 0.85,
+   "flavor": true
+  },
+  "sleepy": {
+   "tags": "[yawns] [sleepily]",
+   "stability": 0.5,
+   "style": 0.35,
+   "speed": 0.82
+  },
+  "cringe": {
+   "tags": "[cringing]",
+   "stability": 0.5,
+   "style": 0.4,
+   "speed": 1.0
+  },
+  "dizzy": {
+   "tags": "[dazed]",
+   "stability": 0.0,
+   "style": 0.45,
+   "speed": 0.9
+  },
+  "knocked_out": {
+   "tags": "[groans]",
+   "stability": 0.5,
+   "style": 0.3,
+   "speed": 0.8
+  },
+  "sarcastic": {
+   "face": "smug",
+   "tags": "[sarcastic]",
+   "stability": 0.5,
+   "style": 0.55,
+   "speed": 0.95
+  },
+  "mock_excited": {
+   "face": "grin",
+   "tags": "[sarcastically excited]",
+   "stability": 0.0,
+   "style": 0.7,
+   "speed": 1.05
+  },
+  "fake_sweet": {
+   "face": "happy",
+   "tags": "[sickly sweet]",
+   "stability": 0.5,
+   "style": 0.6,
+   "speed": 0.92
+  },
+  "condescending": {
+   "face": "skeptical",
+   "tags": "[condescending]",
+   "stability": 0.5,
+   "style": 0.55,
+   "speed": 0.9
+  },
+  "eye_roll": {
+   "face": "side_eye",
+   "tags": "[sighs heavily] [bored]",
+   "stability": 0.5,
+   "style": 0.5,
+   "speed": 0.9
+  },
+  "mock_sympathy": {
+   "face": "sad",
+   "tags": "[mock sympathy]",
+   "stability": 0.5,
+   "style": 0.6,
+   "speed": 0.88
+  },
+  "slow_clap": {
+   "face": "deadpan",
+   "tags": "[flatly] [slow clap]",
+   "stability": 1.0,
+   "style": 0.2,
+   "speed": 0.82
+  },
+  "passive_aggressive": {
+   "face": "awkward",
+   "tags": "[passive-aggressive]",
+   "stability": 0.5,
+   "style": 0.55,
+   "speed": 0.95
+  },
+  "mocking_mimic": {
+   "face": "disgusted",
+   "tags": "[mocking, in a silly voice]",
+   "stability": 0.0,
+   "style": 0.75,
+   "speed": 1.0
+  },
+  "fake_gasp": {
+   "face": "shocked",
+   "tags": "[fake gasp] [sarcastically]",
+   "stability": 0.0,
+   "style": 0.65,
+   "speed": 1.0
+  }
+ },
+ "_expressions_note": "A line with \"expr\" (one of the 26 face names in demo/cast.js) gets that expression's delivery and the character's base_speed. The character's flavor tag is added only to calm expressions marked \"flavor\": true, so it never fights a big emotion. A line with \"mode\" uses the named mode instead.",
+ "_sarcasm_note": "The ten deliveries with a \"face\" key are voice-only sarcasm styles: use them as \"expr\" in a lines file, and draw the face named in \"face\" (one of the 26 in demo/cast.js) while the line plays."
+}

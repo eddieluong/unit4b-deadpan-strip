@@ -1,0 +1,12 @@
+[
+ {"id": "steve_A",     "voice": "am_puck",     "speed": 1.06, "text": "Sorry. Sorry! Quick question. Is the ghost included in the rent? Because the listing just said, cozy."},
+ {"id": "steve_B",     "voice": "am_eric",     "speed": 1.06, "text": "Sorry. Sorry! Quick question. Is the ghost included in the rent? Because the listing just said, cozy."},
+ {"id": "nana_A",    "voice": "bf_isabella", "speed": 0.86, "text": "Oh, I don't do that sort of thing anymore, dear. My hip won't let me. Mostly my hip."},
+ {"id": "nana_B",    "voice": "bf_alice",    "speed": 0.86, "text": "Oh, I don't do that sort of thing anymore, dear. My hip won't let me. Mostly my hip."},
+ {"id": "penny_A",     "voice": "af_sky",      "speed": 1.06, "text": "Rent is due Friday. Late fees are fifteen percent. Also, can you open my juice box?"},
+ {"id": "penny_B",     "voice": "af_nova",     "speed": 1.06, "text": "Rent is due Friday. Late fees are fifteen percent. Also, can you open my juice box?"},
+ {"id": "ted_A",  "voice": "bm_lewis",    "speed": 0.88, "text": "I died in this apartment in nineteen eighty-seven. I think I get to choose the thermostat."},
+ {"id": "ted_B",  "voice": "bm_daniel",   "speed": 0.88, "text": "I died in this apartment in nineteen eighty-seven. I think I get to choose the thermostat."},
+ {"id": "snuggles_A", "voice": "am_onyx",     "speed": 0.84, "text": "The building was quiet. Too quiet. Then somebody opened a can of tuna. And I knew it wasn't for me."},
+ {"id": "snuggles_B", "voice": "bm_george",   "speed": 0.82, "text": "The building was quiet. Too quiet. Then somebody opened a can of tuna. And I knew it wasn't for me."}
+]

@@ -1,0 +1,60 @@
+[
+ {
+  "id": "07_01_ted",
+  "char": "ted",
+  "mode": "dad_joke",
+  "text": "Steve. Why did the ghost go to the party?",
+  "tail": "",
+  "expr": "proud"
+ },
+ {
+  "id": "07_02_steve",
+  "char": "steve",
+  "mode": "nervous",
+  "text": "Please don't.",
+  "expr": "cringe"
+ },
+ {
+  "id": "07_03_ted",
+  "char": "ted",
+  "mode": "dad_joke",
+  "text": "For the boos.",
+  "tail": "[chuckles] [beat] Boos.",
+  "expr": "proud"
+ },
+ {
+  "id": "07_04_penny",
+  "char": "penny",
+  "mode": "unimpressed",
+  "text": "No.",
+  "expr": "deadpan"
+ },
+ {
+  "id": "07_05_nana",
+  "char": "nana",
+  "mode": "deadpan_threat",
+  "text": "Ted, dear. I've buried men for less.",
+  "expr": "happy"
+ },
+ {
+  "id": "07_06_ted",
+  "char": "ted",
+  "mode": "dry_sarcasm",
+  "text": "I'm already dead, Nana.",
+  "expr": "deadpan"
+ },
+ {
+  "id": "07_07_nana",
+  "char": "nana",
+  "mode": "menace_whisper",
+  "text": "Then I'll be very thorough.",
+  "expr": "evil"
+ },
+ {
+  "id": "07_08_snuggles",
+  "char": "snuggles",
+  "mode": "cat_pun",
+  "text": "In this building, the jokes die. The ghost stays.",
+  "expr": "side_eye"
+ }
+]

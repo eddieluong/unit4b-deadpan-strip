@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>UNIT 4B Cast</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: a strip artist's series bible — premise, model-sheet panels per character, then the joke playbook and scripts as script pages */
+:root {
+  --bg: #efe9dc; --surface: #f8f4ea; --paper: #f4efe4; --ink: #2a2422; --muted: #6b625c; --line: #2a2422; --rule: rgba(42,36,34,.18); --chip: #2a2422; --onchip: #f4efe4;
+  --c-steve: #e2b23c; --c-nana: #9b7bc4; --c-penny: #3d5a96; --c-ted: #8aa37b; --c-snuggles: #4a4a54;
+  --display: "Patrick Hand", "Comic Sans MS", cursive; --body: "Be Vietnam Pro", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #1f1b19; --surface: #2a2523; --ink: #efe6da; --muted: #b3a89d; --line: #efe6da; --rule: rgba(239,230,218,.18); --chip: #efe6da; --onchip: #1f1b19; color-scheme: dark } }
+:root[data-theme="dark"] { --bg: #1f1b19; --surface: #2a2523; --ink: #efe6da; --muted: #b3a89d; --line: #efe6da; --rule: rgba(239,230,218,.18); --chip: #efe6da; --onchip: #1f1b19; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font: 15px/1.6 var(--body); }
+.wrap { max-width: 1080px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
+.hero h1 { font: 400 clamp(46px, 8vw, 84px)/.95 var(--display); margin: 0; letter-spacing: .01em; }
+.hero .kicker { font: 600 12px var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+.hero p.lede { margin: 12px 0 0; max-width: 64ch; font-size: 16px; }
+.jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.jump a { font: 19px var(--display); color: #2a2422; text-decoration: none; border: 2px solid #2a2422; border-radius: 999px; padding: 2px 14px; background: var(--id); }
+.jump a.dark { color: #f4efe4; }
+.char { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); background: var(--surface); border: 2.5px solid var(--line); border-radius: 16px; overflow: hidden; }
+.stage { background: var(--paper); border-right: 2.5px solid var(--line); display: grid; align-content: center; justify-items: center; padding: 16px; gap: 10px; }
+.stage canvas { width: 100%; max-width: 420px; height: auto; aspect-ratio: 1; }
+.moods { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-width: 440px; }
+.moods button { font: 16px/1.2 var(--display); color: #2a2422; background: transparent; border: 1.5px solid rgba(42,36,34,.45); border-radius: 999px; padding: 2px 9px; cursor: pointer; }
+.moods button[aria-pressed="true"] { background: #2a2422; color: #f4efe4; }
+.info { padding: 24px 26px; display: grid; align-content: start; gap: 10px; min-width: 0; }
+.info p, .info dl, .info dd { margin: 0; }
+.tab { justify-self: start; font: 28px/1 var(--display); background: var(--id); color: #2a2422; border: 2.5px solid #2a2422; border-radius: 999px; padding: 6px 16px 4px; }
+#penny .tab, #snuggles .tab { color: #f4efe4; }
+.info h2 { font: 600 13px/1.3 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; font-size: 14px; }
+dt { font-weight: 600; color: var(--muted); }
+.voice { margin-top: 4px; border-top: 1.5px dashed var(--rule); padding-top: 14px; display: grid; gap: 8px; }
+.label { font: 600 12px var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.sample { font: 22px/1.25 var(--display); }
+.ab { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.play { display: flex; gap: 10px; align-items: center; text-align: left; font: inherit; color: var(--ink); background: transparent; border: 2px solid var(--line); border-radius: 12px; padding: 8px 12px; cursor: pointer; min-width: 0; }
+.play b { display: block; font: 500 14px var(--mono); overflow-wrap: anywhere; }
+.play small { display: block; color: var(--muted); font-size: 12px; line-height: 1.35; }
+.play .ic { flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--id); color: #2a2422; font-size: 12px; border: 2px solid #2a2422; }
+#penny .play .ic, #snuggles .play .ic { color: #f4efe4; }
+.play.on .ic { font-size: 0; } .play.on .ic::before { content: "■"; font-size: 12px; }
+button:focus-visible, a:focus-visible { outline: 3px solid #e2b23c; outline-offset: 2px; }
+section.block { display: grid; gap: 16px; }
+section.block > h2 { font: 400 44px/1 var(--display); margin: 24px 0 0; }
+section.block > p { margin: 0; max-width: 66ch; color: var(--muted); }
+.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; padding: 0; margin: 0; list-style: none; }
+.rules li { border: 2px solid var(--rule); border-radius: 12px; padding: 12px 14px; }
+.rules b { display: block; font: 21px/1.2 var(--display); }
+.fmt { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--line); }
+.fmt li { display: grid; grid-template-columns: minmax(0, 15em) minmax(0, 1fr) minmax(0, 9em); gap: 6px 18px; padding: 12px 0; border-bottom: 1.5px solid var(--rule); align-items: baseline; }
+.fmt b { font: 21px/1.2 var(--display); }
+.fmt em { font-style: normal; font-size: 13px; color: var(--muted); }
+.scripts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.script { background: var(--paper); color: #2a2422; border: 2.5px solid #2a2422; border-radius: 14px; padding: 16px 18px; display: grid; gap: 6px; align-content: start; }
+.script header { display: grid; grid-template-columns: auto 1fr; gap: 0 10px; align-items: baseline; margin-bottom: 4px; }
+.script .num { font: 13px var(--mono); color: #6b625c; grid-row: span 2; }
+.script h3 { font: 400 26px/1.1 var(--display); margin: 0; }
+.script .meta { font-size: 12px; color: #6b625c; }
+.script p { margin: 0; font-size: 14px; line-height: 1.45; }
+.ln { display: grid; grid-template-columns: 5.2em 1fr; gap: 8px; }
+.who { font: 17px/1.3 var(--display); border-left: 5px solid var(--id); padding-left: 6px; }
+.dir { color: #6b625c; font-style: italic; padding-left: calc(5.2em + 8px); }
+.modes { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.modes li { display: grid; grid-template-columns: minmax(0, 10.5em) minmax(0, 1fr) auto; gap: 10px; align-items: baseline; font-size: 13px; padding: 4px 8px; border-radius: 8px; }
+.modes code { font: 12.5px var(--mono); overflow-wrap: anywhere; }
+.modes em { font: 11.5px var(--mono); font-style: normal; color: var(--muted); text-align: right; }
+.modes li.sar { background: color-mix(in srgb, var(--c-nana) 18%, transparent); }
+.modes li.dead { background: color-mix(in srgb, var(--c-penny) 16%, transparent); }
+.modes li.dad { background: color-mix(in srgb, var(--c-steve) 24%, transparent); }
+.legend { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; color: var(--muted); }
+.legend span { padding: 2px 10px; border-radius: 999px; }
+@media (max-width: 760px) { .modes li { grid-template-columns: 1fr auto; } .modes li span { grid-column: 1 / -1; grid-row: 2; } }
+.evoice { width: 100%; max-width: 440px; background: #fbfaf6; border: 2px solid #2a2422; border-radius: 12px; padding: 10px 12px; color: #2a2422; display: grid; gap: 4px; }
+.evoice .ev-h { font: 600 11px var(--body); letter-spacing: .08em; text-transform: uppercase; color: #6b625c; }
+.evoice .ev-line { font: 20px/1.25 var(--display); }
+.evoice .ev-tags { font: 12.5px var(--mono); color: #6a4fa0; overflow-wrap: anywhere; }
+.evoice .ev-set { font: 12px var(--mono); color: #6b625c; }
+.evoice .ev-play { justify-self: start; font: 17px var(--display); color: #2a2422; background: var(--id); border: 2px solid #2a2422; border-radius: 999px; padding: 2px 14px; cursor: pointer; margin-top: 4px; }
+#penny .ev-play, #snuggles .ev-play { color: #f4efe4; }
+.sarc-h { margin: 2px 0 0; font: 600 11px var(--body); letter-spacing: .08em; text-transform: uppercase; color: #6b625c; }
+.moods.sarc button { border-style: dashed; }
+footer { color: var(--muted); font-size: 13px; max-width: 70ch; }
+@media (max-width: 760px) { .char { grid-template-columns: 1fr; } .stage { border-right: 0; border-bottom: 2.5px solid var(--line); } .ab { grid-template-columns: 1fr; } .fmt li { grid-template-columns: 1fr; } .dir { padding-left: 0; } }
+</style>
+<div class="wrap">
+<header class="hero">
+  <p class="kicker">Series bible · style Deadpan Strip</p>
+  <h1>UNIT 4B</h1>
+  <p class="lede">Steve dọn vào căn 4B của một toà nhà cũ và dần nhận ra mình là người bình thường duy nhất ở đây. Chủ nhà 8 tuổi, người thuê cũ chưa bao giờ dọn đi (ông ấy mất năm 1987), bà cụ tầng dưới rõ ràng từng làm "nghề gì đó", còn con mèo của toà nhà thì kể mọi chuyện như phim noir. Phong cách chibi đầu to, nét tối giản: khuôn mặt chiếm phần lớn khung hình nên mọi biểu cảm đều rõ trên điện thoại, mỗi nhân vật giữ một chi tiết đặc trưng nhận ra ngay từ hình bóng.</p>
+  <nav class="jump" aria-label="Nhân vật"><a href="#steve" style="--id:var(--c-steve)" class="">Sweaty Steve</a><a href="#nana" style="--id:var(--c-nana)" class="">Nana Knuckles</a><a href="#penny" style="--id:var(--c-penny)" class="dark">Penny Pincher</a><a href="#ted" style="--id:var(--c-ted)" class="">Dead Ted</a><a href="#snuggles" style="--id:var(--c-snuggles)" class="dark">Sgt. Snuggles</a><a href="#jokes" style="--id:transparent">Joke cho short</a><a href="#scripts" style="--id:transparent">Kịch bản mẫu</a></nav>
+<p class="legend"><span style="background:color-mix(in srgb, var(--c-nana) 18%, transparent)">châm chọc</span><span style="background:color-mix(in srgb, var(--c-penny) 16%, transparent)">mặt lạnh</span><span style="background:color-mix(in srgb, var(--c-steve) 24%, transparent)">dad joke</span> Mỗi nhân vật có 26 biểu cảm và 10 kiểu châm chọc, tất cả đều có giọng ElevenLabs thật: bấm dưới hình để xem mặt và nghe giọng và 5 kiểu giọng ElevenLabs (Eleven v3, audio tag). Cách tạo giọng và chạy script: ELEVENLABS.md.</p>
+</header>
+<article class="char" style="--id: var(--c-steve)" id="steve">
+  <div class="stage"><canvas id="cv-steve" width="560" height="560" aria-label="Steve"></canvas>
+    <div class="moods" role="group" aria-label="Biểu cảm Steve" data-c="steve"></div><div class="evoice" id="ev-steve" aria-live="polite"></div>
+  </div>
+  <div class="info">
+    <p class="tab">Sweaty Steve</p><h2>Người thuê mới · straight man</h2>
+    <p>29 tuổi, freelancer, xin lỗi tất cả mọi người, kể cả con ma và con mèo. Chỉ muốn một căn hộ bình thường.</p>
+    <dl><dt>Tên</dt><dd>Tên là joke: lúc nào cũng đổ mồ hôi. Hai chữ là hiểu cả tính cách.</dd><dt>Nhận diện</dt><dd>Chibi đầu to, tóc dựng chỏm nhọn, hoodie vàng có mũ. Gag: giọt mồ hôi gần như lúc nào cũng có; hôm nào thiếu mới là chuyện lạ.</dd><dt>Vai trò hài</dt><dd>Mắt của khán giả: hỏi câu hợp lý, nhận câu trả lời vô lý. Không bao giờ được trở nên kỳ quặc.</dd></dl>
+    <div class="voice"><p class="label">ElevenLabs · 5 kiểu giọng đặt tên (dùng qua "mode")</p><ul class="modes"><li class=""><code>nervous</code><span>mặc định, hỏi câu hợp lý</span><em>[nervously]</em></li><li class=""><code>panic</code><span>bị hù, la hét</span><em>[panicking]</em></li><li class="sar"><code>weak_sarcasm</code><span>cố châm chọc mà hụt</span><em>[sarcastic][nervous laugh]</em></li><li class="dad"><code>dad_joke_bomb</code><span>kể chơi chữ, hối hận ngay</span><em>[hopeful]</em></li><li class=""><code>apology</code><span>xin lỗi ma, mèo, trẻ con</span><em>[sheepishly]</em></li></ul></div>
+  </div></article><article class="char" style="--id: var(--c-nana)" id="nana">
+  <div class="stage"><canvas id="cv-nana" width="560" height="560" aria-label="Nana Knuckles"></canvas>
+    <div class="moods" role="group" aria-label="Biểu cảm Nana Knuckles" data-c="nana"></div><div class="evoice" id="ev-nana" aria-live="polite"></div>
+  </div>
+  <div class="info">
+    <p class="tab">Nana Knuckles</p><h2>Bà cụ tầng 2A · sát thủ về hưu (ngầm hiểu)</h2>
+    <p>78 tuổi, nướng bánh, đan len, gọi ai cũng là "dear". Thỉnh thoảng nhắc tới những kỹ năng đáng sợ mà không giải thích. Điểm yếu duy nhất: cái hông.</p>
+    <dl><dt>Tên</dt><dd>Tên là joke: "Nana" thì hiền, "Knuckles" (nắm đấm) thì không. Không ai dám hỏi biệt danh từ đâu ra.</dd><dt>Nhận diện</dt><dd>Người tí hon, búi tóc tổ ong cao hơn cả đầu có cắm que đan, kính đáy chai phóng to mắt. Gag: lôi đồ đáng sợ ra từ búi tóc.</dd><dt>Vai trò hài</dt><dd>Mặt hiền, câu đen. Người đáng sợ nhất toà nhà và cũng tốt bụng nhất. Bạo lực chỉ ám chỉ, không bao giờ thấy.</dd></dl>
+    <div class="voice"><p class="label">ElevenLabs · 5 kiểu giọng đặt tên (dùng qua "mode")</p><ul class="modes"><li class=""><code>sweet</code><span>mặc định, hiền hậu</span><em>[warmly]</em></li><li class="dead"><code>deadpan_threat</code><span>câu đen, nói như đọc công thức</span><em>[calmly]</em></li><li class=""><code>menace_whisper</code><span>thì thầm bí mật</span><em>[whispers]</em></li><li class=""><code>cackle</code><span>cười vì joke đen của mình</span><em>[chuckles]</em></li><li class=""><code>nostalgic</code><span>"hồi xưa bà…"</span><em>[wistfully]</em></li></ul></div>
+  </div></article><article class="char" style="--id: var(--c-penny)" id="penny">
+  <div class="stage"><canvas id="cv-penny" width="560" height="560" aria-label="Penny"></canvas>
+    <div class="moods" role="group" aria-label="Biểu cảm Penny" data-c="penny"></div><div class="evoice" id="ev-penny" aria-live="polite"></div>
+  </div>
+  <div class="info">
+    <p class="tab">Penny Pincher</p><h2>Chủ nhà · 8 tuổi</h2>
+    <p>Thừa kế toà nhà, điều hành như CEO tàn nhẫn: phí trễ hạn, điều khoản nhỏ, "per my last email". Nhưng vẫn 8 tuổi: cần người mở hộp nước trái cây, có giờ đi ngủ.</p>
+    <dl><dt>Tên</dt><dd>Tên là joke: "penny-pincher" là kẻ keo kiệt, và cô bé là chủ nhà keo nhất thế giới.</dd><dt>Nhận diện</dt><dd>Chibi tóc bob vuông như hộp, blazer navy và cà vạt nhỏ trên thân bé tí. Gag: phong thái CEO nhưng với không tới chuông cửa.</dd><dt>Vai trò hài</dt><dd>Thuật ngữ công sở bằng giọng trẻ con. Luôn thắng, không bao giờ gặp nguy hiểm.</dd></dl>
+    <div class="voice"><p class="label">ElevenLabs · 5 kiểu giọng đặt tên (dùng qua "mode")</p><ul class="modes"><li class=""><code>corporate</code><span>mặc định: phí, điều khoản</span><em>[matter-of-fact]</em></li><li class="sar"><code>bored_sarcasm</code><span>chán người lớn</span><em>[sarcastic]</em></li><li class="dead"><code>unimpressed</code><span>dập dad joke: "No."</span><em>[deadpan]</em></li><li class=""><code>kid_slip</code><span>lộ ra vẫn là trẻ con</span><em>[excited]</em></li><li class=""><code>negotiation</code><span>chốt deal</span><em>[slowly]</em></li></ul></div>
+  </div></article><article class="char" style="--id: var(--c-ted)" id="ted">
+  <div class="stage"><canvas id="cv-ted" width="560" height="560" aria-label="Ted"></canvas>
+    <div class="moods" role="group" aria-label="Biểu cảm Ted" data-c="ted"></div><div class="evoice" id="ev-ted" aria-live="polite"></div>
+  </div>
+  <div class="info">
+    <p class="tab">Dead Ted</p><h2>Người thuê cũ · đã mất năm 1987</h2>
+    <p>Chết trong căn 4B năm 1987 và không chịu dọn đi. Năng lượng bạn cùng phòng người Anh thụ động-hung hăng: máy sưởi, bát đĩa, "tường mỏng lắm Steve". Thích ngắm phô mai.</p>
+    <dl><dt>Tên</dt><dd>Tên là joke: chết rồi, lại còn vần. Ông tự giới thiệu là "Ted", người khác tự thêm chữ "Dead".</dd><dt>Nhận diện</dt><dd>Hồn ma trong suốt: đầu hói có hai túm tóc bạc, kính đọc sách, cardigan xanh xô thơm, làn khói thay chân, cốc trà, đôi dép bông hồng lơ lửng. Gag: ma vẫn muốn ấm chân.</dd><dt>Vai trò hài</dt><dd>Phi lý được bình thường hoá: cái chết chỉ là một phiền toái nhỏ.</dd></dl>
+    <div class="voice"><p class="label">ElevenLabs · 5 kiểu giọng đặt tên (dùng qua "mode")</p><ul class="modes"><li class=""><code>passive_aggressive</code><span>mặc định: máy sưởi, bát đĩa</span><em>[sighs]</em></li><li class="sar"><code>dry_sarcasm</code><span>đáp một chữ: "And yet."</span><em>[dryly]</em></li><li class="dad"><code>dad_joke</code><span>chơi chữ, rất tự hào</span><em>[proudly]</em></li><li class=""><code>melancholy</code><span>phô mai, quá khứ</span><em>[wistfully][softly]</em></li><li class="dead"><code>boo</code><span>"boo" cho có</span><em>[flatly]</em></li></ul></div>
+  </div></article><article class="char" style="--id: var(--c-snuggles)" id="snuggles">
+  <div class="stage"><canvas id="cv-snuggles" width="560" height="560" aria-label="Snuggles"></canvas>
+    <div class="moods" role="group" aria-label="Biểu cảm Snuggles" data-c="snuggles"></div><div class="evoice" id="ev-snuggles" aria-live="polite"></div>
+  </div>
+  <div class="info">
+    <p class="tab">Sgt. Snuggles</p><h2>Mèo của toà nhà · người dẫn chuyện</h2>
+    <p>Sống ở toà nhà lâu hơn bất kỳ ai còn sống. Kể mọi chuyện như thám tử phim noir thập niên 1940. Chỉ người xem nghe thấy.</p>
+    <dl><dt>Tên</dt><dd>Tên là joke: giọng thám tử noir rắn rỏi nhưng tên là "Snuggles" (âu yếm). Chữ "Sgt." là nó tự phong.</dd><dt>Nhận diện</dt><dd>Mèo xám than đầu to tai to, mắt vàng, mũ fedora nhỏ hơn hai cỡ, ngậm tăm. Gag: thám tử noir cứng rắn tên là... Snuggles.</dd><dt>Vai trò hài</dt><dd>Lời bình phá tường thứ tư, panel cuối, người dẫn cho tập loop.</dd></dl>
+    <div class="voice"><p class="label">ElevenLabs · 5 kiểu giọng đặt tên (dùng qua "mode")</p><ul class="modes"><li class=""><code>noir</code><span>mặc định, dẫn chuyện</span><em>[low, slow narration]</em></li><li class="sar"><code>sarcastic_aside</code><span>nút chốt: "Worth it."</span><em>[sarcastic]</em></li><li class=""><code>dramatic</code><span>làm quá về cá ngừ</span><em>[dramatically]</em></li><li class="dead"><code>cat_pun</code><span>chơi chữ như thú tội</span><em>[deadpan]</em></li><li class=""><code>smug</code><span>hoá ra nó đúng</span><em>[smugly][purrs]</em></li></ul></div>
+  </div></article>
+<section class="block" id="jokes">
+  <h2>Joke cho short video</h2>
+  <p>Khán giả quốc tế, xem trên Shorts, TikTok, Reels. Nhiều người xem tắt tiếng và nói tiếng Anh như ngôn ngữ thứ hai, nên joke phải sống được qua phụ đề.</p>
+  <ul class="rules">
+    <li><b>20–40 giây, một joke</b>Joke thứ hai chỉ là panel cuối sau khi joke chính đã "nổ".</li>
+    <li><b>Hook trong 1.5 giây</b>Mở bằng hình ảnh lạ nhất tập kèm một câu đặt ra câu hỏi. Không logo, không intro.</li>
+    <li><b>Punchline ở 70–85%</b>Sau đó im lặng 0.8–1.6 giây, rồi tối đa một nút chốt.</li>
+    <li><b>Kết loop khi có thể</b>Khung cuối nối vào khung đầu để video tự phát lại.</li>
+    <li><b>Chủ đề ai cũng hiểu</b>Tiền nhà, chủ nhà, bạn cùng phòng, Wi-Fi, làm việc tại nhà, hẹn hò, già đi, thứ Hai.</li>
+    <li><b>Đen nhưng không ác</b>Cái chết, ma, tiền là sân chơi. Không đụng chủng tộc, tôn giáo, khuyết tật, bi kịch hay người thật. Bạo lực chỉ ám chỉ.</li>
+  </ul>
+  <ul class="fmt"><li><b>Phi lý được bình thường hoá</b><span>Chuyện không thể xảy ra bị xử lý như giấy tờ nhàm chán; joke nằm ở lời phàn nàn vặt vãnh.</span><em>Ted, Penny</em></li><li><b>Mặt hiền, câu đen</b><span>Nhân vật trông hiền nhất nói câu u ám nhất, thật bình thản.</span><em>Nana, Penny</em></li><li><b>Panel cuối</b><span>Cảnh kết thúc, giữ im lặng, rồi thêm một panel lật lại mọi thứ.</span><em>Tất cả</em></li><li><b>Leo thang ×3, lần ba im lặng</b><span>Hai nhịp có thoại tệ dần; nhịp ba chỉ là một hình ảnh im lặng.</span><em>Steve vs Ted</em></li><li><b>Hiểu thành ngữ theo nghĩa đen</b><span>Một người nói thành ngữ phổ biến, người khác hiểu theo nghĩa đen.</span><em>Ted, Penny</em></li><li><b>Anti-climax</b><span>Dồn dập một cú lật lớn, rồi lời giải lại nhỏ xíu.</span><em>Snuggles, Steve</em></li><li><b>Nói với người xem</b><span>Một nhân vật kể với người xem sự thật; không ai khác nghe.</span><em>Snuggles</em></li><li><b>Loop</b><span>Câu cuối chính là câu đầu, video tự phát lại liền mạch.</span><em>Snuggles noir</em></li><li><b>Dad joke + phản ứng dập tắt</b><span>Một câu chơi chữ dở tệ, kể đầy tự hào; im lặng; phản ứng của cả phòng mới là joke.</span><em>Ted kể, Penny dập, Nana doạ</em></li><li><b>Câu châm chọc một dòng</b><span>Một câu dài nghiêm túc, đáp lại bằng hai ba chữ khô khốc.</span><em>Ted, Penny, Snuggles</em></li></ul>
+</section>
+<section class="block" id="scripts">
+  <h2>Kịch bản mẫu</h2>
+  <p>Thoại để nguyên tiếng Anh như sẽ lên phim. Chỉ dẫn cảnh viết tiếng Việt. Bản đầy đủ có mốc thời gian nằm trong JOKES.md.</p>
+  <div class="scripts"><article class="script"><header><span class="num">01</span><h3>The Listing</h3><span class="meta">phi lý bình thường hoá + panel cuối · ~32s</span></header><p class="ln" style="--id:var(--c-penny)"><span class="who">Penny</span><span>Natural light. Original floors. Very quiet neighbors.</span></p><p class="dir">Ted trôi xuyên tường sau lưng Steve, cầm cốc trà.</p><p class="ln" style="--id:var(--c-steve)"><span class="who">Steve</span><span>Wow. And the rent?</span></p><p class="ln" style="--id:var(--c-penny)"><span class="who">Penny</span><span>Twelve hundred. Ted is included.</span></p><p class="ln" style="--id:var(--c-steve)"><span class="who">Steve</span><span>Who&#x27;s Ted?</span></p><p class="dir">[im lặng 1.2s] đẩy máy chậm, Ted nhấp trà ngay sau lưng.</p><p class="ln" style="--id:var(--c-ted)"><span class="who">Ted</span><span>Hello.</span></p><p class="dir">Panel cuối: Penny ghi chép.</p><p class="ln" style="--id:var(--c-penny)"><span class="who">Penny</span><span>Tenant screams. Deposit is non-refundable.</span></p></article><article class="script"><header><span class="num">02</span><h3>The Thermostat</h3><span class="meta">leo thang ×3, lần ba im lặng · ~25s</span></header><p class="dir">Cận máy sưởi: 16°. Steve chỉnh lên 22°.</p><p class="ln" style="--id:var(--c-steve)"><span class="who">Steve</span><span>There.</span></p><p class="dir">Sáng hôm sau, cùng khung hình: 16°. Ted lơ lửng bên cạnh.</p><p class="ln" style="--id:var(--c-ted)"><span class="who">Ted</span><span>I run warm.</span></p><p class="ln" style="--id:var(--c-steve)"><span class="who">Steve</span><span>You&#x27;re dead.</span></p><p class="ln" style="--id:var(--c-ted)"><span class="who">Ted</span><span>And yet.</span></p><p class="dir">Sáng thứ ba: máy sưởi biến mất, chỉ còn cái lỗ trên tường. [im lặng]</p><p class="dir">Toàn cảnh: Ted ôm máy sưởi trong ghế bành như gấu bông. Không thoại.</p></article><article class="script"><header><span class="num">03</span><h3>Walking Home</h3><span class="meta">mặt hiền, câu đen · ~22s</span></header><p class="ln" style="--id:var(--c-steve)"><span class="who">Steve</span><span>Nana Knuckles, you shouldn&#x27;t walk home alone at night. It&#x27;s dangerous.</span></p><p class="ln" style="--id:var(--c-nana)"><span class="who">Nana</span><span>Oh, it is, dear.</span></p><p class="ln" style="--id:var(--c-steve)"><span class="who">Steve</span><span>Right. So, you&#x27;ll be careful?</span></p><p class="ln" style="--id:var(--c-nana)"><span class="who">Nana</span><span>I wasn&#x27;t talking about me.</span></p><p class="dir">[im lặng] mắt Steve liếc sang bà. Bà vẫn mỉm cười.</p><p class="ln" style="--id:var(--c-snuggles)"><span class="who">Snuggles</span><span>Three muggers left this neighborhood last year. They left their shoes, too.</span></p></article><article class="script"><header><span class="num">04</span><h3>The Complaint</h3><span class="meta">anti-climax + sếp nhí · ~28s</span></header><p class="ln" style="--id:var(--c-steve)"><span class="who">Steve</span><span>Penny. The sink leaks, the heater is haunted, and there&#x27;s a cat in a hat living in the vents.</span></p><p class="ln" style="--id:var(--c-penny)"><span class="who">Penny</span><span>I hear your concerns.</span></p><p class="ln" style="--id:var(--c-penny)"><span class="who">Penny</span><span>Your rent is going up ten percent.</span></p><p class="ln" style="--id:var(--c-steve)"><span class="who">Steve</span><span>For what?!</span></p><p class="dir">[im lặng 1s]</p><p class="ln" style="--id:var(--c-penny)"><span class="who">Penny</span><span>The hat was expensive.</span></p><p class="ln" style="--id:var(--c-snuggles)"><span class="who">Snuggles</span><span>Worth it.</span></p></article><article class="script"><header><span class="num">05</span><h3>3 A.M.</h3><span class="meta">noir phá tường thứ tư + loop · ~30s</span></header><p class="ln" style="--id:var(--c-snuggles)"><span class="who">Snuggles</span><span>Apartment 4B. Three a.m. Somebody&#x27;s in the kitchen.</span></p><p class="dir">Ted nhìn chằm chằm khối phô mai trong tủ lạnh.</p><p class="ln" style="--id:var(--c-ted)"><span class="who">Ted</span><span>I can&#x27;t taste it anymore. I just like to look.</span></p><p class="ln" style="--id:var(--c-snuggles)"><span class="who">Snuggles</span><span>Every night, same thing. He looks at the cheese. I look at him.</span></p><p class="ln" style="--id:var(--c-snuggles)"><span class="who">Snuggles</span><span>And the cheese... looks back.</span></p><p class="ln" style="--id:var(--c-snuggles)"><span class="who">Snuggles</span><span>Apartment 4B. Three a.m.</span></p><p class="dir">(quay lại cảnh đầu)</p></article><article class="script"><header><span class="num">06</span><h3>Dying Here</h3><span class="meta">thành ngữ nghĩa đen · ~18s</span></header><p class="ln" style="--id:var(--c-steve)"><span class="who">Steve</span><span>Mom, this job is killing me. I&#x27;m literally dying here.</span></p><p class="ln" style="--id:var(--c-ted)"><span class="who">Ted</span><span>Welcome. Meetings are on Tuesdays.</span></p><p class="ln" style="--id:var(--c-steve)"><span class="who">Steve</span><span>I&#x27;ll call you back.</span></p><p class="dir">Panel cuối: tờ đăng ký trên tủ lạnh &quot;GHOST SUPPORT GROUP&quot;, dòng chữ của Penny: &quot;Room fee: $20.&quot;</p></article><article class="script"><header><span class="num">07</span><h3>For the Boos</h3><span class="meta">dad joke + phản ứng dập tắt · ~24s</span></header><p class="ln" style="--id:var(--c-ted)"><span class="who">Ted</span><span>Steve. Why did the ghost go to the party?</span></p><p class="ln" style="--id:var(--c-steve)"><span class="who">Steve</span><span>Please don&#x27;t.</span></p><p class="ln" style="--id:var(--c-ted)"><span class="who">Ted</span><span>For the boos. (cười khúc khích) Boos.</span></p><p class="dir">[im lặng 1s] cắt sang Penny ở cửa.</p><p class="ln" style="--id:var(--c-penny)"><span class="who">Penny</span><span>No.</span></p><p class="ln" style="--id:var(--c-nana)"><span class="who">Nana</span><span>Ted, dear. I&#x27;ve buried men for less.</span></p><p class="ln" style="--id:var(--c-ted)"><span class="who">Ted</span><span>I&#x27;m already dead, Nana.</span></p><p class="ln" style="--id:var(--c-nana)"><span class="who">Nana</span><span>Then I&#x27;ll be very thorough.</span></p><p class="ln" style="--id:var(--c-snuggles)"><span class="who">Snuggles</span><span>In this building, the jokes die. The ghost stays.</span></p></article></div>
+</section>
+<footer>Giọng là ElevenLabs thật (Eleven v3), tạo bằng Voice Design; đang dùng bản 3 cho Steve, Nana, Penny, Ted và bản 1 cho Snuggles. Hình vẽ do chính engine của style render, nên tập phim sẽ trông giống hệt.</footer>
+</div>
+<script>
+// Deadpan Strip — cast + drawing engine (Canvas 2D, works in the browser and in Node with @napi-rs/canvas).
+// Series: UNIT 4B. Chibi proportions (head ≈ 2/3 of height), simple shapes, one signature per character. Local character units: x centred, y up from the feet. Adults are ~100 units tall. Line width is constant in px.
+
+const INK = '#2a2422';
+const PAPER = '#f4efe4';
+
+const CAST = {
+  steve: {
+    name: 'Sweaty Steve', short: 'Steve', role: 'The new tenant', color: '#e2b23c', skin: '#c98f68', hair: '#2b2220', kind: 'steve', defaultLid: 0,
+  },
+  nana: {
+    name: 'Nana Knuckles', short: 'Nana', role: 'Sweet old lady, 2A', color: '#9b7bc4', skin: '#f0c8a8', hair: '#eeeae2', kind: 'nana', defaultLid: 0.35,
+  },
+  penny: {
+    name: 'Penny Pincher', short: 'Penny', role: 'The landlord (age 8)', color: '#3d5a96', skin: '#e9b98f', hair: '#191616', kind: 'penny', defaultLid: 0.5,
+  },
+  ted: {
+    name: 'Dead Ted', short: 'Ted', role: 'Previous tenant (deceased)', color: '#8aa37b', skin: '#dfe6ee', hair: '#c4ceda', kind: 'ted', defaultLid: 0.6,
+  },
+  snuggles: {
+    name: 'Sgt. Snuggles', short: 'Snuggles', role: 'Building cat, noir narrator', color: '#4a4a54', hat: '#5b4a3f', kind: 'cat', defaultLid: 0.6,
+  },
+};
+
+// ---------- noise + geometry ----------
+function hash(n) { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); }
+function vnoise(seed, t) {
+  const i = Math.floor(t), f = t - i, u = f * f * (3 - 2 * f);
+  return (hash(seed * 17.3 + i) * (1 - u) + hash(seed * 17.3 + i + 1) * u) * 2 - 1;
+}
+function ellipsePts(cx, cy, rx, ry, n = 40, a0 = 0, a1 = Math.PI * 2) {
+  const p = [];
+  for (let i = 0; i < n; i++) { const a = a0 + (a1 - a0) * i / n; p.push([cx + Math.cos(a) * rx, cy + Math.sin(a) * ry]); }
+  return p;
+}
+function rrectPts(cx, cy, w, h, r, k = 8) {
+  const x0 = cx - w / 2, x1 = cx + w / 2, y0 = cy - h / 2, y1 = cy + h / 2, p = [];
+  const corner = (ox, oy, a) => { for (let i = 0; i <= k; i++) { const t = a + Math.PI / 2 * i / k; p.push([ox + Math.cos(t) * r, oy + Math.sin(t) * r]); } };
+  corner(x1 - r, y1 - r, 0); corner(x0 + r, y1 - r, Math.PI / 2); corner(x0 + r, y0 + r, Math.PI); corner(x1 - r, y0 + r, Math.PI * 1.5);
+  return p;
+}
+function resample(pts, closed, step) {
+  const src = closed ? [...pts, pts[0]] : pts, out = [];
+  for (let i = 0; i < src.length - 1; i++) {
+    const [ax, ay] = src[i], [bx, by] = src[i + 1], d = Math.hypot(bx - ax, by - ay), n = Math.max(1, Math.ceil(d / step));
+    for (let j = 0; j < n; j++) out.push([ax + (bx - ax) * j / n, ay + (by - ay) * j / n]);
+  }
+  if (!closed) out.push(src[src.length - 1]);
+  return out;
+}
+
+// ---------- the pen ----------
+// Maps local units to screen px (y flipped) and draws marker-wobbled, constant-width lines.
+class Pen {
+  constructor(ctx, x, y, s, { seed = 1, frame = 0, lw = 3.5 } = {}) {
+    Object.assign(this, { ctx, x, y, s, seed, lw });
+    this.drawing = Math.floor(frame / 3) % 2; // 2 drawings at 8 fps on a 24 fps timeline
+  }
+  T([px, py]) { return [this.x + px * this.s, this.y - py * this.s]; }
+  path(pts, closed) {
+    const scr = resample(pts.map(p => this.T(p)), closed, 10), seed = this.seed + this.drawing * 101, c = this.ctx;
+    c.beginPath();
+    scr.forEach(([x, y], i) => {
+      const a = scr[(i + 1) % scr.length], b = scr[(i - 1 + scr.length) % scr.length];
+      let nx = -(a[1] - b[1]), ny = a[0] - b[0]; const L = Math.hypot(nx, ny) || 1; nx /= L; ny /= L;
+      const o = vnoise(seed, i * 0.18) * 0.8;
+      i ? c.lineTo(x + nx * o, y + ny * o) : c.moveTo(x + nx * o, y + ny * o);
+    });
+    if (closed) c.closePath();
+  }
+  shape(pts, fill, stroke = INK, lw = this.lw) {
+    const c = this.ctx; this.path(pts, true);
+    if (fill) { c.fillStyle = fill; c.fill(); }
+    if (stroke) { c.strokeStyle = stroke; c.lineWidth = lw; c.lineJoin = c.lineCap = 'round'; c.stroke(); }
+    this.seed += 7;
+  }
+  line(pts, lw = this.lw, color = INK) {
+    const c = this.ctx; this.path(pts, false);
+    c.strokeStyle = color; c.lineWidth = lw; c.lineJoin = c.lineCap = 'round'; c.stroke(); this.seed += 7;
+  }
+  curve(a, ctrl, b, n = 14) { const p = []; for (let i = 0; i <= n; i++) { const t = i / n, u = 1 - t; p.push([u * u * a[0] + 2 * u * t * ctrl[0] + t * t * b[0], u * u * a[1] + 2 * u * t * ctrl[1] + t * t * b[1]]); } return p; }
+  dot(cx, cy, rx, ry, fill = INK) { const c = this.ctx, [x, y] = this.T([cx, cy]); c.beginPath(); c.ellipse(x, y, rx * this.s, ry * this.s, 0, 0, Math.PI * 2); c.fillStyle = fill; c.fill(); }
+}
+
+// ---------- face: an expression system ----------
+// A face is built from parts: eyes, lid, brows, mouth and comic symbols (fx). EXPRESSIONS names the useful
+// combinations; pose = { expr: 'shocked' } picks one, and any part can still be overridden ({ expr: 'shocked', mouth: 'scream' }).
+const EXPRESSIONS = {
+  neutral:     { eyes: 'dot', mouth: 'line' },
+  deadpan:     { eyes: 'dot', lid: 0.65, mouth: 'line' },
+  side_eye:    { eyes: 'dot', lid: 0.55, look: 0.9, mouth: 'line' },
+  smug:        { eyes: 'dot', lid: 0.6, look: 0.3, brow: 'skeptic', mouth: 'smirk' },
+  skeptical:   { eyes: 'dot', lid: 0.4, brow: 'skeptic', mouth: 'flat_down' },
+  happy:       { eyes: 'happy', mouth: 'smile', fx: ['blush'] },
+  grin:        { eyes: 'dot', lid: 0, brow: 'raised', mouth: 'grin' },
+  laughing:    { eyes: 'squint', mouth: 'grin', fx: ['tears_small'], arm: 'hold' },
+  proud:       { eyes: 'closed', brow: 'raised', mouth: 'smile', fx: ['sparkle'], arm: 'hips' },
+  shocked:     { eyes: 'wide', brow: 'raised', mouth: 'O', arm: 'up' },
+  horrified:   { eyes: 'pinpoint', brow: 'worried', mouth: 'scream', fx: ['gloom'], arm: 'up' },
+  nervous:     { eyes: 'dot', lid: 0, brow: 'worried', mouth: 'teeth', fx: ['sweat'] },
+  awkward:     { eyes: 'dot', lid: 0.2, look: -0.7, brow: 'worried', mouth: 'teeth', fx: ['sweat'] },
+  embarrassed: { eyes: 'happy', brow: 'worried', mouth: 'wobble', fx: ['blush_heavy', 'sweat'] },
+  confused:    { eyes: 'dot', lid: 0, look: 0.4, brow: 'skeptic', mouth: 'wobble', fx: ['question'], arm: 'shrug' },
+  sad:         { eyes: 'sad', brow: 'worried', mouth: 'frown' },
+  crying:      { eyes: 'closed', brow: 'worried', mouth: 'wavy_open', fx: ['tears'] },
+  angry:       { eyes: 'angry', brow: 'angry', mouth: 'frown', fx: ['vein'] },
+  furious:     { eyes: 'angry', brow: 'angry', mouth: 'teeth', fx: ['vein', 'steam'], arm: 'hips' },
+  disgusted:   { eyes: 'dot', lid: 0.5, brow: 'skeptic', mouth: 'tongue' },
+  evil:        { eyes: 'angry', brow: 'angry', mouth: 'evil' },
+  dead_inside: { eyes: 'dot', lid: 0.8, mouth: 'line', fx: ['gloom'] },
+  sleepy:      { eyes: 'closed', mouth: 'small', fx: ['zzz'] },
+  cringe:      { eyes: 'squint', brow: 'worried', mouth: 'teeth', fx: ['sweat'] },
+  dizzy:       { eyes: 'spiral', mouth: 'wobble' },
+  knocked_out: { eyes: 'x', mouth: 'tongue' },
+};
+const EXPRESSION_NAMES = Object.keys(EXPRESSIONS);
+
+function resolvePose(C, pose) {
+  const base = EXPRESSIONS[pose.expr] || {};
+  const p = { eyes: 'dot', mouth: 'line', look: 0, arm: 'down', fx: [], ...base, ...pose };
+  if (pose.lid === undefined && base.lid === undefined) p.lid = p.eyes === 'dot' ? C.defaultLid : 0;
+  return p;
+}
+
+// F = { cx, ey, gap, rx, ry, skin, my (mouth y), head: { x, y, w, h }, glasses (ring radius or 0), ink, eye, ms (mouth scale), cat }
+function face(pen, p, F) {
+  const ink = F.ink || INK, eyeFill = F.eye || ink, lw = pen.lw, look = (p.look || 0) * 2.2;
+  const L = (pts, w = lw * 0.9, col = ink) => pen.line(pts, w, col);
+  for (const sx of [-1, 1]) {
+    const ex = F.cx + sx * F.gap, rx = F.rx, ry = F.ry, ey = F.ey;
+    const inner = ex - sx * (rx + 1.4), outer = ex + sx * (rx + 1.4), top = ey + ry;
+    const cover = (yInner, yOuter) => { // skin over the top of the eye, cut by a (possibly slanted) lid line
+      const c = pen.ctx, P = [[outer, top + 1], [inner, top + 1], [inner, yInner], [outer, yOuter]].map(q => pen.T(q));
+      c.beginPath(); P.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.closePath(); c.fillStyle = F.skin; c.fill();
+      L([[outer + sx * 0.4, yOuter], [inner - sx * 0.4, yInner]]);
+    };
+    switch (p.eyes) {
+      case 'wide': case 'pinpoint': {
+        pen.shape(ellipsePts(ex, ey, rx * 1.9, ry * 1.6, 26), '#fbfaf6', ink, lw * 0.8);
+        const pr = p.eyes === 'wide' ? 1.3 : 0.65;
+        pen.dot(ex + look * 0.6, ey, pr, pr * 1.15, INK); break;
+      }
+      case 'happy': L(pen.curve([ex - 3, ey - 1], [ex, ey + 3.6], [ex + 3, ey - 1])); break;
+      case 'closed': L(pen.curve([ex - 3, ey + 0.6], [ex, ey - 1.6], [ex + 3, ey + 0.6])); break;
+      case 'squint': L([[ex + sx * 2.6, ey + 2.3], [ex - sx * 2, ey], [ex + sx * 2.6, ey - 2.3]]); break;
+      case 'x': L([[ex - 2.4, ey + 2.4], [ex + 2.4, ey - 2.4]]); L([[ex - 2.4, ey - 2.4], [ex + 2.4, ey + 2.4]]); break;
+      case 'spiral': { const pts = []; for (let t = 0; t < 14; t++) { const a = t * 0.9 * sx, r = 0.25 * t; pts.push([ex + Math.cos(a) * r, ey + Math.sin(a) * r]); } L(pts, lw * 0.7); break; }
+      case 'angry': pen.dot(ex + look, ey, rx, ry, eyeFill); cover(top - ry * 1.15, top - ry * 0.25); break;
+      case 'sad': pen.dot(ex + look, ey, rx, ry, eyeFill); cover(top - ry * 0.2, top - ry * 1.0); break;
+      default: { // dot with a straight lid
+        pen.dot(ex + look, ey, rx, ry, eyeFill);
+        const lid = Math.max(0, Math.min(1, p.lid || 0));
+        if (lid > 0.02) { const cut = top - lid * ry * 2; cover(cut, cut); }
+      }
+    }
+    if (p.brow) { // brows float above the eye (and above glasses) with a clear gap
+      const by = ey + Math.max(ry * (p.eyes === 'wide' || p.eyes === 'pinpoint' ? 1.6 : 1), F.glasses || 0) + 2.6;
+      const bi = ex - sx * 3, bo = ex + sx * 3;
+      if (p.brow === 'raised') L(pen.curve([bo, by + 0.8], [ex, by + 2.8], [bi, by + 0.8]), lw * 0.8);
+      else if (p.brow === 'worried') L([[bo, by], [bi, by + 1.8]], lw * 0.8);
+      else if (p.brow === 'angry') L([[bo, by + 1.4], [bi, by - 1]], lw * 0.8);
+      else if (p.brow === 'skeptic') sx < 0 ? L(pen.curve([bo, by + 1], [ex, by + 3.4], [bi, by + 1.4]), lw * 0.8) : L([[bi, by - 0.4], [bo, by - 0.4]], lw * 0.8);
+      else L([[bo, by], [bi, by]], lw * 0.8);
+    }
+  }
+  if (F.glasses) {
+    for (const sx of [-1, 1]) pen.shape(ellipsePts(F.cx + sx * F.gap, F.ey - 0.3, F.glasses, F.glasses * 0.96, 24), null, ink, lw * 0.9);
+    L([[F.cx - F.gap + F.glasses, F.ey + 0.2], [F.cx + F.gap - F.glasses, F.ey + 0.2]], lw * 0.8);
+  }
+  mouth(pen, F.cx, F.my, F.cat && ['line', 'smile'].includes(p.mouth) ? 'cat' : p.mouth, F.ms || 1, ink);
+  for (const fx of p.fx || []) symbol(pen, fx, F, ink);
+}
+
+function mouth(pen, cx, cy, kind = 'line', k = 1, ink = INK) {
+  const lw = pen.lw * 0.9, D = '#4a2b2a', W = '#fbfaf6';
+  const P = pts => pts.map(([x, y]) => [cx + x * k, cy + y * k]);
+  const L = (pts, w = lw) => pen.line(P(pts), w, ink);
+  const S = (pts, fill) => pen.shape(P(pts), fill, ink, lw);
+  switch (kind) {
+    case 'line': L([[-3.6, 0], [3.6, 0]]); break;
+    case 'flat_down': L([[-3.4, 0.3], [0, 0], [3.4, -0.8]]); break;
+    case 'smirk': L([[-3.6, 0], [2, 0], [4.2, 1.6]]); break;
+    case 'smile': L(pen.curve([-4, 1], [0, -2.4], [4, 1])); break;
+    case 'frown': L(pen.curve([-4, -1.2], [0, 1.8], [4, -1.2])); break;
+    case 'wobble': L([[-4.5, 0], [-2.2, 1], [0, -0.6], [2.2, 1], [4.5, 0]]); break;
+    case 'small': S(ellipsePts(0, 0, 2.2, 1.6, 18), D); break;
+    case 'O': S(ellipsePts(0, -0.4, 2.3, 3.2, 20), D); break;
+    case 'wide': S(ellipsePts(0, -0.6, 4.4, 3.6, 24), D); pen.dot(cx, cy - 2.6 * k, 2.4 * k, 1 * k, '#d9706a'); break;
+    case 'scream': S(ellipsePts(0, -2.4, 4.2, 5.6, 26), D); pen.dot(cx, cy - 6.2 * k, 2.6 * k, 1.3 * k, '#d9706a'); break;
+    case 'grin': {
+      S([[-5, 1], [5, 1], ...pen.curve([5, 1], [5, -6], [0, -5.6]).slice(1), ...pen.curve([0, -5.6], [-5, -6], [-5, 1]).slice(1)], D);
+      S([[-4.5, 0.6], [4.5, 0.6], [4.2, -1.1], [-4.2, -1.1]], W); break;
+    }
+    case 'teeth': {
+      S(rrectPts(0, 0, 11, 4.6, 1.6, 4), W);
+      L([[-5, 0], [5, 0]], lw * 0.6); for (const x of [-2.6, 0, 2.6]) L([[x, 2], [x, -2]], lw * 0.6); break;
+    }
+    case 'tongue': L(pen.curve([-4, 0.6], [0, -1.6], [4, 0.6])); S([[0.6, -0.4], [3.4, -0.2], ...pen.curve([3.4, -0.2], [3.4, -4.4], [2, -4.2]).slice(1), ...pen.curve([2, -4.2], [0.6, -4], [0.6, -0.4]).slice(1)], '#e07a74'); break;
+    case 'evil': {
+      S([...pen.curve([-6, 1.8], [0, -0.6], [6, 1.8]), ...pen.curve([6, 1.8], [0, -7], [-6, 1.8]).slice(1)], W);
+      for (const x of [-3, -1, 1, 3]) L([[x, 1.1 - Math.abs(x) * 0.1], [x, -2.6 + Math.abs(x) * 0.5]], lw * 0.5); break;
+    }
+    case 'wavy_open': S([[-4.4, 0.6], [-2.2, 1.6], [0, 0.6], [2.2, 1.6], [4.4, 0.6], [3.4, -3], [0, -3.8], [-3.4, -3]], D); break;
+    case 'cat': L(pen.curve([-3, 0.6], [-1.5, -1.4], [0, 0.4])); L(pen.curve([0, 0.4], [1.5, -1.4], [3, 0.6])); break;
+    default: L([[-3.6, 0], [3.6, 0]]);
+  }
+}
+
+function symbol(pen, kind, F, ink) {
+  const outInk = INK; // symbols drawn outside the head always use the dark ink, so they read on paper
+  const H = F.head, right = H.x + H.w / 2, topY = H.y + H.h / 2, c = pen.ctx, lw = pen.lw;
+  const text = (t, x, y, size) => { const [sx, sy] = pen.T([x, y]); c.font = `${size * pen.s}px "Patrick Hand", "Comic Sans MS", sans-serif`; c.fillStyle = INK; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(t, sx, sy); c.textAlign = 'start'; };
+  switch (kind) {
+    case 'sweat': { const x = right + 1.5, y = H.y + H.h * 0.22; pen.shape([[x, y + 4.4], [x + 2.2, y + 0.4], ...pen.curve([x + 2.2, y + 0.4], [x, y - 3.6], [x - 2.2, y + 0.4]).slice(1)], '#a9d8ea', outInk, lw * 0.7); break; }
+    case 'blush': case 'blush_heavy': {
+      const a = kind === 'blush' ? 0.35 : 0.6, rx = kind === 'blush' ? 3.2 : 4.2;
+      for (const sx of [-1, 1]) pen.dot(F.cx + sx * (F.gap + 1), F.ey - 4.6, rx, 1.6, `rgba(232,110,105,${a})`);
+      if (kind === 'blush_heavy') for (const sx of [-1, 1]) for (const d of [-1.4, 0, 1.4]) pen.line([[F.cx + sx * (F.gap + 1) + d - 0.6, F.ey - 3.6], [F.cx + sx * (F.gap + 1) + d + 0.6, F.ey - 5.6]], lw * 0.45, 'rgba(200,70,70,0.7)');
+      break;
+    }
+    case 'tears': for (const sx of [-1, 1]) { const x = F.cx + sx * F.gap; pen.line([[x, F.ey - 1.6], [x + sx * 0.4, F.ey - 6], [x, F.ey - 11]], lw * 1.3, '#7fc2df'); } break;
+    case 'tears_small': for (const sx of [-1, 1]) pen.dot(F.cx + sx * (F.gap + 3.4), F.ey + 1.4, 1, 1.4, '#7fc2df'); break;
+    case 'vein': { const x = right + 2.6, y = topY - 3; for (const [dx, dy] of [[-1, 1], [1, 1], [-1, -1], [1, -1]]) pen.line(pen.curve([x + dx * 0.7, y + dy * 2.6], [x + dx * 0.6, y + dy * 0.6], [x + dx * 2.6, y + dy * 0.7]), lw * 0.75, outInk); break; }
+    case 'gloom': { // vertical dread lines across the forehead, between the brows and the hairline
+      const y0 = F.ey + Math.max(F.ry, F.glasses || 0) + 1.2;
+      for (let i = 0; i < 5; i++) { const x = F.cx - F.gap * 1.1 + i * F.gap * 0.55; pen.line([[x, y0], [x, y0 + 4.5 + (i % 2) * 1.2]], lw * 0.5, ink); }
+      break;
+    }
+    case 'sparkle': { const x = right + 3, y = topY + 1; pen.shape([[x, y + 3.6], [x + 0.9, y + 0.9], [x + 3.6, y], [x + 0.9, y - 0.9], [x, y - 3.6], [x - 0.9, y - 0.9], [x - 3.6, y], [x - 0.9, y + 0.9]], '#f2d16b', outInk, lw * 0.6); break; }
+    case 'question': text('?', right + 3.5, topY + 2, 11); break;
+    case 'zzz': text('z', right + 2, topY - 1, 6); text('Z', right + 5.5, topY + 4, 8.5); break;
+    case 'steam': for (const sx of [-1, 1]) { const x = H.x + sx * (H.w / 2 + 3), y = topY - 1; pen.shape(ellipsePts(x, y, 2.6, 2, 14), '#fbfaf6', outInk, lw * 0.6); pen.shape(ellipsePts(x + sx * 2.6, y + 3, 2, 1.6, 12), '#fbfaf6', outInk, lw * 0.6); } break;
+  }
+}
+
+// ---------- limbs: single ink lines, no hands ----------
+function limb(pen, sx, [x0, y0], pose = 'down', len = 18) {
+  const ax = x0 * sx;
+  let end, ctrl;
+  switch (pose) {
+    case 'point': end = [ax + sx * (len + 3), y0 + 3]; ctrl = [ax + sx * len * 0.5, y0 + 1]; break;
+    case 'up': end = [ax + sx * 6, y0 + len]; ctrl = [ax + sx * 9, y0 + len * 0.4]; break;
+    case 'hips': end = [ax + sx * 1, y0 - 12]; ctrl = [ax + sx * 9, y0 - 5]; break;
+    case 'shrug': end = [ax + sx * 11, y0 + 4]; ctrl = [ax + sx * 9, y0 - 7]; break;
+    case 'hold': end = [ax - sx * 5, y0 - len * 0.6]; ctrl = [ax + sx * 5, y0 - len * 0.5]; break;
+    default: end = [ax + sx * 3, y0 - len]; ctrl = [ax + sx * 6, y0 - len * 0.45];
+  }
+  pen.line(pen.curve([ax, y0], ctrl, end), pen.lw);
+  return end;
+}
+function legs(pen, gap, top) { // two short lines and two small ink feet
+  for (const sx of [-1, 1]) { pen.line([[sx * gap, top], [sx * gap, 2.2]], pen.lw); pen.dot(sx * (gap + 1.6), 1.6, 3.4, 1.8); }
+}
+function arms(pen, p, shoulder, len) {
+  limb(pen, -1, shoulder, p.armL || p.arm, len); limb(pen, 1, shoulder, p.armR || p.arm, len);
+}
+
+// ---------- characters ----------
+// Simplicity rule: one body shape, one head shape, one or two signature features. Nothing else.
+function drawCharacter(ctx, id, x, y, scale, pose = {}, opt = {}) {
+  const C = CAST[id], p = resolvePose(C, pose);
+  const pen = new Pen(ctx, x, y, scale, { seed: opt.seed ?? id.length * 13, frame: opt.frame ?? 0, lw: opt.lw ?? 3 });
+  const shadowW = { cat: 22, ted: 13, nana: 13, penny: 15, steve: 15 }[C.kind];
+  ctx.fillStyle = 'rgba(42,36,34,0.10)';
+  ctx.beginPath(); ctx.ellipse(x, y, shadowW * scale, 2.6 * scale, 0, 0, Math.PI * 2); ctx.fill();
+  ({ steve: drawSteve, nana: drawNana, penny: drawPenny, ted: drawTed, cat: drawCat })[C.kind](pen, C, p, opt.frame ?? 0);
+}
+
+// Chibi rule: the head is about 2/3 of the character's height, the body is a small simple shape with stick limbs.
+// Each lead keeps one signature that reads in silhouette. Faces are huge, so all 26 expressions read on a phone.
+
+// head + face helper shared by the human cast. o: { hy, w, h, skin, eyeK, ms, glasses }
+function chibiHead(pen, p, o) {
+  pen.shape(ellipsePts(0, o.hy, o.w / 2, o.h / 2, 44), o.skin);
+}
+function chibiFace(pen, p, o) {
+  face(pen, p, { cx: 0, ey: o.hy + o.h * 0.03, gap: o.w * 0.2, rx: 2.2 * o.eyeK, ry: 3 * o.eyeK, skin: o.skin, my: o.hy - o.h * 0.25, ms: o.ms, glasses: o.glasses || 0, head: { x: 0, y: o.hy, w: o.w, h: o.h } });
+}
+
+// Sweaty Steve — the only normal person in the building: spiky black hair, mustard hoodie, perpetually alarmed.
+function drawSteve(pen, C, p) {
+  legs(pen, 4, 11);
+  arms(pen, p, [9, 24], 12);
+  pen.shape(rrectPts(0, 27, 24, 9, 4.5), C.color);                       // hood behind the neck
+  pen.shape([[-10, 10], [10, 10], [9, 27], [-9, 27]], C.color);
+  pen.line([[-2.4, 26], [-2.8, 19]], pen.lw * 0.6); pen.line([[2.4, 26], [2.8, 19]], pen.lw * 0.6);
+  const o = { hy: 47, w: 44, h: 42, skin: C.skin, eyeK: 1.35, ms: 1.3 };
+  chibiHead(pen, p, o);
+  const hy = o.hy, w = o.w, h = o.h;
+  pen.shape([[-w / 2, hy + 2], [-w / 2 + 1, hy + h * 0.3], [-w * 0.34, hy + h * 0.5], [-w * 0.3, hy + h * 0.66], [-w * 0.14, hy + h * 0.52], [-w * 0.06, hy + h * 0.72], [w * 0.06, hy + h * 0.53], [w * 0.2, hy + h * 0.68], [w * 0.26, hy + h * 0.5], [w * 0.44, hy + h * 0.4], [w / 2, hy + 2], [w * 0.22, hy + h * 0.24], [-w * 0.22, hy + h * 0.24]], C.hair);
+  chibiFace(pen, p, o);
+}
+
+// Nana Knuckles — tiny, a white beehive taller than her head with a knitting needle in it, magnifying glasses.
+function drawNana(pen, C, p) {
+  legs(pen, 3.4, 7);
+  arms(pen, p, [8, 19], 10);
+  pen.shape([[-10, 6], [10, 6], [8, 21], [-8, 21]], C.color);
+  const o = { hy: 39, w: 40, h: 36, skin: C.skin, eyeK: 1.55, ms: 1.2, glasses: 7.8 };
+  pen.line([[7, o.hy + 34], [15, o.hy + 44]], pen.lw * 0.9, '#b8895a'); pen.dot(15.4, o.hy + 44.6, 1.3, 1.3, '#b8895a');
+  pen.shape(ellipsePts(0, o.hy + 30, 13, 21, 36), C.hair);
+  pen.line(pen.curve([-6, o.hy + 14], [3, o.hy + 30], [-2, o.hy + 48]), pen.lw * 0.6);
+  chibiHead(pen, p, o);
+  pen.line(pen.curve([-o.w / 2 + 1.5, o.hy + 7], [0, o.hy + 20], [o.w / 2 - 1.5, o.hy + 7]), pen.lw);
+  chibiFace(pen, p, o);
+}
+
+// Penny Pincher — eight years old, owns the building: square black bob, navy blazer with a tie.
+function drawPenny(pen, C, p) {
+  legs(pen, 3, 6);
+  arms(pen, p, [10, 17], 9);
+  pen.shape([[-9, 5], [9, 5], [10, 15], [12.5, 18], [-12.5, 18], [-10, 15]], C.color);
+  pen.shape([[-2.6, 18], [2.6, 18], [0, 13]], '#f7f4ee');
+  pen.shape([[-1, 17], [1, 17], [1.4, 11.5], [0, 10], [-1.4, 11.5]], INK, INK, pen.lw * 0.5);
+  const o = { hy: 39, w: 44, h: 42, skin: C.skin, eyeK: 1.35, ms: 1.3 };
+  pen.shape(rrectPts(0, o.hy - 1, o.w + 8, o.h + 4, 9), C.hair);
+  chibiHead(pen, p, o);
+  pen.shape([[-o.w / 2 - 4, o.hy + o.h * 0.48], [o.w / 2 + 4, o.hy + o.h * 0.48], [o.w / 2 + 4, o.hy + o.h * 0.22], [-o.w / 2 - 4, o.hy + o.h * 0.22]], C.hair);
+  chibiFace(pen, p, o);
+}
+
+// Dead Ted — the ghost of the previous tenant: pale, see-through, bald with grey tufts, reading glasses,
+// sage cardigan, a wisp instead of legs, and fluffy pink slippers floating underneath. Holds a mug.
+function drawTed(pen, C, p, frame) {
+  const c = pen.ctx, bob = Math.sin(frame / 24 * Math.PI) * 0.8;
+  for (const sx of [-1, 1]) pen.shape(ellipsePts(sx * 5, 2.2, 4.4, 2.2, 16), '#eeb3bd');
+  c.save(); c.globalAlpha = 0.72; pen.y -= bob * pen.s;
+  pen.shape([[-9, 13], ...pen.curve([-5, 6], [0, 7], [5, 9]), ...pen.curve([5, 9], [2, 11], [9, 13]).slice(1)], C.skin);
+  const armR = p.armR || p.arm;
+  arms(pen, { ...p, armR: armR === 'down' ? 'hold' : armR }, [9, 25], 11);
+  pen.shape([[-10, 12], [10, 12], [9, 27], [-9, 27]], C.color);
+  pen.line([[0, 27], [0, 13]], pen.lw * 0.6); [16, 20, 24].forEach(y => pen.dot(-1.8, y, 0.8, 0.8, '#f4efe4'));
+  const o = { hy: 48, w: 42, h: 42, skin: C.skin, eyeK: 1.3, ms: 1.25, glasses: 7.2 };
+  chibiHead(pen, p, o);
+  for (const sx of [-1, 1]) pen.shape(ellipsePts(sx * 20, o.hy + 3, 3, 5, 14), C.hair);
+  chibiFace(pen, p, o);
+  if (armR === 'down') { pen.shape(rrectPts(5, 16.5, 6, 7, 1.2), '#fbfaf6'); pen.line(pen.curve([8, 18.5], [11, 17], [8, 15]), pen.lw * 0.6); }
+  pen.y += bob * pen.s; c.restore();
+}
+
+// Sgt. Snuggles — a round charcoal cat with a big head, a fedora two sizes too small and a toothpick. Narrates like film noir.
+function drawCat(pen, C, p) {
+  pen.line(pen.curve([10, 4], [24, 4], [20, 18]), pen.lw);
+  pen.shape(ellipsePts(0, 11, 14, 11, 30), C.color);
+  for (const sx of [-1, 1]) pen.dot(sx * 5, 1.4, 3.4, 1.6, '#8b8b96');
+  const hy = 34, hw = 42, hh = 36;
+  pen.shape([[-19, hy + 6], [-16, hy + 22], [-7, hy + 15]], C.color);
+  pen.shape([[7, hy + 15], [16, hy + 22], [19, hy + 6]], C.color);
+  pen.shape(ellipsePts(0, hy, hw / 2, hh / 2, 44), C.color);
+  pen.shape([[-10, hy + 16.4], [11, hy + 18], [9.4, hy + 20], [5, hy + 20.2], [5, hy + 26], [0, hy + 24.4], [-5, hy + 26], [-5.6, hy + 19.6], [-9.2, hy + 18.6]], C.hat);
+  for (const sx of [-1, 1]) for (const dy of [0, 2.4]) pen.line([[sx * 10, hy - 5 + dy * 0.3], [sx * 23, hy - 4.6 + dy]], pen.lw * 0.55, '#efe9df');
+  pen.dot(0, hy - 3.2, 1.8, 1.3, '#efe9df');
+  face(pen, p, { cx: 0, ey: hy + 2.4, gap: 8.4, rx: 2.8, ry: 3.6, skin: C.color, my: hy - 8, ms: 1.15, cat: true, ink: '#efe9df', eye: '#f0d264', head: { x: 0, y: hy, w: hw, h: hh } });
+  if (!['O', 'scream', 'grin', 'wide', 'evil', 'wavy_open', 'teeth', 'tongue'].includes(p.mouth)) pen.line([[2.6, hy - 8.2], [12, hy - 10.4]], pen.lw * 0.7, '#d9c49a');
+}
+
+// ---------- paper + panel ----------
+function paper(ctx, w, h, seed = 1) {
+  ctx.fillStyle = PAPER; ctx.fillRect(0, 0, w, h);
+  for (let i = 0; i < (w * h) / 900; i++) {
+    const x = hash(seed + i * 1.7) * w, y = hash(seed * 3 + i * 2.3) * h, a = 0.03 + hash(i * 5.1) * 0.05;
+    ctx.fillStyle = `rgba(80,60,40,${a.toFixed(3)})`; ctx.fillRect(x, y, 1.4, 1.4);
+  }
+  const g = ctx.createRadialGradient(w / 2, h / 2, Math.min(w, h) * 0.35, w / 2, h / 2, Math.max(w, h) * 0.75);
+  g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(60,40,20,0.06)'); ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+}
+function panel(ctx, x, y, w, h, seed = 1, fill = null, frame = 0) {
+  const pen = new Pen(ctx, 0, 0, 1, { seed, frame, lw: 4.5 });
+  pen.T = ([px, py]) => [px, py];
+  pen.shape(rrectPts(x + w / 2, y + h / 2, w, h, 14, 6), fill);
+}
+function nameTab(ctx, x, y, id, size = 30) {
+  const C = CAST[id]; ctx.font = `${size}px "Patrick Hand", "Comic Sans MS", sans-serif`;
+  const tw = ctx.measureText(C.name).width, pw = tw + size * 0.9, ph = size * 1.35;
+  ctx.fillStyle = C.color; ctx.strokeStyle = INK; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.roundRect(x, y, pw, ph, ph / 2); ctx.fill(); ctx.stroke();
+  const dark = ['#3d5a96', '#4a4a54'].includes(C.color);
+  ctx.fillStyle = dark ? '#f4efe4' : INK; ctx.textBaseline = 'middle'; ctx.fillText(C.name, x + size * 0.45, y + ph / 2 + 1);
+  return pw;
+}
+
+const VI = {neutral:'bình thường',deadpan:'mặt lạnh',side_eye:'liếc ngang',smug:'đắc ý',skeptical:'nghi ngờ',happy:'vui',grin:'cười toe',laughing:'cười lăn',proud:'tự hào',shocked:'sốc',horrified:'kinh hãi',nervous:'lo lắng',awkward:'ngượng',embarrassed:'xấu hổ',confused:'bối rối',sad:'buồn',crying:'khóc',angry:'giận',furious:'điên tiết',disgusted:'ghê',evil:'gian ác',dead_inside:'chết trong lòng',sleepy:'buồn ngủ',cringe:'muốn độn thổ',dizzy:'choáng',knocked_out:'bất tỉnh'};
+const EV = {"expr": {"neutral": {"tags": "", "stability": 0.5, "style": 0.2, "speed": 1.0, "flavor": true}, "deadpan": {"tags": "[deadpan]", "stability": 1.0, "style": 0.0, "speed": 0.92, "flavor": true}, "side_eye": {"tags": "[suspiciously]", "stability": 0.5, "style": 0.35, "speed": 0.95, "flavor": true}, "smug": {"tags": "[smugly]", "stability": 0.5, "style": 0.45, "speed": 0.95, "flavor": true}, "skeptical": {"tags": "[skeptical]", "stability": 0.5, "style": 0.35, "speed": 0.96, "flavor": true}, "happy": {"tags": "[cheerfully]", "stability": 0.5, "style": 0.4, "speed": 1.04}, "grin": {"tags": "[excited]", "stability": 0.0, "style": 0.55, "speed": 1.08}, "laughing": {"tags": "[laughs]", "stability": 0.0, "style": 0.6, "speed": 1.0, "tail": "[laughs harder]"}, "proud": {"tags": "[proudly]", "stability": 0.5, "style": 0.45, "speed": 0.95, "flavor": true}, "shocked": {"tags": "[gasps]", "stability": 0.0, "style": 0.6, "speed": 1.1}, "horrified": {"tags": "[screaming]", "stability": 0.0, "style": 0.7, "speed": 1.15}, "nervous": {"tags": "[nervously]", "stability": 0.5, "style": 0.4, "speed": 1.1}, "awkward": {"tags": "[awkward laugh]", "stability": 0.5, "style": 0.35, "speed": 1.0}, "embarrassed": {"tags": "[embarrassed]", "stability": 0.5, "style": 0.4, "speed": 1.02}, "confused": {"tags": "[confused]", "stability": 0.5, "style": 0.35, "speed": 0.95, "flavor": true}, "sad": {"tags": "[sadly]", "stability": 0.5, "style": 0.4, "speed": 0.88, "flavor": true}, "crying": {"tags": "[crying]", "stability": 0.0, "style": 0.65, "speed": 0.9}, "angry": {"tags": "[angrily]", "stability": 0.5, "style": 0.5, "speed": 1.02}, "furious": {"tags": "[shouting]", "stability": 0.0, "style": 0.7, "speed": 1.1}, "disgusted": {"tags": "[disgusted]", "stability": 0.5, "style": 0.45, "speed": 0.95}, "evil": {"tags": "[mischievously]", "stability": 0.5, "style": 0.5, "speed": 0.9, "tail": "[evil laugh]"}, "dead_inside": {"tags": "[monotone]", "stability": 1.0, "style": 0.0, "speed": 0.85, "flavor": true}, "sleepy": {"tags": "[yawns] [sleepily]", "stability": 0.5, "style": 0.35, "speed": 0.82}, "cringe": {"tags": "[cringing]", "stability": 0.5, "style": 0.4, "speed": 1.0}, "dizzy": {"tags": "[dazed]", "stability": 0.0, "style": 0.45, "speed": 0.9}, "knocked_out": {"tags": "[groans]", "stability": 0.5, "style": 0.3, "speed": 0.8}, "sarcastic": {"face": "smug", "tags": "[sarcastic]", "stability": 0.5, "style": 0.55, "speed": 0.95}, "mock_excited": {"face": "grin", "tags": "[sarcastically excited]", "stability": 0.0, "style": 0.7, "speed": 1.05}, "fake_sweet": {"face": "happy", "tags": "[sickly sweet]", "stability": 0.5, "style": 0.6, "speed": 0.92}, "condescending": {"face": "skeptical", "tags": "[condescending]", "stability": 0.5, "style": 0.55, "speed": 0.9}, "eye_roll": {"face": "side_eye", "tags": "[sighs heavily] [bored]", "stability": 0.5, "style": 0.5, "speed": 0.9}, "mock_sympathy": {"face": "sad", "tags": "[mock sympathy]", "stability": 0.5, "style": 0.6, "speed": 0.88}, "slow_clap": {"face": "deadpan", "tags": "[flatly] [slow clap]", "stability": 1.0, "style": 0.2, "speed": 0.82}, "passive_aggressive": {"face": "awkward", "tags": "[passive-aggressive]", "stability": 0.5, "style": 0.55, "speed": 0.95}, "mocking_mimic": {"face": "disgusted", "tags": "[mocking, in a silly voice]", "stability": 0.0, "style": 0.75, "speed": 1.0}, "fake_gasp": {"face": "shocked", "tags": "[fake gasp] [sarcastically]", "stability": 0.0, "style": 0.65, "speed": 1.0}}, "chars": {"steve": {"base": 1.06, "flavor": "", "lines": {"neutral": "Hi. I'm Steve. I just moved into 4B.", "deadpan": "Great. The ghost took the good pillow again.", "side_eye": "Why is there a cat in a hat in my kitchen?", "smug": "Look who fixed the Wi-Fi. This guy.", "skeptical": "The rent includes a ghost? Is that legal?", "happy": "My deposit came back! I'm a real adult!", "grin": "Okay, I have a plan, and it's actually good!", "laughing": "He tripped over his own sheet!", "proud": "I assembled the shelf. Only three screws left over.", "shocked": "Wait. You're eight?!", "horrified": "Why is the ghost holding my toothbrush?!", "nervous": "Haha, yep, totally fine, everything's fine.", "awkward": "So... you were dead this whole time. Cool. Cool.", "embarrassed": "Please forget you saw me dancing.", "confused": "Hang on. Who signed my lease?", "sad": "I just wanted one normal day.", "crying": "It was my favorite mug!", "angry": "Who ate my leftovers? I labeled them!", "furious": "That is the LAST time you change the thermostat!", "disgusted": "Ew. Why is the doorknob warm?", "evil": "Fine. Two can play the thermostat game.", "dead_inside": "Cool. Rent's up again. Cool cool cool.", "sleepy": "Five more minutes. Ghosts can wait.", "cringe": "Oh no. Oh no, he's telling another joke.", "dizzy": "Who turned the floor on?", "knocked_out": "Tell my landlord... I paid on time.", "sarcastic": "Oh great. A ghost roommate. Just what my anxiety needed.", "mock_excited": "Wow! A rent increase! My favorite surprise!", "fake_sweet": "No, no, take the last slice. I'll just eat my feelings.", "condescending": "It's called a thermostat, Ted. You turn it. Up.", "eye_roll": "Yes, Penny. I read the fine print. All forty pages.", "mock_sympathy": "Aw, the poor ghost can't taste cheese. Tragic.", "slow_clap": "Wow. You broke the microwave. Again. Amazing.", "passive_aggressive": "Totally fine that you used my towel. Totally. Fine.", "mocking_mimic": "'I died in this apartment, Steve.' Yeah, yeah, we know.", "fake_gasp": "No way. The landlord raised the rent? I'm shocked."}}, "nana": {"base": 0.88, "flavor": "[warmly]", "lines": {"neutral": "Hello, dear. Mind the third stair, it creaks.", "deadpan": "I've buried men for less, dear.", "side_eye": "And what exactly is in that bag, young man?", "smug": "I told the mailman not to run. He ran.", "skeptical": "A 'self-defense class'? Who's teaching it, dear?", "happy": "Oh, you brought biscuits! How lovely!", "grin": "Oh, I know exactly where to hide it!", "laughing": "He thought I couldn't climb the fence!", "proud": "Forty years, and they never caught me knitting.", "shocked": "Oh my! Somebody took my parking spot!", "horrified": "Not the good china!", "nervous": "That passport? Oh, that's my... cousin's.", "awkward": "Funny story, that's not tomato sauce.", "embarrassed": "Oh, don't look at the old photos, dear.", "confused": "A tick-tock? Is that a kind of bomb, dear?", "sad": "My hip isn't what it used to be.", "crying": "They cancelled my favorite quiz show!", "angry": "Who's been parking in front of my door?", "furious": "Nobody touches my biscuit tin!", "disgusted": "Store-bought pastry. In this house.", "evil": "Oh, he'll be moving out. Very soon.", "dead_inside": "Another birthday. Wonderful.", "sleepy": "Just resting my eyes, dear.", "cringe": "Oh dear, the ghost is doing his little dance.", "dizzy": "That wasn't decaf, was it?", "knocked_out": "Wake me when it's teatime.", "sarcastic": "Oh yes, dear, I'm just a harmless little old lady.", "mock_excited": "Ooh, another visit from the landlord! What a treat!", "fake_sweet": "Bless your heart, you think you can outrun me.", "condescending": "That's adorable, dear. You think that's a knife.", "eye_roll": "Back in my day, we didn't need an app to lie.", "mock_sympathy": "Oh, sweetheart. You lost your parking spot? Tragic.", "slow_clap": "Lovely. You burned the toast. Truly gifted.", "passive_aggressive": "No, use my good china. I only have it for funerals.", "mocking_mimic": "'I'm calling the police!' Go on then, dear.", "fake_gasp": "A hidden camera? In my teapot? How did that get there?"}}, "penny": {"base": 1.04, "flavor": "[crisp]", "lines": {"neutral": "Rent is due on the first. No exceptions.", "deadpan": "No.", "side_eye": "Is that a second toothbrush? That's a guest fee.", "smug": "I own the building. And the building next door.", "skeptical": "You call that a reason to be late?", "happy": "A juice box! For me? Contract approved!", "grin": "Late fees are my favorite holiday.", "laughing": "You thought I'd fix the sink!", "proud": "Raised the rent and took a nap. Productive day.", "shocked": "You want me to pay for the repairs?!", "horrified": "Who touched my clipboard?!", "nervous": "Bedtime? Now? During a board meeting?", "awkward": "Yes, I sleep with a teddy bear. It's an investment.", "embarrassed": "That was my mom. She calls me pumpkin.", "confused": "What's a 'refund'?", "sad": "Someone paid on time. There's no fee.", "crying": "My balloon flew away!", "angry": "Who parked a bike in my hallway?", "furious": "Per my LAST email!", "disgusted": "Broccoli is not on the menu. Or in the lease.", "evil": "Let's discuss... the fine print.", "dead_inside": "Another tenant meeting. Thrilling.", "sleepy": "Nap time is a business strategy.", "cringe": "Please stop calling me 'kiddo'.", "dizzy": "Too much birthday cake.", "knocked_out": "Wake me for the rent.", "sarcastic": "Oh sure. I'll fix the sink. Right after never.", "mock_excited": "Yay! A complaint! My favorite kind of paperwork!", "fake_sweet": "Of course you can have a pet. For a small monthly fee.", "condescending": "It's called a lease. Grown-ups read them.", "eye_roll": "Ugh. Fine. You can have one extra day. Plus interest.", "mock_sympathy": "Aww, your heater's broken? Have you tried being warmer?", "slow_clap": "Wow. You paid on time. Do you want a sticker?", "passive_aggressive": "Per my last email. And the one before that.", "mocking_mimic": "'But Penny, it's raining in my kitchen.' Not my problem.", "fake_gasp": "Gasp. The tenant wants a refund. How original."}}, "ted": {"base": 0.9, "flavor": "[weary]", "lines": {"neutral": "Evening. I'm Ted. I used to live here. I still do.", "deadpan": "I'm already dead, Steve.", "side_eye": "Someone moved my armchair. Again.", "smug": "I don't pay rent. Perks of being deceased.", "skeptical": "You call this tea?", "happy": "Someone remembered my death-day!", "grin": "I've got a new pun. You'll hate it.", "laughing": "Boo! Get it? Boo!", "proud": "Why did the ghost go to the party? For the boos.", "shocked": "Somebody touched the thermostat!", "horrified": "An exorcist? On a Tuesday?", "nervous": "Is that a vacuum cleaner? Keep it away from me.", "awkward": "Sorry. Didn't mean to walk through you.", "embarrassed": "That was a draft. I'm not that transparent.", "confused": "What's a 'streaming service'?", "sad": "I can't taste cheese anymore. I just look at it.", "crying": "They threw out my old slippers!", "angry": "The walls are thin, Steve. I would know.", "furious": "Who touched my thermostat?", "disgusted": "You put milk in first? In my apartment?", "evil": "Let's see how he likes cold showers.", "dead_inside": "Another Monday. For eternity.", "sleepy": "Ghosts don't sleep. We just... rest.", "cringe": "That's my old cardigan. On the cat.", "dizzy": "Somebody vacuumed me.", "knocked_out": "I think I died again.", "sarcastic": "Oh, wonderful. Another tenant. I'll alert the other ghosts.", "mock_excited": "Ooh, you moved my armchair! Bold new direction!", "fake_sweet": "Help yourself to my mug, Steve. It's only been mine since 1987.", "condescending": "That's not how you make tea. That's how you insult it.", "eye_roll": "Yes, yes, walk through the wall, very spooky, very original.", "mock_sympathy": "Aw, you had a bad day? I'm dead, Steve.", "slow_clap": "Bravo. You turned the heat up. Again. Marvelous.", "passive_aggressive": "No, it's fine. I'll just haunt the cold side of the room.", "mocking_mimic": "'Ted, can you not float over my bed.' Can you not breathe?", "fake_gasp": "An exorcist? For little old me? You shouldn't have."}}, "snuggles": {"base": 0.86, "flavor": "[low, gravelly]", "lines": {"neutral": "Apartment 4B. Three a.m. Somebody's awake.", "deadpan": "The tuna was gone. So was my faith in humanity.", "side_eye": "The new guy had a secret. I could smell it. It was ham.", "smug": "They call me Snuggles. I let them.", "skeptical": "A 'vet appointment'. Sure. And I'm a dog.", "happy": "The can opener sang. It was a beautiful song.", "grin": "Somebody left the fridge open. Christmas came early.", "laughing": "The ghost tripped over his own sheet.", "proud": "I knocked the glass off the table. Case closed.", "shocked": "The red dot. It was back.", "horrified": "The vacuum. It found me.", "nervous": "The carrier came out. That means one thing.", "awkward": "I sat on the keyboard. Sent an email to the landlord.", "embarrassed": "I missed the jump. Nobody saw. Everybody saw.", "confused": "The cucumber was just sitting there. Why.", "sad": "The box was empty. Like my bowl.", "crying": "They bought the cheap tuna.", "angry": "Somebody sat in my sunbeam.", "furious": "The dog next door. Again.", "disgusted": "Diet cat food. In this economy.", "evil": "Three a.m. Time to knock things off shelves.", "dead_inside": "Another nap. Another day.", "sleepy": "The sunbeam was warm. The case could wait.", "cringe": "The ghost wore my hat. I'll never be clean again.", "dizzy": "Too much catnip. The walls are talking.", "knocked_out": "Tell the tuna... I loved it.", "sarcastic": "Another can of dry food. They're really spoiling me.", "mock_excited": "The vet. My favorite place. I'll pack my bags.", "fake_sweet": "Pet me, human. Go on. I promise not to bite. Much.", "condescending": "That's a laser pointer, kid. I'm a professional.", "eye_roll": "The ghost is crying about cheese again. Classic.", "mock_sympathy": "Poor Steve. His sock went missing. I wonder who.", "slow_clap": "Bravo, human. You found the hairball. Detective work.", "passive_aggressive": "No, take my sunbeam. I'll just sit in the dark.", "mocking_mimic": "'Who's a good kitty?' Not me, pal. Never me.", "fake_gasp": "The tuna's gone? Who could have done this? Certainly not me."}}}};
+function voiceFor(id, e) {
+  const x = EV.expr[e], c = EV.chars[id]; if (!x || !c) return null;
+  const tags = [x.flavor ? c.flavor : '', x.tags].filter(Boolean).join(' ');
+  const speed = Math.max(0.7, Math.min(1.2, c.base * x.speed)).toFixed(2);
+  return { line: c.lines[e], tags: (tags + ' ' + (x.tail || '')).trim(), stability: x.stability, speed };
+}
+function showVoice(id) {
+  const box = document.getElementById('ev-' + id); if (!box) return;
+  const v = voiceFor(id, state[id]); if (!v) { box.hidden = true; return; }
+  box.hidden = false;
+  const label = VI[state[id]] || SARC_VI[state[id]] || state[id];
+  box.innerHTML = '<span class="ev-h">Giọng ElevenLabs · ' + label + '</span>' +
+    '<span class="ev-line">“' + v.line.replace(/</g, '&lt;') + '”</span>' +
+    '<span class="ev-tags">' + (v.tags || '(không tag)') + '</span>' +
+    '<span class="ev-set">stability ' + v.stability + ' · speed ' + v.speed + ' · expr: ' + state[id] + '</span>' +
+    '<button type="button" class="ev-play">▶ Nghe giọng thật</button>';
+  box.querySelector('.ev-play').addEventListener('click', () => play(id, state[id]));
+}
+const SARC_VI = {"sarcastic": "châm chọc", "mock_excited": "giả vờ hào hứng", "fake_sweet": "ngọt xớt giả tạo", "condescending": "kẻ cả", "eye_roll": "đảo mắt", "mock_sympathy": "giả vờ thương", "slow_clap": "vỗ tay mỉa", "passive_aggressive": "thụ động-hung hăng", "mocking_mimic": "nhại giọng", "fake_gasp": "giả vờ sốc"};
+const SARC = Object.keys(SARC_VI);
+let player = null;
+function play(id, e) { try { if (player) player.pause(); player = new Audio('audio/' + id + '_' + e + '.mp3?v=2'); player.play().catch(() => {}); } catch (err) {} }
+const GO = {steve:'nervous', nana:'happy', penny:'deadpan', ted:'dead_inside', snuggles:'smug'};
+const SC = {steve:6, nana:5.2, penny:6.6, ted:6.2, snuggles:6.6}, DX = {};
+const state = {...GO};
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function draw(id, frame, blink) {
+  const cv = document.getElementById('cv-' + id), ctx = cv.getContext('2d');
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  const face = (EV.expr[state[id]] && EV.expr[state[id]].face) || state[id];
+  const e = EXPRESSIONS[face] || {}, pose = { expr: face };
+  if (blink && (!e.eyes || e.eyes === 'nana')) pose.lid = 1;
+  drawCharacter(ctx, id, cv.width / 2 + (DX[id] || 0), cv.height - 40, SC[id], pose, { frame });
+}
+const ids = Object.keys(state), blinkAt = {};
+document.querySelectorAll('.moods').forEach(box => {
+  const id = box.dataset.c;
+  EXPRESSION_NAMES.forEach(n => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = VI[n] || n; b.title = n;
+    b.setAttribute('aria-pressed', String(n === state[id]));
+    b.addEventListener('click', () => { state[id] = n; box.parentElement.querySelectorAll('.moods button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); draw(id, 0, false); showVoice(id); play(id, n); });
+    box.appendChild(b);
+  });
+  const sl = document.createElement('p'); sl.className = 'sarc-h'; sl.textContent = 'Gói châm chọc · bấm để nghe';
+  const sbox = document.createElement('div'); sbox.className = 'moods sarc'; sbox.setAttribute('role', 'group');
+  SARC.forEach(n => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = SARC_VI[n]; b.title = n; b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', () => { state[id] = n; box.parentElement.querySelectorAll('.moods button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); draw(id, 0, false); showVoice(id); play(id, n); });
+    sbox.appendChild(b);
+  });
+  box.after(sl, sbox);
+});
+ids.forEach(id => { blinkAt[id] = 1 + Math.random() * 3; draw(id, 0, false); showVoice(id); });
+if (document.fonts) document.fonts.ready.then(() => ids.forEach(id => draw(id, 0, false)));
+if (!reduce) {
+  let f = 0; const t0 = performance.now();
+  setInterval(() => { f += 3; const t = (performance.now() - t0) / 1000;
+    ids.forEach(id => { let b = false; if (t > blinkAt[id]) { b = true; if (t > blinkAt[id] + .16) { blinkAt[id] = t + 3 + Math.random() * 3; b = false; } } draw(id, f, b); });
+  }, 125);
+}
+
+</script>
+
+</body>
+</html>

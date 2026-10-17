@@ -1,0 +1,10 @@
+{
+ "_engine": "kokoro (core/tts/tts.py), English, offline",
+ "_common_fx": "acompressor=threshold=-20dB:ratio=3:attack=5:release=80",
+ "steve":     {"voice": "am_puck",     "speed": 1.06, "fx": "equalizer=f=3000:t=q:w=1:g=3",                              "alt": "am_eric"},
+ "nana":    {"voice": "bf_isabella", "speed": 0.86, "fx": "rubberband=pitch=0.94:formant=preserved,vibrato=f=5.5:d=0.06", "alt": "bf_alice"},
+ "penny":     {"voice": "af_sky",      "speed": 1.06, "fx": "rubberband=pitch=1.26:formant=preserved",                   "alt": "af_nova"},
+ "ted":  {"voice": "bm_lewis",    "speed": 0.88, "fx": "highpass=f=140,aecho=0.8:0.7:70|140:0.25|0.14",             "alt": "bm_daniel"},
+ "snuggles": {"voice": "am_onyx",     "speed": 0.84, "fx": "rubberband=pitch=0.94,lowpass=f=6500,aecho=0.8:0.5:35:0.15", "alt": "bm_george"},
+ "_note": "Encode Nana to WAV before MP3: the vibrato filter can crash the LAME encoder when piped straight to mp3."
+}
