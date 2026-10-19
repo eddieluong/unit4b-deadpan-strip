@@ -4,3 +4,4 @@ out/
 node_modules/
 __pycache__/
 .cache/
+research/viral/**/transcripts/

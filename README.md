@@ -36,6 +36,8 @@ styles/deadpan-strip/        the Lemo-Opuscar style
 bible/index.html             interactive series bible: every face, every voice, scripts
 episodes/                    written episodes (script.md + lines.json [+ voice/]) and BANK.md of used jokes
 .claude/skills/unit4b-joke-lab/   Claude Code skill: research topics and write scored jokes for the cast
+tools/viral_research.py      find viral shorts, pull their subtitles, check a script for copied lines
+research/                    DNA cards from viral research (raw transcripts are git-ignored)
 ```
 
 ## 1. Install Lemo-Opuscar
@@ -128,6 +130,34 @@ The skill:
 5. writes the short (hook, punchline timing, silent beat, button) with an `expr` for every line,
 6. saves `episodes/NN-slug/script.md` and `lines.json`, adds the joke to `episodes/BANK.md` so it is never reused,
 7. validates `lines.json` against the voice config with a dry run.
+
+### Learn from viral shorts
+
+The skill can study viral comedy shorts by reading their subtitles, then write **original** jokes with the
+same mechanics (hook type, punch timing, joke mechanism). Install the tools once:
+
+```bash
+pip install yt-dlp youtube-transcript-api
+```
+
+Then just ask, for example:
+
+> Học từ 10 video viral về chủ nhà rồi viết 3 tập tương tự cho Penny.
+
+> Analyze these shorts and propose jokes for our cast: <url> <url> <url>
+
+Or run the tool yourself:
+
+```bash
+python tools/viral_research.py find --search "landlord animated comedy" --shorts-only --out research/viral/landlords
+python tools/viral_research.py subs --from research/viral/landlords/candidates.json --top 10
+python tools/viral_research.py check episodes/09-slug/lines.json research/viral/landlords/transcripts
+```
+
+The skill writes one DNA card per video (pain point, hook, setup length, punch position, mechanism, why it
+spreads) and a Patterns summary, and only borrows mechanisms: situations, lines and characters are always new,
+and `check` fails any script that shares five consecutive words with a source. If YouTube asks you to sign in,
+add `--cookies-from-browser chrome` before the subcommand.
 
 Then generate the voices and render:
 

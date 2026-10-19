@@ -1,6 +1,6 @@
 ---
 name: unit4b-joke-lab
-description: Research topics and write funny, sarcastic short-video jokes for the UNIT 4B channel (Sweaty Steve, Nana Knuckles, Penny Pincher, Dead Ted, Sgt. Snuggles). Use whenever the user asks for joke ideas, episode ideas, trending or relatable topics, a new script, punch-ups, dad jokes, sarcastic lines, or "what should the next short be". Produces a researched, scored episode script plus a ready-to-voice lines.json.
+description: Research topics and viral YouTube comedy shorts (reads their subtitles) and write original, funny, sarcastic short-video jokes for the UNIT 4B channel (Sweaty Steve, Nana Knuckles, Penny Pincher, Dead Ted, Sgt. Snuggles). Use whenever the user asks for joke ideas, episode ideas, trending or relatable topics, to learn from viral videos or a reference channel, a new script, punch-ups, dad jokes, sarcastic lines, or "what should the next short be". Produces a researched, scored episode script plus a ready-to-voice lines.json.
 ---
 
 # UNIT 4B Joke Lab
@@ -22,6 +22,8 @@ Talk to the user in their language (often Vietnamese). Write all on-screen dialo
 References in this skill (load when the step needs them):
 - `references/techniques.md` — joke mechanics (misdirection, reversal, rule of three, sarcasm types, dad-joke build, tags).
 - `references/research.md` — where to look for topics and the search queries that work.
+- `references/viral-analysis.md` — pull subtitles of viral shorts, write DNA cards, transform without copying.
+- `tools/viral_research.py` (repo root) — `find` viral videos, `subs` download subtitles, `check` originality.
 - `references/scorecard.md` — the rubric every candidate joke is scored against.
 - `templates/episode.md`, `templates/lines.json` — output formats.
 
@@ -39,6 +41,15 @@ Follow `references/research.md`. Goal: **8–12 candidate topics** that are
 For each topic note: the shared pain point in one sentence, why it's current (source link), and which
 character's engine it fits. If web search is unavailable, say so and use the evergreen list in
 `references/research.md` plus the calendar.
+
+### 1b. Learn from viral shorts (default when the shell can reach YouTube; always when the user asks)
+Follow `references/viral-analysis.md`:
+- `python tools/viral_research.py find …` on 2–3 searches built from the strongest topics (plus any reference
+  channel the user names), then `subs --from …/candidates.json --top 10`.
+- Write a DNA card per video and a Patterns summary in `research/viral/<date>-<topic>/DNA.md`.
+- Feed the mechanisms, pacing numbers and hook types into steps 3–5. Never the lines or the premises.
+If YouTube is unreachable from the shell and no vidIQ credits are available, say so in one line and continue
+with web research only.
 
 ### 2. Filter (hard gates, drop anything that fails one)
 - Survives subtitles for a non-native speaker (no puns that need a native ear, no local slang).
@@ -90,10 +101,19 @@ Validate before reporting done:
 cd styles/deadpan-strip && python demo/elevenlabs_tts.py ../../episodes/NN-slug/lines.json /tmp/voice-check --dry-run
 ```
 It must print one request per line and exit 0 (unknown `char` or `expr` fails here).
+If the episode came from viral research, also run the originality check and rewrite until it passes:
+```bash
+python tools/viral_research.py check episodes/NN-slug/lines.json research/viral/<date>-<topic>/transcripts
+```
 
 Tell the user, in their language: the title options, the joke in one sentence, why it should land
 (topic + source), and the next step: generate voices (`--fx`) or ask lemo-opuscar to render it, e.g.
 "Make this short in the deadpan-strip style from episodes/NN-slug/script.md".
+
+## Viral study mode
+"Học từ video viral", "analyze this channel", "read the subtitles of these videos" → run step 1b on what the
+user gives (URLs, a channel, a topic), report the Patterns and the top DNA cards, then propose 3–5 original
+premises (scored). Write full episodes only for the ones the user picks.
 
 ## Batch mode
 "Give me ideas" → stop after step 4 and present the top 5 premises (title, one-line joke, cast, format,
