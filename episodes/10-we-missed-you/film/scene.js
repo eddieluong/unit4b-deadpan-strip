@@ -10,24 +10,27 @@ const WIN = { x0: 120, x1: 470, y0: 560, y1: 1010 };       // window on the left
 const DOOR_X0 = 650, DOOR_X1 = 920, DOOR_TOP = 610;
 
 const LINES = [
-  ['10_01_snuggles', 'snuggles', 0.3, "Nine a.m. The kid is waiting for a man he's never met."],
-  ['10_02_steve', 'steve', 4.1, "He said he's coming today."],
-  ['10_03_steve', 'steve', 8.4, "He's on his way!"],
-  ['10_04_snuggles', 'snuggles', 10.8, 'Seven hours. No food. No shower. No blinking.'],
-  ['10_05_steve', 'steve', 17.1, "I can't hold it anymore."],
-  ['10_06_steve', 'steve', 24.2, 'Why?!'],
-  ['10_07_snuggles', 'snuggles', 27.9, 'Same window. Same time. Tomorrow.'],
+  ['10_01_snuggles', 'snuggles', 0.2, "Nine a.m. The kid is waiting for a man he's never met. Again."],
+  ['10_02_steve', 'steve', 6.4, "He said he's coming today..."],
+  ['10_03_steve', 'steve', 9.7, "HE'S ON HIS WAY! He's on his waaay!"],
+  ['10_04_snuggles', 'snuggles', 14.8, 'Seven hours. No food. No shower. No blinking.'],
+  ['10_05_steve', 'steve', 20.3, "I'M HERE! I'M COMING! I'M HEEERE!"],
+  ['10_06_steve', 'steve', 23.6, "...that's a garbage truck."],
+  ['10_07_steve', 'steve', 25.4, 'Thirty seconds. Nobody comes in thirty seconds.'],
+  ['10_08_steve', 'steve', 34.2, 'WHYYYYY?!'],
+  ['10_09_steve', 'steve', 39.5, '...tomorrow.'],
+  ['10_10_snuggles', 'snuggles', 41.0, 'Same window. Same time. Tomorrow.'],
 ].map(([id, char, t, text]) => ({ id, char, t, text }));
-const DUR = 32.0;
-const T = { hug: 7.0, hugEnd: 8.3, montage: 10.6, m2: 12.6, m3: 14.6, late: 16.8, wc: 20.5, flush: 21.6, note: 22.3, drain: 24.0, phone2: 26.2, back: 27.6 };
+const DUR = 45.6;
+const T = { close: 6.2, phone: 8.9, jump: 10.1, montage: 14.6, m3: 17.2, truck: 20.0, late: 25.3, wc: 30.8, flush: 31.9, note: 32.6, drain: 34.0, phone2: 37.9, back: 39.3 };
 let VOICE = {};
 
 const EV = [
   ...LINES.map(L => ({ t: L.t, type: 'voice', id: L.id })),
-  { t: 0.0, type: 'longing' }, { t: T.hug, type: 'buzz' }, { t: T.hug + 0.2, type: 'swell' },
-  { t: T.m2 + 0.1, type: 'truck' }, { t: T.m2 + 0.6, type: 'steps' }, { t: T.late, type: 'tremble' },
+  { t: 0.0, type: 'longing' }, { t: T.phone, type: 'buzz' }, { t: 9.7, type: 'swell' },
+  { t: T.truck, type: 'truck' }, { t: T.truck + 0.4, type: 'steps' }, { t: 23.5, type: 'sadtrombone' }, { t: T.late, type: 'tremble' },
   { t: T.wc + 0.15, type: 'slam' }, { t: T.flush, type: 'flush' }, { t: T.note, type: 'stop' },
-  { t: 24.2, type: 'hit' }, { t: T.phone2, type: 'buzz' }, { t: 30.0, type: 'longing2' },
+  { t: 34.2, type: 'hit' }, { t: T.phone2, type: 'buzz' }, { t: 41.0, type: 'longing2' },
 ];
 
 // ---------- helpers ----------
@@ -113,25 +116,45 @@ function phone(t, lines, sub) {   // close insert of a phone screen held in a ha
 
 // ---------- shots ----------
 const STEVE_WIN = 300;   // Steve at the window
-function shotWindow(t, { snug = false, light = 'day' } = {}) {
+const hop = (t, h = 70) => Math.abs(Math.sin(step8(t) * Math.PI * 2.2)) * h;    // jumping for joy, on 8 fps steps
+const jitter = (t, a = 8) => (Math.floor(t * 8) % 2 ? a : -a);                    // trembling, 2 drawings
+function shotWindow(t, { snug = false, light = 'day', expr = 'sad' } = {}) {
   room(t, { light });
-  actor('steve', snug ? 230 : STEVE_WIN, t, { expr: 'sad', look: -0.8, armL: 'up' });
+  actor('steve', snug ? 230 : STEVE_WIN, t, { expr, look: -0.8, armL: 'up' });
   if (snug) actor('snuggles', 445, t, { expr: 'smug', look: 0.6 }, { y: FLOOR - (FLOOR - WIN.y1) + 26, scale: 4.4 });
+}
+function shotJump(t) {          // "HE'S ON HIS WAY!": jumping, arms flailing, tears of joy, sparkles
+  room(t);
+  const arm = Math.floor(t * 8) % 2 ? 'up' : 'shrug';
+  actor('steve', 540, t, { expr: 'laughing', arm, fx: ['sparkle', 'tears'] }, { y: FLOOR - hop(t) });
+  const p = pen(0, FLOOR, 1, t, 9);
+  for (const [x, y] of [[300, 900], [800, 850], [380, 620], [720, 560]]) if ((Math.floor(t * 8) + x) % 3) p.part(roundPoly([[x, y + 22], [x + 6, y + 6], [x + 22, y], [x + 6, y - 6], [x, y - 22], [x - 6, y - 6], [x - 22, y], [x - 6, y + 6]], 2, 2), '#f2c14e', { shade: false, lw: 2.5 });
 }
 function shotMontage(t) {
   room(t);
-  if (t < T.m2) { timeTag('11:00', t); actor('steve', 560, t, { expr: 'grin', look: 0.9, armR: 'point' }); }
-  else if (t < T.m3) {
-    timeTag('1:00 PM', t);
-    const k = step8(seg(t, T.m2 + 0.3, T.m2 + 0.8)), x = 250 + 330 * k;
-    if (k > 0 && k < 1) { const p = pen(0, FLOOR, 1, t, 5); for (const dy of [380, 460, 540]) p.line([[x - 160, dy], [x - 60, dy]], 4, 'rgba(42,34,48,0.5)'); }
-    actor('steve', x, t, { expr: k < 1 ? 'shocked' : t > T.m2 + 1.5 ? 'sad' : 'happy', look: 0.9 });
-    if (t > T.m2 + 1.0) hand('vroooom...', 820, 1150, 50, -0.08, '#6b625c');
-  } else { timeTag('3:00 PM', t); actor('steve', 590, t, { expr: 'sleepy' }, { rot: 0.12 }); }
+  if (t < T.m3) { timeTag('11:00 AM', t); actor('steve', 560, t, { expr: 'grin', look: 0.9, armR: 'point' }); hand('practice #47', 300, 1130, 50, -0.06, '#6b625c'); }
+  else { timeTag('3:00 PM', t); actor('steve', 590, t, { expr: 'sleepy' }, { rot: 0.12 }); }
+}
+function garbageTruck(t, k) {   // drives across the window
+  ctx.save(); ctx.beginPath(); ctx.rect(WIN.x0, WIN.y0, WIN.x1 - WIN.x0, WIN.y1 - WIN.y0); ctx.clip();
+  const x = WIN.x1 + 60 - (WIN.x1 - WIN.x0 + 420) * k, p = pen(x, 990, 2.6, t, 33);
+  p.part(roundPoly([[0, 0], [130, 0], [130, 70], [0, 70]], 4), '#6aa36f', { shade: 0.1 });
+  p.part(roundPoly([[-40, 0], [0, 0], [0, 50], [-30, 50], [-40, 30]], 3), '#e8e2d2', { shade: false });
+  for (const wx of [-20, 95]) p.part(ellipsePts(wx, 0, 11, 11, 18), '#3a3440', { shade: false });
+  hand('GARBAGE', x + 170, 990 - 95, 46, 0, '#fffdf6');
+  ctx.restore();
+}
+function shotTruck(t) {         // 4:00 PM: a truck! sprint to the window... it's the garbage truck
+  room(t); timeTag('4:00 PM', t);
+  const k = step8(seg(t, T.truck + 0.3, T.truck + 1.0)), x = 840 - 280 * k;   // door → just right of the window, truck stays visible
+  if (k > 0 && k < 1) { const p = pen(0, FLOOR, 1, t, 5); for (const dy of [380, 460, 540]) p.line([[x + 60, dy], [x + 170, dy]], 4, 'rgba(42,34,48,0.5)'); }
+  garbageTruck(t, seg(t, 21.0, 25.0));
+  const sad = t >= 23.5;
+  actor('steve', x, t, sad ? { expr: 'dead_inside', look: -0.8, arm: 'down' } : { expr: 'shocked', look: -0.9, arm: k < 1 ? 'up' : 'point' }, { y: FLOOR - (k >= 1 && !sad ? hop(t, 40) : 0) });
 }
 function shotLate(t) {
   room(t, { light: 'eve' });
-  actor('steve', 470, t, { expr: 'horrified', look: 0.9, armL: 'hold', armR: 'hold' });
+  actor('steve', 470 + jitter(t, 7), t, { expr: t < 28 ? 'nervous' : 'horrified', look: 0.9, armL: 'hold', armR: 'hold', fx: ['sweat', 'gloom'] });
 }
 function shotWC(t) {
   ctx.fillStyle = '#d9e4e6'; ctx.fillRect(PX, PY, PW, PH);
@@ -140,8 +163,8 @@ function shotWC(t) {
   p.dot(-19, 50, 1.6, 1.6, '#e8c35a');
   p.part(roundPoly([[-8, 80], [8, 80], [8, 92], [-8, 92]], 2), '#fffdf6', { shade: false, lw: 3 });
   hand('WC', 540, 1400 - 86 * 7, 64);
-  const shake = t < T.wc + 0.4 ? Math.sin(t * 90) * 6 : 0;
-  if (t < T.wc + 0.5) hand('SLAM!', 790 + shake, 520, 90, -0.12);
+  const shake = t < T.wc + 0.4 ? jitter(t, 6) : 0;
+  if (t < T.wc + 0.6) hand('SLAM!', 790 + shake, 520, 90, -0.12);
   timeTag('0:30', t);
   if (t >= T.flush) hand('flushhh...', 760, 1000, 64, 0.06, '#3f7f8c');
 }
@@ -150,10 +173,11 @@ function shotNote(t) {
   actor('steve', 330, t, { expr: 'shocked', look: 0.9 }, { frozen: true });
   noteOnDoor(t);
 }
-function shotDrain(t) {
+function shotDrain(t) {         // "WHYYYYY?!": greyscale, flailing arms, tears, shaking camera (shake is in render)
   room(t, { grey: true, light: 'eve' });
   noteOnDoor(t);
-  actor('steve', 420, t, { expr: 'crying', arm: 'up' });
+  const arm = Math.floor(t * 8) % 2 ? 'up' : 'shrug';
+  actor('steve', 420, t, { expr: 'crying', arm, fx: ['gloom'] });
 }
 function shotPhone2(t) { phone(t, [['New delivery date:', 56], ['TOMORROW', 92, '#c0392b'], ['9 AM – 5 PM', 76]], 'Thank you for your patience!'); }
 
@@ -189,17 +213,19 @@ function render(t) {
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.filter = 'none';
   paper(ctx, W, H, 11);
   ctx.font = '600 40px Fredoka'; ctx.fillStyle = INK; ctx.textAlign = 'center'; ctx.fillText('UNIT 4B', 540, 100); ctx.textAlign = 'start';
-  if (t < 4.0) withCamera(1 + 0.08 * seg(t, 0, 4), 330, 1000, () => { shotWindow(t); timeTag('9:00 AM', t); });
-  else if (t < T.hug) withCamera(1.8, STEVE_WIN, 820, () => shotWindow(t), 540, 760);
-  else if (t < T.hugEnd) withCamera(1, 540, 900, () => phone(t, [['Your package is', 60], ['OUT FOR', 96, '#2e8b57'], ['DELIVERY!', 96, '#2e8b57']], 'Arriving today, 9 AM – 5 PM'));
-  else if (t < T.montage) withCamera(1.6, STEVE_WIN, 820, () => { room(t); actor('steve', STEVE_WIN, t, { expr: 'crying', armL: 'hold', armR: 'hold' }); }, 540, 760);
-  else if (t < T.late) withCamera(1, 540, 1000, () => shotMontage(t));
-  else if (t < T.wc) { withCamera(1 + 0.25 * seg(t, T.late, T.wc), 470, 800, () => shotLate(t), 540, 800); timeTag('4:58 PM', t); }   // tag in screen space, unzoomed
+  const shake = t >= 34.2 && t < 37.6 ? [((Math.floor(t * 12) * 37) % 29) - 14, ((Math.floor(t * 12) * 53) % 23) - 11] : [0, 0];
+  if (t < T.close) withCamera(1 + 0.1 * seg(t, 0, T.close), 330, 1000, () => { shotWindow(t); timeTag('9:00 AM', t); });
+  else if (t < T.phone) withCamera(1.8, STEVE_WIN, 820, () => shotWindow(t, { expr: 'happy' }), 540, 760);
+  else if (t < T.jump) withCamera(1, 540, 900, () => phone(t, [['Your package is', 60], ['OUT FOR', 96, '#2e8b57'], ['DELIVERY!', 96, '#2e8b57']], 'Arriving today, 9 AM – 5 PM'));
+  else if (t < T.montage) withCamera(1.2, 540, 900, () => shotJump(t), 540, 860);
+  else if (t < T.truck) withCamera(1, 540, 1000, () => shotMontage(t));
+  else if (t < T.late) withCamera(1, 540, 1000, () => shotTruck(t));
+  else if (t < T.wc) { withCamera(1 + 0.3 * seg(t, T.late, T.wc), 470, 800, () => shotLate(t), 540, 800); timeTag('4:58 PM', t); }
   else if (t < T.note) withCamera(1, 540, 900, () => shotWC(t));
   else if (t < T.drain) withCamera(1, 540, 1000, () => shotNote(t));
-  else if (t < T.phone2) withCamera(1.12, 560, 800, () => shotDrain(t), 540, 760);
+  else if (t < T.phone2) withCamera(1.12 + 0.05 * Math.abs(Math.sin(t * 9)), 560, 800, () => shotDrain(t), 540 + shake[0], 760 + shake[1]);
   else if (t < T.back) withCamera(1, 540, 900, () => shotPhone2(t));
-  else withCamera(1 + 0.06 * seg(t, T.back, DUR), 330, 1000, () => shotWindow(t, { snug: true }));
+  else withCamera(1 + 0.06 * seg(t, T.back, DUR), 330, 1000, () => shotWindow(t, { snug: true, expr: t < 41 ? 'sad' : 'dead_inside' }));
   panel(ctx, PX, PY, PW, PH, 5, null, frameOf(t));
   const cap = caption(t); window.__texts = cap ? [cap] : [];
 }
@@ -209,6 +235,6 @@ window.DUR = DUR; window.EV = EV; window.render = render; window.TEXTS = t => { 
   for (const [fam, file, weight] of [['Patrick Hand', 'fonts/patrick-hand-latin-400-normal.woff2', '400'], ['Fredoka', 'fonts/fredoka-latin-600-normal.woff2', '600']]) {
     const f = new FontFace(fam, `url(${file})`, { weight }); await f.load(); document.fonts.add(f);
   }
-  VOICE = await (await fetch('voice_el/voice.json')).json();
+  VOICE = await (await fetch('voice/voice.json')).json();
   render(0); window.READY = true;
 })();

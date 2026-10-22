@@ -19,7 +19,7 @@ buf = np.zeros((int(DUR * SR), 2))
 voice_on = np.zeros(len(buf))
 for e in EV:
     if e['type'] != 'voice': continue
-    a, sr = sf.read(os.path.join(HERE, 'voice_el', e['id'] + '.wav'))
+    a, sr = sf.read(os.path.join(HERE, 'voice', e['id'] + '.wav'))
     if a.ndim > 1: a = a.mean(1)
     x = S.norm(resample_poly(a, SR, sr) if sr != SR else a, 0.9)
     S.add(buf, x, e['t'], 0.95, -0.1 if 'steve' in e['id'] else 0.1)
@@ -90,6 +90,17 @@ for t in at('slam'): S.add(fol, S.thump(1.0, 80), t, 0.8); S.add(fol, S.clack(0.
 for t in at('flush'):
     d = 1.6; tt = np.arange(int(d * SR)) / SR
     S.add(fol, S.bp(S.noise(d), 300, 3000) * np.sin(np.pi * tt / d) ** 0.7 * (0.7 + 0.3 * np.sin(2 * np.pi * 3 * tt)), t, 0.25)
+
+# the garbage-truck letdown: a muted "wah wah wah waaah" (sawtooth with a mute filter and a sagging pitch)
+NOTES = (('G3', .38), ('F#3', .38), ('F3', .38), ('E3', 1.3))
+for t0 in at('sadtrombone'):
+    start = t0
+    for j, (n, d) in enumerate(NOTES):
+        tt = np.arange(int(d * SR)) / SR
+        f = hz(n) * ((1 - 0.03 * tt / d) * (1 + 0.012 * np.sin(2 * np.pi * 6 * tt)) if j == 3 else 1)   # the last note sags and wobbles
+        ph = 2 * np.pi * np.cumsum(f * np.ones_like(tt)) / SR
+        x = S.lp(sum(np.sin(k * ph) / k for k in range(1, 12)), 1300) * np.minimum(1, tt / 0.03) * np.minimum(1, (d - tt) / 0.08).clip(0)
+        S.add(fol, x * 0.22, start, 1.0, 0.1); start += d + 0.04
 
 # room tone keeps the silences alive
 room = S.lp(S.brown(DUR), 300) * 0.018
