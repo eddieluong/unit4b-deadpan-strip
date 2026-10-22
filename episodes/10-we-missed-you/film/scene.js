@@ -1,36 +1,35 @@
-// UNIT 4B · 10 "We Missed You" — 9:16 film page (lemo-opuscar page contract: READY, DUR, render(t), EV, TEXTS).
-// An everyday problem played as a tragic love story. Stick cast from lib/cast_stick.js. Timings follow script.md.
+// UNIT 4B · 10 "We Missed You" (Tập 1) v3 — 9:16 film page (lemo-opuscar contract: READY, DUR, render(t), EV, TEXTS).
+// Real reactions: Steve is a normal tired adult; the drama lives in small visual cutaways and Snuggles' narration.
 import { drawCharacter, nameTab, paper, panel } from './lib/cast_stick.js';
 import { VPen, roundPoly, ellipsePts } from './lib/cast_v2.js';
 
 const W = 1080, H = 1920, cv = document.getElementById('c'), ctx = cv.getContext('2d');
 const PX = 40, PY = 150, PW = 1000, PH = 1420, FLOOR = 1400, K = 7;
 const INK = '#2a2230', WALL = '#ece2cf', FLOORC = '#d8c6a8', DOOR = '#c7a985';
-const WIN = { x0: 120, x1: 470, y0: 560, y1: 1010 };       // window on the left wall (world px)
+const WIN = { x0: 90, x1: 380, y0: 560, y1: 960 };
 const DOOR_X0 = 650, DOOR_X1 = 920, DOOR_TOP = 610;
+const CHAIR_X = 450;
 
 const LINES = [
-  ['10_01_snuggles', 'snuggles', 0.2, "Nine a.m. The kid is waiting for a man he's never met. Again."],
-  ['10_02_steve', 'steve', 6.4, "He said he's coming today..."],
-  ['10_03_steve', 'steve', 9.7, "HE'S ON HIS WAY! He's on his waaay!"],
-  ['10_04_snuggles', 'snuggles', 14.8, 'Seven hours. No food. No shower. No blinking.'],
-  ['10_05_steve', 'steve', 20.3, "I'M HERE! I'M COMING! I'M HEEERE!"],
-  ['10_06_steve', 'steve', 23.6, "...that's a garbage truck."],
-  ['10_07_steve', 'steve', 25.4, 'Thirty seconds. Nobody comes in thirty seconds.'],
-  ['10_08_steve', 'steve', 34.2, 'WHYYYYY?!'],
-  ['10_09_steve', 'steve', 39.5, '...tomorrow.'],
-  ['10_10_snuggles', 'snuggles', 41.0, 'Same window. Same time. Tomorrow.'],
+  ['10_01_snuggles', 'snuggles', 0.2, 'Nine a.m. The kid took a day off... for a package.'],
+  ['10_02_steve', 'steve', 4.9, 'Okay. Nine to five. Easy.'],
+  ['10_03_steve', 'steve', 8.6, "Oh, nice. He's close."],
+  ['10_04_steve', 'steve', 14.6, "...it's the garbage truck."],
+  ['10_05_snuggles', 'snuggles', 17.2, 'No shower. No lunch. He refreshed the app... forty-one times.'],
+  ['10_06_steve', 'steve', 22.8, "He's not coming. Okay... thirty seconds. I'll be thirty seconds."],
+  ['10_07_steve', 'steve', 34.2, '...cool.'],
+  ['10_08_steve', 'steve', 36.9, "...I'll just take another day off."],
+  ['10_09_snuggles', 'snuggles', 39.6, 'Same chair. Same door. Tomorrow.'],
 ].map(([id, char, t, text]) => ({ id, char, t, text }));
-const DUR = 45.6;
-const T = { close: 6.2, phone: 8.9, jump: 10.1, montage: 14.6, m3: 17.2, truck: 20.0, late: 25.3, wc: 30.8, flush: 31.9, note: 32.6, drain: 34.0, phone2: 37.9, back: 39.3 };
+const DUR = 43.4;
+const T = { app1: 4.7, app2: 7.5, sitUp: 8.5, stop: 10.9, truck: 12.9, three: 17.0, light0: 19.0, light1: 20.3, late: 22.6, wc: 30.4, flush: 31.4, note: 32.2, melt: 33.4, app3: 35.6, sit2: 36.8, back: 39.3 };
 let VOICE = {};
 
 const EV = [
   ...LINES.map(L => ({ t: L.t, type: 'voice', id: L.id })),
-  { t: 0.0, type: 'longing' }, { t: T.phone, type: 'buzz' }, { t: 9.7, type: 'swell' },
-  { t: T.truck, type: 'truck' }, { t: T.truck + 0.4, type: 'steps' }, { t: 23.5, type: 'sadtrombone' }, { t: T.late, type: 'tremble' },
-  { t: T.wc + 0.15, type: 'slam' }, { t: T.flush, type: 'flush' }, { t: T.note, type: 'stop' },
-  { t: 34.2, type: 'hit' }, { t: T.phone2, type: 'buzz' }, { t: 41.0, type: 'longing2' },
+  { t: 0.0, type: 'wait' }, { t: T.app2, type: 'buzz' }, { t: T.truck + 0.1, type: 'truck' }, { t: T.truck + 0.4, type: 'chair' },
+  { t: T.light0, type: 'violin' }, { t: T.light1, type: 'wait2' }, { t: T.wc + 0.1, type: 'door' }, { t: T.flush, type: 'flush' },
+  { t: T.note, type: 'stop' }, { t: T.app3, type: 'buzz' }, { t: T.back + 0.3, type: 'wait3' },
 ];
 
 // ---------- helpers ----------
@@ -45,15 +44,12 @@ function speaking(char, t) {
   }
   return -1;
 }
-function actor(id, x, t, pose, { y = FLOOR, scale = K, frozen = false, rot = 0, voiceOff = false } = {}) {
-  let p = { ...pose };
-  const e = voiceOff ? -1 : speaking(id, t);
-  if (e >= 0) p.mouth = e > 0.55 ? 'wide' : e > 0.18 ? 'small' : 'line';
+function actor(id, x, t, pose, { y = FLOOR, scale = K, frozen = false } = {}) {
+  const p = { ...pose }, e = speaking(id, t);
+  if (e >= 0 && id !== 'snuggles') p.mouth = e > 0.55 ? 'wide' : e > 0.18 ? 'small' : 'line';   // Snuggles is voice-over: no lip-sync
   const blinkP = (t + (id === 'steve' ? 0.7 : 3.1)) % 4.2;
-  if (!frozen && blinkP < 0.17 && (!p.eyes || p.eyes === 'dot') && !(p.expr && ['happy', 'crying', 'sleepy', 'proud', 'laughing', 'cringe'].includes(p.expr))) p.eyes = 'closed';
-  ctx.save(); if (rot) { ctx.translate(x, y); ctx.rotate(rot); ctx.translate(-x, -y); }
+  if (!frozen && blinkP < 0.17 && (!p.eyes || p.eyes === 'dot') && !['happy', 'sleepy', 'laughing'].includes(p.expr)) p.eyes = 'closed';
   drawCharacter(ctx, id, x, y, scale, p, { frame: frozen ? 0 : frameOf(t) });
-  ctx.restore();
 }
 const pen = (x, y, s, t, seed = 1) => new VPen(ctx, x, y, s, { lw: Math.max(2.4, s * 0.85), hand: true, frame: frameOf(t), seed });
 function withCamera(zoom, fx, fy, fn, sx = fx, sy = fy) {
@@ -63,10 +59,10 @@ function withCamera(zoom, fx, fy, fn, sx = fx, sy = fy) {
 function hand(text, x, y, size, rot = 0, color = INK) {
   ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.font = `${size}px "Patrick Hand"`; ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, 0, 0); ctx.restore();
 }
-function timeTag(text, t) {   // sticky label in the top-left of the panel
+function timeTag(text, t) {
   const p = pen(0, 0, 1, t, 91); p.T = q => q;
-  p.part(roundPoly([[80, 200], [330, 196], [334, 280], [84, 284]], 6), '#f7e27a', { shade: false, lw: 3 });
-  hand(text, 207, 240, 54, -0.03);
+  p.part(roundPoly([[80, 200], [340, 196], [344, 280], [84, 284]], 6), '#f7e27a', { shade: false, lw: 3 });
+  hand(text, 212, 240, 54, -0.03);
 }
 
 // ---------- set ----------
@@ -77,17 +73,15 @@ function room(t, { grey = false, light = 'day' } = {}) {
   const p = pen(0, FLOOR, 1, t, 3);
   p.line([[PX - 600, 0], [PX + PW + 600, 0]], 4);
   for (const y of [60, 130]) p.line([[PX - 600, -y], [PX + PW + 600, -y]], 2, 'rgba(42,34,48,0.25)');
-  // window: sky, sun, a cloud, frame and sill
   const sky = light === 'eve' ? '#f2b98a' : '#bfe0f2';
   p.part([[WIN.x0, FLOOR - WIN.y1], [WIN.x1, FLOOR - WIN.y1], [WIN.x1, FLOOR - WIN.y0], [WIN.x0, FLOOR - WIN.y0]], sky, { shade: false, lw: 5 });
   ctx.save(); ctx.beginPath(); ctx.rect(WIN.x0, WIN.y0, WIN.x1 - WIN.x0, WIN.y1 - WIN.y0); ctx.clip();
-  p.part(ellipsePts(light === 'eve' ? 400 : 380, FLOOR - (light === 'eve' ? 960 : 650), 46, 46, 30), light === 'eve' ? '#f08a5d' : '#f7d35c', { shade: false, lw: 3 });
-  p.part(ellipsePts(220, FLOOR - 720, 60, 24, 30), '#ffffff', { shade: false, lw: 3 });
+  p.part(ellipsePts(300, FLOOR - (light === 'eve' ? 900 : 640), 40, 40, 30), light === 'eve' ? '#f08a5d' : '#f7d35c', { shade: false, lw: 3 });
+  p.part(ellipsePts(170, FLOOR - 700, 52, 20, 30), '#ffffff', { shade: false, lw: 3 });
   ctx.restore();
   p.line([[(WIN.x0 + WIN.x1) / 2, FLOOR - WIN.y0], [(WIN.x0 + WIN.x1) / 2, FLOOR - WIN.y1]], 5);
   p.line([[WIN.x0, FLOOR - (WIN.y0 + WIN.y1) / 2], [WIN.x1, FLOOR - (WIN.y0 + WIN.y1) / 2]], 5);
-  p.part([[WIN.x0 - 30, FLOOR - WIN.y1 - 26], [WIN.x1 + 30, FLOOR - WIN.y1 - 26], [WIN.x1 + 30, FLOOR - WIN.y1], [WIN.x0 - 30, FLOOR - WIN.y1]], '#efe7d6', { shade: false, lw: 4 });
-  // front door (closed)
+  p.part([[WIN.x0 - 26, FLOOR - WIN.y1 - 24], [WIN.x1 + 26, FLOOR - WIN.y1 - 24], [WIN.x1 + 26, FLOOR - WIN.y1], [WIN.x0 - 26, FLOOR - WIN.y1]], '#efe7d6', { shade: false, lw: 4 });
   p.part([[DOOR_X0, 0], [DOOR_X1, 0], [DOOR_X1, FLOOR - DOOR_TOP], [DOOR_X0, FLOOR - DOOR_TOP]], DOOR, { shade: false, lw: 4 });
   p.dot(DOOR_X0 + 32, 380, 9, 9, '#e8c35a');
   p.part(roundPoly([[DOOR_X0 + 50, 470], [DOOR_X1 - 50, 470], [DOOR_X1 - 50, 720], [DOOR_X0 + 50, 720]], 6), null, { shade: false, lw: 2.5 });
@@ -95,67 +89,92 @@ function room(t, { grey = false, light = 'day' } = {}) {
   p.line([[DOOR_X0 - 18, 0], [DOOR_X0 - 18, FLOOR - DOOR_TOP + 18]], 3.5);
   ctx.restore();
 }
-function noteOnDoor(t, scale = 1) {
-  const cx = (DOOR_X0 + DOOR_X1) / 2, cy = 900, p = pen(cx, cy, 6 * scale, t, 97);
+function chair(x, t) {   // a plain wooden kitchen chair, seat ~22 units high
+  const p = pen(x, FLOOR, K, t, 17);
+  for (const sx of [-1, 1]) p.line([[sx * 12, 0], [sx * 12, 21]], p.lw * 1.1, '#8a6040');
+  p.part(roundPoly([[-15, 20], [15, 20], [15, 23.5], [-15, 23.5]], 1), '#b98a5e', { shade: 0.2 });
+  for (const sx of [-1, 1]) p.line([[sx * 12, 23], [sx * 12, 52]], p.lw * 1.1, '#8a6040');
+  p.part(roundPoly([[-13, 44], [13, 44], [13, 52], [-13, 52]], 1.5), '#b98a5e', { shade: 0.2 });
+}
+function steveInChair(t, pose, { frozen = false, y = FLOOR } = {}) { chair(CHAIR_X, t); actor('steve', CHAIR_X, t, { sit: true, look: 0.7, ...pose }, { frozen, y }); }
+function noteOnDoor(t) {
+  const cx = (DOOR_X0 + DOOR_X1) / 2, cy = 900, p = pen(cx, cy, 6, t, 97);
   p.part(roundPoly([[-17, -12], [17, -13], [17, 12], [-17, 12]], 0.8), '#fffdf2', { shade: false });
   p.fill([[-4, 11], [4, 11], [4, 14], [-4, 14]], 'rgba(240,220,140,0.9)');
-  hand('SORRY', cx, cy - 34 * scale, 46 * scale, -0.04, '#c0392b');
-  hand('WE MISSED', cx, cy + 6 * scale, 40 * scale, -0.04, '#c0392b');
-  hand('YOU!', cx, cy + 44 * scale, 46 * scale, -0.04, '#c0392b');
+  hand('SORRY', cx, cy - 34, 46, -0.04, '#c0392b'); hand('WE MISSED', cx, cy + 6, 40, -0.04, '#c0392b'); hand('YOU!', cx, cy + 44, 46, -0.04, '#c0392b');
 }
-function phone(t, lines, sub) {   // close insert of a phone screen held in a hand
+function phoneFrame(t) {
   ctx.fillStyle = '#e9dcc3'; ctx.fillRect(PX, PY, PW, PH);
   const p = pen(540, 1330, 14, t, 71);
   p.part(roundPoly([[-21, 0], [21, 0], [21, 72], [-21, 72]], 5), '#2f2b36', { shade: false });
   p.part(roundPoly([[-18, 5], [18, 5], [18, 67], [-18, 67]], 3), '#fbfaf6', { shade: false, lw: 3 });
-  ctx.save(); ctx.textAlign = 'center'; ctx.fillStyle = INK;
+}
+function phone(t, lines, sub) {
+  phoneFrame(t);
+  ctx.save(); ctx.textAlign = 'center';
   lines.forEach(([txt, size, col], i) => { ctx.font = `600 ${size}px Fredoka`; ctx.fillStyle = col || INK; ctx.fillText(txt, 540, 1330 - 54 * 14 + i * 110); });
   if (sub) { ctx.font = '48px "Patrick Hand"'; ctx.fillStyle = '#6b625c'; ctx.fillText(sub, 540, 1330 - 20 * 14); }
   ctx.restore();
 }
+function phoneMap(t) {   // tracking map: a tiny truck that has not moved
+  phoneFrame(t);
+  const p = pen(540, 1330, 14, t, 75);
+  p.fill(roundPoly([[-17, 22], [17, 22], [17, 64], [-17, 64]], 2), '#e4efe0');
+  p.line([[-13, 26], [-6, 40], [4, 34], [10, 50], [14, 60]], 5, '#7aa6c2');
+  p.part(roundPoly([[-15, 24], [-10, 24], [-10, 28], [-15, 28]], 0.6), '#f2c14e', { shade: false, lw: 2 });
+  p.dot(14, 60, 1.6, 1.6, '#c0392b');
+  ctx.save(); ctx.textAlign = 'center'; ctx.fillStyle = INK;
+  ctx.font = '600 60px Fredoka'; ctx.fillText('Stop 14 of 87', 540, 1330 - 14 * 14);
+  ctx.font = '44px "Patrick Hand"'; ctx.fillStyle = '#6b625c'; ctx.fillText('refreshed just now', 540, 1330 - 9 * 14);
+  ctx.restore();
+}
 
 // ---------- shots ----------
-const STEVE_WIN = 300;   // Steve at the window
-const hop = (t, h = 70) => Math.abs(Math.sin(step8(t) * Math.PI * 2.2)) * h;    // jumping for joy, on 8 fps steps
-const jitter = (t, a = 8) => (Math.floor(t * 8) % 2 ? a : -a);                    // trembling, 2 drawings
-function shotWindow(t, { snug = false, light = 'day', expr = 'sad' } = {}) {
-  room(t, { light });
-  actor('steve', snug ? 230 : STEVE_WIN, t, { expr, look: -0.8, armL: 'up' });
-  if (snug) actor('snuggles', 445, t, { expr: 'smug', look: 0.6 }, { y: FLOOR - (FLOOR - WIN.y1) + 26, scale: 4.4 });
-}
-function shotJump(t) {          // "HE'S ON HIS WAY!": jumping, arms flailing, tears of joy, sparkles
-  room(t);
-  const arm = Math.floor(t * 8) % 2 ? 'up' : 'shrug';
-  actor('steve', 540, t, { expr: 'laughing', arm, fx: ['sparkle', 'tears'] }, { y: FLOOR - hop(t) });
-  const p = pen(0, FLOOR, 1, t, 9);
-  for (const [x, y] of [[300, 900], [800, 850], [380, 620], [720, 560]]) if ((Math.floor(t * 8) + x) % 3) p.part(roundPoly([[x, y + 22], [x + 6, y + 6], [x + 22, y], [x + 6, y - 6], [x, y - 22], [x - 6, y - 6], [x - 22, y], [x - 6, y + 6]], 2, 2), '#f2c14e', { shade: false, lw: 2.5 });
-}
-function shotMontage(t) {
-  room(t);
-  if (t < T.m3) { timeTag('11:00 AM', t); actor('steve', 560, t, { expr: 'grin', look: 0.9, armR: 'point' }); hand('practice #47', 300, 1130, 50, -0.06, '#6b625c'); }
-  else { timeTag('3:00 PM', t); actor('steve', 590, t, { expr: 'sleepy' }, { rot: 0.12 }); }
-}
-function garbageTruck(t, k) {   // drives across the window
+function shotMorning(t) { room(t); timeTag('9:00 AM', t); steveInChair(t, { expr: 'neutral' }); }
+function shotSitUp(t) { room(t); steveInChair(t, { expr: 'happy' }, { y: FLOOR - (t > T.sitUp + 0.25 ? 18 : 0) }); }   // sits up a little
+function garbageTruck(t, k) {
   ctx.save(); ctx.beginPath(); ctx.rect(WIN.x0, WIN.y0, WIN.x1 - WIN.x0, WIN.y1 - WIN.y0); ctx.clip();
-  const x = WIN.x1 + 60 - (WIN.x1 - WIN.x0 + 420) * k, p = pen(x, 990, 2.6, t, 33);
+  const x = WIN.x1 + 60 - (WIN.x1 - WIN.x0 + 420) * k, p = pen(x, 950, 2.6, t, 33);
   p.part(roundPoly([[0, 0], [130, 0], [130, 70], [0, 70]], 4), '#6aa36f', { shade: 0.1 });
   p.part(roundPoly([[-40, 0], [0, 0], [0, 50], [-30, 50], [-40, 30]], 3), '#e8e2d2', { shade: false });
   for (const wx of [-20, 95]) p.part(ellipsePts(wx, 0, 11, 11, 18), '#3a3440', { shade: false });
-  hand('GARBAGE', x + 170, 990 - 95, 46, 0, '#fffdf6');
+  hand('GARBAGE', x + 170, 950 - 95, 46, 0, '#fffdf6');
   ctx.restore();
 }
-function shotTruck(t) {         // 4:00 PM: a truck! sprint to the window... it's the garbage truck
-  room(t); timeTag('4:00 PM', t);
-  const k = step8(seg(t, T.truck + 0.3, T.truck + 1.0)), x = 840 - 280 * k;   // door → just right of the window, truck stays visible
-  if (k > 0 && k < 1) { const p = pen(0, FLOOR, 1, t, 5); for (const dy of [380, 460, 540]) p.line([[x + 60, dy], [x + 170, dy]], 4, 'rgba(42,34,48,0.5)'); }
-  garbageTruck(t, seg(t, 21.0, 25.0));
-  const sad = t >= 23.5;
-  actor('steve', x, t, sad ? { expr: 'dead_inside', look: -0.8, arm: 'down' } : { expr: 'shocked', look: -0.9, arm: k < 1 ? 'up' : 'point' }, { y: FLOOR - (k >= 1 && !sad ? hop(t, 40) : 0) });
+function shotTruck(t) {   // 1:00 PM: the one small peak — he jumps up, checks the window, sits back down
+  room(t); timeTag('1:00 PM', t);
+  chair(CHAIR_X, t);
+  const up = t > T.truck + 0.35 && t < 16.5;
+  garbageTruck(t, seg(t, T.truck + 0.6, 16.4));
+  if (up) actor('steve', 470, t, t < 14.5 ? { expr: 'shocked', look: -0.9, arm: 'up' } : { expr: 'deadpan', look: -0.6 });
+  else actor('steve', CHAIR_X, t, { sit: true, expr: t < 14 ? 'neutral' : 'deadpan', look: 0.7 });
 }
-function shotLate(t) {
-  room(t, { light: 'eve' });
-  actor('steve', 470 + jitter(t, 7), t, { expr: t < 28 ? 'nervous' : 'horrified', look: 0.9, armL: 'hold', armR: 'hold', fx: ['sweat', 'gloom'] });
+function stinkLines(x, y, t) {
+  const p = pen(0, FLOOR, 1, t, 41);
+  for (const dx of [-60, 0, 60]) { const pts = []; for (let i = 0; i <= 8; i++) pts.push([x + dx + Math.sin(i * 1.3 + step8(t) * 3) * 10, FLOOR - (y - i * 12)]); p.line(pts, 3.5, '#8fae6a'); }
 }
+function shotAfternoon(t) {
+  room(t); timeTag('3:00 PM', t);
+  steveInChair(t, { expr: 'dead_inside', armL: 'hold' });
+  const bx = CHAIR_X + 3, by = FLOOR - (48 - 15) * K;   // cracker box in his 'hold' hand (body lowered 15 units when seated)
+  const p = pen(bx, by, K, t, 45);
+  p.part(roundPoly([[-5, -4], [5, -4], [5, 7], [-5, 7]], 0.8), '#e7b85a', { shade: 0.15 });
+  stinkLines(CHAIR_X, FLOOR - (15 + 98) * K, t);
+  for (let i = 0; i < 5; i++) pen(CHAIR_X - 60 + i * 30, FLOOR - 4, K, t, 50 + i).dot(0, 0, 0.9, 0.6, '#d8a95a');   // crumbs
+}
+function shotLighthouse(t) {   // 1.3 s cutaway: how it feels inside
+  ctx.fillStyle = '#5b7fa6'; ctx.fillRect(PX, PY, PW, PH);
+  ctx.fillStyle = '#2f4f74'; ctx.fillRect(PX, 1150, PW, 420);
+  const p = pen(0, 0, 1, t, 61); p.T = q => q;
+  for (let i = 0; i < 6; i++) { const y = 1180 + i * 60; p.line([[PX + 40 + (i % 2) * 60, y], [PX + 200, y - 10], [PX + 360, y], [PX + 520, y - 10], [PX + 680, y], [PX + 840, y - 10], [PX + 980, y]], 3, '#9ec3e6'); }
+  p.part([[600, 1250], [820, 1250], [780, 700], [640, 700]], '#f4efe4', { shade: false, lw: 4 });
+  for (const y of [1100, 950, 800]) p.fill([[600 + (1250 - y) * 0.073, y], [820 - (1250 - y) * 0.073, y], [820 - (1250 - y + 70) * 0.073, y - 70], [600 + (1250 - y + 70) * 0.073, y - 70]], '#3d5a96');
+  p.part([[630, 700], [790, 700], [790, 620], [630, 620]], '#f7e9a8', { shade: false, lw: 4 });
+  actor('steve', 710, t, { expr: 'sad', look: -0.9, arm: 'down' }, { y: 690, scale: 2.2 });
+  ctx.save(); ctx.globalAlpha = 0.35 + 0.2 * Math.sin(step8(t) * 6); ctx.fillStyle = '#fff6c0';
+  ctx.beginPath(); ctx.moveTo(710, 650); ctx.lineTo(PX, 520); ctx.lineTo(PX, 760); ctx.closePath(); ctx.fill(); ctx.restore();
+}
+function shotLate(t) { room(t, { light: 'eve' }); steveInChair(t, { expr: t < 26 ? 'nervous' : 'awkward', armR: 'hold' }); }
 function shotWC(t) {
   ctx.fillStyle = '#d9e4e6'; ctx.fillRect(PX, PY, PW, PH);
   const p = pen(540, 1400, 7, t, 81);
@@ -163,23 +182,24 @@ function shotWC(t) {
   p.dot(-19, 50, 1.6, 1.6, '#e8c35a');
   p.part(roundPoly([[-8, 80], [8, 80], [8, 92], [-8, 92]], 2), '#fffdf6', { shade: false, lw: 3 });
   hand('WC', 540, 1400 - 86 * 7, 64);
-  const shake = t < T.wc + 0.4 ? jitter(t, 6) : 0;
-  if (t < T.wc + 0.6) hand('SLAM!', 790 + shake, 520, 90, -0.12);
   timeTag('0:30', t);
-  if (t >= T.flush) hand('flushhh...', 760, 1000, 64, 0.06, '#3f7f8c');
+  if (t >= T.flush) hand('flush', 760, 1000, 64, 0.06, '#3f7f8c');
 }
 function shotNote(t) {
-  room(t, { light: 'eve' });
-  actor('steve', 330, t, { expr: 'shocked', look: 0.9 }, { frozen: true });
+  const melting = t >= T.melt && t < T.melt + 0.17;   // one-frame melt, then snaps back
+  room(t, { light: 'eve', grey: t >= T.melt });
   noteOnDoor(t);
+  ctx.save();
+  if (melting) { ctx.translate(380, FLOOR); ctx.scale(1.12, 0.82); ctx.translate(-380, -FLOOR); }
+  actor('steve', 380, t, { expr: t < T.melt ? 'shocked' : 'dead_inside', look: 0.8, ...(melting ? { eyes: 'spiral', mouth: 'wobble' } : {}) }, { frozen: t < T.melt });
+  ctx.restore();
 }
-function shotDrain(t) {         // "WHYYYYY?!": greyscale, flailing arms, tears, shaking camera (shake is in render)
-  room(t, { grey: true, light: 'eve' });
-  noteOnDoor(t);
-  const arm = Math.floor(t * 8) % 2 ? 'up' : 'shrug';
-  actor('steve', 420, t, { expr: 'crying', arm, fx: ['gloom'] });
+function shotEvening(t) { room(t, { light: 'eve' }); steveInChair(t, { expr: 'sad', look: 0.4 }); }
+function shotLoop(t) {
+  room(t); timeTag('9:00 AM', t);
+  steveInChair(t, { expr: 'dead_inside' });
+  actor('snuggles', 300, t, { expr: 'smug', look: 0.5 }, { y: WIN.y1 + 26, scale: 4.2 });
 }
-function shotPhone2(t) { phone(t, [['New delivery date:', 56], ['TOMORROW', 92, '#c0392b'], ['9 AM – 5 PM', 76]], 'Thank you for your patience!'); }
 
 // ---------- captions ----------
 function captionAt(t) {
@@ -213,19 +233,20 @@ function render(t) {
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.filter = 'none';
   paper(ctx, W, H, 11);
   ctx.font = '600 40px Fredoka'; ctx.fillStyle = INK; ctx.textAlign = 'center'; ctx.fillText('UNIT 4B', 540, 100); ctx.textAlign = 'start';
-  const shake = t >= 34.2 && t < 37.6 ? [((Math.floor(t * 12) * 37) % 29) - 14, ((Math.floor(t * 12) * 53) % 23) - 11] : [0, 0];
-  if (t < T.close) withCamera(1 + 0.1 * seg(t, 0, T.close), 330, 1000, () => { shotWindow(t); timeTag('9:00 AM', t); });
-  else if (t < T.phone) withCamera(1.8, STEVE_WIN, 820, () => shotWindow(t, { expr: 'happy' }), 540, 760);
-  else if (t < T.jump) withCamera(1, 540, 900, () => phone(t, [['Your package is', 60], ['OUT FOR', 96, '#2e8b57'], ['DELIVERY!', 96, '#2e8b57']], 'Arriving today, 9 AM – 5 PM'));
-  else if (t < T.montage) withCamera(1.2, 540, 900, () => shotJump(t), 540, 860);
-  else if (t < T.truck) withCamera(1, 540, 1000, () => shotMontage(t));
-  else if (t < T.late) withCamera(1, 540, 1000, () => shotTruck(t));
-  else if (t < T.wc) { withCamera(1 + 0.3 * seg(t, T.late, T.wc), 470, 800, () => shotLate(t), 540, 800); timeTag('4:58 PM', t); }
+  if (t < T.app1) withCamera(1 + 0.06 * seg(t, 0, T.app1), 540, 1000, () => shotMorning(t));
+  else if (t < T.app2) withCamera(1, 540, 900, () => phone(t, [['Your delivery', 64], ['TODAY', 100, '#2e8b57'], ['9 AM – 5 PM', 80]]));
+  else if (t < T.sitUp) withCamera(1, 540, 900, () => phone(t, [['Your package is', 60], ['OUT FOR', 96, '#2e8b57'], ['DELIVERY', 96, '#2e8b57']]));
+  else if (t < T.stop) withCamera(1.35, CHAIR_X, 900, () => shotSitUp(t), 540, 860);
+  else if (t < T.truck) withCamera(1, 540, 900, () => { phoneMap(t); timeTag('11:00 AM', t); });
+  else if (t < T.three) withCamera(1, 540, 1000, () => shotTruck(t));
+  else if (t < T.light0 || (t >= T.light1 && t < T.late)) withCamera(1, 540, 1000, () => shotAfternoon(t));
+  else if (t < T.light1) withCamera(1, 540, 900, () => shotLighthouse(t));
+  else if (t < T.wc) { withCamera(1 + 0.2 * seg(t, T.late, T.wc), CHAIR_X, 820, () => shotLate(t), 540, 820); timeTag('4:58 PM', t); }
   else if (t < T.note) withCamera(1, 540, 900, () => shotWC(t));
-  else if (t < T.drain) withCamera(1, 540, 1000, () => shotNote(t));
-  else if (t < T.phone2) withCamera(1.12 + 0.05 * Math.abs(Math.sin(t * 9)), 560, 800, () => shotDrain(t), 540 + shake[0], 760 + shake[1]);
-  else if (t < T.back) withCamera(1, 540, 900, () => shotPhone2(t));
-  else withCamera(1 + 0.06 * seg(t, T.back, DUR), 330, 1000, () => shotWindow(t, { snug: true, expr: t < 41 ? 'sad' : 'dead_inside' }));
+  else if (t < T.app3) withCamera(1 + 0.15 * seg(t, T.note, T.melt), 520, 900, () => shotNote(t), 540, 900);
+  else if (t < T.sit2) withCamera(1, 540, 900, () => phone(t, [['New delivery date:', 56], ['TOMORROW', 92, '#c0392b'], ['9 AM – 5 PM', 76]], 'Thank you for your patience!'));
+  else if (t < T.back) withCamera(1.3, CHAIR_X, 900, () => shotEvening(t), 540, 860);
+  else withCamera(1 + 0.05 * seg(t, T.back, DUR), 540, 1000, () => shotLoop(t));
   panel(ctx, PX, PY, PW, PH, 5, null, frameOf(t));
   const cap = caption(t); window.__texts = cap ? [cap] : [];
 }

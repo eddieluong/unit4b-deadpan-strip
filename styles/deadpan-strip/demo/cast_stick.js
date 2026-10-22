@@ -1,7 +1,7 @@
 // UNIT 4B — stick cast: simple hand-drawn stick figures, one colour item and one silhouette signature each.
 // Drop-in for cast.js / cast_v2.js: same drawCharacter(ctx, id, x, y, scale, pose, opt), EXPRESSIONS and pose parts.
 // Built on the v2 pen in hand mode (pressure ink lines that boil with opt.frame). opt.style 'clean' gives crisp lines.
-// Local units: x centred, y up from the feet, adults ~100 units tall. Heads are big (r 15) so faces read on a phone.
+// Local units: x centred, y up from the feet, adults ~100 units tall. pose.sit = true seats a human on a ~22-unit seat. Heads are big (r 15) so faces read on a phone.
 
 import { VPen, face, mix, roundPoly, nameTab, EXPRESSIONS, EXPRESSION_NAMES, ellipsePts, paper, panel, PAPER } from './cast_v2.js';
 export { nameTab, EXPRESSIONS, EXPRESSION_NAMES, paper, panel, PAPER };
@@ -45,6 +45,14 @@ function arms(pen, p, sh, k = 1) {
   }
 }
 function legs(pen, hip, gap = 7, k = 1) {
+  if (pen.sit) { // sitting: the body is lowered by pen.sit units; knees push forward and out, shins drop to the real floor
+    const f = pen.sit + 0.6;   // the body origin sits pen.sit units below the floor, so the floor is at local +pen.sit
+    for (const sx of [-1, 1]) {
+      pen.line([[0, hip], [sx * (gap + 4), hip - 3], [sx * (gap + 3), f]], pen.lw);
+      pen.line([[sx * (gap + 3), f], [sx * (gap + 3 + 4.5 * k), f - 0.2]], pen.lw);
+    }
+    return;
+  }
   for (const sx of [-1, 1]) {
     pen.line([[0, hip], [sx * gap * 0.5, hip * 0.5], [sx * gap, 0.6]], pen.lw);
     pen.line([[sx * gap, 0.6], [sx * (gap + 4.5 * k), 0.4]], pen.lw);
@@ -70,6 +78,7 @@ export function drawCharacter(ctx, id, x, y, scale, pose = {}, opt = {}) {
   const C = CAST[id], p = resolvePose(C, pose), hand = (opt.style ?? 'hand') === 'hand';
   const pen = new VPen(ctx, x, y, scale, { lw: opt.lw ?? Math.max(2.4, scale * 0.95), hand, frame: opt.frame ?? 0, seed: opt.seed ?? id.length * 13 });
   shadow(ctx, x, y, C.kind === 'cat' ? 18 : 12, scale);
+  if (p.sit && C.kind !== 'cat') { pen.sit = 15; pen.y += pen.sit * scale; }   // pose.sit: seated on something ~22 units high
   ({ steve: drawSteve, nana: drawNana, penny: drawPenny, ted: drawTed, cat: drawCat })[C.kind](pen, C, p, opt.frame ?? 0);
 }
 

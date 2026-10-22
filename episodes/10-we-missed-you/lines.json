@@ -1,11 +1,11 @@
 [
- {"id": "10_01_snuggles", "char": "snuggles", "expr": "deadpan", "text": "[low, gravelly] Nine a.m. The kid took a day off. For a package."},
- {"id": "10_02_steve", "char": "steve", "expr": "neutral", "text": "[casually, to himself] Nine to five. Easy."},
- {"id": "10_03_steve", "char": "steve", "expr": "happy", "text": "[quietly pleased] Oh nice. He's close."},
- {"id": "10_04_steve", "char": "steve", "expr": "deadpan", "text": "[flat] ...Garbage truck."},
- {"id": "10_05_snuggles", "char": "snuggles", "expr": "deadpan", "text": "[low, gravelly] No shower. No lunch. He refreshed the app forty-one times."},
- {"id": "10_06_steve", "char": "steve", "expr": "nervous", "text": "[muttering, reasoning with himself] He's not coming. [pause] Thirty seconds. I'll be thirty seconds."},
- {"id": "10_07_steve", "char": "steve", "expr": "dead_inside", "text": "[flat] ...Cool."},
- {"id": "10_08_steve", "char": "steve", "expr": "sad", "text": "[sighs] ...I'll take another day off."},
- {"id": "10_09_snuggles", "char": "snuggles", "expr": "smug", "text": "[low, gravelly] Same chair. Same door. Tomorrow."}
+ {"id": "10_01_snuggles", "char": "snuggles", "expr": "deadpan", "stability": 0.45, "style": 0.4, "text": "[low, gravelly] Nine a.m. The kid took a day off... for a package."},
+ {"id": "10_02_steve", "char": "steve", "expr": "neutral", "stability": 0.35, "style": 0.45, "speed": 1.0, "text": "[to himself, relaxed] Okay. Nine to five. Easy."},
+ {"id": "10_03_steve", "char": "steve", "expr": "happy", "stability": 0.35, "style": 0.5, "speed": 1.0, "text": "[pleasantly surprised] Oh, nice. He's close."},
+ {"id": "10_04_steve", "char": "steve", "expr": "deadpan", "stability": 0.35, "style": 0.45, "speed": 1.0, "text": "[exhales] ...it's the garbage truck."},
+ {"id": "10_05_snuggles", "char": "snuggles", "expr": "deadpan", "stability": 0.45, "style": 0.4, "text": "[dry] No shower. No lunch. He refreshed the app... forty-one times."},
+ {"id": "10_06_steve", "char": "steve", "expr": "nervous", "stability": 0.35, "style": 0.5, "speed": 1.0, "text": "[mumbling to himself] He's not coming. [sighs] Okay... thirty seconds. I'll be thirty seconds."},
+ {"id": "10_07_steve", "char": "steve", "expr": "dead_inside", "stability": 0.35, "style": 0.5, "speed": 0.95, "text": "[quietly, defeated] ...cool."},
+ {"id": "10_08_steve", "char": "steve", "expr": "sad", "stability": 0.35, "style": 0.5, "speed": 1.0, "text": "[sighs] ...I'll just take another day off."},
+ {"id": "10_09_snuggles", "char": "snuggles", "expr": "smug", "stability": 0.45, "style": 0.4, "text": "[low, gravelly] Same chair. Same door. Tomorrow."}
 ]
