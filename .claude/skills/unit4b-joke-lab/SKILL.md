@@ -88,6 +88,11 @@ Use `templates/episode.md`. Non-negotiables from `JOKES.md`:
   `mocking_mimic`, `fake_gasp`). The reaction face is half the joke: pick it deliberately.
 - Loop the ending when the last line can lead back into the first.
 
+### 5b. QA against `styles/deadpan-strip/QA.md`
+Check the script part of the checklist (hook in 1.5 s with a title line, one joke in 25–40 s, punch at 70–85 %,
+one short button, 5–8 lines that never describe the picture, real-person delivery). When a video is rendered,
+run the picture and sound checks on a contact sheet every 2 s before showing it.
+
 ### 6. Punch-up pass
 Read the script aloud in your head as each voice. Then:
 - Cut every word that isn't setup or payoff; punchlines end on the funny word.

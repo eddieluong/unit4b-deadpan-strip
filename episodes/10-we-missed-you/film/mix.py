@@ -54,7 +54,8 @@ def waiting(t0, t1):
         t += 2.4; i += 1
 
 stop = at('stop')[0]
-waiting(0.0, at('violin')[0])
+waiting(at('wait')[0], at('violin')[0])
+for t0 in at('cold'): S.add(mus, P.pluck('upright_bass_pizz', 'C2', 1.2, vel=0.6), t0 + 0.15, 0.4)   # cold open: one low pluck under the note
 v0 = at('violin')[0]                     # the lighthouse: one solemn string swell, then back to normal life
 for n, v in (('D3', 0.3), ('A3', 0.25), ('F4', 0.22), ('D5', 0.18)): S.add(mus, strings(n, 1.5, v, att=0.25), v0, 1.0)
 waiting(at('wait2')[0], stop)

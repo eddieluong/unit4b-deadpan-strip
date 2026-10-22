@@ -42,7 +42,8 @@
   "stability": 0.35,
   "style": 0.5,
   "speed": 1.0,
-  "text": "[mumbling to himself] He's not coming. [sighs] Okay... thirty seconds. I'll be thirty seconds."
+  "text": "[mumbling to himself] He's not coming. [sighs] Okay... thirty seconds. I'll be thirty seconds.",
+  "film_trim": "film uses 1.9 s → end (starts at the sigh before \"Okay\"); \"He's not coming.\" is cut"
  },
  {
   "id": "10_07_steve",
@@ -68,7 +69,7 @@
   "expr": "smug",
   "stability": 0.5,
   "style": 0.4,
-  "text": "[hushed, like a nature documentary] Same chair. Same door. Tomorrow, he will return. [pause] They always return.",
+  "text": "[hushed, like a nature documentary] Same chair. Same door. [pause] Tomorrow.",
   "speed": 0.95
  }
 ]

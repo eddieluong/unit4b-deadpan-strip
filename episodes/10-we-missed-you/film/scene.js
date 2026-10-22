@@ -1,4 +1,4 @@
-// UNIT 4B · 10 "We Missed You" (Tập 1) v4 — 9:16 film page (lemo-opuscar contract: READY, DUR, render(t), EV, TEXTS).
+// UNIT 4B · 10 "We Missed You" (Tập 1) v6 — 9:16 film page (lemo-opuscar contract: READY, DUR, render(t), EV, TEXTS).
 // Show, don't say — but keep the lines that add attitude, irony or inner logic the picture can't (Steve's muttering).
 import { drawCharacter, nameTab, paper, panel } from './lib/cast_stick.js';
 import { VPen, roundPoly, ellipsePts } from './lib/cast_v2.js';
@@ -11,25 +11,26 @@ const DOOR_X0 = 650, DOOR_X1 = 920, DOOR_TOP = 610;
 const CHAIR_X = 450;
 
 const LINES = [
-  ['10_01_snuggles', 'snuggles', 0.2, 'Nine a.m. The human has taken a day off... to wait for a package.'],
-  ['10_02_steve', 'steve', 5.3, 'Okay. Nine to five. Easy.'],
-  ['10_03_steve', 'steve', 9.5, "Oh, nice. He's close."],
-  ['10_04_steve', 'steve', 15.5, "...it's the garbage truck."],
-  ['10_06_steve', 'steve', 22.9, "He's not coming. Okay... thirty seconds. I'll be thirty seconds."],
-  ['10_07_steve', 'steve', 35.3, '...cool.'],
-  ['10_08_steve', 'steve', 38.1, "...I'll just take another day off."],
-  ['10_09_snuggles', 'snuggles', 40.8, 'Same chair. Same door. Tomorrow, he will return. They always return.'],
+  ['10_01_snuggles', 'snuggles', 2.0, 'Nine a.m. The human has taken a day off... to wait for a package.'],
+  ['10_02_steve', 'steve', 6.9, 'Okay. Nine to five. Easy.'],
+  ['10_03_steve', 'steve', 10.4, "Oh, nice. He's close."],
+  ['10_04_steve', 'steve', 15.3, "...it's the garbage truck."],
+  ['10_06_steve', 'steve', 21.0, "Okay... thirty seconds. I'll be thirty seconds."],
+  ['10_07_steve', 'steve', 30.4, '...cool.'],
+  ['10_08_steve', 'steve', 32.4, "...I'll just take another day off."],
+  ['10_09_snuggles', 'snuggles', 35.4, 'Same chair. Same door. Tomorrow.'],
 ].map(([id, char, t, text]) => ({ id, char, t, text }));
-const DUR = 48.3;
-const T = { app1: 5.1, nod: 6.5, app2: 8.1, sitUp: 9.3, map: 11.7, truck: 13.7, three: 17.9, light0: 21.3, late: 22.6, map2: 23.5, map2e: 24.5, look: 25.9, bubble: 26.5, run: 30.5, wc: 31.5, flush: 32.5, note: 33.3, melt: 34.5, app3: 36.7, dayoff: 37.9, back: 40.5 };
+const DUR = 40.0;
+const TITLE = ['POV: you took the day off', 'for a package'];   // on-screen hook, the whole video
+const T = { cold: 1.8, app1: 4.0, nod: 5.3, app2: 9.3, sitUp: 10.3, map: 12.6, truck: 13.8, three: 17.6, light0: 19.6, late: 20.8, map2: 21.6, map2e: 22.6, look: 23.0, bubble: 23.4, run: 26.4, wc: 27.0, flush: 27.8, note: 28.6, melt: 29.6, app3: 32.2, dayoff: 33.2, back: 35.2 };
 let VOICE = {};
 
 const EV = [
   ...LINES.map(L => ({ t: L.t, type: 'voice', id: L.id })),
-  { t: 0.0, type: 'wait' }, { t: T.app2, type: 'buzz' }, { t: T.sitUp + 0.2, type: 'ding' },
+  { t: 0.0, type: 'cold' }, { t: T.cold, type: 'wait' }, { t: T.app2, type: 'buzz' }, { t: T.sitUp + 0.2, type: 'ding' },
   { t: T.truck + 0.1, type: 'truck' }, { t: T.truck + 0.3, type: 'chair' }, { t: T.light0, type: 'violin' }, { t: T.late, type: 'wait2' },
   { t: T.bubble, type: 'pop' }, { t: T.run, type: 'steps' }, { t: T.wc + 0.1, type: 'door' }, { t: T.flush, type: 'flush' },
-  { t: T.note, type: 'stop' }, { t: T.app3, type: 'buzz' }, { t: T.dayoff + 2.3, type: 'whoosh' }, { t: T.back + 0.2, type: 'wait3' },
+  { t: T.note, type: 'stop' }, { t: T.app3, type: 'buzz' }, { t: T.dayoff + 0.7, type: 'whoosh' }, { t: T.back + 0.2, type: 'wait3' },
 ];
 
 // ---------- helpers ----------
@@ -94,7 +95,7 @@ function room(t, { grey = false, light = 'day', tally = 0 } = {}) {
 function tallyMarks(t, n) {   // how many times he refreshed the app, scratched on the wall like a prisoner
   const p = pen(0, 0, 1, t, 7); p.T = q => q;
   for (let i = 0; i < n; i++) {
-    const g = Math.floor(i / 5), r = i % 5, gx = 440 + (g % 4) * 52, gy = 330 + Math.floor(g / 4) * 70;
+    const g = Math.floor(i / 5), r = i % 5, gx = 440 + (g % 4) * 52, gy = 470 + Math.floor(g / 4) * 64;
     if (r < 4) p.line([[gx + r * 9, gy], [gx + r * 9 + 2, gy + 50]], 3.5);
     else p.line([[gx - 6, gy + 40], [gx + 40, gy + 10]], 3.5);
   }
@@ -152,7 +153,18 @@ function thoughtBubble(t, x, y) {   // "30 sec?" next to a toilet
 }
 
 // ---------- shots ----------
-function shotMorning(t) { room(t); timeTag('9:00 AM', t); steveInChair(t, { expr: 'neutral' }); }
+function shotCold(t) {   // cold open: the ending first — the note, and his face
+  room(t, { light: 'eve', tally: 41 });
+  noteOnDoor(t);
+  actor('steve', 470, t, { expr: 'dead_inside', look: 0.9 }, { frozen: true });
+}
+function dreamFrame() {   // soft cloud edge so the cutaway reads as "inside his head"
+  ctx.save(); ctx.beginPath(); ctx.rect(PX, PY, PW, PH); ctx.clip(); ctx.fillStyle = 'rgba(255,255,255,0.88)';
+  for (let x = PX; x <= PX + PW; x += 70) for (const y of [PY, PY + PH]) { ctx.beginPath(); ctx.arc(x, y, 62, 0, Math.PI * 2); ctx.fill(); }
+  for (let y = PY; y <= PY + PH; y += 70) for (const x of [PX, PX + PW]) { ctx.beginPath(); ctx.arc(x, y, 62, 0, Math.PI * 2); ctx.fill(); }
+  ctx.restore();
+}
+function shotMorning(t) { room(t); timeTag('9:00 AM', t); hand('earlier that day', 212, 320, 44, -0.03, '#6b625c'); steveInChair(t, { expr: 'neutral' }); }
 function shotNod(t) { room(t); steveInChair(t, { expr: 'smug', look: 0.6 }, { y: FLOOR + (Math.floor(t * 6) % 2 ? 0 : 8) }); }   // small confident nods
 function shotSitUp(t) { room(t); steveInChair(t, { expr: 'happy', fx: ['sparkle', 'blush'] }, { y: FLOOR - (t > T.sitUp + 0.2 ? 20 : 0) }); }
 function shotMap(t) { phoneMap(t); timeTag('11:00 AM', t); }
@@ -201,8 +213,8 @@ function shotLate(t) {   // 4:58: squirming, checks the phone, glances at the ba
   room(t, { light: 'eve', tally: 41 });
   const run = t >= T.run, k = step8(seg(t, T.run, T.run + 0.5));
   if (run) { chair(CHAIR_X, t); actor('steve', CHAIR_X - 420 * k, t, { expr: 'nervous', look: -0.9, arm: 'up', fx: ['sweat'] }); return; }
-  const nod = t > T.bubble + 2.5 && Math.floor(t * 6) % 2;
-  const pose = t < T.look ? { expr: 'nervous', look: 0.7, armR: 'hold', fx: ['sweat'] } : { expr: t < T.bubble + 2.5 ? 'skeptical' : 'grin', look: -0.9, fx: ['sweat'] };
+  const nod = t > T.bubble + 1.6 && Math.floor(t * 6) % 2;
+  const pose = t < T.look ? { expr: 'nervous', look: 0.7, armR: 'hold', fx: ['sweat'] } : { expr: t < T.bubble + 1.6 ? 'skeptical' : 'grin', look: -0.9, fx: ['sweat'] };
   steveInChair(t, pose, { x: CHAIR_X + jitter(t, t < T.look ? 6 : 0), y: FLOOR + (nod ? 8 : 0) });
   if (t >= T.bubble) thoughtBubble(t, 300, 520);
 }
@@ -214,7 +226,7 @@ function shotWC(t) {
   p.part(roundPoly([[-8, 80], [8, 80], [8, 92], [-8, 92]], 2), '#fffdf6', { shade: false, lw: 3 });
   hand('WC', 540, 1400 - 86 * 7, 64);
   timeTag('0:30', t);
-  if (t >= T.flush) hand('flush', 760, 1000, 64, 0.06, '#3f7f8c');
+  if (t >= T.flush) hand('flush', 880, 1000, 64, 0.06, '#3f7f8c');
 }
 function shotNote(t) {
   const melting = t >= T.melt && t < T.melt + 0.17;   // one-frame melt, then snaps back
@@ -226,13 +238,13 @@ function shotNote(t) {
   ctx.restore();
 }
 function shotDayOff(t) {   // he files another day off: the form, then the tick
-  const sent = t >= T.dayoff + 2.3;   // ticks SENT after he says it
+  const sent = t >= T.dayoff + 0.7;   // SENT stays on screen for 1.3 s
   phone(t, [['Request day off', 58], ['TOMORROW', 76, '#3d5a96'], [sent ? 'SENT ✓' : 'Reason: personal', sent ? 84 : 52, sent ? '#2e8b57' : '#6b625c']]);
 }
 function shotLoop(t) {
   room(t, { tally: 41 }); timeTag('9:00 AM', t);
   steveInChair(t, { expr: 'dead_inside' });
-  actor('snuggles', 300, t, { expr: 'smug', look: 0.5 }, { y: WIN.y1 + 26, scale: 4.2 });
+  actor('snuggles', 205, t, { expr: 'smug', look: 0.8 }, { y: WIN.y1 + 26, scale: 4.2 });
 }
 
 // ---------- captions ----------
@@ -266,24 +278,29 @@ function caption(t) {
 function render(t) {
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.filter = 'none';
   paper(ctx, W, H, 11);
-  ctx.font = '600 40px Fredoka'; ctx.fillStyle = INK; ctx.textAlign = 'center'; ctx.fillText('UNIT 4B', 540, 100); ctx.textAlign = 'start';
-  if (t < T.app1) withCamera(1 + 0.06 * seg(t, 0, T.app1), 540, 1000, () => shotMorning(t));
+  ctx.fillStyle = INK; ctx.textAlign = 'center';
+  ctx.font = '600 52px Fredoka'; ctx.fillText(TITLE[0], 540, 72); ctx.fillText(TITLE[1], 540, 132);
+  ctx.textAlign = 'start';
+  const wide = (fn, zoom = 1.3, fx = 600, fy = 1000, sx = 540, sy = 1000) => withCamera(zoom, fx, fy, fn, sx, sy);   // closer than v5: faces read on a phone
+  if (t < T.cold) withCamera(1.6, 640, 900, () => shotCold(t), 540, 860);
+  else if (t < T.app1) wide(() => shotMorning(t), 1.3 + 0.05 * seg(t, T.cold, T.app1));
   else if (t < T.nod) withCamera(1, 540, 900, () => phone(t, [['Your delivery', 64], ['TODAY', 100, '#2e8b57'], ['9 AM – 5 PM', 80]]));
-  else if (t < T.app2) withCamera(1.35, CHAIR_X, 900, () => shotNod(t), 540, 860);
+  else if (t < T.app2) withCamera(1.6, CHAIR_X, 900, () => shotNod(t), 540, 860);
   else if (t < T.sitUp) withCamera(1, 540, 900, () => phone(t, [['Your package is', 60], ['OUT FOR', 96, '#2e8b57'], ['DELIVERY', 96, '#2e8b57']]));
-  else if (t < T.map) withCamera(1.35, CHAIR_X, 900, () => shotSitUp(t), 540, 860);
+  else if (t < T.map) withCamera(1.6, CHAIR_X, 900, () => shotSitUp(t), 540, 860);
   else if (t < T.truck) withCamera(1, 540, 900, () => shotMap(t));
-  else if (t < T.three) withCamera(1, 540, 1000, () => shotTruck(t));
-  else if (t < T.light0) withCamera(1, 540, 1000, () => shotAfternoon(t));
-  else if (t < T.late) withCamera(1, 540, 900, () => shotLighthouse(t));
+  else if (t < T.three) wide(() => shotTruck(t), 1.3, 470);
+  else if (t < T.light0) wide(() => shotAfternoon(t), 1.35);
+  else if (t < T.late) { withCamera(1, 540, 900, () => shotLighthouse(t)); dreamFrame(); }
   else if (t >= T.map2 && t < T.map2e) withCamera(1, 540, 900, () => { phoneMap(t, 'refreshed 41 times today'); timeTag('4:58 PM', t); });
-  else if (t < T.wc) { withCamera(1.1, CHAIR_X - 60, 860, () => shotLate(t), 540, 860); timeTag('4:58 PM', t); }
+  else if (t < T.wc) { withCamera(1.25, CHAIR_X - 60, 860, () => shotLate(t), 540, 860); timeTag('4:58 PM', t); }
   else if (t < T.note) withCamera(1, 540, 900, () => shotWC(t));
-  else if (t < T.app3) withCamera(1 + 0.15 * seg(t, T.note, T.melt), 520, 900, () => shotNote(t), 540, 900);
-  else if (t < T.dayoff) withCamera(1, 540, 900, () => phone(t, [['New delivery date:', 56], ['TOMORROW', 76, '#c0392b'], ['9 AM – 5 PM', 76]], 'Thank you for your patience!'));
+  else if (t < T.app3) withCamera(1.3 + 0.15 * seg(t, T.note, T.melt), 540, 900, () => shotNote(t), 540, 900);
+  else if (t < T.dayoff) withCamera(1, 540, 900, () => phone(t, [['New delivery date:', 56], ['TOMORROW', 76, '#c0392b'], ['9 AM – 5 PM', 76]]));
   else if (t < T.back) withCamera(1, 540, 900, () => shotDayOff(t));
-  else withCamera(1 + 0.05 * seg(t, T.back, DUR), 540, 1000, () => shotLoop(t));
+  else wide(() => shotLoop(t), 1.2 + 0.05 * seg(t, T.back, DUR), 520);
   panel(ctx, PX, PY, PW, PH, 5, null, frameOf(t));
+  ctx.font = '600 30px Fredoka'; ctx.fillStyle = 'rgba(42,34,48,0.55)'; ctx.textAlign = 'right'; ctx.fillText('UNIT 4B', PX + PW - 24, PY + PH - 22); ctx.textAlign = 'start';
   const cap = caption(t); window.__texts = cap ? [cap] : [];
 }
 

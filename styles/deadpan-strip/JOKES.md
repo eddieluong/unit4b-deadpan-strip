@@ -128,6 +128,8 @@ Voice file: `voice-samples/ep07_dad_joke.lines.json` (ElevenLabs modes in bracke
 
 ## 7. Writing checklist
 
+Before delivering any video, also run the full review in `QA.md` (lessons from Tập 1 and the hook / length / framing / sound checks).
+
 - Can a 13-year-old in Brazil reading the captions get it? If not, simplify.
 - Is the first frame strange enough to stop a thumb?
 - Is there exactly one moment of silence, right before or after the punchline?
