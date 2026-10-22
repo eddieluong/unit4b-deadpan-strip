@@ -1,5 +1,5 @@
 // UNIT 4B · 10 "We Missed You" (Tập 1) v4 — 9:16 film page (lemo-opuscar contract: READY, DUR, render(t), EV, TEXTS).
-// Show, don't say: three lines only. Everything else is told by phone screens, props and Steve's face.
+// Show, don't say — but keep the lines that add attitude, irony or inner logic the picture can't (Steve's muttering).
 import { drawCharacter, nameTab, paper, panel } from './lib/cast_stick.js';
 import { VPen, roundPoly, ellipsePts } from './lib/cast_v2.js';
 
@@ -12,11 +12,16 @@ const CHAIR_X = 450;
 
 const LINES = [
   ['10_01_snuggles', 'snuggles', 0.2, 'Nine a.m. The kid took a day off... for a package.'],
-  ['10_07_steve', 'steve', 29.2, '...cool.'],
-  ['10_09_snuggles', 'snuggles', 34.3, 'Same chair. Same door. Tomorrow.'],
+  ['10_02_steve', 'steve', 4.8, 'Okay. Nine to five. Easy.'],
+  ['10_03_steve', 'steve', 9.0, "Oh, nice. He's close."],
+  ['10_04_steve', 'steve', 15.0, "...it's the garbage truck."],
+  ['10_06_steve', 'steve', 22.4, "He's not coming. Okay... thirty seconds. I'll be thirty seconds."],
+  ['10_07_steve', 'steve', 34.8, '...cool.'],
+  ['10_08_steve', 'steve', 37.6, "...I'll just take another day off."],
+  ['10_09_snuggles', 'snuggles', 40.3, 'Same chair. Same door. Tomorrow.'],
 ].map(([id, char, t, text]) => ({ id, char, t, text }));
-const DUR = 38.3;
-const T = { app1: 4.6, nod: 6.2, app2: 7.4, sitUp: 8.6, map: 10.4, truck: 12.6, three: 16.2, light0: 19.6, late: 20.9, map2: 21.8, map2e: 22.8, look: 23.0, bubble: 23.2, run: 24.8, wc: 25.4, flush: 26.4, note: 27.2, melt: 28.4, app3: 30.6, dayoff: 31.8, back: 34.0 };
+const DUR = 44.3;
+const T = { app1: 4.6, nod: 6.0, app2: 7.6, sitUp: 8.8, map: 11.2, truck: 13.2, three: 17.4, light0: 20.8, late: 22.1, map2: 23.0, map2e: 24.0, look: 25.4, bubble: 26.0, run: 30.0, wc: 31.0, flush: 32.0, note: 32.8, melt: 34.0, app3: 36.2, dayoff: 37.4, back: 40.0 };
 let VOICE = {};
 
 const EV = [
@@ -24,7 +29,7 @@ const EV = [
   { t: 0.0, type: 'wait' }, { t: T.app2, type: 'buzz' }, { t: T.sitUp + 0.2, type: 'ding' },
   { t: T.truck + 0.1, type: 'truck' }, { t: T.truck + 0.3, type: 'chair' }, { t: T.light0, type: 'violin' }, { t: T.late, type: 'wait2' },
   { t: T.bubble, type: 'pop' }, { t: T.run, type: 'steps' }, { t: T.wc + 0.1, type: 'door' }, { t: T.flush, type: 'flush' },
-  { t: T.note, type: 'stop' }, { t: T.app3, type: 'buzz' }, { t: T.dayoff + 0.6, type: 'whoosh' }, { t: T.back + 0.2, type: 'wait3' },
+  { t: T.note, type: 'stop' }, { t: T.app3, type: 'buzz' }, { t: T.dayoff + 2.3, type: 'whoosh' }, { t: T.back + 0.2, type: 'wait3' },
 ];
 
 // ---------- helpers ----------
@@ -163,10 +168,10 @@ function garbageTruck(t, k) {
 function shotTruck(t) {   // the one small peak: jumps up, checks the window, his face drops, sits back down
   room(t, { tally: TALLY(t) }); timeTag('1:00 PM', t);
   chair(CHAIR_X, t);
-  const up = t > T.truck + 0.3 && t < 15.6;
-  garbageTruck(t, seg(t, T.truck + 0.5, 15.5));
-  if (up) actor('steve', 470, t, t < 14.0 ? { expr: 'grin', look: -0.9, arm: 'up' } : { expr: 'dead_inside', look: -0.6 });
-  else actor('steve', CHAIR_X, t, { sit: true, expr: t < 13 ? 'neutral' : 'deadpan', look: 0.7 });
+  const up = t > T.truck + 0.3 && t < 16.4;
+  garbageTruck(t, seg(t, T.truck + 0.5, 16.2));
+  if (up) actor('steve', 470, t, t < 14.6 ? { expr: 'grin', look: -0.9, arm: 'up' } : { expr: 'dead_inside', look: -0.6 });
+  else actor('steve', CHAIR_X, t, { sit: true, expr: t < 13.4 ? 'neutral' : 'deadpan', look: 0.7 });
 }
 function stinkLines(x, y, t) {
   const p = pen(0, FLOOR, 1, t, 41);
@@ -196,8 +201,8 @@ function shotLate(t) {   // 4:58: squirming, checks the phone, glances at the ba
   room(t, { light: 'eve', tally: 41 });
   const run = t >= T.run, k = step8(seg(t, T.run, T.run + 0.5));
   if (run) { chair(CHAIR_X, t); actor('steve', CHAIR_X - 420 * k, t, { expr: 'nervous', look: -0.9, arm: 'up', fx: ['sweat'] }); return; }
-  const nod = t > T.bubble + 1.1 && Math.floor(t * 6) % 2;
-  const pose = t < T.look ? { expr: 'nervous', look: 0.7, armR: 'hold', fx: ['sweat'] } : { expr: t < T.bubble + 1.1 ? 'skeptical' : 'grin', look: -0.9, fx: ['sweat'] };
+  const nod = t > T.bubble + 2.5 && Math.floor(t * 6) % 2;
+  const pose = t < T.look ? { expr: 'nervous', look: 0.7, armR: 'hold', fx: ['sweat'] } : { expr: t < T.bubble + 2.5 ? 'skeptical' : 'grin', look: -0.9, fx: ['sweat'] };
   steveInChair(t, pose, { x: CHAIR_X + jitter(t, t < T.look ? 6 : 0), y: FLOOR + (nod ? 8 : 0) });
   if (t >= T.bubble) thoughtBubble(t, 300, 520);
 }
@@ -221,7 +226,7 @@ function shotNote(t) {
   ctx.restore();
 }
 function shotDayOff(t) {   // he files another day off: the form, then the tick
-  const sent = t >= T.dayoff + 0.6;
+  const sent = t >= T.dayoff + 2.3;   // ticks SENT after he says it
   phone(t, [['Request day off', 58], ['TOMORROW', 76, '#3d5a96'], [sent ? 'SENT ✓' : 'Reason: personal', sent ? 84 : 52, sent ? '#2e8b57' : '#6b625c']]);
 }
 function shotLoop(t) {
