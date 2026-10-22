@@ -371,10 +371,10 @@
    "design_preview": 3
   },
   "snuggles": {
-   "voice_id": "l4SjkRNDNFXHMWSAVCoK",
+   "voice_id": "nPczCjzI2devNBz1zQrb",
    "design_prompt": "Comedic cartoon voice of a gruff, gravelly American tough-guy detective in a 1940s film noir parody. Overdramatic, deep and raspy narration with long tense pauses and sudden bursts of outrage, deadpan and self-important. Animated comedy style, wildly expressive.",
    "library_search": "noir narrator, deep american male, gravelly, detective",
-   "fx": "lowpass=f=6500,aecho=0.8:0.5:35:0.15",
+   "fx": "acompressor=threshold=-20dB:ratio=2.5:attack=5:release=80",
    "modes": {
     "noir": {
      "use": "default; narration, the loop line",
@@ -458,7 +458,10 @@
     "fake_gasp": "The tuna's gone? Who could have done this? Certainly not me."
    },
    "design_sample": "Apartment 4B. Three a.m. The city was asleep. Then I heard it. The can opener. Somebody was opening tuna, and it wasn't for me. They call me Snuggles. I let them. For now.",
-   "design_preview": 1
+   "design_preview": 1,
+   "voice_id_noir_2026_10": "l4SjkRNDNFXHMWSAVCoK",
+   "_voice_note": "2026-10-23: narrator switched to \"Brian\" (ElevenLabs premade, American, deep, resonant), chosen by the user from Bill/Brian/Eric/Roger nature-documentary samples; previous generated noir voice kept in voice_id_noir_2026_10.",
+   "fx_noir_2026_10": "lowpass=f=6500,aecho=0.8:0.5:35:0.15"
   }
  },
  "expressions": {

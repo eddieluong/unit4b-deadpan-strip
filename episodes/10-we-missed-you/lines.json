@@ -3,9 +3,10 @@
   "id": "10_01_snuggles",
   "char": "snuggles",
   "expr": "deadpan",
-  "stability": 0.45,
+  "stability": 0.5,
   "style": 0.4,
-  "text": "[low, gravelly] Nine a.m. The kid took a day off... for a package."
+  "text": "[hushed, like a nature documentary] Nine a.m. The human has taken a day off... to wait for a package.",
+  "speed": 0.95
  },
  {
   "id": "10_02_steve",
@@ -65,8 +66,9 @@
   "id": "10_09_snuggles",
   "char": "snuggles",
   "expr": "smug",
-  "stability": 0.45,
+  "stability": 0.5,
   "style": 0.4,
-  "text": "[low, gravelly] Same chair. Same door. Tomorrow."
+  "text": "[hushed, like a nature documentary] Same chair. Same door. Tomorrow, he will return. [pause] They always return.",
+  "speed": 0.95
  }
 ]

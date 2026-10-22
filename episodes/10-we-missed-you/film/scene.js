@@ -11,17 +11,17 @@ const DOOR_X0 = 650, DOOR_X1 = 920, DOOR_TOP = 610;
 const CHAIR_X = 450;
 
 const LINES = [
-  ['10_01_snuggles', 'snuggles', 0.2, 'Nine a.m. The kid took a day off... for a package.'],
-  ['10_02_steve', 'steve', 4.8, 'Okay. Nine to five. Easy.'],
-  ['10_03_steve', 'steve', 9.0, "Oh, nice. He's close."],
-  ['10_04_steve', 'steve', 15.0, "...it's the garbage truck."],
-  ['10_06_steve', 'steve', 22.4, "He's not coming. Okay... thirty seconds. I'll be thirty seconds."],
-  ['10_07_steve', 'steve', 34.8, '...cool.'],
-  ['10_08_steve', 'steve', 37.6, "...I'll just take another day off."],
-  ['10_09_snuggles', 'snuggles', 40.3, 'Same chair. Same door. Tomorrow.'],
+  ['10_01_snuggles', 'snuggles', 0.2, 'Nine a.m. The human has taken a day off... to wait for a package.'],
+  ['10_02_steve', 'steve', 5.3, 'Okay. Nine to five. Easy.'],
+  ['10_03_steve', 'steve', 9.5, "Oh, nice. He's close."],
+  ['10_04_steve', 'steve', 15.5, "...it's the garbage truck."],
+  ['10_06_steve', 'steve', 22.9, "He's not coming. Okay... thirty seconds. I'll be thirty seconds."],
+  ['10_07_steve', 'steve', 35.3, '...cool.'],
+  ['10_08_steve', 'steve', 38.1, "...I'll just take another day off."],
+  ['10_09_snuggles', 'snuggles', 40.8, 'Same chair. Same door. Tomorrow, he will return. They always return.'],
 ].map(([id, char, t, text]) => ({ id, char, t, text }));
-const DUR = 44.3;
-const T = { app1: 4.6, nod: 6.0, app2: 7.6, sitUp: 8.8, map: 11.2, truck: 13.2, three: 17.4, light0: 20.8, late: 22.1, map2: 23.0, map2e: 24.0, look: 25.4, bubble: 26.0, run: 30.0, wc: 31.0, flush: 32.0, note: 32.8, melt: 34.0, app3: 36.2, dayoff: 37.4, back: 40.0 };
+const DUR = 48.3;
+const T = { app1: 5.1, nod: 6.5, app2: 8.1, sitUp: 9.3, map: 11.7, truck: 13.7, three: 17.9, light0: 21.3, late: 22.6, map2: 23.5, map2e: 24.5, look: 25.9, bubble: 26.5, run: 30.5, wc: 31.5, flush: 32.5, note: 33.3, melt: 34.5, app3: 36.7, dayoff: 37.9, back: 40.5 };
 let VOICE = {};
 
 const EV = [
@@ -168,10 +168,10 @@ function garbageTruck(t, k) {
 function shotTruck(t) {   // the one small peak: jumps up, checks the window, his face drops, sits back down
   room(t, { tally: TALLY(t) }); timeTag('1:00 PM', t);
   chair(CHAIR_X, t);
-  const up = t > T.truck + 0.3 && t < 16.4;
-  garbageTruck(t, seg(t, T.truck + 0.5, 16.2));
-  if (up) actor('steve', 470, t, t < 14.6 ? { expr: 'grin', look: -0.9, arm: 'up' } : { expr: 'dead_inside', look: -0.6 });
-  else actor('steve', CHAIR_X, t, { sit: true, expr: t < 13.4 ? 'neutral' : 'deadpan', look: 0.7 });
+  const up = t > T.truck + 0.3 && t < T.truck + 3.2;
+  garbageTruck(t, seg(t, T.truck + 0.5, T.truck + 3.0));
+  if (up) actor('steve', 470, t, t < T.truck + 1.4 ? { expr: 'grin', look: -0.9, arm: 'up' } : { expr: 'dead_inside', look: -0.6 });
+  else actor('steve', CHAIR_X, t, { sit: true, expr: t < T.truck + 0.2 ? 'neutral' : 'deadpan', look: 0.7 });
 }
 function stinkLines(x, y, t) {
   const p = pen(0, FLOOR, 1, t, 41);
