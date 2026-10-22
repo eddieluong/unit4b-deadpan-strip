@@ -1,0 +1,12 @@
+[
+ {"id": "09_01_nana", "char": "nana", "expr": "happy", "text": "Welcome to the building, dear! Banana bread."},
+ {"id": "09_02_steve", "char": "steve", "expr": "confused", "text": "And... a shovel?"},
+ {"id": "09_03_nana", "char": "nana", "expr": "fake_sweet", "text": "Every new tenant needs one."},
+ {"id": "09_04_steve", "char": "steve", "expr": "happy", "text": "Oh! A gift!"},
+ {"id": "09_05_steve", "char": "steve", "expr": "confused", "text": "This is a bill."},
+ {"id": "09_06_penny", "char": "penny", "expr": "deadpan", "text": "For the gift."},
+ {"id": "09_07_ted", "char": "ted", "expr": "proud", "text": "Welcome card. From all the old tenants."},
+ {"id": "09_08_steve", "char": "steve", "expr": "happy", "text": "Aw. Where are they now?"},
+ {"id": "09_09_ted", "char": "ted", "expr": "deadpan", "text": "Here."},
+ {"id": "09_10_snuggles", "char": "snuggles", "expr": "sarcastic", "text": "In this building, everybody brings what they're good at."}
+]
