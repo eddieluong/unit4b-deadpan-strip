@@ -68,6 +68,8 @@ Pick the **engine** that makes the topic funniest:
 - **Ted** normalized absurdity of being dead; passive-aggressive flatmate; proud dad jokes.
 - **Snuggles** noir narration of petty cat crimes; fourth-wall aside; loop narrator.
 Use 2–3 characters per short. One teller, one or two reactors.
+Default treatment: **emotionalize** the everyday problem (see `JOKES.md` §1): the character lives a tiny annoyance
+as an epic drama, music and camera play it straight, and the punch snaps back to how small it really was.
 
 ### 4. Generate, then cut
 For the 3 strongest topics, write **3 premises each** using different formats from `JOKES.md`

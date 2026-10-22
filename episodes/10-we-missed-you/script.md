@@ -1,52 +1,51 @@
-# 10 · We Missed You  (channel pilot: replaces 09 as the first upload)
+# 10 · We Missed You  (channel pilot: first upload)
 
 | | |
 |---|---|
-| Format | real-life complaint → reveal → visual flashback → button |
-| Cast | Steve (complains) → Ted (reveals) → courier (extra, no lines) → Snuggles (button) |
-| Length | ~28 s, 9:16 |
-| Topic | You stayed home all day for a delivery and still got a "Sorry we missed you" note. Evergreen; one of the most shared delivery complaints. Checked 2026-10-22. |
-| Score | 36/40 (weakest: surprise 4) |
-| Loop | no |
+| Format | **emotionalized everyday problem**: a delivery wait played as a war-time love story, snap back to reality, loop |
+| Cast | Steve (lives the drama) · Snuggles (noir voice-over, only the viewer hears him) |
+| Length | ~30 s, 9:16 |
+| Topic | You wait home all day for a delivery, step away for 30 seconds, and get a "Sorry we missed you" note. Evergreen; one of the most shared delivery complaints. Checked 2026-10-22. |
+| Score | 37/40 (weakest: surprise 4) |
+| Loop | yes: the last line leads back into the first shot at the window |
 | Style | stick cast, `demo/cast_stick.js` |
 
-**First-time viewer test:** nothing needs backstory. The problem is everyday. Ted is visibly a ghost (pale, no legs,
-floating), and Steve says it out loud. The cat sleeping in the delivery box is universal.
+**First-time viewer test:** no backstory needed. Everyone has waited for a package and everyone knows the courier
+comes the moment you go to the bathroom. A talking cat narrator explains himself.
+
+**Emotion curve:** longing → joy → endurance → desperation → tragedy → resignation (loop).
 
 **Title options** (≤ 50 characters)
-1. "Sorry we missed you." I was HOME.
-2. When the delivery guy says nobody was home
-3. I waited all day for my package
+1. Waiting for a package like it's a love story
+2. The courier always comes when you go to the bathroom
+3. "Sorry we missed you." I left for 30 seconds.
 
-**The joke in one sentence:** Steve waited at the door all day and still got a "Sorry we missed you" note. The
-courier did knock, but the ghost flatmate answered the door, so the courier ran. The package ends up with the cat.
+**The joke in one sentence:** Steve waits for a delivery all day like a soldier's lover at the window, gives in to
+the bathroom for thirty seconds at 4:58 PM, and comes back to "Sorry we missed you"; the new slot is tomorrow,
+nine to five, so he goes back to the window.
 
 ## Shots
 
-| Time | Shot | Who | Line | expr (face + voice) |
-|---|---|---|---|---|
-| 0:00 | **Hook.** Close insert: a note taped to the door, "SORRY WE MISSED YOU!". Pull back: Steve holding it, shaking. | Steve | "I was home. All. Day." | Steve `angry` |
-| 0:03 | Panel tag "EARLIER". Steve sitting on a chair facing the door, staring. A clock on the wall jumps 9:00 → 5:00. | Steve | "I didn't shower. I didn't blink. I waited by the door." | Steve `dead_inside` |
-| 0:09 | Back to now. | Steve | "And he didn't even knock!" | Steve `furious` |
-| 0:11 | Ted floats in through the wall with his mug. | Ted | "He knocked." | Ted `deadpan` |
-| 0:13 | | Steve | "What?" | Steve `confused` |
-| 0:14 | | Ted | "I answered." | Ted `proud` |
-| 0:15 | [beat 1 s] Steve looks at Ted: no legs, floating. | — | — | Steve `deadpan` |
-| 0:16 | **Visual punch.** Panel tag "EARLIER". Hallway side: a courier with a box knocks. Ted's head pushes out through the closed door. | Ted | "Hello!" | Ted `happy` |
-| 0:18 | The courier drops the box and runs on a 2-frame smear. Sound word "AAAH!" in the panel. The note flutters onto the door. | — | — | courier `horrified` |
-| 0:20 | Back to now. | Steve | "Ted. You're a ghost." | Steve `dead_inside` |
-| 0:22 | | Ted | "I was being friendly." | Ted `sad` |
-| 0:24 | | Steve | "So where's my package?" | Steve `sad` |
-| 0:26 | **Button.** Hallway insert: the box, open. Snuggles is asleep inside it, fedora over his eyes. One eye opens. | Snuggles | "Delivered." | Snuggles `smug` |
-| 0:28 | Out. | | | |
+| Time | Shot | Who | Line | expr (face + voice) | Music / look |
+|---|---|---|---|---|---|
+| 0:00 | **Hook.** Steve at the window in soft morning light, hand on the glass. Tag "9:00 AM". | Snuggles (V.O.) | "Nine a.m. The kid is waiting for a man he's never met." | Snuggles `deadpan` | sad solo violin |
+| 0:04 | Close on Steve, eyes shining. | Steve | "He said he's coming today." | Steve `sad` | violin |
+| 0:07 | Insert: phone, "OUT FOR DELIVERY 🚚". Steve presses the phone to his chest, happy tears. | Steve | "He's on his way!" | Steve `crying` (happy) | violin swells |
+| 0:10 | Montage, no lines: "11:00" Steve practises opening the door. "1:00" a truck sound, he sprints to the door, it drives past. "3:00" he sleeps against the door. | Snuggles (V.O.) | "Seven hours. No food. No shower. No blinking." | Steve `nervous` → `sad` → `sleepy` | slow push-ins |
+| 0:17 | "4:58 PM". Steve, legs crossed, sweating, staring at the door. | Steve | "I can't hold it anymore." | Steve `horrified` | violin trembles |
+| 0:20 | He runs off. The bathroom door slams. Tag "0:30". Flush. | — | — | — | music holds one note |
+| 0:22 | **Punch.** Steve comes back: a note on the door, "SORRY WE MISSED YOU!". Music stops dead. [beat 1.2 s] | — | — | Steve `shocked` | silence, room tone only |
+| 0:24 | Greyscale drain. Steve on his knees, arms up, camera above him. | Steve | "WHYYY?!" | Steve `crying` | one huge orchestral hit, then silence |
+| 0:26 | Phone buzzes, insert: "New delivery: TOMORROW, 9 AM – 5 PM". Colour snaps back. | — | — | — | — |
+| 0:27 | **Button / loop.** Steve walks back to the window and puts his hand on the glass. | Snuggles (V.O.) | "Same window. Same time. Tomorrow." | Snuggles `smug` | the violin starts again → loops to 0:00 |
+| 0:30 | Out. | | | | |
 
-Punchline ("I answered" + the flashback) at 0:14–0:19, button at 0:26 (≈ 93 %).
+Punch at 0:22 (≈ 73 %), the scream is the tag, the loop is the button.
 
-**Alternate button:** Snuggles: "Signed for it." (score 34)
+**Alternate button:** Snuggles: "He'll wait. They always wait." (score 34)
 
 **Notes for the animator**
-- New extra: a courier (generic stick figure, cap and brown uniform, no voice). The scream is a drawn sound word
-  plus a short SFX, not a voice.
-- The note text must be readable: "SORRY WE MISSED YOU!" in big handwriting.
-- Keep Ted's lack of legs and his float obvious in the beat at 0:15. That's the setup for "You're a ghost."
-- Snuggles in the box is the only thing in the final shot. Hold it 1.5 s after "Delivered."
+- Play it 100 % straight: the drama is never winked at. Steve's acting is big, the camera is slow and solemn.
+- Snuggles is only a voice until the very last shot, where he sits on the windowsill next to Steve.
+- The note text must be big and readable. The phone screens must be readable in one second.
+- The greyscale drain at 0:24 is the only time colour leaves the frame.

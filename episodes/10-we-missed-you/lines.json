@@ -1,13 +1,9 @@
 [
- {"id": "10_01_steve", "char": "steve", "expr": "angry", "text": "I was home. All. Day."},
- {"id": "10_02_steve", "char": "steve", "expr": "dead_inside", "text": "I didn't shower. I didn't blink. I waited by the door."},
- {"id": "10_03_steve", "char": "steve", "expr": "furious", "text": "And he didn't even knock!"},
- {"id": "10_04_ted", "char": "ted", "expr": "deadpan", "text": "He knocked."},
- {"id": "10_05_steve", "char": "steve", "expr": "confused", "text": "What?"},
- {"id": "10_06_ted", "char": "ted", "expr": "proud", "text": "I answered."},
- {"id": "10_07_ted", "char": "ted", "expr": "happy", "text": "Hello!"},
- {"id": "10_08_steve", "char": "steve", "expr": "dead_inside", "text": "Ted. You're a ghost."},
- {"id": "10_09_ted", "char": "ted", "expr": "sad", "text": "I was being friendly."},
- {"id": "10_10_steve", "char": "steve", "expr": "sad", "text": "So where's my package?"},
- {"id": "10_11_snuggles", "char": "snuggles", "expr": "smug", "text": "Delivered."}
+ {"id": "10_01_snuggles", "char": "snuggles", "expr": "deadpan", "text": "Nine a.m. The kid is waiting for a man he's never met."},
+ {"id": "10_02_steve", "char": "steve", "expr": "sad", "text": "He said he's coming today."},
+ {"id": "10_03_steve", "char": "steve", "expr": "crying", "text": "He's on his way!"},
+ {"id": "10_04_snuggles", "char": "snuggles", "expr": "deadpan", "text": "Seven hours. No food. No shower. No blinking."},
+ {"id": "10_05_steve", "char": "steve", "expr": "horrified", "text": "I can't hold it anymore."},
+ {"id": "10_06_steve", "char": "steve", "expr": "crying", "text": "Why?!"},
+ {"id": "10_07_snuggles", "char": "snuggles", "expr": "smug", "text": "Same window. Same time. Tomorrow."}
 ]
