@@ -52,6 +52,9 @@ If YouTube is unreachable from the shell and no vidIQ credits are available, say
 with web research only.
 
 ### 2. Filter (hard gates, drop anything that fails one)
+- Starts from a real-life problem most adults have had, and lands for a first-time viewer who knows nothing about
+  the cast. If the punchline needs lore (Nana's past, why Ted is dead, Penny's inheritance), drop it or show on
+  screen everything the joke needs.
 - Survives subtitles for a non-native speaker (no puns that need a native ear, no local slang).
 - No real people, brands, politics, religion, race, disability, real tragedies, or news about victims.
 - Dark but not cruel: death/ghosts/money/crime are fine when absurd; violence implied only; Penny is never in danger.
