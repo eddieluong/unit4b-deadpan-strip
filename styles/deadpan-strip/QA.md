@@ -21,6 +21,10 @@ not to the other end, and say which notch you chose.
 
 ## 2. QA checklist (run on every short)
 
+The measurable items are automated: `python tools/qa_video.py <video.mp4> --punch <seconds>` checks duration,
+punchline position, static stretches (with the line boil blurred out), the level of the first 1.8 s and loudness,
+and exits non-zero on a failure. Run it, then do the rest by eye on a contact sheet every 2 s.
+
 ### Before writing
 - [ ] The problem is something most adults have lived. Write it in one line without any character names.
 - [ ] The joke works for a first-time viewer who knows nothing about the cast.
@@ -57,6 +61,9 @@ not to the other end, and say which notch you chose.
 - [ ] Commit, push, update the episode page on Notion (see memory: sync rule).
 
 ## 3. Tooling notes learned on the way
+- Measuring "static" on raw frames is wrong for this style: the hand-drawn boil changes every frame. Blur (5×5 blocks) and compare frames 1 s apart (`tools/qa_video.py` does this).
+- A slide transition must paint the panel background first, or the paper shows through behind the moving screen.
+- Props drawn in front of a window (the cat) can hide the joke behind the window (the GARBAGE sign): check what the key shot must show and clear it.
 - `mux.sh` loudnorm raises gain; a mix with long silences has a high crest factor and will clip after normalization. Pre-master in `mix.py`.
 - `sfx.brown(d)` can return one sample more than the buffer; slice to `len(buf)`.
 - Seated stick figures: `pose.sit` lowers the body; the floor is at local `+pen.sit`.

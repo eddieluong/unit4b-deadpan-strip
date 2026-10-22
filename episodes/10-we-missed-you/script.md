@@ -1,10 +1,10 @@
-# 10 · We Missed You  (channel: Tập 1, first upload) — v6
+# 10 · We Missed You  (channel: Tập 1, first upload) — v7
 
 | | |
 |---|---|
 | Format | everyday problem, real reactions, drama in the visuals and the narration; flat punchline; loop |
 | Cast | Steve (a normal tired adult) · Snuggles (noir voice-over, only the viewer hears him) |
-| Length | 40 s, 9:16 |
+| Length | 39.8 s, 9:16 |
 | Topic | You take the day off for a delivery, step away for thirty seconds, and get "Sorry we missed you". Evergreen. |
 | Score | 36/40 (weakest: surprise 4) |
 | Loop | yes |
@@ -25,9 +25,9 @@ On-screen title for the whole video: "POV: you took the day off / for a package"
 | Time | Picture | Face | Line |
 |---|---|---|---|
 | 0:00 | **Cold open:** close on Steve beside the door, "SORRY WE MISSED YOU!", tally marks behind him. | dead_inside | — (one low pluck) |
-| 0:02 | "9:00 AM · earlier that day". Steve in the chair facing the door. | neutral | Narrator: "Nine a.m. The human has taken a day off... to wait for a package." |
-| 0:04 | Phone: "Your delivery TODAY, 9 AM – 5 PM". | — | — |
-| 0:05 | Close: small confident nods. | smug | Steve: "Okay. Nine to five. Easy." |
+| 0:02 | "9:00 AM · earlier that day". Steve in the chair facing the door; the cat watches from the sill (all room shots except the truck). | neutral | Narrator: "Nine a.m. The human has taken a day off... to wait for a package." |
+| 0:04 | Close: phone in his hand, blown up beside him: "Your delivery TODAY, 9 AM – 5 PM". | neutral | (narration continues) |
+| 0:06 | Phone on the knee, knuckle crack (sfx), leans back, hands behind his head, nodding. | smug | Steve: "Okay. Nine to five. Easy." |
 | 0:09 | Phone: "OUT FOR DELIVERY" (buzz). | — | — |
 | 0:10 | Close: he sits up, sparkle. | happy | Steve: "Oh, nice. He's close." |
 | 0:12 | Phone map: "Stop 14 of 87", "11:00 AM". | — | — |
@@ -37,7 +37,7 @@ On-screen title for the whole video: "POV: you took the day off / for a package"
 | 0:21 | "4:58 PM": squirming; phone "refreshed 41 times today"; glance to the bathroom; bubble "30 sec?"; nods; runs. | nervous → skeptical → grin | Steve: "Okay... thirty seconds. I'll be thirty seconds." |
 | 0:27 | WC door, "0:30", flush. | — | — |
 | 0:28 | **Punch:** the note; music stops; beat; one-frame melt; greyscale. | shocked → dead_inside | Steve: "...cool." |
-| 0:32 | Phone: "New delivery date: TOMORROW", then "Request day off — TOMORROW — SENT ✓". | — | Steve: "...I'll just take another day off." |
-| 0:35 | Back in the chair, "9:00 AM", the cat on the sill. | dead_inside | Narrator: "Same chair. Same door. Tomorrow." |
+| 0:32 | Phone buzzes: "New delivery date: TOMORROW"; the day-off request slides in, "SENT ✓" pops. | — | Steve: "...I'll just take another day off." |
+| 0:35 | Back in the chair, "9:00 AM": he sighs, the cat yawns, the camera pushes in. | dead_inside | Narrator: "Same chair. Same door. Tomorrow." |
 
 Punch at 0:30.4 / 40 s = 76 %. Button 3.9 s.

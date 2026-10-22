@@ -74,6 +74,11 @@ for t in at('truck'): S.add(fol, S.rumble(3.0, 0.8), t, 0.5, -0.5); S.add(fol, S
 for t in at('chair'):
     d = 0.35; S.add(fol, S.bp(S.noise(d), 200, 1200) * S.env_exp(d, 0.1), t, 0.35)
     for j in range(4): S.add(fol, S.step(0.7), t + 0.25 + j * 0.13, 0.45, -0.3)
+for t in at('tick'):    # cold open: a wall clock, so the first second is not silent
+    for j in range(4): S.add(fol, S.click(1.8, 0.8), t + 0.12 + j * 0.5, 0.6, 0.3)
+for t in at('paper'): S.add(fol, S.lp(S.hp(S.noise(0.35), 1500), 6000) * S.env_exp(0.35, 0.09), t, 0.5, 0.3)
+for t in at('crack'):
+    for j in range(3): S.add(fol, S.click(0.7, 0.8), t + j * 0.09, 0.35)
 for t in at('ding'): S.add(fol, S.ding(0.6), t, 0.18, 0.2)
 for t in at('pop'): S.add(fol, S.pop(0.7), t, 0.35)
 for t in at('steps'):

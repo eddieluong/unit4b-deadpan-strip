@@ -1,4 +1,4 @@
-// UNIT 4B · 10 "We Missed You" (Tập 1) v6 — 9:16 film page (lemo-opuscar contract: READY, DUR, render(t), EV, TEXTS).
+// UNIT 4B · 10 "We Missed You" (Tập 1) v7 — 9:16 film page (lemo-opuscar contract: READY, DUR, render(t), EV, TEXTS).
 // Show, don't say — but keep the lines that add attitude, irony or inner logic the picture can't (Steve's muttering).
 import { drawCharacter, nameTab, paper, panel } from './lib/cast_stick.js';
 import { VPen, roundPoly, ellipsePts } from './lib/cast_v2.js';
@@ -20,14 +20,14 @@ const LINES = [
   ['10_08_steve', 'steve', 32.4, "...I'll just take another day off."],
   ['10_09_snuggles', 'snuggles', 35.4, 'Same chair. Same door. Tomorrow.'],
 ].map(([id, char, t, text]) => ({ id, char, t, text }));
-const DUR = 40.0;
+const DUR = 39.8;
 const TITLE = ['POV: you took the day off', 'for a package'];   // on-screen hook, the whole video
-const T = { cold: 1.8, app1: 4.0, nod: 5.3, app2: 9.3, sitUp: 10.3, map: 12.6, truck: 13.8, three: 17.6, light0: 19.6, late: 20.8, map2: 21.6, map2e: 22.6, look: 23.0, bubble: 23.4, run: 26.4, wc: 27.0, flush: 27.8, note: 28.6, melt: 29.6, app3: 32.2, dayoff: 33.2, back: 35.2 };
+const T = { cold: 1.8, app1: 4.4, pocket: 5.6, lean: 6.5, app2: 9.3, sitUp: 10.3, map: 12.6, truck: 13.8, three: 17.6, light0: 19.6, late: 20.8, map2: 21.6, map2e: 22.6, look: 23.0, bubble: 23.4, run: 26.4, wc: 27.0, flush: 27.8, note: 28.6, melt: 29.6, app3: 32.2, dayoff: 33.2, back: 35.2 };
 let VOICE = {};
 
 const EV = [
   ...LINES.map(L => ({ t: L.t, type: 'voice', id: L.id })),
-  { t: 0.0, type: 'cold' }, { t: T.cold, type: 'wait' }, { t: T.app2, type: 'buzz' }, { t: T.sitUp + 0.2, type: 'ding' },
+  { t: 0.0, type: 'cold' }, { t: 0.0, type: 'tick' }, { t: 0.05, type: 'paper' }, { t: T.cold, type: 'wait' }, { t: T.pocket + 0.3, type: 'crack' }, { t: T.app2, type: 'buzz' }, { t: T.sitUp + 0.2, type: 'ding' },
   { t: T.truck + 0.1, type: 'truck' }, { t: T.truck + 0.3, type: 'chair' }, { t: T.light0, type: 'violin' }, { t: T.late, type: 'wait2' },
   { t: T.bubble, type: 'pop' }, { t: T.run, type: 'steps' }, { t: T.wc + 0.1, type: 'door' }, { t: T.flush, type: 'flush' },
   { t: T.note, type: 'stop' }, { t: T.app3, type: 'buzz' }, { t: T.dayoff + 0.7, type: 'whoosh' }, { t: T.back + 0.2, type: 'wait3' },
@@ -153,6 +153,7 @@ function thoughtBubble(t, x, y) {   // "30 sec?" next to a toilet
 }
 
 // ---------- shots ----------
+function cat(t, pose = {}) { actor('snuggles', 245, t, { expr: 'side_eye', look: 0.8, ...pose }, { y: WIN.y1 + 26, scale: 4.2 }); }   // the narrator, watching from the sill
 function shotCold(t) {   // cold open: the ending first — the note, and his face
   room(t, { light: 'eve', tally: 41 });
   noteOnDoor(t);
@@ -164,8 +165,22 @@ function dreamFrame() {   // soft cloud edge so the cutaway reads as "inside his
   for (let y = PY; y <= PY + PH; y += 70) for (const x of [PX, PX + PW]) { ctx.beginPath(); ctx.arc(x, y, 62, 0, Math.PI * 2); ctx.fill(); }
   ctx.restore();
 }
-function shotMorning(t) { room(t); timeTag('9:00 AM', t); hand('earlier that day', 212, 320, 44, -0.03, '#6b625c'); steveInChair(t, { expr: 'neutral' }); }
-function shotNod(t) { room(t); steveInChair(t, { expr: 'smug', look: 0.6 }, { y: FLOOR + (Math.floor(t * 6) % 2 ? 0 : 8) }); }   // small confident nods
+function shotMorning(t) { room(t); timeTag('9:00 AM', t); hand('earlier that day', 212, 320, 44, -0.03, '#6b625c'); cat(t); steveInChair(t, { expr: 'neutral' }); }
+function phoneInset(t, lines) {   // the phone in his hand, blown up beside him like a comic inset
+  const x0 = 690, y0 = 560, p = pen(0, 0, 1, t, 77); p.T = q => q;
+  p.line([[x0 - 20, y0 + 300], [CHAIR_X + 40, 980]], 3, 'rgba(42,34,48,0.5)');
+  p.part(roundPoly([[x0 - 140, y0], [x0 + 140, y0], [x0 + 140, y0 + 330], [x0 - 140, y0 + 330]], 26), '#2f2b36', { shade: false });
+  p.part(roundPoly([[x0 - 122, y0 + 24], [x0 + 122, y0 + 24], [x0 + 122, y0 + 306], [x0 - 122, y0 + 306]], 16), '#fbfaf6', { shade: false, lw: 3 });
+  ctx.save(); ctx.textAlign = 'center';
+  lines.forEach(([txt, size, col], i) => { ctx.font = `600 ${size}px Fredoka`; ctx.fillStyle = col || INK; ctx.fillText(txt, x0, y0 + 100 + i * 80); });
+  ctx.restore();
+}
+function shotConfident(t) {   // phone in hand → phone on the knee, knuckle crack → leans back, hands behind his head
+  room(t);
+  if (t < T.pocket) { steveInChair(t, { expr: 'neutral', look: 0.9, armR: 'hold' }); phoneInset(t, [['Your delivery', 30], ['TODAY', 50, '#2e8b57'], ['9 AM – 5 PM', 34]]); }
+  else if (t < T.lean) { const crack = Math.floor(t * 8) % 2 ? 'hold' : 'shrug'; steveInChair(t, { expr: 'smug', look: 0.4, armL: crack, armR: crack }); }
+  else steveInChair(t, { expr: 'smug', look: 0.6, arm: 'up' }, { y: FLOOR + 10 + (Math.floor(t * 4) % 2 ? 0 : 6) });   // leaning back, nodding
+}
 function shotSitUp(t) { room(t); steveInChair(t, { expr: 'happy', fx: ['sparkle', 'blush'] }, { y: FLOOR - (t > T.sitUp + 0.2 ? 20 : 0) }); }
 function shotMap(t) { phoneMap(t); timeTag('11:00 AM', t); }
 function garbageTruck(t, k) {
@@ -182,7 +197,7 @@ function shotTruck(t) {   // the one small peak: jumps up, checks the window, hi
   chair(CHAIR_X, t);
   const up = t > T.truck + 0.3 && t < T.truck + 3.2;
   garbageTruck(t, seg(t, T.truck + 0.5, T.truck + 3.0));
-  if (up) actor('steve', 470, t, t < T.truck + 1.4 ? { expr: 'grin', look: -0.9, arm: 'up' } : { expr: 'dead_inside', look: -0.6 });
+  if (up) actor('steve', 530, t, t < T.truck + 1.4 ? { expr: 'grin', look: -0.9, arm: 'up' } : { expr: 'dead_inside', look: -0.6 });
   else actor('steve', CHAIR_X, t, { sit: true, expr: t < T.truck + 0.2 ? 'neutral' : 'deadpan', look: 0.7 });
 }
 function stinkLines(x, y, t) {
@@ -190,7 +205,7 @@ function stinkLines(x, y, t) {
   for (const dx of [-60, 0, 60]) { const pts = []; for (let i = 0; i <= 8; i++) pts.push([x + dx + Math.sin(i * 1.3 + step8(t) * 3) * 10, FLOOR - (y - i * 12)]); p.line(pts, 3.5, '#8fae6a'); }
 }
 function shotAfternoon(t) {
-  room(t, { tally: TALLY(t) }); timeTag('3:00 PM', t);
+  room(t, { tally: TALLY(t) }); timeTag('3:00 PM', t); cat(t, { expr: 'deadpan' });
   steveInChair(t, { expr: 'dead_inside', armL: 'hold' });
   const p = pen(CHAIR_X + 3, FLOOR - (48 - 15) * K, K, t, 45);   // cracker box in his hand
   p.part(roundPoly([[-5, -4], [5, -4], [5, 7], [-5, 7]], 0.8), '#e7b85a', { shade: 0.15 });
@@ -213,9 +228,12 @@ function shotLate(t) {   // 4:58: squirming, checks the phone, glances at the ba
   room(t, { light: 'eve', tally: 41 });
   const run = t >= T.run, k = step8(seg(t, T.run, T.run + 0.5));
   if (run) { chair(CHAIR_X, t); actor('steve', CHAIR_X - 420 * k, t, { expr: 'nervous', look: -0.9, arm: 'up', fx: ['sweat'] }); return; }
+  cat(t, { expr: 'smug' });
   const nod = t > T.bubble + 1.6 && Math.floor(t * 6) % 2;
-  const pose = t < T.look ? { expr: 'nervous', look: 0.7, armR: 'hold', fx: ['sweat'] } : { expr: t < T.bubble + 1.6 ? 'skeptical' : 'grin', look: -0.9, fx: ['sweat'] };
-  steveInChair(t, pose, { x: CHAIR_X + jitter(t, t < T.look ? 6 : 0), y: FLOOR + (nod ? 8 : 0) });
+  const torn = t >= T.bubble && t < T.bubble + 1.6;   // eyes flick between the front door and the bathroom, legs bouncing
+  const look = torn ? (Math.floor(t * 2.5) % 2 ? 0.9 : -0.9) : t < T.look ? 0.7 : -0.9;
+  const pose = t < T.look ? { expr: 'nervous', look, armR: 'hold', fx: ['sweat'] } : { expr: t < T.bubble + 1.6 ? 'skeptical' : 'grin', look, fx: ['sweat'] };
+  steveInChair(t, pose, { x: CHAIR_X + jitter(t, t < T.look || torn ? 6 : 0), y: FLOOR + (nod ? 8 : torn && Math.floor(t * 8) % 2 ? 5 : 0) });
   if (t >= T.bubble) thoughtBubble(t, 300, 520);
 }
 function shotWC(t) {
@@ -232,6 +250,7 @@ function shotNote(t) {
   const melting = t >= T.melt && t < T.melt + 0.17;   // one-frame melt, then snaps back
   room(t, { light: 'eve', grey: t >= T.melt, tally: 41 });
   noteOnDoor(t);
+  cat(t, { expr: t < T.melt ? 'shocked' : 'deadpan' });
   ctx.save();
   if (melting) { ctx.translate(380, FLOOR); ctx.scale(1.12, 0.82); ctx.translate(-380, -FLOOR); }
   actor('steve', 380, t, { expr: t < T.melt ? 'shocked' : 'dead_inside', look: 0.8, ...(melting ? { eyes: 'spiral', mouth: 'wobble' } : {}) }, { frozen: t < T.melt });
@@ -239,12 +258,15 @@ function shotNote(t) {
 }
 function shotDayOff(t) {   // he files another day off: the form, then the tick
   const sent = t >= T.dayoff + 0.7;   // SENT stays on screen for 1.3 s
-  phone(t, [['Request day off', 58], ['TOMORROW', 76, '#3d5a96'], [sent ? 'SENT ✓' : 'Reason: personal', sent ? 84 : 52, sent ? '#2e8b57' : '#6b625c']]);
+  const pop = sent && t < T.dayoff + 0.95 ? 1.35 : 1;   // SENT pops in
+  phone(t, [['Request day off', 58], ['TOMORROW', 76, '#3d5a96'], [sent ? 'SENT ✓' : 'Reason: personal', sent ? Math.round(84 * pop) : 52, sent ? '#2e8b57' : '#6b625c']]);
+  if (sent) { const q = pen(540, 1330, 14, t, 79); for (const [dx, dy] of [[-15, 35], [15, 35], [-13, 46], [13, 46]]) q.dot(dx, dy, 0.8, 0.8, '#f2c14e'); }
 }
-function shotLoop(t) {
+function shotLoop(t) {   // next morning: he sighs, sits; the cat yawns
   room(t, { tally: 41 }); timeTag('9:00 AM', t);
-  steveInChair(t, { expr: 'dead_inside' });
-  actor('snuggles', 205, t, { expr: 'smug', look: 0.8 }, { y: WIN.y1 + 26, scale: 4.2 });
+  const sigh = t > T.back + 0.9 && t < T.back + 1.5, yawn = t > T.back + 2.6 && t < T.back + 3.4;
+  cat(t, yawn ? { expr: 'sleepy', mouth: 'O' } : { expr: 'smug' });
+  steveInChair(t, { expr: sigh ? 'sad' : 'dead_inside' }, { y: FLOOR + (sigh ? 12 : 0) });
 }
 
 // ---------- captions ----------
@@ -281,11 +303,10 @@ function render(t) {
   ctx.fillStyle = INK; ctx.textAlign = 'center';
   ctx.font = '600 52px Fredoka'; ctx.fillText(TITLE[0], 540, 72); ctx.fillText(TITLE[1], 540, 132);
   ctx.textAlign = 'start';
-  const wide = (fn, zoom = 1.3, fx = 600, fy = 1000, sx = 540, sy = 1000) => withCamera(zoom, fx, fy, fn, sx, sy);   // closer than v5: faces read on a phone
+  const wide = (fn, zoom = 1.3, fx = 545, fy = 1000, sx = 540, sy = 1000) => withCamera(zoom, fx, fy, fn, sx, sy);   // closer than v5: faces read on a phone
   if (t < T.cold) withCamera(1.6, 640, 900, () => shotCold(t), 540, 860);
   else if (t < T.app1) wide(() => shotMorning(t), 1.3 + 0.05 * seg(t, T.cold, T.app1));
-  else if (t < T.nod) withCamera(1, 540, 900, () => phone(t, [['Your delivery', 64], ['TODAY', 100, '#2e8b57'], ['9 AM – 5 PM', 80]]));
-  else if (t < T.app2) withCamera(1.6, CHAIR_X, 900, () => shotNod(t), 540, 860);
+  else if (t < T.app2) withCamera(1.35, CHAIR_X + 110, 900, () => shotConfident(t), 540, 860);
   else if (t < T.sitUp) withCamera(1, 540, 900, () => phone(t, [['Your package is', 60], ['OUT FOR', 96, '#2e8b57'], ['DELIVERY', 96, '#2e8b57']]));
   else if (t < T.map) withCamera(1.6, CHAIR_X, 900, () => shotSitUp(t), 540, 860);
   else if (t < T.truck) withCamera(1, 540, 900, () => shotMap(t));
@@ -296,9 +317,9 @@ function render(t) {
   else if (t < T.wc) { withCamera(1.25, CHAIR_X - 60, 860, () => shotLate(t), 540, 860); timeTag('4:58 PM', t); }
   else if (t < T.note) withCamera(1, 540, 900, () => shotWC(t));
   else if (t < T.app3) withCamera(1.3 + 0.15 * seg(t, T.note, T.melt), 540, 900, () => shotNote(t), 540, 900);
-  else if (t < T.dayoff) withCamera(1, 540, 900, () => phone(t, [['New delivery date:', 56], ['TOMORROW', 76, '#c0392b'], ['9 AM – 5 PM', 76]]));
-  else if (t < T.back) withCamera(1, 540, 900, () => shotDayOff(t));
-  else wide(() => shotLoop(t), 1.2 + 0.05 * seg(t, T.back, DUR), 520);
+  else if (t < T.dayoff) withCamera(1, 540, 900, () => phone(t, [['New delivery date:', 56], ['TOMORROW', 76, '#c0392b'], ['9 AM – 5 PM', 76]]), 540 + (t < T.app3 + 0.5 ? jitter(t, 12) : 0), 900);   // buzzes
+  else if (t < T.back) { const k = seg(t, T.dayoff, T.dayoff + 0.3); ctx.fillStyle = '#e9dcc3'; ctx.fillRect(PX, PY, PW, PH); withCamera(1, 540, 900, () => shotDayOff(t), 540 + 900 * (1 - k) * (1 - k), 900); }   // the next screen slides in
+  else wide(() => shotLoop(t), 1.2 + 0.18 * seg(t, T.back, DUR), 500);
   panel(ctx, PX, PY, PW, PH, 5, null, frameOf(t));
   ctx.font = '600 30px Fredoka'; ctx.fillStyle = 'rgba(42,34,48,0.55)'; ctx.textAlign = 'right'; ctx.fillText('UNIT 4B', PX + PW - 24, PY + PH - 22); ctx.textAlign = 'start';
   const cap = caption(t); window.__texts = cap ? [cap] : [];
