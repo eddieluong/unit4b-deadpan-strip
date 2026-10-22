@@ -5,3 +5,7 @@ node_modules/
 __pycache__/
 .cache/
 research/viral/**/transcripts/
+episodes/*/film/stills/
+episodes/*/film/check/
+episodes/*/film/sheet*.jpg
+episodes/*/film/voice_raw/
