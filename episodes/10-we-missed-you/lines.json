@@ -1,12 +1,11 @@
 [
- {"id": "10_01_snuggles", "char": "snuggles", "expr": "deadpan", "text": "[low, gravelly] Nine a.m. [pause] The kid is waiting for a man he's never met. [sighs] Again."},
- {"id": "10_02_steve", "char": "steve", "expr": "sad", "stability": 0.0, "style": 0.8, "text": "[whispering dreamily] He said he's coming today... [sighs lovingly]"},
- {"id": "10_03_steve", "char": "steve", "expr": "crying", "stability": 0.0, "style": 0.9, "speed": 1.1, "text": "[gasps] [squealing with joy] HE'S ON HIS WAY! [sobbing happily] He's on his waaay!"},
- {"id": "10_04_snuggles", "char": "snuggles", "expr": "deadpan", "text": "[low, gravelly] Seven hours. No food. No shower. [pause] No blinking."},
- {"id": "10_05_steve", "char": "steve", "expr": "shocked", "stability": 0.0, "style": 0.9, "speed": 1.15, "text": "[screaming excitedly] I'M HERE! I'M COMING! I'M HEEERE!"},
- {"id": "10_06_steve", "char": "steve", "expr": "dead_inside", "stability": 0.0, "style": 0.7, "text": "[heartbroken whisper] ...that's a garbage truck."},
- {"id": "10_07_steve", "char": "steve", "expr": "nervous", "stability": 0.0, "style": 0.85, "text": "[strained, through gritted teeth] Thirty seconds. [panting] Nobody comes in thirty seconds."},
- {"id": "10_08_steve", "char": "steve", "expr": "crying", "stability": 0.0, "style": 1.0, "speed": 0.9, "text": "[screaming in despair] WHYYYYY?! [wailing]"},
- {"id": "10_09_steve", "char": "steve", "expr": "sad", "stability": 0.0, "style": 0.8, "text": "[sniffles] [hopeful whisper] ...tomorrow."},
- {"id": "10_10_snuggles", "char": "snuggles", "expr": "smug", "text": "[low, gravelly] [sighs] Same window. Same time. [pause] Tomorrow."}
+ {"id": "10_01_snuggles", "char": "snuggles", "expr": "deadpan", "text": "[low, gravelly] Nine a.m. The kid took a day off. For a package."},
+ {"id": "10_02_steve", "char": "steve", "expr": "neutral", "text": "[casually, to himself] Nine to five. Easy."},
+ {"id": "10_03_steve", "char": "steve", "expr": "happy", "text": "[quietly pleased] Oh nice. He's close."},
+ {"id": "10_04_steve", "char": "steve", "expr": "deadpan", "text": "[flat] ...Garbage truck."},
+ {"id": "10_05_snuggles", "char": "snuggles", "expr": "deadpan", "text": "[low, gravelly] No shower. No lunch. He refreshed the app forty-one times."},
+ {"id": "10_06_steve", "char": "steve", "expr": "nervous", "text": "[muttering, reasoning with himself] He's not coming. [pause] Thirty seconds. I'll be thirty seconds."},
+ {"id": "10_07_steve", "char": "steve", "expr": "dead_inside", "text": "[flat] ...Cool."},
+ {"id": "10_08_steve", "char": "steve", "expr": "sad", "text": "[sighs] ...I'll take another day off."},
+ {"id": "10_09_snuggles", "char": "snuggles", "expr": "smug", "text": "[low, gravelly] Same chair. Same door. Tomorrow."}
 ]
