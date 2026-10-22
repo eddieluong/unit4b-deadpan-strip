@@ -73,15 +73,25 @@ for t in at('truck'): S.add(fol, S.rumble(3.0, 0.8), t, 0.5, -0.5); S.add(fol, S
 for t in at('chair'):
     d = 0.35; S.add(fol, S.bp(S.noise(d), 200, 1200) * S.env_exp(d, 0.1), t, 0.35)
     for j in range(4): S.add(fol, S.step(0.7), t + 0.25 + j * 0.13, 0.45, -0.3)
+for t in at('ding'): S.add(fol, S.ding(0.6), t, 0.18, 0.2)
+for t in at('pop'): S.add(fol, S.pop(0.7), t, 0.35)
+for t in at('steps'):
+    for j in range(5): S.add(fol, S.step(0.8), t + j * 0.1, 0.45, -0.4 + j * 0.05)
+for t in at('whoosh'): S.add(fol, S.whoosh(0.4, 0.5), t, 0.25)
 for t in at('door'): S.add(fol, S.thump(0.6, 90), t, 0.5); S.add(fol, S.click(0.6, 0.5), t + 0.05, 0.3)
 for t in at('flush'):
     d = 1.5; tt = np.arange(int(d * SR)) / SR
     S.add(fol, S.bp(S.noise(d), 300, 3000) * np.sin(np.pi * tt / d) ** 0.7, t, 0.22)
 
-room = S.lp(S.brown(DUR), 300) * 0.018
+room = S.lp(S.brown(DUR), 300)[:len(buf)] * 0.018   # brown() can round to one sample more than buf
 buf += room[:, None] + fol + mus
 buf *= 0.9 / np.abs(buf).max()
-for ch in (0, 1): buf[:, ch] = S.limit(S.compress(buf[:, ch], thr=.3, ratio=3), .55)   # tame transients so mux.sh hits -14 LUFS with safe peaks
+for ch in (0, 1): buf[:, ch] = S.limit(S.compress(buf[:, ch], thr=.1, ratio=5), .28)   # tame transients so mux.sh hits -14 LUFS with safe peaks
 os.makedirs(os.path.join(HERE, 'out'), exist_ok=True)
 sf.write(os.path.join(HERE, 'out', 'mix.wav'), buf.astype(np.float32), SR)
+# pre-master to the platform target with true-peak headroom, so mux.sh's loudnorm has almost nothing to do
+import subprocess
+raw, out = os.path.join(HERE, 'out', 'mix_raw.wav'), os.path.join(HERE, 'out', 'mix.wav')
+os.replace(out, raw)
+subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', raw, '-af', 'loudnorm=I=-14:TP=-2.5:LRA=11,alimiter=limit=0.7:level=false', '-ar', str(SR), out], check=True)
 print('mix.wav', round(len(buf) / SR, 2), 's')

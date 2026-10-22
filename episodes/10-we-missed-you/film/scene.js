@@ -1,5 +1,5 @@
-// UNIT 4B · 10 "We Missed You" (Tập 1) v3 — 9:16 film page (lemo-opuscar contract: READY, DUR, render(t), EV, TEXTS).
-// Real reactions: Steve is a normal tired adult; the drama lives in small visual cutaways and Snuggles' narration.
+// UNIT 4B · 10 "We Missed You" (Tập 1) v4 — 9:16 film page (lemo-opuscar contract: READY, DUR, render(t), EV, TEXTS).
+// Show, don't say: three lines only. Everything else is told by phone screens, props and Steve's face.
 import { drawCharacter, nameTab, paper, panel } from './lib/cast_stick.js';
 import { VPen, roundPoly, ellipsePts } from './lib/cast_v2.js';
 
@@ -12,24 +12,19 @@ const CHAIR_X = 450;
 
 const LINES = [
   ['10_01_snuggles', 'snuggles', 0.2, 'Nine a.m. The kid took a day off... for a package.'],
-  ['10_02_steve', 'steve', 4.9, 'Okay. Nine to five. Easy.'],
-  ['10_03_steve', 'steve', 8.6, "Oh, nice. He's close."],
-  ['10_04_steve', 'steve', 14.6, "...it's the garbage truck."],
-  ['10_05_snuggles', 'snuggles', 17.2, 'No shower. No lunch. He refreshed the app... forty-one times.'],
-  ['10_06_steve', 'steve', 22.8, "He's not coming. Okay... thirty seconds. I'll be thirty seconds."],
-  ['10_07_steve', 'steve', 34.2, '...cool.'],
-  ['10_08_steve', 'steve', 36.9, "...I'll just take another day off."],
-  ['10_09_snuggles', 'snuggles', 39.6, 'Same chair. Same door. Tomorrow.'],
+  ['10_07_steve', 'steve', 29.2, '...cool.'],
+  ['10_09_snuggles', 'snuggles', 34.3, 'Same chair. Same door. Tomorrow.'],
 ].map(([id, char, t, text]) => ({ id, char, t, text }));
-const DUR = 43.4;
-const T = { app1: 4.7, app2: 7.5, sitUp: 8.5, stop: 10.9, truck: 12.9, three: 17.0, light0: 19.0, light1: 20.3, late: 22.6, wc: 30.4, flush: 31.4, note: 32.2, melt: 33.4, app3: 35.6, sit2: 36.8, back: 39.3 };
+const DUR = 38.3;
+const T = { app1: 4.6, nod: 6.2, app2: 7.4, sitUp: 8.6, map: 10.4, truck: 12.6, three: 16.2, light0: 19.6, late: 20.9, map2: 21.8, map2e: 22.8, look: 23.0, bubble: 23.2, run: 24.8, wc: 25.4, flush: 26.4, note: 27.2, melt: 28.4, app3: 30.6, dayoff: 31.8, back: 34.0 };
 let VOICE = {};
 
 const EV = [
   ...LINES.map(L => ({ t: L.t, type: 'voice', id: L.id })),
-  { t: 0.0, type: 'wait' }, { t: T.app2, type: 'buzz' }, { t: T.truck + 0.1, type: 'truck' }, { t: T.truck + 0.4, type: 'chair' },
-  { t: T.light0, type: 'violin' }, { t: T.light1, type: 'wait2' }, { t: T.wc + 0.1, type: 'door' }, { t: T.flush, type: 'flush' },
-  { t: T.note, type: 'stop' }, { t: T.app3, type: 'buzz' }, { t: T.back + 0.3, type: 'wait3' },
+  { t: 0.0, type: 'wait' }, { t: T.app2, type: 'buzz' }, { t: T.sitUp + 0.2, type: 'ding' },
+  { t: T.truck + 0.1, type: 'truck' }, { t: T.truck + 0.3, type: 'chair' }, { t: T.light0, type: 'violin' }, { t: T.late, type: 'wait2' },
+  { t: T.bubble, type: 'pop' }, { t: T.run, type: 'steps' }, { t: T.wc + 0.1, type: 'door' }, { t: T.flush, type: 'flush' },
+  { t: T.note, type: 'stop' }, { t: T.app3, type: 'buzz' }, { t: T.dayoff + 0.6, type: 'whoosh' }, { t: T.back + 0.2, type: 'wait3' },
 ];
 
 // ---------- helpers ----------
@@ -64,9 +59,10 @@ function timeTag(text, t) {
   p.part(roundPoly([[80, 200], [340, 196], [344, 280], [84, 284]], 6), '#f7e27a', { shade: false, lw: 3 });
   hand(text, 212, 240, 54, -0.03);
 }
+const jitter = (t, a = 6) => (Math.floor(t * 8) % 2 ? a : -a);
 
 // ---------- set ----------
-function room(t, { grey = false, light = 'day' } = {}) {
+function room(t, { grey = false, light = 'day', tally = 0 } = {}) {
   ctx.save(); if (grey) ctx.filter = 'grayscale(1)';
   ctx.fillStyle = WALL; ctx.fillRect(PX - 600, PY - 600, PW + 1200, FLOOR - PY + 600);
   ctx.fillStyle = FLOORC; ctx.fillRect(PX - 600, FLOOR, PW + 1200, PY + PH - FLOOR + 600);
@@ -88,7 +84,17 @@ function room(t, { grey = false, light = 'day' } = {}) {
   p.line([[DOOR_X0 - 18, FLOOR - DOOR_TOP + 18], [DOOR_X1 + 18, FLOOR - DOOR_TOP + 18], [DOOR_X1 + 18, 0]], 3.5);
   p.line([[DOOR_X0 - 18, 0], [DOOR_X0 - 18, FLOOR - DOOR_TOP + 18]], 3.5);
   ctx.restore();
+  if (tally) tallyMarks(t, tally);
 }
+function tallyMarks(t, n) {   // how many times he refreshed the app, scratched on the wall like a prisoner
+  const p = pen(0, 0, 1, t, 7); p.T = q => q;
+  for (let i = 0; i < n; i++) {
+    const g = Math.floor(i / 5), r = i % 5, gx = 440 + (g % 4) * 52, gy = 330 + Math.floor(g / 4) * 70;
+    if (r < 4) p.line([[gx + r * 9, gy], [gx + r * 9 + 2, gy + 50]], 3.5);
+    else p.line([[gx - 6, gy + 40], [gx + 40, gy + 10]], 3.5);
+  }
+}
+const TALLY = t => t < T.map ? 0 : t < T.truck ? 6 : t < T.three ? 14 : 41;
 function chair(x, t) {   // a plain wooden kitchen chair, seat ~22 units high
   const p = pen(x, FLOOR, K, t, 17);
   for (const sx of [-1, 1]) p.line([[sx * 12, 0], [sx * 12, 21]], p.lw * 1.1, '#8a6040');
@@ -96,7 +102,7 @@ function chair(x, t) {   // a plain wooden kitchen chair, seat ~22 units high
   for (const sx of [-1, 1]) p.line([[sx * 12, 23], [sx * 12, 52]], p.lw * 1.1, '#8a6040');
   p.part(roundPoly([[-13, 44], [13, 44], [13, 52], [-13, 52]], 1.5), '#b98a5e', { shade: 0.2 });
 }
-function steveInChair(t, pose, { frozen = false, y = FLOOR } = {}) { chair(CHAIR_X, t); actor('steve', CHAIR_X, t, { sit: true, look: 0.7, ...pose }, { frozen, y }); }
+function steveInChair(t, pose, { frozen = false, y = FLOOR, x = CHAIR_X } = {}) { chair(CHAIR_X, t); actor('steve', x, t, { sit: true, look: 0.7, ...pose }, { frozen, y }); }
 function noteOnDoor(t) {
   const cx = (DOOR_X0 + DOOR_X1) / 2, cy = 900, p = pen(cx, cy, 6, t, 97);
   p.part(roundPoly([[-17, -12], [17, -13], [17, 12], [-17, 12]], 0.8), '#fffdf2', { shade: false });
@@ -116,7 +122,7 @@ function phone(t, lines, sub) {
   if (sub) { ctx.font = '48px "Patrick Hand"'; ctx.fillStyle = '#6b625c'; ctx.fillText(sub, 540, 1330 - 20 * 14); }
   ctx.restore();
 }
-function phoneMap(t) {   // tracking map: a tiny truck that has not moved
+function phoneMap(t, sub = 'refreshed just now') {   // tracking map: a tiny truck that has not moved
   phoneFrame(t);
   const p = pen(540, 1330, 14, t, 75);
   p.fill(roundPoly([[-17, 22], [17, 22], [17, 64], [-17, 64]], 2), '#e4efe0');
@@ -125,13 +131,26 @@ function phoneMap(t) {   // tracking map: a tiny truck that has not moved
   p.dot(14, 60, 1.6, 1.6, '#c0392b');
   ctx.save(); ctx.textAlign = 'center'; ctx.fillStyle = INK;
   ctx.font = '600 60px Fredoka'; ctx.fillText('Stop 14 of 87', 540, 1330 - 14 * 14);
-  ctx.font = '44px "Patrick Hand"'; ctx.fillStyle = '#6b625c'; ctx.fillText('refreshed just now', 540, 1330 - 9 * 14);
+  ctx.font = '44px "Patrick Hand"'; ctx.fillStyle = '#6b625c'; ctx.fillText(sub, 540, 1330 - 9 * 14);
   ctx.restore();
+}
+function thoughtBubble(t, x, y) {   // "30 sec?" next to a toilet
+  const p = pen(0, 0, 1, t, 88); p.T = q => q;
+  for (const [dx, dy, r] of [[-70, 120, 12], [-45, 80, 18]]) p.part(ellipsePts(x + dx, y + dy, r, r, 18), '#fffdf6', { shade: false, lw: 3 });
+  p.part(ellipsePts(x + 60, y - 20, 185, 105, 40), '#fffdf6', { shade: false, lw: 4 });
+  const q = pen(x - 45, y + 45, 4.2, t, 89);   // a toilet you can read at a glance: tank, seat, bowl
+  q.part(roundPoly([[-11, 14], [3, 14], [3, 30], [-11, 30]], 1.5), '#ffffff', { shade: 0.15 });
+  q.part(roundPoly([[-12, 8], [16, 8], [16, 13], [-12, 13]], 2), '#ffffff', { shade: 0.15 });
+  q.part(roundPoly([[-8, -2], [12, -2], [14, 8], [-10, 8]], 2), '#ffffff', { shade: 0.15 });
+  q.part(roundPoly([[-3, -8], [7, -8], [7, -2], [-3, -2]], 1), '#ffffff', { shade: 0.15 });
+  hand('30 sec?', x + 120, y - 15, 62, -0.05);
 }
 
 // ---------- shots ----------
 function shotMorning(t) { room(t); timeTag('9:00 AM', t); steveInChair(t, { expr: 'neutral' }); }
-function shotSitUp(t) { room(t); steveInChair(t, { expr: 'happy' }, { y: FLOOR - (t > T.sitUp + 0.25 ? 18 : 0) }); }   // sits up a little
+function shotNod(t) { room(t); steveInChair(t, { expr: 'smug', look: 0.6 }, { y: FLOOR + (Math.floor(t * 6) % 2 ? 0 : 8) }); }   // small confident nods
+function shotSitUp(t) { room(t); steveInChair(t, { expr: 'happy', fx: ['sparkle', 'blush'] }, { y: FLOOR - (t > T.sitUp + 0.2 ? 20 : 0) }); }
+function shotMap(t) { phoneMap(t); timeTag('11:00 AM', t); }
 function garbageTruck(t, k) {
   ctx.save(); ctx.beginPath(); ctx.rect(WIN.x0, WIN.y0, WIN.x1 - WIN.x0, WIN.y1 - WIN.y0); ctx.clip();
   const x = WIN.x1 + 60 - (WIN.x1 - WIN.x0 + 420) * k, p = pen(x, 950, 2.6, t, 33);
@@ -141,26 +160,25 @@ function garbageTruck(t, k) {
   hand('GARBAGE', x + 170, 950 - 95, 46, 0, '#fffdf6');
   ctx.restore();
 }
-function shotTruck(t) {   // 1:00 PM: the one small peak — he jumps up, checks the window, sits back down
-  room(t); timeTag('1:00 PM', t);
+function shotTruck(t) {   // the one small peak: jumps up, checks the window, his face drops, sits back down
+  room(t, { tally: TALLY(t) }); timeTag('1:00 PM', t);
   chair(CHAIR_X, t);
-  const up = t > T.truck + 0.35 && t < 16.5;
-  garbageTruck(t, seg(t, T.truck + 0.6, 16.4));
-  if (up) actor('steve', 470, t, t < 14.5 ? { expr: 'shocked', look: -0.9, arm: 'up' } : { expr: 'deadpan', look: -0.6 });
-  else actor('steve', CHAIR_X, t, { sit: true, expr: t < 14 ? 'neutral' : 'deadpan', look: 0.7 });
+  const up = t > T.truck + 0.3 && t < 15.6;
+  garbageTruck(t, seg(t, T.truck + 0.5, 15.5));
+  if (up) actor('steve', 470, t, t < 14.0 ? { expr: 'grin', look: -0.9, arm: 'up' } : { expr: 'dead_inside', look: -0.6 });
+  else actor('steve', CHAIR_X, t, { sit: true, expr: t < 13 ? 'neutral' : 'deadpan', look: 0.7 });
 }
 function stinkLines(x, y, t) {
   const p = pen(0, FLOOR, 1, t, 41);
   for (const dx of [-60, 0, 60]) { const pts = []; for (let i = 0; i <= 8; i++) pts.push([x + dx + Math.sin(i * 1.3 + step8(t) * 3) * 10, FLOOR - (y - i * 12)]); p.line(pts, 3.5, '#8fae6a'); }
 }
 function shotAfternoon(t) {
-  room(t); timeTag('3:00 PM', t);
+  room(t, { tally: TALLY(t) }); timeTag('3:00 PM', t);
   steveInChair(t, { expr: 'dead_inside', armL: 'hold' });
-  const bx = CHAIR_X + 3, by = FLOOR - (48 - 15) * K;   // cracker box in his 'hold' hand (body lowered 15 units when seated)
-  const p = pen(bx, by, K, t, 45);
+  const p = pen(CHAIR_X + 3, FLOOR - (48 - 15) * K, K, t, 45);   // cracker box in his hand
   p.part(roundPoly([[-5, -4], [5, -4], [5, 7], [-5, 7]], 0.8), '#e7b85a', { shade: 0.15 });
   stinkLines(CHAIR_X, FLOOR - (15 + 98) * K, t);
-  for (let i = 0; i < 5; i++) pen(CHAIR_X - 60 + i * 30, FLOOR - 4, K, t, 50 + i).dot(0, 0, 0.9, 0.6, '#d8a95a');   // crumbs
+  for (let i = 0; i < 5; i++) pen(CHAIR_X - 60 + i * 30, FLOOR - 4, K, t, 50 + i).dot(0, 0, 0.9, 0.6, '#d8a95a');
 }
 function shotLighthouse(t) {   // 1.3 s cutaway: how it feels inside
   ctx.fillStyle = '#5b7fa6'; ctx.fillRect(PX, PY, PW, PH);
@@ -174,7 +192,15 @@ function shotLighthouse(t) {   // 1.3 s cutaway: how it feels inside
   ctx.save(); ctx.globalAlpha = 0.35 + 0.2 * Math.sin(step8(t) * 6); ctx.fillStyle = '#fff6c0';
   ctx.beginPath(); ctx.moveTo(710, 650); ctx.lineTo(PX, 520); ctx.lineTo(PX, 760); ctx.closePath(); ctx.fill(); ctx.restore();
 }
-function shotLate(t) { room(t, { light: 'eve' }); steveInChair(t, { expr: t < 26 ? 'nervous' : 'awkward', armR: 'hold' }); }
+function shotLate(t) {   // 4:58: squirming, checks the phone, glances at the bathroom, the idea, a nod, he runs
+  room(t, { light: 'eve', tally: 41 });
+  const run = t >= T.run, k = step8(seg(t, T.run, T.run + 0.5));
+  if (run) { chair(CHAIR_X, t); actor('steve', CHAIR_X - 420 * k, t, { expr: 'nervous', look: -0.9, arm: 'up', fx: ['sweat'] }); return; }
+  const nod = t > T.bubble + 1.1 && Math.floor(t * 6) % 2;
+  const pose = t < T.look ? { expr: 'nervous', look: 0.7, armR: 'hold', fx: ['sweat'] } : { expr: t < T.bubble + 1.1 ? 'skeptical' : 'grin', look: -0.9, fx: ['sweat'] };
+  steveInChair(t, pose, { x: CHAIR_X + jitter(t, t < T.look ? 6 : 0), y: FLOOR + (nod ? 8 : 0) });
+  if (t >= T.bubble) thoughtBubble(t, 300, 520);
+}
 function shotWC(t) {
   ctx.fillStyle = '#d9e4e6'; ctx.fillRect(PX, PY, PW, PH);
   const p = pen(540, 1400, 7, t, 81);
@@ -187,16 +213,19 @@ function shotWC(t) {
 }
 function shotNote(t) {
   const melting = t >= T.melt && t < T.melt + 0.17;   // one-frame melt, then snaps back
-  room(t, { light: 'eve', grey: t >= T.melt });
+  room(t, { light: 'eve', grey: t >= T.melt, tally: 41 });
   noteOnDoor(t);
   ctx.save();
   if (melting) { ctx.translate(380, FLOOR); ctx.scale(1.12, 0.82); ctx.translate(-380, -FLOOR); }
   actor('steve', 380, t, { expr: t < T.melt ? 'shocked' : 'dead_inside', look: 0.8, ...(melting ? { eyes: 'spiral', mouth: 'wobble' } : {}) }, { frozen: t < T.melt });
   ctx.restore();
 }
-function shotEvening(t) { room(t, { light: 'eve' }); steveInChair(t, { expr: 'sad', look: 0.4 }); }
+function shotDayOff(t) {   // he files another day off: the form, then the tick
+  const sent = t >= T.dayoff + 0.6;
+  phone(t, [['Request day off', 58], ['TOMORROW', 76, '#3d5a96'], [sent ? 'SENT ✓' : 'Reason: personal', sent ? 84 : 52, sent ? '#2e8b57' : '#6b625c']]);
+}
 function shotLoop(t) {
-  room(t); timeTag('9:00 AM', t);
+  room(t, { tally: 41 }); timeTag('9:00 AM', t);
   steveInChair(t, { expr: 'dead_inside' });
   actor('snuggles', 300, t, { expr: 'smug', look: 0.5 }, { y: WIN.y1 + 26, scale: 4.2 });
 }
@@ -234,18 +263,20 @@ function render(t) {
   paper(ctx, W, H, 11);
   ctx.font = '600 40px Fredoka'; ctx.fillStyle = INK; ctx.textAlign = 'center'; ctx.fillText('UNIT 4B', 540, 100); ctx.textAlign = 'start';
   if (t < T.app1) withCamera(1 + 0.06 * seg(t, 0, T.app1), 540, 1000, () => shotMorning(t));
-  else if (t < T.app2) withCamera(1, 540, 900, () => phone(t, [['Your delivery', 64], ['TODAY', 100, '#2e8b57'], ['9 AM – 5 PM', 80]]));
+  else if (t < T.nod) withCamera(1, 540, 900, () => phone(t, [['Your delivery', 64], ['TODAY', 100, '#2e8b57'], ['9 AM – 5 PM', 80]]));
+  else if (t < T.app2) withCamera(1.35, CHAIR_X, 900, () => shotNod(t), 540, 860);
   else if (t < T.sitUp) withCamera(1, 540, 900, () => phone(t, [['Your package is', 60], ['OUT FOR', 96, '#2e8b57'], ['DELIVERY', 96, '#2e8b57']]));
-  else if (t < T.stop) withCamera(1.35, CHAIR_X, 900, () => shotSitUp(t), 540, 860);
-  else if (t < T.truck) withCamera(1, 540, 900, () => { phoneMap(t); timeTag('11:00 AM', t); });
+  else if (t < T.map) withCamera(1.35, CHAIR_X, 900, () => shotSitUp(t), 540, 860);
+  else if (t < T.truck) withCamera(1, 540, 900, () => shotMap(t));
   else if (t < T.three) withCamera(1, 540, 1000, () => shotTruck(t));
-  else if (t < T.light0 || (t >= T.light1 && t < T.late)) withCamera(1, 540, 1000, () => shotAfternoon(t));
-  else if (t < T.light1) withCamera(1, 540, 900, () => shotLighthouse(t));
-  else if (t < T.wc) { withCamera(1 + 0.2 * seg(t, T.late, T.wc), CHAIR_X, 820, () => shotLate(t), 540, 820); timeTag('4:58 PM', t); }
+  else if (t < T.light0) withCamera(1, 540, 1000, () => shotAfternoon(t));
+  else if (t < T.late) withCamera(1, 540, 900, () => shotLighthouse(t));
+  else if (t >= T.map2 && t < T.map2e) withCamera(1, 540, 900, () => { phoneMap(t, 'refreshed 41 times today'); timeTag('4:58 PM', t); });
+  else if (t < T.wc) { withCamera(1.1, CHAIR_X - 60, 860, () => shotLate(t), 540, 860); timeTag('4:58 PM', t); }
   else if (t < T.note) withCamera(1, 540, 900, () => shotWC(t));
   else if (t < T.app3) withCamera(1 + 0.15 * seg(t, T.note, T.melt), 520, 900, () => shotNote(t), 540, 900);
-  else if (t < T.sit2) withCamera(1, 540, 900, () => phone(t, [['New delivery date:', 56], ['TOMORROW', 92, '#c0392b'], ['9 AM – 5 PM', 76]], 'Thank you for your patience!'));
-  else if (t < T.back) withCamera(1.3, CHAIR_X, 900, () => shotEvening(t), 540, 860);
+  else if (t < T.dayoff) withCamera(1, 540, 900, () => phone(t, [['New delivery date:', 56], ['TOMORROW', 76, '#c0392b'], ['9 AM – 5 PM', 76]], 'Thank you for your patience!'));
+  else if (t < T.back) withCamera(1, 540, 900, () => shotDayOff(t));
   else withCamera(1 + 0.05 * seg(t, T.back, DUR), 540, 1000, () => shotLoop(t));
   panel(ctx, PX, PY, PW, PH, 5, null, frameOf(t));
   const cap = caption(t); window.__texts = cap ? [cap] : [];
