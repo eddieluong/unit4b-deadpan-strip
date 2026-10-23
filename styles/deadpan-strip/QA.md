@@ -61,6 +61,7 @@ and exits non-zero on a failure. Run it, then do the rest by eye on a contact sh
 - [ ] Commit, push, update the episode page on Notion (see memory: sync rule).
 
 ## 3. Tooling notes learned on the way
+- One character = one take. Generating each line separately (different tags and settings) made Steve sound like several people. Generate all of a character's lines in one request (fixed seed, same settings), split at the quietest point between lines, keep a 300 ms natural tail, fade in 15 ms / out 120 ms, and give every line the same light room. Never cut a line where it is still loud: v7 endings were cut at −25 to −31 dBFS, heard as a click at every line end.
 - "One voice doing all the characters" (the competitors' trick) was tried on Tập 1 with ElevenLabs: Steve's voice faking a documentary narrator. Pitch-shifting broke the sound and the v3 impression stayed weak; the user preferred the separate voices of v7. Revisit only with a real performance (speech-to-speech) or a newer model.
 - Voices: "..." and [pause] in the text make ElevenLabs insert even, rigid pauses that read as AI. Write lines with normal punctuation, give each take its neighbours (`previous_text` / `next_text`, multilingual v2), and start voice casting from conversational community voices in the Voice Library rather than the premade ones.
 - Measuring "static" on raw frames is wrong for this style: the hand-drawn boil changes every frame. Blur (5×5 blocks) and compare frames 1 s apart (`tools/qa_video.py` does this).

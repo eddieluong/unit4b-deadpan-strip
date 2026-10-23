@@ -17,12 +17,16 @@ at = lambda k: [e['t'] for e in EV if e['type'] == k]
 buf = np.zeros((int(DUR * SR), 2))
 
 # ---------- voices ----------
+# Level per line from Steve's prosody profile (styles/deadpan-strip/VOICE_PROSODY.md): never flatten every line to the same level.
+GAIN_DB = {'10_02_steve': 0, '10_03_steve': +2, '10_04_steve': -3, '10_06_steve': +1.5, '10_07_steve': -5, '10_08_steve': -4,
+           '10_01_snuggles': -1, '10_09_snuggles': -1}
 voice_on = np.zeros(len(buf))
 for e in EV:
     if e['type'] != 'voice': continue
     a, sr = sf.read(os.path.join(HERE, 'voice', e['id'] + '.wav'))
     if a.ndim > 1: a = a.mean(1)
-    x = S.norm(resample_poly(a, SR, sr) if sr != SR else a, 0.9)
+    x = S.norm(resample_poly(a, SR, sr) if sr != SR else a, 0.9) * 10 ** (GAIN_DB.get(e['id'], 0) / 20)   # loudness carries the feeling (VOICE_PROSODY.md)
+    fi, fo = int(0.015 * SR), int(0.12 * SR); x[:fi] *= np.linspace(0, 1, fi); x[-fo:] *= np.linspace(1, 0, fo) ** 1.5   # no hard starts or cut-offs
     S.add(buf, x, e['t'], 0.95, -0.08 if 'steve' in e['id'] else 0.08)
     s = int(e['t'] * SR); voice_on[s:s + len(x)] = 1
 
@@ -89,7 +93,7 @@ for t in at('flush'):
     d = 1.5; tt = np.arange(int(d * SR)) / SR
     S.add(fol, S.bp(S.noise(d), 300, 3000) * np.sin(np.pi * tt / d) ** 0.7, t, 0.22)
 
-room = S.lp(S.brown(DUR), 300)[:len(buf)] * 0.018   # brown() can round to one sample more than buf
+room = S.lp(S.brown(DUR), 300)[:len(buf)] * 0.026   # a steady room bed, so gaps between lines are never dead silence   # brown() can round to one sample more than buf
 buf += room[:, None] + fol + mus
 buf *= 0.9 / np.abs(buf).max()
 for ch in (0, 1): buf[:, ch] = S.limit(S.compress(buf[:, ch], thr=.1, ratio=5), .28)   # tame transients so mux.sh hits -14 LUFS with safe peaks

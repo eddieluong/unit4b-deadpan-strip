@@ -22,9 +22,9 @@
   "char": "steve",
   "expr": "happy",
   "stability": 0.35,
-  "style": 0.5,
-  "speed": 1.0,
-  "text": "[pleasantly surprised] Oh, nice. He's close."
+  "style": 0.6,
+  "speed": 1.05,
+  "text": "[pleasantly surprised, brightening up] Oh, nice. He's CLOSE."
  },
  {
   "id": "10_04_steve",
@@ -40,10 +40,9 @@
   "char": "steve",
   "expr": "nervous",
   "stability": 0.35,
-  "style": 0.5,
-  "speed": 1.0,
-  "text": "[mumbling to himself] He's not coming. [sighs] Okay... thirty seconds. I'll be thirty seconds.",
-  "film_trim": "film uses 1.9 s → end (starts at the sigh before \"Okay\"); \"He's not coming.\" is cut"
+  "style": 0.55,
+  "speed": 1.12,
+  "text": "[hurried, anxious, talking himself into it] Okay, THIRTY seconds. I'll be thirty seconds."
  },
  {
   "id": "10_07_steve",
