@@ -3,6 +3,15 @@
 Everything needed to set up YouTube, TikTok, Facebook and Instagram, and to post Tập 1. Accounts are created and
 logged in by the owner; profile fields below are ready to paste (or to fill with Claude in Chrome once logged in).
 
+## Live accounts (2026-10-23)
+
+| Platform | Account | Status |
+|---|---|---|
+| YouTube | [@unit4bcomedy](https://www.youtube.com/@unit4bcomedy) (channel `UCfFgYzIDT28afga2jynBbKQ`) | Avatar, banner, description, links (IG, FB) published. Keywords set; country Vietnam; not made for kids. Upload defaults: Comedy, English video + metadata language. |
+| Facebook | [UNIT 4B Page](https://www.facebook.com/unit4bcomedy) | Intro, username, avatar, cover done. Page settings still show "No Instagram connected". |
+| Instagram | [@unit4bcomedy](https://www.instagram.com/unit4bcomedy) | Name, bio, avatar; Creator account. |
+| TikTok | registered, region not US yet | On hold. |
+
 ## Identity (same everywhere)
 
 | Field | Value |
