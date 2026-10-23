@@ -61,6 +61,7 @@ and exits non-zero on a failure. Run it, then do the rest by eye on a contact sh
 - [ ] Commit, push, update the episode page on Notion (see memory: sync rule).
 
 ## 3. Tooling notes learned on the way
+- Voices: "..." and [pause] in the text make ElevenLabs insert even, rigid pauses that read as AI. Write lines with normal punctuation, give each take its neighbours (`previous_text` / `next_text`, multilingual v2), and start voice casting from conversational community voices in the Voice Library rather than the premade ones.
 - Measuring "static" on raw frames is wrong for this style: the hand-drawn boil changes every frame. Blur (5×5 blocks) and compare frames 1 s apart (`tools/qa_video.py` does this).
 - A slide transition must paint the panel background first, or the paper shows through behind the moving screen.
 - Props drawn in front of a window (the cat) can hide the joke behind the window (the GARBAGE sign): check what the key shot must show and clear it.
