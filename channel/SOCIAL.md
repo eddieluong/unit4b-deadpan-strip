@@ -12,6 +12,18 @@ logged in by the owner; profile fields below are ready to paste (or to fill with
 | Instagram | [@unit4bcomedy](https://www.instagram.com/unit4bcomedy) | Name, bio, avatar; Creator account. |
 | TikTok | registered, region not US yet | On hold. |
 
+## Published (2026-10-24) — Tập 1 v8 (`Tap01-we-missed-you_v8.mp4`, one-take voice)
+
+| Where | Link | Notes |
+|---|---|---|
+| YouTube Short | https://youtube.com/shorts/Zu5q8GsMslM | Public, not made for kids. Community posts not yet available on the new channel. |
+| Facebook Reel | https://www.facebook.com/reel/1606233407903191/ | Posted as the Page. |
+| Facebook post | Page feed | Cover image + A/B/C poll-style question ("how many times have you refreshed a delivery app today?") + Short link. |
+| Instagram Reel | https://www.instagram.com/unit4bcomedy/reel/De3BThCOSLD/ | Original 9:16 crop; not cross-posted to the personal Facebook. |
+| Instagram post | profile grid | Cover (4:5) + intro "Hi, we're UNIT 4B" + question "longest you've waited for a delivery?". |
+
+Lesson: Instagram web defaults video to a 1:1 crop; pick **Original** in the crop step.
+
 ## Identity (same everywhere)
 
 | Field | Value |
