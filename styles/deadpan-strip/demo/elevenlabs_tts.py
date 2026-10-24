@@ -15,6 +15,7 @@ lines.json = [{"id": "s03_ted", "char": "ted", "expr": "proud", "text": "For the
           the mode's own tags are not added. Numbers as words ("nineteen eighty-seven").
   seed  : optional int, makes a take reproducible
   tail  : optional, overrides the mode's tail tag(s) ("" to drop it)
+  stability / style / speed : optional per-line overrides of the voice settings (stability 0.0 = most expressive)
 
 Writes, like tts.py: out/<id>.wav (24 kHz mono 16-bit, leading/trailing silence trimmed) and out/dur.json,
 plus out/captions.json (each line with every [tag] removed, ready for subtitles).
@@ -141,6 +142,7 @@ def main():
         c = chars[L['char']]; mname, m = resolve(c, L, expressions)
         text = build_text(L, m, model, fallback)
         settings = {k: m[k] for k in ('stability', 'similarity_boost', 'style', 'speed') if k in m}
+        settings.update({k: L[k] for k in ('stability', 'style', 'speed') if k in L})   # per-line override for big emotional beats
         settings['use_speaker_boost'] = True
         payload = {'text': text, 'model_id': model, 'voice_settings': settings}
         if 'seed' in L: payload['seed'] = int(L['seed'])

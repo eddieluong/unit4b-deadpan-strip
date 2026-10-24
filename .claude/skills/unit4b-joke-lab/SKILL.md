@@ -52,6 +52,9 @@ If YouTube is unreachable from the shell and no vidIQ credits are available, say
 with web research only.
 
 ### 2. Filter (hard gates, drop anything that fails one)
+- Starts from a real-life problem most adults have had, and lands for a first-time viewer who knows nothing about
+  the cast. If the punchline needs lore (Nana's past, why Ted is dead, Penny's inheritance), drop it or show on
+  screen everything the joke needs.
 - Survives subtitles for a non-native speaker (no puns that need a native ear, no local slang).
 - No real people, brands, politics, religion, race, disability, real tragedies, or news about victims.
 - Dark but not cruel: death/ghosts/money/crime are fine when absurd; violence implied only; Penny is never in danger.
@@ -65,6 +68,9 @@ Pick the **engine** that makes the topic funniest:
 - **Ted** normalized absurdity of being dead; passive-aggressive flatmate; proud dad jokes.
 - **Snuggles** noir narration of petty cat crimes; fourth-wall aside; loop narrator.
 Use 2–3 characters per short. One teller, one or two reactors.
+Default treatment: **emotionalize** the everyday problem (see `JOKES.md` §1): the drama is inside the character and
+shows in visuals, music and narration; the character's voice stays real (sighs, muttering, one short peak at most)
+and the punchline is said flat.
 
 ### 4. Generate, then cut
 For the 3 strongest topics, write **3 premises each** using different formats from `JOKES.md`
@@ -81,6 +87,11 @@ Use `templates/episode.md`. Non-negotiables from `JOKES.md`:
   `fake_sweet`, `condescending`, `eye_roll`, `mock_sympathy`, `slow_clap`, `passive_aggressive`,
   `mocking_mimic`, `fake_gasp`). The reaction face is half the joke: pick it deliberately.
 - Loop the ending when the last line can lead back into the first.
+
+### 5b. QA against `styles/deadpan-strip/QA.md`
+Check the script part of the checklist (hook in 1.5 s with a title line, one joke in 25–40 s, punch at 70–85 %,
+one short button, 5–8 lines that never describe the picture, real-person delivery). When a video is rendered,
+run the picture and sound checks on a contact sheet every 2 s before showing it.
 
 ### 6. Punch-up pass
 Read the script aloud in your head as each voice. Then:

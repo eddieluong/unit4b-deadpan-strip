@@ -1,0 +1,62 @@
+[
+ {
+  "id": "09_01_nana",
+  "text": "Welcome to the building, dear! Banana bread.",
+  "voice": "bf_isabella",
+  "speed": 0.86
+ },
+ {
+  "id": "09_02_steve",
+  "text": "And... a shovel?",
+  "voice": "am_puck",
+  "speed": 1.06
+ },
+ {
+  "id": "09_03_nana",
+  "text": "Every new tenant needs one.",
+  "voice": "bf_isabella",
+  "speed": 0.86
+ },
+ {
+  "id": "09_04_steve",
+  "text": "Oh! A gift!",
+  "voice": "am_puck",
+  "speed": 1.06
+ },
+ {
+  "id": "09_05_steve",
+  "text": "This is a bill.",
+  "voice": "am_puck",
+  "speed": 1.06
+ },
+ {
+  "id": "09_06_penny",
+  "text": "For the gift.",
+  "voice": "af_sky",
+  "speed": 1.06
+ },
+ {
+  "id": "09_07_ted",
+  "text": "Welcome card. From all the old tenants.",
+  "voice": "bm_lewis",
+  "speed": 0.88
+ },
+ {
+  "id": "09_08_steve",
+  "text": "Aw. Where are they now?",
+  "voice": "am_puck",
+  "speed": 1.06
+ },
+ {
+  "id": "09_09_ted",
+  "text": "Here.",
+  "voice": "bm_lewis",
+  "speed": 0.88
+ },
+ {
+  "id": "09_10_snuggles",
+  "text": "In this building, everybody brings what they're good at.",
+  "voice": "am_onyx",
+  "speed": 0.84
+ }
+]
