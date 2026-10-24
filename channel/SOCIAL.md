@@ -24,6 +24,13 @@ logged in by the owner; profile fields below are ready to paste (or to fill with
 
 Lesson: Instagram web defaults video to a 1:1 crop; pick **Original** in the crop step.
 
+**YouTube automatic dubbing (2026-10-24):** Settings → Channel → Advanced: Allow automatic dubbing ✓, Manually review dubs before
+publishing ✓, review in **all** languages. Viewers whose YouTube language is English always get the original audio, so
+English-speaking countries need no extra setting. Dubs appear under each video's Languages page after auto subtitles are
+generated; listen to each one (deadpan timing, punchline pause) before publishing, and reject languages that break the joke.
+Studio note: the Sweet Kurt Google account also owns "Head Office Explains"; switch channel at youtube.com/channel_switcher
+before opening UNIT 4B Studio.
+
 ## Identity (same everywhere)
 
 | Field | Value |
