@@ -20,9 +20,19 @@ function resolvePose(C, pose) {
 
 // ---------- stick limbs ----------
 // Arms bend at an elbow so poses read clearly as silhouettes. sh = shoulder [x, y], k = length factor.
-function armPts(sx, [x0, y0], pose = 'down', k = 1) {
-  const P = (dx, dy) => [x0 + sx * dx * k, y0 + dy * k];
+function armPts(sx, sh, pose = 'down', k = 1) {
+  if (pose && typeof pose === 'object') {   // blend between two named poses: { a, b, k: 0..1 } (k may overshoot slightly)
+    const A = armPts(sx, sh, pose.a, k), B = armPts(sx, sh, pose.b, k);
+    return A.map((q, i) => [q[0] + (B[i][0] - q[0]) * pose.k, q[1] + (B[i][1] - q[1]) * pose.k]);
+  }
+  const [x0, y0] = sh, P = (dx, dy) => [x0 + sx * dx * k, y0 + dy * k];
   switch (pose) {
+    case 'wave': return [P(0, 0), P(9, 12), P(14, 27)];
+    case 'facepalm': return [P(0, 0), P(9, -4), P(3, 21)];
+    case 'chin': return [P(0, 0), P(9, -8), P(2, 11)];
+    case 'cross': return [P(0, 0), P(8, -8), P(-7, -5)];
+    case 'reach': return [P(0, 0), P(10, 6), P(22, 14)];
+    case 'wide': return [P(0, 0), P(12, 2), P(21, 9)];
     case 'point': return [P(0, 0), P(11, 1), P(23, 4)];
     case 'up': return [P(0, 0), P(10, 8), P(13, 22)];
     case 'hips': return [P(0, 0), P(10, -8), P(4, -17)];
@@ -73,7 +83,17 @@ function spikes(r, hy, n = 9, out = 5.5) {
   return pts;
 }
 
+// Rotate everything drawn in fn around a local point (units) by deg (positive = clockwise on screen).
+function pivot(pen, [lx, ly], deg, fn) {
+  if (!deg) return fn();
+  const c = pen.ctx, [X, Y] = pen.T([lx, ly]);
+  c.save(); c.translate(X, Y); c.rotate(deg * Math.PI / 180); c.translate(-X, -Y); fn(); c.restore();
+}
+
 // ---------- characters ----------
+// Motion fields every character understands (all optional, small numbers):
+//   lean (deg, upper body around the hips), tilt (deg, head around the neck), headDy (units, head bob up/down).
+// Arms take a named pose or a blend { a, b, k } so poses can be tweened (see motion.js).
 export function drawCharacter(ctx, id, x, y, scale, pose = {}, opt = {}) {
   const C = CAST[id], p = resolvePose(C, pose), hand = (opt.style ?? 'hand') === 'hand';
   const pen = new VPen(ctx, x, y, scale, { lw: opt.lw ?? Math.max(2.4, scale * 0.95), hand, frame: opt.frame ?? 0, seed: opt.seed ?? id.length * 13 });
@@ -84,13 +104,15 @@ export function drawCharacter(ctx, id, x, y, scale, pose = {}, opt = {}) {
 
 // Sweaty Steve — spiky black hair, a mustard hoodie on a stick body. The sweat drop is his whole personality.
 function drawSteve(pen, C, p) {
-  const hy = 80, r = 15;
+  const hy = 80 + (p.headDy || 0), r = 15;
   legs(pen, 38);
-  pen.part(roundPoly([[-6.5, 62], [6.5, 62], [8, 37], [-8, 37]], 2.5), C.color, { shade: 0.18 });
-  pen.part(roundPoly([[-8, 65], [8, 65], [6, 61], [-6, 61]], 2), C.color, { shade: 0.3 });
-  pen.line([[-1.6, 61], [-1.8, 55]], pen.lw * 0.5); pen.line([[1.6, 61], [1.8, 55]], pen.lw * 0.5);
-  arms(pen, p, [0, 60]);
-  headFace(pen, p, hy, r, { before: () => pen.part(spikes(r, hy), C.hair, { shade: false }) });
+  pivot(pen, [0, 38], p.lean || 0, () => {
+    pen.part(roundPoly([[-6.5, 62], [6.5, 62], [8, 37], [-8, 37]], 2.5), C.color, { shade: 0.18 });
+    pen.part(roundPoly([[-8, 65], [8, 65], [6, 61], [-6, 61]], 2), C.color, { shade: 0.3 });
+    pen.line([[-1.6, 61], [-1.8, 55]], pen.lw * 0.5); pen.line([[1.6, 61], [1.8, 55]], pen.lw * 0.5);
+    pivot(pen, [0, 64], p.tilt || 0, () => headFace(pen, p, hy, r, { before: () => pen.part(spikes(r, hy), C.hair, { shade: false }) }));
+    arms(pen, p, [0, 60]);   // after the head, so a hand can touch the face (facepalm, chin)
+  });
 }
 
 // Nana Knuckles — a towering white beehive with a knitting needle, round glasses, a lavender dress.
@@ -150,10 +172,11 @@ function drawTed(pen, C, p, frame) {
 
 // Sgt. Snuggles — a stick cat: round charcoal head with ears, a bean body, a curly tail, a fedora and a toothpick.
 function drawCat(pen, C, p) {
-  const hy = 34, r = 15;
-  pen.line(pen.curve([9, 6], [24, 4], [20, 20]), pen.lw);
+  const hy = 34 + (p.headDy || 0), r = 15, tw = p.tail || 0;   // tail: -1..1 swish
+  pen.line(pen.curve([9, 6], [24 + tw * 3, 4 + tw * 2], [20 + tw * 9, 20 - Math.abs(tw) * 3]), pen.lw);
   pen.part(ellipsePts(0, 11, 11, 11, 36), C.color, { shade: 0.12 });
   for (const sx of [-1, 1]) pen.line([[sx * 4, 4], [sx * 4.5, 0.6], [sx * 7.5, 0.6]], pen.lw * 0.9);
+  pivot(pen, [0, 22], p.tilt || 0, () => {
   for (const sx of [-1, 1]) pen.part(roundPoly([[sx * 14.5, hy + 4], [sx * 12, hy + 19], [sx * 4.5, hy + 12]], 1.6), C.color, { shade: false });
   pen.part(ellipsePts(0, hy, r + 1, r, 56), C.color, { shade: 0.1 });
   pen.part(roundPoly([[-10, hy + 12.2], [10.5, hy + 13.4], [9, hy + 15.2], [-9, hy + 14.4]], 1.2), C.hat, { shade: 0.3 });
@@ -163,4 +186,5 @@ function drawCat(pen, C, p) {
   pen.dot(0, hy - 2, 1.2, 0.9, '#e89aac');
   face(pen, p, { cx: 0, ey: hy + 2.6, gap: 6.2, rx: 2.2, ry: 2.8, skin: C.color, my: hy - 6, ms: 0.85, cat: true, ink: '#efe9df', eye: '#f6d54a', blush: false, head: { x: 0, y: hy, w: r * 2, h: r * 2 } });
   if (!['O', 'scream', 'grin', 'wide', 'evil', 'wavy_open', 'teeth', 'tongue'].includes(p.mouth)) pen.line([[2, hy - 6.2], [9.5, hy - 8]], pen.lw * 0.6, '#e2c48f');
+  });
 }
