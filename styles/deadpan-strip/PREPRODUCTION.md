@@ -22,6 +22,7 @@ Writing rules: `JOKES.md` §0. Review after render: `QA.md`. Numbers: `channel/P
 | 12 | "Nobody understands the free hour" | Show/say any rule (daylight saving) before the joke uses it. |
 | 13 | "Trying to sleep but his mouth is narrating, looks awake" | Voice-over ≠ lip-sync: flashback faces act the state; lips move only for lines said in the scene. |
 | 14 | "Emotion too flat; about to sleep you'd explode and swear" | Build an emotion arc with one real explosion at the climax; swearing = bleep + grawlix "#@$%&!". |
+| 15 | "Scenes and lines feel a bit fast" (after speeding narration ×1.12, 0.1 s gaps) | Narration at natural speed (no atempo), ~0.25–0.3 s between lines; fit the length by cutting a beat in the script, never by speeding up. Plan ~2.0 words/s → ≈ 75 words for 38 s. |
 
 ## 2. The script table (write this, get the owner's OK, then produce)
 One row per line. Columns:
@@ -45,7 +46,7 @@ Intensity 1 (flat) … 5 (explosion). The arc must rise; the stakes decide the h
 - Never two explosions; never flat for the whole short. [lessons 3, 14]
 
 Voice settings by intensity (ElevenLabs v3): 1–2 stability 0.5; 3–4 stability 0.3, style 0.6; 5 stability 0.0, style 0.8,
-in its own take for the in-scene lines; narration sped to ~2.3–2.5 words/s (atempo ≤ 1.12) if the take runs slow.
+in its own take for the in-scene lines; narration at its natural speed (≈ 2 words/s), 0.25–0.3 s gaps; cut a beat to fit the length.
 
 ## 4. Swearing
 Never real profanity (YouTube limits ads and reach for profanity in the first seconds and in titles; international audience).

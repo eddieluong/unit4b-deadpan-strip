@@ -21,23 +21,24 @@ const FACE = { x: 540, y: 1095 };                       // where the cat sits on
 // shots cut on the line's first word or on a named word), so nothing is timed by hand.
 const LINE_DEFS = [   // id, char, caption text, gap after (s)
   ['11_s01', 'steve', 'The clocks just went back an hour.', 0.25],
-  ['11_s02', 'steve', 'One FREE hour of sleep.', 0.15],
-  ['11_s03', 'steve', 'So my body, being an idiot, woke me up at five a.m.', 0.1],
-  ['11_s04', 'steve', 'Wide awake. Like I had a MEETING.', 0.15],
-  ['11_s05', 'steve', 'I tried everything.', 0.1],
-  ['11_s06', 'steve', 'Cold side of the pillow.', 0.1],
-  ['11_s07', 'steve', 'Counting sheep.', 0.1],
-  ['11_s08', 'steve', 'The sheep got bored.', 0.15],
-  ['11_s09', 'steve', 'I watched ONE video.', 0.1],
-  ['11_s10', 'steve', 'It was five forty-one.', 0.15],
+  ['11_s02', 'steve', 'One FREE hour of sleep.', 0.28],
+  ['11_s03', 'steve', 'So my body, being an idiot, woke me up at five a.m.', 0.28],
+  ['11_s04', 'steve', 'Wide awake. Like I had a MEETING.', 0.28],
+  ['11_s05', 'steve', 'I tried everything.', 0.28],
+  ['11_s06', 'steve', 'Cold side of the pillow.', 0.28],
+  ['11_s07', 'steve', 'Counting sheep.', 0.28],
+  ['11_s08', 'steve', 'The sheep got bored.', 0.28],
+  ['11_s09', 'steve', 'I watched ONE video.', 0.28],
+  ['11_s10', 'steve', 'It was five forty-one.', 0.28],
   ['11_s11', 'steve', 'And at five fifty-eight, I was finally, FINALLY drifting off.', 1.35],
-  ['11_s12a', 'steve', 'MMMPH!', 0.1],                                   // in the scene: under the cat
+  ['11_s12a', 'steve', 'MMMPH!', 0.28],                                   // in the scene: under the cat
   ['11_s12b', 'steve', 'Are you KIDDING me?! Five more MINUTES, you little—', 0.65],   // in the scene: the explosion (+ bleep)
   ['11_n01', 'snuggles', 'Breakfast is at six.', 0.35],
   ['11_n02', 'snuggles', 'MY six.', 0.3],
   ['11_s13', 'steve', "Cats don't do daylight saving.", 0.5],
 ];
 const TITLE = ['POV: you get an', 'extra hour of sleep'];
+const CUT_SHEEP = new URLSearchParams(location.search).get('cut') === 'sheep';   // variant without the sheep beat
 let LINES = [], DUR = 0, T = {}, EV = [], SHOTS = [], STEVE = [], CAT = [];
 let VOICE = {}, WORDS = {};
 const L_ = id => LINES.find(l => l.id === id);
@@ -46,13 +47,13 @@ const wt = (id, i) => L_(id).t + Math.max(0, (WORDS[id] || [])[i]?.[1] ?? 0);   
 
 function buildTimeline() {
   let t = 0.1;
-  LINES = LINE_DEFS.map(([id, char, text, gap]) => { const L = { id, char, text, t }; t += VOICE[id].dur + gap; return L; });
+  LINES = LINE_DEFS.filter(d => !(CUT_SHEEP && ['11_s07', '11_s08'].includes(d[0]))).map(([id, char, text, gap]) => { const L = { id, char, text, t }; t += VOICE[id].dur + gap; return L; });
   DUR = +t.toFixed(2);
   T = {
     flip: 0, rewind: wt('11_s01', 4), flipEnd: L_('11_s02').t,
     off: L_('11_s03').t, snap: wt('11_s03', 6), wide: L_('11_s04').t, tie: wt('11_s04', 2),
-    tried: L_('11_s05').t, pFlip: L_('11_s06').t + 0.1, down: end('11_s06'), c520: L_('11_s07').t,
-    sheep: L_('11_s07').t, sheep3: L_('11_s08').t, phone: L_('11_s09').t, lapse: end('11_s09') - 0.25, c541: L_('11_s10').t,
+    tried: L_('11_s05').t, pFlip: L_('11_s06').t + 0.1, down: end('11_s06'), c520: L_(CUT_SHEEP ? '11_s09' : '11_s07').t,
+    sheep: CUT_SHEEP ? -1 : L_('11_s07').t, sheep3: CUT_SHEEP ? -1 : L_('11_s08').t, phone: L_('11_s09').t, lapse: end('11_s09') - 0.25, c541: L_('11_s10').t,
     c558: L_('11_s11').t, catEye: end('11_s11') + 0.15, hop: end('11_s11') + 0.75, land: L_('11_s12a').t - 0.15, burst: L_('11_s12b').t - 0.1, bleep: end('11_s12b') - 0.2,
     my: L_('11_n01').t, kitchen: L_('11_s13').t - 0.35,
   };
@@ -65,7 +66,6 @@ function buildTimeline() {
     { t: T.tried, dur: 0.25, expr: 'angry', eyes: 'closed', sit: 0, arm: 'hold', fx: ['sweat'] },      // "I tried everything."
     { t: T.pFlip - 0.25, dur: 0.2, expr: 'angry', sit: 1, fx: [] },                                    // cold side of the pillow
     { t: T.down, dur: 0.25, expr: 'angry', eyes: 'closed', sit: 0 },
-    { t: T.sheep, expr: 'dead_inside', sit: 0, look: 0 },                                              // sheep
     { t: T.phone, dur: 0.2, expr: 'nervous', mouth: 'line', look: 0.6, sit: 0, fx: [] },                       // one video
     { t: T.c541, dur: 0.15, expr: 'dead_inside', look: 0.6, sit: 0 },
     { t: T.c558, dur: 0.6, expr: 'sleepy', eyes: 'dot', lid: 0.8, mouth: 'smile', sit: 0, look: 0, fx: ['zzz'] },  // drifting off
@@ -88,6 +88,7 @@ function buildTimeline() {
     { t: L_('11_n02').t - 0.1, dur: 0.2, expr: 'deadpan', x: 680, y: 1255, scale: 4.2, tilt: 8 },
   ];
   const push = (a, b, z0, z1) => t => z0 + (z1 - z0) * ease.inOut(seg(t, a, b));
+  if (!CUT_SHEEP) STEVE.push({ t: T.sheep, expr: 'dead_inside', sit: 0, look: 0 }); STEVE.sort((a, b) => a.t - b.t);
   SHOTS = [   // [start, draw(t)] — one picture per sentence
     [0, t => { withCamera(1, 540, 900, () => shotClockFlip(t)); }],
     [T.flipEnd, t => withCamera(push(T.flipEnd, T.off, 1.3, 1.4)(t), 540, 960, () => shotSaturday(t))],
@@ -97,7 +98,7 @@ function buildTimeline() {
     [T.tie, t => { withCamera(1.45, 540, 960, () => shotTie(t)); timeTag('5:02 AM', t); }],
     [T.tried, t => { withCamera(1.6, 540, 1000, () => shotMemo(t, '5:04')); timeTag('5:04 AM', t); }],
     [T.pFlip - 0.25, t => { withCamera(1.4, 540, 960, () => shotPillow(t)); timeTag('5:05 AM', t); }],
-    [T.sheep, t => { withCamera(1.15, 520, 960, () => shotSheep(t)); timeTag('5:12 AM', t); }],
+    ...(CUT_SHEEP ? [] : [[T.sheep, t => { withCamera(1.15, 520, 960, () => shotSheep(t)); timeTag('5:12 AM', t); }]]),
     [T.phone, t => { withCamera(push(T.phone, T.c541, 1.8, 2.0)(t), 600, 1010, () => shotPhone(t)); timeTag(t < T.lapse ? '5:20 AM' : `5:${20 + Math.floor(21 * seg(onTwos(t), T.lapse, T.c541 - 0.05))} AM`, t); }],
     [T.c541, t => { withCamera(1, 540, 900, () => shotClock(t, '5:41')); timeTag('5:41 AM', t); }],
     [T.c558, t => { withCamera(push(T.c558, T.catEye, 1.8, 2.0)(t), 540, 1010, () => shotDroop(t)); timeTag('5:58 AM', t); }],
@@ -112,7 +113,7 @@ function buildTimeline() {
     { t: 0.05, type: 'buzz' }, { t: T.rewind, type: 'whoosh' }, { t: T.rewind + 0.5, type: 'choir' }, { t: T.flipEnd, type: 'lullaby' },
     { t: T.off, type: 'click' }, { t: T.off + 0.1, type: 'purr' }, { t: T.snap, type: 'sting' }, { t: T.snap + 0.6, type: 'tick2' },
     { t: T.tie, type: 'pop' }, { t: T.pFlip, type: 'whoosh' }, { t: T.pFlip + 0.6, type: 'pillow' }, { t: T.down, type: 'pillow' },
-    { t: T.sheep, type: 'pop' }, { t: T.phone, type: 'buzz' }, { t: T.lapse, type: 'lapse' }, { t: T.c558, type: 'hum' },
+    ...(CUT_SHEEP ? [] : [{ t: T.sheep, type: 'pop' }]), { t: T.phone, type: 'buzz' }, { t: T.lapse, type: 'lapse' }, { t: T.c558, type: 'hum' },
     { t: T.catEye, type: 'ding' }, { t: T.hop, type: 'hops' }, { t: T.land - 0.05, type: 'stop' }, { t: T.land, type: 'thump' }, { t: T.burst, type: 'whoosh' }, { t: T.bleep, type: 'bleep' },
     { t: T.kitchen + 0.2, type: 'kibble' }, { t: T.kitchen + 0.9, type: 'plink' }, { t: T.kitchen + 0.2, type: 'outro' }, { t: 0.0, type: 'tick' },
   ].sort((a, b) => a.t - b.t);
