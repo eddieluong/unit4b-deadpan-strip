@@ -2,6 +2,32 @@
 
 For an international, English-speaking audience on YouTube Shorts, TikTok and Reels. Read with `CAST.md` and `STYLE.md`.
 
+## 0. Voice-led storytelling for stiff animation (2026-10-26 — read first)
+
+Research: `research/viral/2026-10-26-storytelling/` (TRANSCRIPTS.md measured, CHANNELS.md, LITERATURE.md).
+Our art is nearly static, so **the voice carries the short and the pictures illustrate it** ("illustrated radio" —
+Hanna-Barbera, Casually Explained, Ricky Gervais Show). Reference shorts talk 2.2–3.7 words/s; Tập 1–2 talked 1.2–1.3
+and left silent stretches the drawings couldn't hold. This replaces the "show, don't say / 5–8 lines" calibration below
+for the next episodes (test on one episode, compare retention with Tập 1–2, then keep or roll back one notch).
+
+1. **Funny with the screen off.** Read the script aloud with no pictures; if it isn't funny, the drawings won't save it.
+2. **One opinionated voice, from second 0, ~2.5 words/s** (≈ 70–90 words for 30 s). Usually Steve telling it to us in the
+   first person, conversational and dry ("Last night…", "My toxic trait is…", "Every time I…"); Snuggles may interrupt
+   with one deadpan aside. No title-card openings, no silent first second.
+3. **The first sentence states the premise as a judgement** (≤ 2 s), and raises a question the viewer is sure will be
+   answered within 30 s. Never open on the thing that gives away the ending.
+4. **A laugh or a new fact every 5–8 s**: lists and escalations work best ("I tried everything: … The sheep got bored.").
+5. **A turn at 12–18 s** (escalation or a new problem): swipes cluster where the payoff becomes guessable.
+6. **Every joke plants one wrong assumption and flips it** (incongruity → resolution that makes sense afterwards).
+7. **Concrete, odd, international words**: numbers, objects, times ("five forty-one", "one banana"); no idioms or puns.
+8. **Each sentence gets its own drawing** — cut between stills (a new picture or new words every ~1.5 s, spacing
+   irregular); draw what the words say literally; move only on the punchline.
+9. **Flat voice, big picture**: the delivery stays a tired real person; exaggeration lives in the cutaway drawing.
+   Punchline: lower and slower, with one held beat only before the biggest reveal.
+10. **Plant early, pay off late; end on a reframe, a self-own or a worse second example** that can loop to the start.
+11. **Edit for the face (Kuleshov)**: hold a deadpan face → cut to the absurd thing → cut back; no acting needed.
+12. **Show any rule the joke needs** (daylight saving, a holiday, a custom) before the joke uses it.
+
 ## 1. Rules for every short
 
 - **Length**: 25–30 s by default (40 s max), one joke. Tập 1 at 40 s lost viewers at 0:18 (45.5 % viewed): every 2–3 s needs something new. A second joke only as an extra panel after the first lands.
