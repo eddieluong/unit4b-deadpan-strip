@@ -48,7 +48,7 @@ until the channel has an audience that knows them.
   this frame?") before the user sees anything.
 
 ## 5. Publishing and packaging
-- **Cadence**: 2 shorts a week to start (Tue + Fri), 3 once the generator works. Same day on YouTube, Facebook, Instagram.
+- **Cadence** (user, 2026-10-26): a new short every 2–3 days, posted as soon as it passes QA and review. Same day on YouTube, Facebook, Instagram.
 - **Time**: 17:00–20:00 US Eastern (05:00–08:00 VN) on weekdays; seasonal ones on the morning of the day.
 - **Title** = the situation in ≤ 50 characters, spoken in the first line too.
 - **First frame** = the premise picture with the first word already on screen (no title card, no silence).
@@ -68,9 +68,7 @@ Every video gets a `channel/PERFORMANCE.md` entry at 48 h and 7 d; rules that co
 ## 7. Next 2 weeks
 | When | What |
 |---|---|
-| Mon 26 – Wed 28 Oct | produce Tập 2 as script A (voice-led); build the storyboard generator while doing it |
-| Thu 29 – Fri 30 | QA + user review; prepare captions, pinned question |
-| Sun 1 Nov 08:00 ET | post Tập 2 (all three platforms) |
-| Mon 2 – Tue 3 Nov | Tập 1 + Tập 2 post-mortems; produce Tập 3 (Self-checkout) |
-| Fri 6 Nov | post Tập 3; produce Tập 4 (Leaving the house) |
-| Tue 10 Nov | post Tập 4; review the 3-video test, decide the main series |
+| Mon 26 Oct | Tập 2 voice-led (v5) done; post as soon as approved (EU clocks went back 25 Oct, US on 1 Nov) |
+| Tue 27 – Wed 28 | produce Tập 3 (Self-checkout) with the voice-driven timeline; post ~28–29 Oct |
+| Thu 29 – Fri 30 | Tập 1 + Tập 2 48 h post-mortems; produce Tập 4 (Leaving the house); post ~31 Oct |
+| then | every 2–3 days; after Tập 4 review the 3-video test and pick the main series |
