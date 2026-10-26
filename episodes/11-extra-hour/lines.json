@@ -1,20 +1,83 @@
 [
- {"id": "11_01_snuggles", "char": "snuggles", "expr": "deadpan", "stability": 0.5, "style": 0.4, "speed": 0.95,
-  "text": "[hushed, like a nature documentary] Saturday night. One free hour. The human is very excited."},
- {"id": "11_02_steve", "char": "steve", "expr": "happy", "stability": 0.5, "style": 0.5, "speed": 1.05,
-  "text": "[excited, giddy] Free hour. FREE hour."},
- {"id": "11_03_snuggles", "char": "snuggles", "expr": "deadpan", "stability": 0.5, "style": 0.4, "speed": 0.95,
-  "text": "[dry] His body did not get the memo."},
- {"id": "11_04_steve", "char": "steve", "expr": "angry", "stability": 0.5, "style": 0.5, "speed": 1.05,
-  "text": "[determined, under his breath] Okay. Cold side. Let's go."},
- {"id": "11_05_steve", "char": "steve", "expr": "nervous", "stability": 0.5, "style": 0.45, "speed": 1.0,
-  "text": "[whispering, bargaining with himself] Just ONE video."},
- {"id": "11_06_steve", "char": "steve", "expr": "sleepy", "stability": 0.5, "style": 0.45, "speed": 0.9,
-  "text": "[drowsy, relieved mumble] Here it comes."},
- {"id": "11_07_snuggles", "char": "snuggles", "expr": "smug", "stability": 0.5, "style": 0.4, "speed": 0.95,
-  "text": "[flat, matter-of-fact] Breakfast is at six."},
- {"id": "11_08_snuggles", "char": "snuggles", "expr": "deadpan", "stability": 0.5, "style": 0.4, "speed": 0.9,
-  "text": "[flat] MY six."},
- {"id": "11_09_steve", "char": "steve", "expr": "dead_inside", "stability": 0.5, "style": 0.45, "speed": 0.95,
-  "text": "[quiet, flat, half asleep] Happy daylight saving."}
+ {
+  "id": "11_01_snuggles",
+  "char": "snuggles",
+  "expr": "deadpan",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 0.95,
+  "text": "[hushed, like a nature documentary] Tonight the clocks go back one hour. The human gets an extra hour of sleep."
+ },
+ {
+  "id": "11_02_steve",
+  "char": "steve",
+  "expr": "happy",
+  "stability": 0.5,
+  "style": 0.5,
+  "speed": 1.05,
+  "text": "[excited, giddy] One more HOUR of sleep."
+ },
+ {
+  "id": "11_03_snuggles",
+  "char": "snuggles",
+  "expr": "deadpan",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 0.95,
+  "text": "[dry] His body did not get the memo."
+ },
+ {
+  "id": "11_04_steve",
+  "char": "steve",
+  "expr": "angry",
+  "stability": 0.5,
+  "style": 0.5,
+  "speed": 1.05,
+  "text": "[determined, under his breath] Okay. Cold side. Let's go."
+ },
+ {
+  "id": "11_05_steve",
+  "char": "steve",
+  "expr": "nervous",
+  "stability": 0.5,
+  "style": 0.45,
+  "speed": 1.0,
+  "text": "[whispering, bargaining with himself] Just ONE video."
+ },
+ {
+  "id": "11_06_steve",
+  "char": "steve",
+  "expr": "sleepy",
+  "stability": 0.5,
+  "style": 0.45,
+  "speed": 0.9,
+  "text": "[drowsy, relieved mumble] Here it comes."
+ },
+ {
+  "id": "11_07_snuggles",
+  "char": "snuggles",
+  "expr": "smug",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 0.95,
+  "text": "[flat, matter-of-fact] Breakfast is at six."
+ },
+ {
+  "id": "11_08_snuggles",
+  "char": "snuggles",
+  "expr": "deadpan",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 0.9,
+  "text": "[flat] MY six."
+ },
+ {
+  "id": "11_09_steve",
+  "char": "steve",
+  "expr": "dead_inside",
+  "stability": 0.5,
+  "style": 0.45,
+  "speed": 0.95,
+  "text": "[quiet, flat, half asleep] Happy daylight saving."
+ }
 ]

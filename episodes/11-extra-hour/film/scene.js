@@ -17,28 +17,28 @@ const CATBED = { x: 720, y: 1330 };                     // the cat asleep at the
 const FACE = { x: 540, y: 1095 };                       // where the cat sits on his face
 
 const LINES = [
-  ['11_01_snuggles', 'snuggles', 1.7, 'Saturday night. One free hour. The human is very excited.'],
-  ['11_02_steve', 'steve', 7.0, 'Free hour. FREE hour.'],
+  ['11_01_snuggles', 'snuggles', 1.7, 'Tonight the clocks go back one hour. The human gets an extra hour of sleep.'],
+  ['11_02_steve', 'steve', 7.0, 'One more HOUR of sleep.'],
   ['11_03_snuggles', 'snuggles', 11.7, 'His body did not get the memo.'],
   ['11_04_steve', 'steve', 14.5, "Okay. Cold side. Let's go."],
-  ['11_05_steve', 'steve', 17.9, 'Just ONE video.'],
-  ['11_06_steve', 'steve', 24.0, 'Here it comes.'],
-  ['11_07_snuggles', 'snuggles', 27.6, 'Breakfast is at six.'],
-  ['11_08_snuggles', 'snuggles', 29.6, 'MY six.'],
-  ['11_09_steve', 'steve', 32.3, 'Happy daylight saving.'],
+  ['11_05_steve', 'steve', 18.8, 'Just ONE video.'],
+  ['11_06_steve', 'steve', 25.0, 'Here it comes.'],
+  ['11_07_snuggles', 'snuggles', 28.7, 'Breakfast is at six.'],
+  ['11_08_snuggles', 'snuggles', 30.6, 'MY six.'],
+  ['11_09_steve', 'steve', 33.1, 'Happy daylight saving.'],
 ].map(([id, char, t, text]) => ({ id, char, t, text }));
-const DUR = 35.0;
+const DUR = 36.2;
 const TITLE = ['POV: you get an', 'extra hour of sleep'];
 const T = {
-  cold: 1.6, flip: 3.1, flipEnd: 4.0, steve: 6.9, reach: 9.6, off: 10.1, snap: 10.8, memo: 11.5,
-  sitUp: 14.0, pFlip: 14.4, down: 16.4, c520: 17.1, phone: 17.7, lapse: 20.0, c541: 20.8, sheep: 21.4,
-  c558: 23.6, catEye: 25.3, hop: 26.1, land: 26.9, my: 29.5, kitchen: 31.2,
+  cold: 1.6, flip: 2.2, rewind: 3.1, flipEnd: 4.6, steve: 6.9, reach: 9.6, off: 10.1, snap: 10.8, memo: 11.5,
+  sitUp: 14.0, pFlip: 14.4, down: 17.0, c520: 18.0, phone: 18.6, lapse: 21.1, c541: 21.9, sheep: 22.5,
+  c558: 24.7, catEye: 26.4, hop: 27.2, land: 28.0, my: 30.5, kitchen: 32.0,
 };
 let VOICE = {}, WORDS = {};
 
 const EV = [
   ...LINES.map(L => ({ t: L.t, type: 'voice', id: L.id })),
-  { t: 0.0, type: 'tick' }, { t: 0.3, type: 'purr' }, { t: T.cold, type: 'lullaby' }, { t: T.flip, type: 'choir' },
+  { t: 0.0, type: 'tick' }, { t: 0.3, type: 'purr' }, { t: T.cold, type: 'lullaby' }, { t: T.flip, type: 'buzz' }, { t: T.rewind, type: 'whoosh' }, { t: T.rewind + 0.5, type: 'choir' },
   { t: T.off, type: 'click' }, { t: T.snap, type: 'sting' }, { t: T.snap + 0.6, type: 'tick2' },
   { t: T.pFlip, type: 'whoosh' }, { t: T.pFlip + 0.35, type: 'pillow' }, { t: T.down, type: 'pillow' },
   { t: T.phone, type: 'buzz' }, { t: T.lapse, type: 'lapse' }, { t: T.sheep, type: 'pop' },
@@ -141,7 +141,7 @@ const STEVE = [
   { t: T.cold, expr: 'neutral', look: -0.8, sit: 1, arm: 'hold', tilt: 0 },                          // Saturday night, sitting up
   { t: T.flip + 0.3, expr: 'happy', look: -0.5, sit: 1, tilt: -5 },                                 // the clock goes back
   { t: T.steve, dur: 0.3, expr: 'grin', arm: 'wide', sit: 1, tilt: 4, look: 0 },                     // "Free hour."
-  { t: 8.2, dur: 0.25, expr: 'happy', arm: 'wide', sit: 1, tilt: -6 },                               // "FREE hour."
+  { t: 7.75, dur: 0.25, expr: 'happy', arm: 'wide', sit: 1, tilt: -6 },                              // "…HOUR of sleep."
   { t: T.reach, dur: 0.3, expr: 'smug', armL: 'hold', armR: 'reach', sit: 1, tilt: 6, look: 0.9 },  // reaches for the lamp
   { t: T.off + 0.2, dur: 0.3, expr: 'sleepy', arm: 'hold', sit: 0, tilt: 0, look: 0 },               // lies down, dark
   { t: T.snap, dur: 0.08, expr: 'shocked', eyes: 'wide', mouth: 'line', fx: [], sit: 0 },           // eyes snap open
@@ -236,12 +236,27 @@ function bigClock(t, text, { warmLight = false } = {}) {   // insert: the bedsid
   hand(text, 540, 915, 230, 0, '#ff5a4a', 'Fredoka', '600');
 }
 function shotClock(t, text) { bigClock(t, text); }
-function shotClockFlip(t) {   // 1:59 → 1:00 with a beam of light and "+1 hour": a gift from above
-  bigClock(t, onTwos(t) < T.flip + 0.35 ? '1:59' : '1:00', { warmLight: true });
-  const a = Math.sin(Math.PI * seg(t, T.flip, T.flipEnd));
-  ctx.save(); ctx.globalAlpha = 0.5 * a; ctx.fillStyle = '#fff4c0';
-  ctx.beginPath(); ctx.moveTo(430, PY); ctx.lineTo(650, PY); ctx.lineTo(900, 1150); ctx.lineTo(180, 1150); ctx.closePath(); ctx.fill(); ctx.restore();
-  if (onTwos(t) >= T.flip + 0.35) hand('+1 hour', 540, 560, 120, -0.04, '#2e8b57', 'Fredoka', '600');
+function shotClockFlip(t) {   // the phone says why; the clock rewinds 2:00 → 1:00; "+1 hour of sleep"
+  const tq = onTwos(t), rew = seg(tq, T.rewind, T.rewind + 0.5), done = tq >= T.rewind + 0.5;
+  bigClock(t, done ? '1:00' : '2:00', { warmLight: true });
+  if (rew > 0 && rew < 1) {   // rewinding: a big counter-clockwise arrow spins round the clock
+    ctx.save(); ctx.translate(540, 915); ctx.rotate(-rew * Math.PI * 2); ctx.strokeStyle = '#2e8b57'; ctx.lineWidth = 16; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.arc(0, 0, 330, -0.2, -Math.PI * 1.6, true); ctx.stroke();
+    ctx.translate(330 * Math.cos(-Math.PI * 1.6), 330 * Math.sin(-Math.PI * 1.6)); ctx.rotate(-Math.PI * 1.6 - Math.PI / 2);
+    ctx.fillStyle = '#2e8b57'; ctx.beginPath(); ctx.moveTo(0, -36); ctx.lineTo(30, 0); ctx.lineTo(-30, 0); ctx.closePath(); ctx.fill(); ctx.restore();
+  }
+  if (done) hand('+1 hour of sleep', 540, 1290, 84, -0.03, '#2e8b57', 'Fredoka', '600');
+  // the phone notification that explains it
+  const k = ease.out(seg(t, T.flip, T.flip + 0.3)), y0 = 240 - (1 - k) * 260;
+  const p = spen(t, 93);
+  p.part(roundPoly([[90, y0], [990, y0], [990, y0 + 250], [90, y0 + 250]], 30), '#fffdf8', { shade: false, lw: 4 });
+  p.part(roundPoly([[120, y0 + 30], [200, y0 + 30], [200, y0 + 110], [120, y0 + 110]], 18), '#3d5a96', { shade: false, lw: 3 });
+  hand('↺', 160, y0 + 72, 56, 0, '#ffffff', 'Fredoka', '600');
+  ctx.save(); ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillStyle = INK;
+  ctx.font = '600 46px Fredoka'; ctx.fillText('Daylight saving time ends', 225, y0 + 70);
+  ctx.font = '42px "Patrick Hand"'; ctx.fillStyle = '#4a4252'; ctx.fillText('Tonight at 2:00, clocks go back 1 hour', 225, y0 + 128);
+  ctx.fillText('to 1:00. Enjoy the extra hour of sleep!', 225, y0 + 180);
+  ctx.restore();
 }
 function shotMemo(t) { bedScene(t, { clock: '5:02' }); night(0.9); }
 function shotPillow(t) { bedScene(t, { clock: '5:05', pillowFlip: true }); night(0.85); if (t > T.pFlip + 0.6 && t < T.down + 0.6) hand('cold side', 760, 860, 54, -0.06, '#bfe3ff', 'Fredoka', '600'); }

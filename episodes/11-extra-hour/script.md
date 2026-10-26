@@ -11,6 +11,13 @@
 | Built from | `channel/PERFORMANCE.md` Tập 1: 45.5 % viewed, swipe at 0:18 → hook asks / punch answers, something new every 2–3 s, 25–30 s, a question for the comments. |
 
 
+## v4 (2026-10-26) — "nobody gets where the free hour comes from"
+The premise needs daylight saving time, which much of the world (Vietnam included) doesn't have. Now explained on screen
+and in the narration: a phone notification ("Daylight saving time ends — tonight at 2:00 clocks go back 1 hour to 1:00"),
+the clock rewinds 2:00 → 1:00 with a counter-clockwise arrow, "+1 hour of sleep"; narrator: "Tonight the clocks go back
+one hour. The human gets an extra hour of sleep."; Steve: "One more HOUR of sleep." 36.2 s, punch at 30.6 s (84.5 %).
+Lesson (QA.md): never assume a cultural/seasonal rule is known — show the rule itself on screen before the joke uses it.
+
 ## v2 (2026-10-26) — after "stiff" + "lie on his back, cat sits straight on his face"
 Bed seen from its foot (Steve on his back, face to camera); cat asleep at the foot of the bed from frame 1, wakes before
 him; three specific attempts; motion layer v2 (purposeful only); kinetic word captions. 35.0 s, punch "MY six." at 29.6 s (84.6 %).

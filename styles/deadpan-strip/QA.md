@@ -29,6 +29,7 @@ and exits non-zero on a failure. Run it, then do the rest by eye on a contact sh
 ### Before writing
 - [ ] The problem is something most adults have lived. Write it in one line without any character names.
 - [ ] The joke works for a first-time viewer who knows nothing about the cast.
+- [ ] Any rule the joke depends on (a holiday, a season, a local custom such as daylight saving time) is shown or said on screen before the joke uses it; the international audience may not have it.
 - [ ] Not already in `episodes/BANK.md`.
 
 ### Script
