@@ -23,12 +23,14 @@ Writing rules: `JOKES.md` §0. Review after render: `QA.md`. Numbers: `channel/P
 | 13 | "Trying to sleep but his mouth is narrating, looks awake" | Voice-over ≠ lip-sync: flashback faces act the state; lips move only for lines said in the scene. |
 | 14 | "Emotion too flat; about to sleep you'd explode and swear" | Build an emotion arc with one real explosion at the climax; swearing = bleep + grawlix "#@$%&!". |
 | 15 | "Scenes and lines feel a bit fast" (after speeding narration ×1.12, 0.1 s gaps) | Narration at natural speed (no atempo), ~0.25–0.3 s between lines; fit the length by cutting a beat in the script, never by speeding up. Plan ~2.0 words/s → ≈ 75 words for 38 s. |
+| 16 | "Don't speed up to hit a length; length is free — it's the pacing, how it pauses" | No length target. Gaps follow the beat: setup→payoff 0.3 s · list items 0.35 · before a laugh line 0.45 · after a joke 0.7 (room to laugh) · time passing 0.6 · before the punch 0.8; keep natural pauses inside lines (only > 0.7 s shortened to 0.5). Write the gap of each row in the script table. |
+| 17 | "There must be silent moments so the viewer understands the story" | After each turn of the story leave a silent beat (0.6–1 s) on a picture that explains it — usually the character's face reacting (Kuleshov), not an empty insert; a silent beat never shows only an object for > 3 s. |
 
 ## 2. The script table (write this, get the owner's OK, then produce)
 One row per line. Columns:
 
-| # | Speaker | VO or in-scene | Line (caption text) | Emotion | Intensity 1–5 | Stressed word | Picture (what the frame shows) | Motion (and its reason) |
-|---|---|---|---|---|---|---|---|---|
+| # | Speaker | VO or in-scene | Line (caption text) | Emotion | Intensity 1–5 | Stressed word | Pause after (beat type) | Picture (what the frame shows) | Motion (and its reason) |
+|---|---|---|---|---|---|---|---|---|---|
 
 Rules for the table:
 - **VO or in-scene** decides lip-sync. VO = the character tells it later (no lip movement on screen); in-scene = said in the moment (lip-sync, face matches the words).

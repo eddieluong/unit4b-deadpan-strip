@@ -11,7 +11,7 @@ and left silent stretches the drawings couldn't hold. This replaces the "show, d
 for the next episodes (test on one episode, compare retention with Tập 1–2, then keep or roll back one notch).
 
 1. **Funny with the screen off.** Read the script aloud with no pictures; if it isn't funny, the drawings won't save it.
-2. **One opinionated voice, from second 0, ~2.5 words/s** (≈ 70–90 words for 30 s). Usually Steve telling it to us in the
+2. **One opinionated voice, from second 0, at its natural pace (~2 words/s)** with beat-based pauses (PREPRODUCTION.md #16). Usually Steve telling it to us in the
    first person, conversational and dry ("Last night…", "My toxic trait is…", "Every time I…"); Snuggles may interrupt
    with one deadpan aside. No title-card openings, no silent first second.
 3. **The first sentence states the premise as a judgement** (≤ 2 s), and raises a question the viewer is sure will be
@@ -31,7 +31,7 @@ for the next episodes (test on one episode, compare retention with Tập 1–2, 
 
 ## 1. Rules for every short
 
-- **Length**: 25–30 s by default (40 s max), one joke. Tập 1 at 40 s lost viewers at 0:18 (45.5 % viewed): every 2–3 s needs something new. A second joke only as an extra panel after the first lands.
+- **Length is free** (owner, 2026-10-26): never speed up or squeeze to hit a length; pace the pauses by beat (PREPRODUCTION.md #16). Keep something new every 2–3 s (Tập 1 lost viewers in a 5–6 s stretch with nothing new). A second joke only as an extra panel after the first lands.
 - **Hook in the first 1.5 s**: open on the strangest image in the episode *and* a line that raises a question ("Who's Ted?", "Why is the thermostat gone?"). No logos, no intros, no establishing shots.
 - **Punchline at 70–85 % of the runtime**, then a 0.8–1.6 s silent beat, then at most one button (reaction, extra panel or aside).
 - **Loop the ending** when possible: the last frame or line flows back into the first, so the short replays itself.

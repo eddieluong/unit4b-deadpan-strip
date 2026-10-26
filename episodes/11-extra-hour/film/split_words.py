@@ -63,12 +63,12 @@ def split(char):
         loud = np.where(db[a:b] > -32)[0]
         s = max(a, a + loud[0] - 4); e = min(b, a + loud[-1] + 30)
         y = x[s * 240:e * 240].copy()
-        ry = frames_rms(y); dby = 20 * np.log10(ry / ry.max()); qq = dby < -35; jj = 0; keep = []   # cap internal pauses at 0.3 s
+        ry = frames_rms(y); dby = 20 * np.log10(ry / ry.max()); qq = dby < -35; jj = 0; keep = []   # keep natural pauses; cap > 0.7 s at 0.5 s
         while jj < len(qq):
             if qq[jj]:
                 k2 = jj
                 while k2 < len(qq) and qq[k2]: k2 += 1
-                if jj > 0 and k2 < len(qq) and k2 - jj > 40: keep.append((jj + 15, k2 - 15))
+                if jj > 0 and k2 < len(qq) and k2 - jj > 70: keep.append((jj + 25, k2 - 25))   # only pauses > 0.7 s, shortened to 0.5 s
                 jj = k2
             else: jj += 1
         for a2, b2 in reversed(keep):

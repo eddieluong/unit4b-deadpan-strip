@@ -19,23 +19,23 @@ const FACE = { x: 540, y: 1095 };                       // where the cat sits on
 // v5 (voice-led, research/viral/2026-10-26-storytelling): Steve tells it in the first person at ~2.3 words/s; one picture
 // per sentence; the timeline is computed from the voice take (each line starts after the previous one + its gap, and
 // shots cut on the line's first word or on a named word), so nothing is timed by hand.
-const LINE_DEFS = [   // id, char, caption text, gap after (s)
-  ['11_s01', 'steve', 'The clocks just went back an hour.', 0.25],
-  ['11_s02', 'steve', 'One FREE hour of sleep.', 0.28],
-  ['11_s03', 'steve', 'So my body, being an idiot, woke me up at five a.m.', 0.28],
-  ['11_s04', 'steve', 'Wide awake. Like I had a MEETING.', 0.28],
-  ['11_s05', 'steve', 'I tried everything.', 0.28],
-  ['11_s06', 'steve', 'Cold side of the pillow.', 0.28],
-  ['11_s07', 'steve', 'Counting sheep.', 0.28],
-  ['11_s08', 'steve', 'The sheep got bored.', 0.28],
-  ['11_s09', 'steve', 'I watched ONE video.', 0.28],
-  ['11_s10', 'steve', 'It was five forty-one.', 0.28],
+const LINE_DEFS = [   // id, char, caption text, gap after (s) — gaps follow the beat: setup→payoff 0.3, list 0.35, before a laugh line 0.45, after a joke 0.7 (room to laugh), time passing 0.6, before the punch 0.8
+  ['11_s01', 'steve', 'The clocks just went back an hour.', 0.3],
+  ['11_s02', 'steve', 'One FREE hour of sleep.', 0.7],
+  ['11_s03', 'steve', 'So my body, being an idiot, woke me up at five a.m.', 0.4],
+  ['11_s04', 'steve', 'Wide awake. Like I had a MEETING.', 0.7],
+  ['11_s05', 'steve', 'I tried everything.', 0.3],
+  ['11_s06', 'steve', 'Cold side of the pillow.', 0.35],
+  ['11_s07', 'steve', 'Counting sheep.', 0.45],
+  ['11_s08', 'steve', 'The sheep got bored.', 0.7],
+  ['11_s09', 'steve', 'I watched ONE video.', 0.6],
+  ['11_s10', 'steve', 'It was five forty-one.', 0.7],
   ['11_s11', 'steve', 'And at five fifty-eight, I was finally, FINALLY drifting off.', 1.35],
   ['11_s12a', 'steve', 'MMMPH!', 0.28],                                   // in the scene: under the cat
   ['11_s12b', 'steve', 'Are you KIDDING me?! Five more MINUTES, you little—', 0.65],   // in the scene: the explosion (+ bleep)
-  ['11_n01', 'snuggles', 'Breakfast is at six.', 0.35],
-  ['11_n02', 'snuggles', 'MY six.', 0.3],
-  ['11_s13', 'steve', "Cats don't do daylight saving.", 0.5],
+  ['11_n01', 'snuggles', 'Breakfast is at six.', 0.8],
+  ['11_n02', 'snuggles', 'MY six.', 0.6],
+  ['11_s13', 'steve', "Cats don't do daylight saving.", 0.8],
 ];
 const TITLE = ['POV: you get an', 'extra hour of sleep'];
 const CUT_SHEEP = new URLSearchParams(location.search).get('cut') === 'sheep';   // variant without the sheep beat
@@ -101,6 +101,7 @@ function buildTimeline() {
     ...(CUT_SHEEP ? [] : [[T.sheep, t => { withCamera(1.15, 520, 960, () => shotSheep(t)); timeTag('5:12 AM', t); }]]),
     [T.phone, t => { withCamera(push(T.phone, T.c541, 1.8, 2.0)(t), 600, 1010, () => shotPhone(t)); timeTag(t < T.lapse ? '5:20 AM' : `5:${20 + Math.floor(21 * seg(onTwos(t), T.lapse, T.c541 - 0.05))} AM`, t); }],
     [T.c541, t => { withCamera(1, 540, 900, () => shotClock(t, '5:41')); timeTag('5:41 AM', t); }],
+    [end('11_s10') + 0.05, t => { withCamera(push(end('11_s10'), T.c558, 2.0, 2.15)(t), 540, 1000, () => shotMemo(t, '5:41')); timeTag('5:41 AM', t); }],   // the silent beat: his face takes it in
     [T.c558, t => { withCamera(push(T.c558, T.catEye, 1.8, 2.0)(t), 540, 1010, () => shotDroop(t)); timeTag('5:58 AM', t); }],
     [T.catEye, t => withCamera(2.6, CATBED.x, CATBED.y - 110, () => shotCatEye(t))],
     [T.hop, t => { withCamera(push(T.hop, T.my, 1.25, 1.45)(t), 560, 1080, () => shotHop(t), 540 + (t >= T.land && t < T.land + 0.25 ? (Math.floor(t * 24) % 2 ? 12 : -12) : 0)); timeTag(t >= T.land ? '6:00 AM' : '5:59 AM', t); }],

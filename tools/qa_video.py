@@ -3,7 +3,7 @@
     python tools/qa_video.py episodes/10-we-missed-you/film/out/Tap01-we-missed-you.mp4 [--punch 30.4]
 
 Reports:
-  - duration (target 25–40 s) and, with --punch, where the punchline falls (target 70–85 %)
+  - duration (information only — length is free; pacing matters, see PREPRODUCTION.md §1 #16) and, with --punch, where the punchline falls (target 70–85 %)
   - static stretches >= 3 s in the art area. Frames 1 s apart are compared after a 5x5 block blur, because the
     hand-drawn line boil changes every frame and would otherwise count as motion.
   - mean level of the first 1.8 s (a near-silent opening loses autoplay viewers; aim above about -30 dBFS)
@@ -26,7 +26,7 @@ def main():
     fails = []
 
     dur = float(json.loads(run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'json', a.video]).stdout)['format']['duration'])
-    print(f'duration      {dur:5.1f} s   (target 25–40)'); fails += ['duration'] if not 25 <= dur <= 40.5 else []
+    print(f'duration      {dur:5.1f} s   (info; length is free)')
     if a.punch:
         pos = a.punch / dur * 100
         print(f'punchline     {pos:5.1f} %   (target 70–85)'); fails += ['punch position'] if not 70 <= pos <= 85 else []
