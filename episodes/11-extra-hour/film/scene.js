@@ -57,7 +57,7 @@ function buildTimeline() {
   };
   STEVE = [
     { t: 0, expr: 'happy', sit: 1, arm: 'wide', tilt: -4 },
-    { t: T.flipEnd, dur: 0.3, expr: 'happy', arm: 'wide', sit: 1, tilt: -6, fx: ['sparkle'] },        // "One FREE hour of sleep."
+    { t: T.flipEnd, dur: 0.3, expr: 'happy', mouth: 'smile', arm: 'wide', sit: 1, tilt: -6, fx: ['sparkle'] },        // "One FREE hour of sleep."
     { t: T.off, dur: 0.3, expr: 'sleepy', mouth: 'smile', arm: 'hold', sit: 0, tilt: 0, fx: [] },     // asleep, smiling
     { t: T.snap, dur: 0.08, expr: 'shocked', eyes: 'wide', mouth: 'line', sit: 0 },                    // 5:02, eyes snap open
     { t: T.tie, dur: 0.2, expr: 'shocked', eyes: 'wide', mouth: 'line', sit: 1, arm: 'hold' },        // "like I had a MEETING": sitting up in a tie
@@ -65,10 +65,10 @@ function buildTimeline() {
     { t: T.pFlip - 0.25, dur: 0.2, expr: 'angry', sit: 1, fx: [] },                                    // cold side of the pillow
     { t: T.down, dur: 0.25, expr: 'angry', eyes: 'closed', sit: 0 },
     { t: T.sheep, expr: 'dead_inside', sit: 0, look: 0 },                                              // sheep
-    { t: T.phone, dur: 0.2, expr: 'nervous', mouth: 'line', look: 0.6, sit: 0 },                       // one video
+    { t: T.phone, dur: 0.2, expr: 'nervous', mouth: 'line', look: 0.6, sit: 0, fx: [] },                       // one video
     { t: T.c541, dur: 0.15, expr: 'dead_inside', look: 0.6, sit: 0 },
-    { t: T.c558, dur: 0.6, expr: 'sleepy', eyes: 'dot', lid: 0.55, mouth: 'smile', sit: 0, look: 0 },  // drifting off
-    { t: T.catEye, dur: 1.0, expr: 'sleepy', eyes: 'dot', lid: 0.92, mouth: 'smile', sit: 0 },
+    { t: T.c558, dur: 0.6, expr: 'sleepy', eyes: 'dot', lid: 0.8, mouth: 'smile', sit: 0, look: 0, fx: ['zzz'] },  // drifting off
+    { t: L_('11_s11').t + 2.2, dur: 1.2, expr: 'sleepy', mouth: 'smile', sit: 0, fx: ['zzz'] },             // asleep (eyes closed)
     { t: T.land, dur: 0.06, expr: 'shocked', eyes: 'wide', sit: 0 },
   ];
   CAT = [
@@ -202,9 +202,9 @@ function lamp(t, on) {
 
 // ---------- acting tracks (t in seconds, poses eased between keys) ----------
 function steveInBed(t, extra = {}) {
-  const tq = onTwos(t), base = track(STEVE, tq), talk = talking('steve', tq);
-  const pose = sum(base, idle(tq, 1), talk ? talk.nod : {}, extra);
-  if (talk && talk.mouth) pose.mouth = talk.mouth;
+  // In bed it's a flashback: Steve narrates over it (voice-over), so no lip-sync and no talking nods here.
+  const tq = onTwos(t), base = track(STEVE, tq);
+  const pose = sum(base, idle(tq, 1), extra);
   if ((tq + 0.7) % 4.2 < 0.17 && (!pose.eyes || pose.eyes === 'dot') && !['happy', 'sleepy'].includes(pose.expr) && pose.lid === undefined) pose.eyes = 'closed';
   const s = Math.max(0, Math.min(1, base.sit ?? 0)), y = LIE_Y + (SIT_Y - LIE_Y) * s, top = 1092 + 48 * s;
   delete pose.sit;
