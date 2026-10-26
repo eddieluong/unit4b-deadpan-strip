@@ -15,6 +15,7 @@ video to anyone. `JOKES.md` holds the writing rules; this file holds the review.
 | 5 | v4 | "Now you cut all the dialogue and lost the charm." | Over-corrected again: cut lines that carried attitude and irony along with the descriptive ones. | Keep short muttered lines that add attitude, irony or inner logic (5–8 per short). |
 | 6 | v5 | Narrator voice didn't fit; the user wanted American. | Voice chosen early and never auditioned against alternatives. | Audition 3–4 voices on the real line before producing; ask about accent. |
 | 7 | v5 review | Weak hook (6 s of a man sitting), 48 s for one joke, 13 s after the punch, static stretches, faces too small on a phone, bugs ("SENT ✓" visible 0.3 s, cat hidden behind a head, cutaway with no "dream" cue). | No review pass against the platform: we checked correctness (lines, levels) but not retention. | Run the checklist below on a contact sheet every 2 s before delivering. |
+| 8 | Tập 1 live (YouTube, first 2 days) | 1.3K views but **45.5 % average viewed**: viewers swiped away around 0:18 of 40 s; 8 likes, 0 comments. | The cold open showed the ending (the note), so the middle had no question left to answer; 0:14–0:21 (3 PM tally marks, crackers, lighthouse cutaway) was 5–6 s with no line and no new information. Nothing asked the viewer to comment. | The hook raises a question and keeps the answer for the punch. Something new every 2–3 s (a line, a jump in time, a new action, a stake that rises). No beat without new information. Default length 25–30 s. End on something viewers can answer in the comments. |
 
 **The pattern behind 2–5:** each fix swung to the opposite extreme. When feedback says "too X", move one notch,
 not to the other end, and say which notch you chose.
@@ -32,7 +33,9 @@ and exits non-zero on a failure. Run it, then do the rest by eye on a contact sh
 
 ### Script
 - [ ] **Hook in 1.5 s:** frame 1 is the strangest or most telling image (cold open with the outcome is allowed and often best), plus an on-screen title line ("POV: …").
-- [ ] **One joke, 25–40 s.** Punchline at 70–85 %. After it: one button at most (≤ 4 s), then out or loop.
+- [ ] **The hook asks, the punch answers:** if the cold open shows an outcome, the cause must stay hidden until the punch.
+- [ ] **Retention map:** list every 2–3 s window and what is new in it; any window with nothing new gets cut.
+- [ ] **One joke, 25–30 s by default (40 s max).** Punchline at 70–85 %. After it: one button at most (≤ 4 s), then out or loop.
 - [ ] **Show, don't say, without going silent:** no line describes the picture; 5–8 short lines that carry attitude, irony or inner logic.
 - [ ] **Real voice:** each line is something a tired real person would mutter. One short peak max. Punchline flat.
 - [ ] Every silent beat has a face change that carries it.
@@ -56,6 +59,8 @@ and exits non-zero on a failure. Run it, then do the rest by eye on a contact sh
 - [ ] Final: −14 LUFS ±0.5, true peak ≤ −1.2 dB with no `mux.sh` warning. With little dialogue, pre-master in `mix.py` (compress → limit → loudnorm TP −2.5).
 
 ### Delivery
+- [ ] Pinned comment / caption asks a question the viewer can answer from their own life.
+- [ ] 48 h after posting: read average % viewed and viewed-vs-swiped; note the swipe-away second here.
 - [ ] Watch the whole thing once as a viewer: where would you swipe away? Fix that moment first.
 - [ ] Score with `scorecard.md` after the render, not only the script.
 - [ ] Commit, push, update the episode page on Notion (see memory: sync rule).

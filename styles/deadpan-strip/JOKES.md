@@ -4,7 +4,7 @@ For an international, English-speaking audience on YouTube Shorts, TikTok and Re
 
 ## 1. Rules for every short
 
-- **Length**: 20–40 s, one joke. A second joke only as an extra panel after the first lands.
+- **Length**: 25–30 s by default (40 s max), one joke. Tập 1 at 40 s lost viewers at 0:18 (45.5 % viewed): every 2–3 s needs something new. A second joke only as an extra panel after the first lands.
 - **Hook in the first 1.5 s**: open on the strangest image in the episode *and* a line that raises a question ("Who's Ted?", "Why is the thermostat gone?"). No logos, no intros, no establishing shots.
 - **Punchline at 70–85 % of the runtime**, then a 0.8–1.6 s silent beat, then at most one button (reaction, extra panel or aside).
 - **Loop the ending** when possible: the last frame or line flows back into the first, so the short replays itself.
