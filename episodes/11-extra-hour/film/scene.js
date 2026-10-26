@@ -14,7 +14,7 @@ const WALL = '#e6dcc8', FLOORC = '#cdb894', WALLB = 1150;
 const WIN = { x0: 640, x1: 940, y0: 430, y1: 760 };
 const LIE_Y = 1560, SIT_Y = 1410;                       // Steve's (hidden) feet line lying / sitting up
 const CATBED = { x: 720, y: 1330 };                     // the cat asleep at the foot of the bed
-const FACE = { x: 540, y: 1065 };                       // where the cat sits on his face
+const FACE = { x: 540, y: 1095 };                       // where the cat sits on his face
 
 const LINES = [
   ['11_01_snuggles', 'snuggles', 1.7, 'Saturday night. One free hour. The human is very excited.'],
@@ -160,10 +160,10 @@ const CAT = [
   { t: T.catEye, dur: 0.08, expr: 'shocked', eyes: 'wide', x: CATBED.x, y: CATBED.y, scale: 3.4 },  // 5:59:59 — awake
   { t: T.catEye + 0.5, dur: 0.2, expr: 'deadpan', x: CATBED.x, y: CATBED.y, scale: 3.4, tilt: -8 },
   { t: T.hop, dur: 0.27, expr: 'deadpan', x: 660, y: 1250, scale: 3.9, tilt: 0 },                    // three hops up the blanket
-  { t: T.hop + 0.27, dur: 0.27, expr: 'deadpan', x: 600, y: 1170, scale: 4.5 },
-  { t: T.hop + 0.54, dur: 0.26, expr: 'deadpan', x: FACE.x, y: FACE.y, scale: 5.2 },
-  { t: T.land + 0.5, dur: 0.3, expr: 'smug', x: FACE.x, y: FACE.y, scale: 5.2 },
-  { t: T.my - 0.1, dur: 0.2, expr: 'deadpan', x: FACE.x, y: FACE.y, scale: 5.2, tilt: 6 },
+  { t: T.hop + 0.27, dur: 0.27, expr: 'deadpan', x: 600, y: 1170, scale: 4.1 },
+  { t: T.hop + 0.54, dur: 0.26, expr: 'deadpan', x: FACE.x, y: FACE.y, scale: 4.4 },
+  { t: T.land + 0.5, dur: 0.3, expr: 'smug', x: FACE.x, y: FACE.y, scale: 4.4 },
+  { t: T.my - 0.1, dur: 0.2, expr: 'deadpan', x: FACE.x, y: FACE.y, scale: 4.4, tilt: 6 },
 ];
 
 function steveInBed(t, extra = {}) {
@@ -173,11 +173,12 @@ function steveInBed(t, extra = {}) {
   if ((tq + 0.7) % 4.2 < 0.17 && (!pose.eyes || pose.eyes === 'dot') && !['happy', 'sleepy'].includes(pose.expr) && pose.lid === undefined) pose.eyes = 'closed';
   const s = Math.max(0, Math.min(1, base.sit ?? 0)), y = LIE_Y + (SIT_Y - LIE_Y) * s, top = 1092 + 48 * s;
   delete pose.sit;
-  const flying = t >= T.pFlip && t < T.pFlip + 0.35;
-  if (flying) flyingPillow(t); else pillow(t, { sitting: s > 0.5, cold: t > T.pFlip + 0.35 && t < T.c520 });
+  const flying = t >= T.pFlip && t < T.pFlip + 0.6;
+  if (!flying) pillow(t, { sitting: s > 0.5, cold: t > T.pFlip + 0.6 && t < T.c520 });
   ctx.save(); ctx.beginPath(); ctx.rect(-2000, -2000, 6000, top + 2000); ctx.clip();
   drawCharacter(ctx, 'steve', 540, y, K, pose, { frame: frameOf(t) });
   ctx.restore();
+  if (flying) flyingPillow(t);   // in his hands, in front of his chest
   return { top, pose };
 }
 function cat(t) {
@@ -197,17 +198,17 @@ function bedScene(t, { clock, lampOn = false, phone = false, pillowFlip = false 
   cat(t);
 }
 function flyingPillow(t) {   // the pillow goes up, flips over, lands: cold side
-  const k = seg(onTwos(t), T.pFlip, T.pFlip + 0.35);
-  if (k <= 0 || k >= 1) return;
-  const y = 985 - Math.sin(Math.PI * k) * 430;
+  const k = ease.inOut(seg(onTwos(t), T.pFlip, T.pFlip + 0.6));
+  const y = 1050 - Math.sin(Math.PI * k) * 60;
   pillow(t, { sitting: true, y, rot: Math.PI * k, cold: k > 0.5 });
+  const p = spen(t, 37); for (const hx of [400, 680]) p.dot(hx, y + 10, 13, 13, INK);   // his hands on the pillow
 }
 function phoneInHand(t) {   // a glowing phone held up beside his face
   const p = spen(t, 71), x = 680, y = 1040;
   p.part(roundPoly([[x - 45, y - 80], [x + 45, y - 80], [x + 45, y + 80], [x - 45, y + 80]], 12), '#2f2b36', { shade: false });
   const lapse = t >= T.lapse && t < T.c541;
   p.part(roundPoly([[x - 36, y - 68], [x + 36, y - 68], [x + 36, y + 68], [x - 36, y + 68]], 8), lapse ? ['#f5a3c7', '#9ad7f5', '#f7e27a', '#b9f0a8'][Math.floor(t * 12) % 4] : '#cfe4ff', { shade: false, lw: 2 });
-  if (!lapse) for (const dy of [-30, 0, 30]) p.line([[x - 22, y + dy], [x + 22, y + dy]], 3, 'rgba(42,34,48,0.35)');
+  p.part([[x - 12, y - 18], [x + 16, y], [x - 12, y + 18]], '#ffffff', { shade: false, lw: 2 });   // a play button: it's a video
   p.line([[x - 10, y + 150], [x - 4, y + 70]], 8); p.dot(x - 4, y + 66, 13, 13, INK);   // his hand, from under the blanket
 }
 function shotSaturday(t) {
@@ -225,11 +226,25 @@ function shotSaturday(t) {
   }
 }
 function shotDark(t) { bedScene(t, { clock: t < T.snap ? '1:00' : '5:02' }); night(1); if (t > T.off + 0.25 && t < T.snap) hand('z z z', 680, 900, 64, -0.1, '#d8dcf0'); }
-function shotClock(t, text) {   // insert: the bedside clock, big
-  bedroom(t); bedClock(t, text); night(0.85, { x: 163, y: 1046, r: 220, c: 'rgba(255,90,74,0.35)' });
+function bigClock(t, text, { warmLight = false } = {}) {   // insert: the bedside clock filling the frame, easy to read
+  ctx.fillStyle = warmLight ? '#cdbb9c' : '#3b4566'; ctx.fillRect(PX, PY, PW, PH);
+  const p = spen(t, 27);
+  p.part(roundPoly([[150, 1180], [930, 1180], [930, 1570], [150, 1570]], 10), warmLight ? '#b98a5e' : '#6e5a48', { shade: 0.15 });   // nightstand top
+  p.part(roundPoly([[200, 700], [880, 700], [880, 1120], [200, 1120]], 40), '#2f2b36', { shade: false });
+  p.part(roundPoly([[250, 750], [830, 750], [830, 1070], [250, 1070]], 24), '#1d1b22', { shade: false });
+  const g = ctx.createRadialGradient(540, 910, 0, 540, 910, 420); g.addColorStop(0, 'rgba(255,90,74,0.25)'); g.addColorStop(1, 'rgba(255,90,74,0)'); ctx.fillStyle = g; ctx.fillRect(PX, PY, PW, PH);
+  hand(text, 540, 915, 230, 0, '#ff5a4a', 'Fredoka', '600');
+}
+function shotClock(t, text) { bigClock(t, text); }
+function shotClockFlip(t) {   // 1:59 → 1:00 with a beam of light and "+1 hour": a gift from above
+  bigClock(t, onTwos(t) < T.flip + 0.35 ? '1:59' : '1:00', { warmLight: true });
+  const a = Math.sin(Math.PI * seg(t, T.flip, T.flipEnd));
+  ctx.save(); ctx.globalAlpha = 0.5 * a; ctx.fillStyle = '#fff4c0';
+  ctx.beginPath(); ctx.moveTo(430, PY); ctx.lineTo(650, PY); ctx.lineTo(900, 1150); ctx.lineTo(180, 1150); ctx.closePath(); ctx.fill(); ctx.restore();
+  if (onTwos(t) >= T.flip + 0.35) hand('+1 hour', 540, 560, 120, -0.04, '#2e8b57', 'Fredoka', '600');
 }
 function shotMemo(t) { bedScene(t, { clock: '5:02' }); night(0.9); }
-function shotPillow(t) { bedScene(t, { clock: '5:05', pillowFlip: true }); night(0.85); if (t > T.pFlip + 0.35 && t < T.down + 0.6) hand('*', 700, 900, 80, 0, '#bfe3ff', 'Fredoka', '600'); }
+function shotPillow(t) { bedScene(t, { clock: '5:05', pillowFlip: true }); night(0.85); if (t > T.pFlip + 0.6 && t < T.down + 0.6) hand('cold side', 760, 860, 54, -0.06, '#bfe3ff', 'Fredoka', '600'); }
 function shotPhone(t) { bedScene(t, { clock: t < T.c541 ? '5:20' : '5:41', phone: true }); night(0.85, { x: 640, y: 1030, r: 300, c: 'rgba(170,200,255,0.5)' }); }
 function sheepBubble(t, x, y) {   // the third sheep stops, looks at us, and walks off
   const p = spen(t, 61);
@@ -251,12 +266,21 @@ function sheepBubble(t, x, y) {   // the third sheep stops, looks at us, and wal
   else if (tq >= s3 + 0.3 && tq < s3 + 1.2) sheep(x - 70, y + 40, true, 65);                          // stops, stares
   else if (tq >= s3 + 1.2) sheep(x - 70 - 260 * seg(tq, s3 + 1.2, s3 + 1.9), y + 40, false, 65);      // walks off
 }
-function shotSheep(t) { bedScene(t, { clock: '5:45' }); night(0.85); sheepBubble(t, 360, 600); }
+function shotSheep(t) { bedScene(t, { clock: '5:45' }); night(0.85); ctx.save(); ctx.translate(540, 600); ctx.scale(1.25, 1.25); ctx.translate(-540, -600); sheepBubble(t, 540, 600); ctx.restore(); }
 function shotDroop(t) { bedScene(t, { clock: '5:58' }); night(0.85); }
-function shotCatEye(t) { bedScene(t, { clock: '5:59' }); night(0.8); }
+function shotCatEye(t) {
+  bedroom(t); blanket(t, 1092); cat(t);
+  if (onTwos(t) >= T.catEye && onTwos(t) < T.catEye + 0.5) hand('!', CATBED.x + 110, CATBED.y - 210, 110, 0.1, '#ffd84a', 'Fredoka', '600');
+  night(0.8);
+}
 function shotHop(t) {
   bedroom(t); lamp(t, false);
   const { top } = steveInBed(t); blanket(t, top); bedClock(t, t < T.land ? '5:59' : '6:00');
+  if (t >= T.land) {   // muffled: his arms flail out from under the blanket
+    const up = Math.floor(onTwos(t) * 6) % 2, p = spen(t, 39);
+    p.line([[360, 1100], [300, up ? 1040 : 1075], [235, up ? 1010 : 1060]], 9); p.dot(232, up ? 1008 : 1058, 15, 15, INK);
+    p.line([[720, 1100], [780, up ? 1075 : 1040], [845, up ? 1060 : 1010]], 9); p.dot(848, up ? 1058 : 1008, 15, 15, INK);
+  }
   cat(t);
   if (t >= T.land && t < T.land + 0.3) hand('THUMP', 770, 820, 66, 0.08, INK, 'Fredoka', '600');
   night(0.8);
@@ -269,11 +293,11 @@ function shotKitchen(t) {
   s.line([[PX - 600, FLOOR], [PX + PW + 600, FLOOR]], 4);
   s.part([[110, 520], [380, 520], [380, 820], [110, 820]], '#1f2a4d', { shade: false, lw: 5 });
   s.line([[245, 520], [245, 820]], 5); s.line([[110, 670], [380, 670]], 5);
-  s.part(roundPoly([[700, 880], [1010, 880], [1010, FLOOR], [700, FLOOR]], 8), '#e9e4da', { shade: 0.1 });
-  s.part(roundPoly([[735, 1020], [975, 1020], [975, 1300], [735, 1300]], 10), '#3a3440', { shade: false });
-  s.part(roundPoly([[790, 905], [930, 905], [930, 975], [790, 975]], 6), '#1d1b22', { shade: false });
-  hand('6:01', 860, 942, 50, 0, '#5af07a', 'Fredoka', '600');
-  s.part(ellipsePts(430, FLOOR - 14, 52, 16, 24), '#c0392b', { shade: false });                     // the bowl — the kibble misses it
+  s.part(roundPoly([[780, 880], [1040, 880], [1040, FLOOR], [780, FLOOR]], 8), '#e9e4da', { shade: 0.1 });
+  s.part(roundPoly([[810, 1020], [1010, 1020], [1010, 1300], [810, 1300]], 10), '#3a3440', { shade: false });
+  s.part(roundPoly([[840, 905], [980, 905], [980, 975], [840, 975]], 6), '#1d1b22', { shade: false });
+  hand('6:01', 910, 942, 50, 0, '#5af07a', 'Fredoka', '600');                                      // the oven clock never changed
+  s.part(ellipsePts(572, FLOOR - 14, 56, 18, 24), '#c0392b', { shade: false });                     // the bowl
   const tq = onTwos(t), pouring = tq < T.kitchen + 1.6, talk = talking('steve', tq);
   const pose = { expr: 'dead_inside', lid: 0.9, armR: pouring ? 'reach' : 'down', look: 0.3, tilt: pouring ? 4 : 0 };
   if (talk && talk.mouth) pose.mouth = talk.mouth;
@@ -281,11 +305,12 @@ function shotKitchen(t) {
   if (pouring) {
     const b = pen(330 + 22 * K, FLOOR - 74 * K, K, t, 45);
     b.part(roundPoly([[-5, -8], [6, -8], [6, 8], [-5, 8]], 1), '#e7b85a', { shade: 0.15 });
-    for (let i = 0; i < 7; i++) { const yy = FLOOR - 70 * K + ((tq * 900 + i * 60) % 330); spen(t, 47 + i).dot(560 + (i % 3) * 12, yy, 5, 5, '#8a5a2b'); }
+    for (let i = 0; i < 7; i++) { const yy = FLOOR - 70 * K + ((tq * 900 + i * 70) % 460); spen(t, 47 + i).dot(562 + (i % 3) * 10, yy, 5, 5, '#8a5a2b'); }
   }
-  drawCharacter(ctx, 'snuggles', 575, FLOOR, 4.6, { expr: 'deadpan', look: -0.3, tilt: pouring ? 0 : -4 }, { frame: frameOf(t) });
-  if (!pouring) for (const [dx, dy] of [[-18, 0], [6, -8], [20, 4], [-4, 10]]) spen(t, 52).dot(575 + dx, FLOOR - 52 * 4.6 + dy, 5, 5, '#8a5a2b');   // kibble on his hat
-  night(0.5, { x: 860, y: 940, r: 260, c: 'rgba(120,255,150,0.25)' });
+  for (const [dx, dy] of [[-20, -18], [0, -24], [18, -18], [-8, -30], [10, -32]]) if (tq > T.kitchen + 0.6) spen(t, 52).dot(572 + dx, FLOOR + dy, 6, 6, '#8a5a2b');   // kibble in the bowl
+  const eating = !pouring;
+  drawCharacter(ctx, 'snuggles', 660, FLOOR, 4.6, eating ? { expr: 'happy', look: -0.8, tilt: -18, headDy: -3 } : { expr: 'deadpan', look: -0.8 }, { frame: frameOf(t) });
+  night(0.5, { x: 910, y: 940, r: 260, c: 'rgba(120,255,150,0.25)' });
 }
 
 // ---------- kinetic captions ----------
@@ -311,22 +336,22 @@ function render(t) {
   let tag = null;
   if (t < T.cold) { withCamera(push(0, T.cold, 1.5, 1.6), 420, 1030, () => { bedScene(t, { clock: '5:02' }); night(1, { x: 540, y: 990, r: 280, c: 'rgba(170,200,255,0.5)' }); }); tag = '5:02 AM'; }
   else if (t < T.flip) withCamera(push(T.cold, T.flip, 1.15, 1.2), 540, 980, () => shotSaturday(t));
-  else if (t < T.flipEnd) withCamera(2.4, 200, 1000, () => shotSaturday(t));
+  else if (t < T.flipEnd) withCamera(1, 540, 900, () => shotClockFlip(t));
   else if (t < T.steve) withCamera(push(T.flipEnd, T.steve, 1.15, 1.22), 540, 980, () => shotSaturday(t));
   else if (t < T.off) withCamera(push(T.steve, T.off, 1.5, 1.6), 590, 960, () => shotSaturday(t));
   else if (t < T.snap) withCamera(1.2, 540, 1000, () => shotDark(t));
-  else if (t < T.memo) { withCamera(2.6, 163, 1046, () => shotClock(t, '5:02')); tag = '5:02 AM'; }
+  else if (t < T.memo) { withCamera(1, 540, 900, () => shotClock(t, '5:02')); tag = '5:02 AM'; }
   else if (t < T.sitUp) { withCamera(push(T.memo, T.sitUp, 1.9, 2.1), 540, 1000, () => shotMemo(t)); tag = '5:02 AM'; }
   else if (t < T.c520) { withCamera(1.4, 540, 960, () => shotPillow(t)); tag = '5:05 AM'; }
-  else if (t < T.phone) { withCamera(2.6, 163, 1046, () => shotClock(t, '5:20')); tag = '5:20 AM'; }
-  else if (t < T.c541) { withCamera(push(T.phone, T.c541, 1.8, 2.0), 600, 1010, () => shotPhone(t)); tag = t < T.lapse ? '5:20 AM' : null; }
-  else if (t < T.sheep) { withCamera(2.6, 163, 1046, () => shotClock(t, '5:41')); tag = '5:41 AM'; }
+  else if (t < T.phone) { withCamera(1, 540, 900, () => shotClock(t, '5:20')); tag = '5:20 AM'; }
+  else if (t < T.c541) { withCamera(push(T.phone, T.c541, 1.8, 2.0), 600, 1010, () => shotPhone(t)); tag = t < T.lapse ? '5:20 AM' : `5:${20 + Math.floor(21 * seg(onTwos(t), T.lapse, T.c541 - 0.1))} AM`; }
+  else if (t < T.sheep) { withCamera(1, 540, 900, () => shotClock(t, '5:41')); tag = '5:41 AM'; }
   else if (t < T.c558) { withCamera(1.15, 520, 960, () => shotSheep(t)); tag = '5:45 AM'; }
   else if (t < T.catEye) { withCamera(push(T.c558, T.catEye, 1.8, 2.0), 540, 1010, () => shotDroop(t)); tag = '5:58 AM'; }
-  else if (t < T.hop) { withCamera(2.8, CATBED.x + 30, CATBED.y - 90, () => shotCatEye(t)); }
+  else if (t < T.hop) { withCamera(2.6, CATBED.x, CATBED.y - 110, () => shotCatEye(t)); }
   else if (t < T.my) { withCamera(push(T.hop, T.my, 1.25, 1.45), 560, 1080, () => shotHop(t), 540 + (t >= T.land && t < T.land + 0.25 ? (Math.floor(t * 24) % 2 ? 12 : -12) : 0)); tag = t >= T.land ? '6:00 AM' : '5:59 AM'; }
   else if (t < T.kitchen) withCamera(push(T.my, T.kitchen, 2.2, 2.3), FACE.x, FACE.y - 130, () => shotHop(t), 540, 860);
-  else withCamera(push(T.kitchen, DUR, 1.3, 1.42), 560, 1080, () => shotKitchen(t), 540, 940);
+  else withCamera(push(T.kitchen, DUR, 1.26, 1.32), 610, 1080, () => shotKitchen(t), 540, 940);
   if (tag) timeTag(tag, t);
   panel(ctx, PX, PY, PW, PH, 5, null, frameOf(t));
   ctx.font = '600 30px Fredoka'; ctx.fillStyle = 'rgba(42,34,48,0.55)'; ctx.textAlign = 'right'; ctx.fillText('UNIT 4B', PX + PW - 24, PY + PH - 22); ctx.textAlign = 'start';
