@@ -13,6 +13,7 @@ dashboard → Content. Instagram: the Reel → View insights.
 | # | Video | Length | Posted | Views 48 h | Avg % viewed | Viewed vs swiped | Likes | Comments | Subs | Swipe-away point | Main lesson |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | We Missed You (v8) | 39.8 s | 2026-10-24 | 1.3K | 45.5 % | — | 8 | 0 | 0 | ~0:18 | Hook gave away the ending; 0:14–0:21 had nothing new |
+| 2 | The Extra Hour (v10) | 47.3 s | 2026-10-26 | (read 28 Oct) | | | | | | | voice-led, beat-paced, emotion arc + bleeped explosion, cat only meows |
 
 ## Entry template (copy for each video)
 
@@ -65,3 +66,9 @@ dashboard → Content. Instagram: the Reel → View insights.
 ### Test for the next video
 - Tập 2 "The Extra Hour": hook shows the effect (awake at 5:02) but hides the cause (the cat); 26–28 s; pinned
   question "What time did your body wake you up today?". Compare avg % viewed and comments with Tập 1.
+
+## Tập 2 — The Extra Hour  (posted 2026-10-26 ~midday VN, `Tap02-extra-hour-v10.mp4`, 47.3 s)
+Links: YouTube https://youtube.com/shorts/sysVz2F47k8 · Facebook https://www.facebook.com/reel/2609924412786304/ ·
+Instagram https://www.instagram.com/unit4bcomedy/reel/De8YgKLNFzw/. Question comment posted on YouTube (pinning needs the
+owner's phone verification). Tests vs Tập 1: voice-led narration (~1.8 words/s, was 1.2), beat-based pauses, emotion arc
+with one bleeped explosion, the cause shown physically (cat on his face → meow). Fill the numbers on 28 Oct (48 h).
