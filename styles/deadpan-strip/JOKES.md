@@ -26,6 +26,7 @@ for the next episodes (test on one episode, compare retention with Tập 1–2, 
    Punchline: lower and slower, with one held beat only before the biggest reveal.
 10. **Plant early, pay off late; end on a reframe, a self-own or a worse second example** that can loop to the start.
 11. **Edit for the face (Kuleshov)**: hold a deadpan face → cut to the absurd thing → cut back; no acting needed.
+13. **Voice-over ≠ lip-sync.** When a character narrates what happened, the pictures are a flashback: the character on screen doesn't mouth the narration (closed mouth, the face acts the state — asleep, wide awake). Lip-sync only when they speak inside the scene (the present).
 12. **Show any rule the joke needs** (daylight saving, a holiday, a custom) before the joke uses it.
 
 ## 1. Rules for every short
