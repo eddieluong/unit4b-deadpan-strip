@@ -60,7 +60,7 @@ and exits non-zero on a failure. Run it, then do the rest by eye on a contact sh
 
 ### Delivery
 - [ ] Pinned comment / caption asks a question the viewer can answer from their own life.
-- [ ] 48 h after posting: read average % viewed and viewed-vs-swiped; note the swipe-away second here.
+- [ ] 48 h after posting (and again at 7 days): fill an entry in `channel/PERFORMANCE.md` (numbers, retention drop, keep / fix, rules changed, next test), then move each new rule into this file or `JOKES.md`.
 - [ ] Watch the whole thing once as a viewer: where would you swipe away? Fix that moment first.
 - [ ] Score with `scorecard.md` after the render, not only the script.
 - [ ] Commit, push, update the episode page on Notion (see memory: sync rule).

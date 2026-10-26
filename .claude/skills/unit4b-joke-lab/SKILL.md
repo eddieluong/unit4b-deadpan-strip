@@ -17,7 +17,8 @@ Talk to the user in their language (often Vietnamese). Write all on-screen dialo
 1. `styles/deadpan-strip/CAST.md` — who each character is, their comic function, go-to faces, "never" rules.
 2. `styles/deadpan-strip/JOKES.md` — rules for every short, formats, face/voice pairings, running gags.
 3. `episodes/BANK.md` — every premise and punchline already used. Never repeat a premise or a punchline.
-4. Skim `styles/deadpan-strip/elevenlabs.json` → `expressions` for the 36 delivery names you may use.
+4. `channel/PERFORMANCE.md` — the last three post-mortems: what made viewers swipe away and what to test next.
+5. Skim `styles/deadpan-strip/elevenlabs.json` → `expressions` for the 36 delivery names you may use.
 
 References in this skill (load when the step needs them):
 - `references/techniques.md` — joke mechanics (misdirection, reversal, rule of three, sarcasm types, dad-joke build, tags).
