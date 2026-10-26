@@ -12,13 +12,17 @@ SR = 24000
 VOICE = {'steve': 'Y9z2nW5YxRRbI3XaIf8x', 'snuggles': 'nPczCjzI2devNBz1zQrb'}
 # feelings come from the words and one light tag per sentence; no "..." or [pause] (they read as AI)
 TAKES = {
-    'steve': (['11_s01', '11_s02', '11_s03', '11_s04', '11_s05', '11_s06', '11_s07', '11_s08', '11_s09', '11_s10', '11_s11', '11_s12', '11_s13'],
-              "[conversational, dry, telling a friend] The clocks just went back an hour. [pleased] One FREE hour of sleep. [deadpan] So my body, being an idiot, woke me up at five a.m. [dry] Wide awake. Like I had a MEETING. [determined] I tried everything. [matter-of-fact] Cold side of the pillow. [matter-of-fact] Counting sheep. [flat] The sheep got bored. [guilty] I watched ONE video. [flat] It was five forty-one. [slowing down, drowsy, hopeful] And at five fifty-eight, I was finally, FINALLY drifting off. [flat, quiet] When the cat sat on my face. [resigned, dry] Cats don't do daylight saving.",
-              {'stability': 0.5, 'similarity_boost': 0.85, 'style': 0.45, 'use_speaker_boost': True}),
+    'steve': (['11_s01', '11_s02', '11_s03', '11_s04', '11_s05', '11_s06', '11_s07', '11_s08', '11_s09', '11_s10', '11_s11', '11_s13'],
+              "[cheerful] The clocks just went back an hour. [excited, almost singing] One FREE hour of sleep! [annoyed] So my body, being an IDIOT, woke me up at five a.m. [sarcastic] Wide awake. Like I had a MEETING. [through gritted teeth] I tried EVERYTHING. [quick, frustrated] Cold side of the pillow. [quick, frustrated] Counting sheep. [exasperated] The SHEEP got bored. [guilty whisper] I watched ONE video. [groaning] It was five FORTY-ONE. [whispering, hopeful, slowing down] And at five fifty-eight, I was finally, FINALLY drifting off. [defeated, flat] Cats don't do daylight saving.",
+              {'stability': 0.3, 'similarity_boost': 0.85, 'style': 0.6, 'use_speaker_boost': True}),
+    'steve_scene': (['11_s12a', '11_s12b'],
+              '[muffled screaming into a pillow] Mmmph! MMMPH! [furious, yelling, exploding] Are you KIDDING me?! Five more MINUTES, you little',
+              {'stability': 0.0, 'similarity_boost': 0.85, 'style': 0.8, 'use_speaker_boost': True}),
     'snuggles': (['11_n01', '11_n02'],
-                 '[flat, matter-of-fact] Breakfast is at six. [flat] MY six.',
+                 "[flat, matter-of-fact] Breakfast is at six. [flat] MY six.",
                  {'stability': 0.5, 'similarity_boost': 0.85, 'style': 0.4, 'use_speaker_boost': True}),
 }
+VOICE['steve_scene'] = VOICE['steve']
 
 
 def generate(char):
@@ -91,7 +95,8 @@ def split(char):
 
 if __name__ == '__main__':
     voice = {}
-    for c in TAKES:
+    only = [a for a in sys.argv[1:] if not a.startswith('--')] or list(TAKES)
+    for c in only:
         if '--split' not in sys.argv: generate(c)
         voice.update(split(c))
     vj = os.path.join(HERE, 'voice', 'voice.json')

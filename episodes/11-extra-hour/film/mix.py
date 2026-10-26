@@ -16,7 +16,7 @@ at = lambda k: [e['t'] for e in EV if e['type'] == k]
 buf = np.zeros((int(DUR * SR), 2))
 
 # ---------- voices (level per line from VOICE_PROSODY.md: never flatten every line to the same level) ----------
-GAIN_DB = {'11_s02': +1.5, '11_s04': +1, '11_s08': -1.5, '11_s10': -2, '11_s11': -2, '11_s12': -3, '11_n01': -1, '11_n02': -2, '11_s13': -3}
+GAIN_DB = {'11_s02': +1.5, '11_s04': +1, '11_s08': -1.5, '11_s10': -2, '11_s11': -2, '11_s12a': +1, '11_s12b': +2.5, '11_n01': -1, '11_n02': -2, '11_s13': -3}
 voice_on = np.zeros(len(buf))
 for e in EV:
     if e['type'] != 'voice': continue
@@ -81,6 +81,8 @@ for t in at('thump'): S.add(fol, S.thump(1.0, 70), t, 0.8); S.add(fol, S.bp(S.no
 for t in at('kibble'):
     rng = np.random.default_rng(3)
     for j in range(40): S.add(fol, S.click(1.4 + rng.random(), 0.5), t + 0.1 + rng.random() * 1.4, 0.18, 0.2)
+for t in at('bleep'):   # the censor bleep over the swear
+    d = 0.6; S.add(fol, np.sin(2 * np.pi * 1000 * tt(d)) * np.minimum(1, np.minimum(tt(d), d - tt(d)) * 200) * 0.5, t, 0.5)
 for t in at('plink'):    # kibble bouncing off the cat's hat
     for j in range(4): S.add(fol, S.click(2.2, 0.6), t + j * 0.18, 0.25, 0.3)
 

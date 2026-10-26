@@ -30,11 +30,12 @@ const LINE_DEFS = [   // id, char, caption text, gap after (s)
   ['11_s08', 'steve', 'The sheep got bored.', 0.15],
   ['11_s09', 'steve', 'I watched ONE video.', 0.1],
   ['11_s10', 'steve', 'It was five forty-one.', 0.15],
-  ['11_s11', 'steve', 'And at five fifty-eight, I was finally, FINALLY drifting off.', 1.5],
-  ['11_s12', 'steve', 'When the cat sat on my face.', 0.2],
+  ['11_s11', 'steve', 'And at five fifty-eight, I was finally, FINALLY drifting off.', 1.35],
+  ['11_s12a', 'steve', 'MMMPH!', 0.1],                                   // in the scene: under the cat
+  ['11_s12b', 'steve', 'Are you KIDDING me?! Five more MINUTES, you little—', 0.65],   // in the scene: the explosion (+ bleep)
   ['11_n01', 'snuggles', 'Breakfast is at six.', 0.35],
-  ['11_n02', 'snuggles', 'MY six.', 0.4],
-  ['11_s13', 'steve', "Cats don't do daylight saving.", 0.7],
+  ['11_n02', 'snuggles', 'MY six.', 0.3],
+  ['11_s13', 'steve', "Cats don't do daylight saving.", 0.5],
 ];
 const TITLE = ['POV: you get an', 'extra hour of sleep'];
 let LINES = [], DUR = 0, T = {}, EV = [], SHOTS = [], STEVE = [], CAT = [];
@@ -44,7 +45,7 @@ const end = id => L_(id).t + VOICE[id].dur;
 const wt = (id, i) => L_(id).t + Math.max(0, (WORDS[id] || [])[i]?.[1] ?? 0);   // time the i-th word starts
 
 function buildTimeline() {
-  let t = 0.2;
+  let t = 0.1;
   LINES = LINE_DEFS.map(([id, char, text, gap]) => { const L = { id, char, text, t }; t += VOICE[id].dur + gap; return L; });
   DUR = +t.toFixed(2);
   T = {
@@ -52,7 +53,7 @@ function buildTimeline() {
     off: L_('11_s03').t, snap: wt('11_s03', 6), wide: L_('11_s04').t, tie: wt('11_s04', 2),
     tried: L_('11_s05').t, pFlip: L_('11_s06').t + 0.1, down: end('11_s06'), c520: L_('11_s07').t,
     sheep: L_('11_s07').t, sheep3: L_('11_s08').t, phone: L_('11_s09').t, lapse: end('11_s09') - 0.25, c541: L_('11_s10').t,
-    c558: L_('11_s11').t, catEye: end('11_s11') + 0.15, hop: end('11_s11') + 0.75, land: L_('11_s12').t - 0.15,
+    c558: L_('11_s11').t, catEye: end('11_s11') + 0.15, hop: end('11_s11') + 0.75, land: L_('11_s12a').t - 0.15, burst: L_('11_s12b').t - 0.1, bleep: end('11_s12b') - 0.2,
     my: L_('11_n01').t, kitchen: L_('11_s13').t - 0.35,
   };
   STEVE = [
@@ -70,6 +71,10 @@ function buildTimeline() {
     { t: T.c558, dur: 0.6, expr: 'sleepy', eyes: 'dot', lid: 0.8, mouth: 'smile', sit: 0, look: 0, fx: ['zzz'] },  // drifting off
     { t: L_('11_s11').t + 2.2, dur: 1.2, expr: 'sleepy', mouth: 'smile', sit: 0, fx: ['zzz'] },             // asleep (eyes closed)
     { t: T.land, dur: 0.06, expr: 'shocked', eyes: 'wide', sit: 0 },
+    { t: T.burst, dur: 0.15, expr: 'furious', sit: 1, arm: 'wide', tilt: -4, fx: ['vein', 'steam'] },   // bursts up, furious
+    { t: T.bleep, dur: 0.1, expr: 'furious', sit: 1, arm: 'hips', tilt: 6, fx: ['vein', 'steam'] },
+    { t: T.my, dur: 0.3, expr: 'angry', sit: 1, arm: 'hips', tilt: 0, look: 0.6, fx: ['vein'] },
+    { t: L_('11_n02').t, dur: 0.3, expr: 'dead_inside', sit: 1, arm: 'hold', look: 0.6, fx: [] },
   ];
   CAT = [
     { t: 0, expr: 'sleepy', x: CATBED.x, y: CATBED.y, scale: 3.4, tilt: 0 },
@@ -79,7 +84,8 @@ function buildTimeline() {
     { t: T.hop + 0.27, dur: 0.27, expr: 'deadpan', x: 600, y: 1170, scale: 4.1 },
     { t: T.hop + 0.54, dur: 0.26, expr: 'deadpan', x: FACE.x, y: FACE.y, scale: 4.4 },
     { t: T.land + 0.5, dur: 0.3, expr: 'smug', x: FACE.x, y: FACE.y, scale: 4.4 },
-    { t: L_('11_n02').t - 0.1, dur: 0.2, expr: 'deadpan', x: FACE.x, y: FACE.y, scale: 4.4, tilt: 6 },
+    { t: T.burst, dur: 0.2, expr: 'deadpan', x: 680, y: 1255, scale: 4.2 },                            // knocked onto his lap, unbothered
+    { t: L_('11_n02').t - 0.1, dur: 0.2, expr: 'deadpan', x: 680, y: 1255, scale: 4.2, tilt: 8 },
   ];
   const push = (a, b, z0, z1) => t => z0 + (z1 - z0) * ease.inOut(seg(t, a, b));
   SHOTS = [   // [start, draw(t)] — one picture per sentence
@@ -97,7 +103,8 @@ function buildTimeline() {
     [T.c558, t => { withCamera(push(T.c558, T.catEye, 1.8, 2.0)(t), 540, 1010, () => shotDroop(t)); timeTag('5:58 AM', t); }],
     [T.catEye, t => withCamera(2.6, CATBED.x, CATBED.y - 110, () => shotCatEye(t))],
     [T.hop, t => { withCamera(push(T.hop, T.my, 1.25, 1.45)(t), 560, 1080, () => shotHop(t), 540 + (t >= T.land && t < T.land + 0.25 ? (Math.floor(t * 24) % 2 ? 12 : -12) : 0)); timeTag(t >= T.land ? '6:00 AM' : '5:59 AM', t); }],
-    [T.my, t => withCamera(push(T.my, T.kitchen, 2.2, 2.3)(t), FACE.x, FACE.y - 130, () => shotHop(t), 540, 860)],
+    [T.burst, t => withCamera(push(T.burst, T.my, 1.45, 1.6)(t) + (t < T.burst + 0.3 ? 0.04 : 0), 580, 960, () => shotBurst(t), 540 + (t < T.burst + 0.25 ? (Math.floor(t * 24) % 2 ? 10 : -10) : 0))],
+    [T.my, t => withCamera(push(T.my, T.kitchen, 1.75, 1.85)(t), 610, 1040, () => shotBurst(t), 540, 860)],
     [T.kitchen, t => withCamera(push(T.kitchen, DUR, 1.26, 1.32)(t), 610, 1080, () => shotKitchen(t), 540, 940)],
   ];
   EV = [
@@ -106,7 +113,7 @@ function buildTimeline() {
     { t: T.off, type: 'click' }, { t: T.off + 0.1, type: 'purr' }, { t: T.snap, type: 'sting' }, { t: T.snap + 0.6, type: 'tick2' },
     { t: T.tie, type: 'pop' }, { t: T.pFlip, type: 'whoosh' }, { t: T.pFlip + 0.6, type: 'pillow' }, { t: T.down, type: 'pillow' },
     { t: T.sheep, type: 'pop' }, { t: T.phone, type: 'buzz' }, { t: T.lapse, type: 'lapse' }, { t: T.c558, type: 'hum' },
-    { t: T.catEye, type: 'ding' }, { t: T.hop, type: 'hops' }, { t: T.land - 0.05, type: 'stop' }, { t: T.land, type: 'thump' },
+    { t: T.catEye, type: 'ding' }, { t: T.hop, type: 'hops' }, { t: T.land - 0.05, type: 'stop' }, { t: T.land, type: 'thump' }, { t: T.burst, type: 'whoosh' }, { t: T.bleep, type: 'bleep' },
     { t: T.kitchen + 0.2, type: 'kibble' }, { t: T.kitchen + 0.9, type: 'plink' }, { t: T.kitchen + 0.2, type: 'outro' }, { t: 0.0, type: 'tick' },
   ].sort((a, b) => a.t - b.t);
 }
@@ -202,9 +209,10 @@ function lamp(t, on) {
 
 // ---------- acting tracks (t in seconds, poses eased between keys) ----------
 function steveInBed(t, extra = {}) {
-  // In bed it's a flashback: Steve narrates over it (voice-over), so no lip-sync and no talking nods here.
+  // In bed it's a flashback: Steve narrates over it (voice-over), so no lip-sync — except the lines he says in the scene.
   const tq = onTwos(t), base = track(STEVE, tq);
   const pose = sum(base, idle(tq, 1), extra);
+  for (const id of ['11_s12b']) { const e = speakingEnv(id, tq); if (e >= 0) pose.mouth = e > 0.55 ? 'scream' : e > 0.18 ? 'wide' : 'teeth'; }
   if ((tq + 0.7) % 4.2 < 0.17 && (!pose.eyes || pose.eyes === 'dot') && !['happy', 'sleepy'].includes(pose.expr) && pose.lid === undefined) pose.eyes = 'closed';
   const s = Math.max(0, Math.min(1, base.sit ?? 0)), y = LIE_Y + (SIT_Y - LIE_Y) * s, top = 1092 + 48 * s;
   delete pose.sit;
@@ -342,6 +350,17 @@ function shotTie(t) {   // "like I had a MEETING": sitting bolt upright in bed, 
   p.part([[528, 985], [552, 985], [560, 1100], [540, 1130], [520, 1100]], '#c0392b', { shade: 0.15, lw: 3 });       // the tie
   p.part(roundPoly([[600, 1040], [720, 1040], [720, 1120], [600, 1120]], 8), '#7a5238', { shade: 0.15 });          // the briefcase
   p.line([[640, 1040], [645, 1018], [675, 1018], [680, 1040]], 5);
+  night(0.75);
+}
+function shotBurst(t) {   // he sits bolt upright, furious; the cat sits on his lap, unbothered; the swear is a grawlix + bleep
+  bedroom(t); lamp(t, false);
+  const { top } = steveInBed(t); blanket(t, top); bedClock(t, '6:00'); cat(t);
+  if (t >= T.bleep && t < T.my) {
+    const p = spen(t, 97), cx = 650, cy = 720, pts = [];
+    for (let i = 0; i < 24; i++) { const a = i * Math.PI / 12, rr = i % 2 ? 130 : 175; pts.push([cx + Math.cos(a) * rr * 1.2, cy + Math.sin(a) * rr * 0.75]); }
+    p.part(pts, '#fff4c0', { shade: false, lw: 5 });
+    hand('#@$%&!', cx, cy, 92, -0.06, '#c0392b', 'Fredoka', '600');
+  }
   night(0.75);
 }
 // ---------- kitchen (the button) ----------

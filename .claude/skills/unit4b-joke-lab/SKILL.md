@@ -14,6 +14,8 @@ Talk to the user in their language (often Vietnamese). Write all on-screen dialo
 
 ## Read first (every time)
 
+0. `styles/deadpan-strip/PREPRODUCTION.md` — the pre-production gate: the 14 owner corrections, the script table (VO/in-scene, emotion 1–5, picture, motion reason), the emotion arc, swearing = bleep + grawlix, and the four owner review points. Deliver the script as that table + arc and stop for the owner's OK before any voice or animation.
+
 1. `styles/deadpan-strip/CAST.md` — who each character is, their comic function, go-to faces, "never" rules.
 2. `styles/deadpan-strip/JOKES.md` — rules for every short, formats, face/voice pairings, running gags.
 3. `episodes/BANK.md` — every premise and punchline already used. Never repeat a premise or a punchline.

@@ -20,6 +20,9 @@ video to anyone. `JOKES.md` holds the writing rules; this file holds the review.
 **The pattern behind 2–5:** each fix swung to the opposite extreme. When feedback says "too X", move one notch,
 not to the other end, and say which notch you chose.
 
+Rows 9–14 (Tập 2: stiff motion, unreadable frames, assumed rules, lip-sync on voice-over, flat emotion) are in
+`PREPRODUCTION.md` §1 together with the pre-production gate that prevents them.
+
 ## 2. QA checklist (run on every short)
 
 The measurable items are automated: `python tools/qa_video.py <video.mp4> --punch <seconds>` checks duration,
