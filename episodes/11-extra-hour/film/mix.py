@@ -16,7 +16,8 @@ at = lambda k: [e['t'] for e in EV if e['type'] == k]
 buf = np.zeros((int(DUR * SR), 2))
 
 # ---------- voices (level per line from VOICE_PROSODY.md: never flatten every line to the same level) ----------
-GAIN_DB = {'11_01_snuggles': -1, '11_02_steve': +2, '11_03_steve': -1, '11_04_steve': -4, '11_05_snuggles': -1, '11_06_snuggles': -2, '11_07_steve': -5}
+GAIN_DB = {'11_01_snuggles': -1, '11_02_steve': +2, '11_03_snuggles': -1, '11_04_steve': 0, '11_05_steve': -3, '11_06_steve': -4,
+           '11_07_snuggles': -1, '11_08_snuggles': -2, '11_09_steve': -5}
 voice_on = np.zeros(len(buf))
 for e in EV:
     if e['type'] != 'voice': continue
@@ -42,13 +43,17 @@ lullaby(at('lullaby')[0], at('click')[0])
 for t0 in at('sting'):   # eyes snap open: a low pluck and a sour harp pair
     S.add(mus, P.pluck('upright_bass_pizz', 'C2', 1.2, vel=0.7), t0, 0.45)
     harp('F#4', t0 + 0.02, 0.35); harp('C5', t0 + 0.04, 0.35)
+for t0 in at('choir'):   # the clock goes back: a soft "aaah" chord
+    for n, v in (('F4', 0.2), ('A4', 0.18), ('C5', 0.16), ('F5', 0.12)):
+        pass
+    for j, n in enumerate(['F4', 'A4', 'C5', 'F5']): harp(n, t0 + j * 0.05, 0.3)
 for t0 in at('hum'):     # drifting off: one hopeful, slow phrase
-    for j, n in enumerate(['C5', 'A4', 'F4', 'A4', 'C5']): harp(n, t0 + j * 0.5, 0.22)
+    for j, n in enumerate(['C5', 'A4', 'F4', 'A4']): harp(n, t0 + j * 0.45, 0.22)
 stop = at('stop')[0]
 mus[int(stop * SR):] = 0                   # the cat lands: music just stops
-k0 = at('kibble')[0]                       # kitchen: a small plucked loop, same feel as Tập 1's ending
-for j, n in enumerate(['F2', 'C3', 'F2', 'C3']): S.add(mus, P.pluck('upright_bass_pizz', n, 0.6, vel=0.4), k0 + 0.4 + j * 0.9, 0.25)
-for j, n in enumerate(['A4', 'C5', 'A4', 'G4']): harp(n, k0 + 0.85 + j * 0.9, 0.2)
+k0 = at('outro')[0]                        # kitchen: a small plucked loop
+for j, n in enumerate(['F2', 'C3', 'F2']): S.add(mus, P.pluck('upright_bass_pizz', n, 0.6, vel=0.4), k0 + 0.3 + j * 0.9, 0.25)
+for j, n in enumerate(['A4', 'C5', 'A4']): harp(n, k0 + 0.75 + j * 0.9, 0.2)
 mus *= np.clip(1 - 0.5 * S.lp(voice_on, 8), 0.45, 1)[:, None]
 
 # ---------- foley ----------
@@ -56,27 +61,29 @@ fol = np.zeros_like(buf)
 def tt(d): return np.arange(int(d * SR)) / SR
 for t in at('tick'):
     for j in range(3): S.add(fol, S.click(1.8, 0.7), t + 0.1 + j * 0.5, 0.5, 0.4)
-for t in at('tick2'):    # the clock through the insomnia, very soft
+for t in at('purr'):     # the cat asleep at the foot of the bed
+    d = 1.4; S.add(fol, S.lp(S.noise(d), 180) * (0.6 + 0.4 * np.sin(2 * np.pi * 24 * tt(d))) * np.sin(np.pi * tt(d) / d), t, 0.35, 0.3)
+for t in at('tick2'):
     j = 0
-    while t + j * 1.0 < stop - 0.2: S.add(fol, S.click(1.9, 0.5), t + j * 1.0, 0.25, 0.4); j += 1
-for t in at('bird'):     # one early bird
-    for j, f0 in enumerate([3200, 3600]):
-        d = 0.12; x = np.sin(2 * np.pi * np.cumsum(np.linspace(f0, f0 * 1.25, int(d * SR))) / SR) * np.sin(np.pi * tt(d) / d)
-        S.add(fol, x, t + j * 0.16, 0.08, 0.6)
-for t in at('flip'): S.add(fol, S.click(1.2, 0.8), t, 0.4, -0.4); S.add(fol, S.ding(0.6), t + 0.1, 0.2, -0.4)
+    while t + j * 1.0 < at('stop')[0] - 0.2: S.add(fol, S.click(1.9, 0.5), t + j * 1.0, 0.22, 0.4); j += 1
+for t in at('click'): S.add(fol, S.click(0.9, 1.0), t, 0.6, 0.4)
+for t in at('whoosh'): S.add(fol, S.whoosh(0.35, 0.6), t, 0.35)
+for t in at('pillow'): S.add(fol, S.lp(S.noise(0.25), 900) * S.env_exp(0.25, 0.06), t, 0.6)
+for t in at('buzz'):
+    d = 0.25; S.add(fol, np.sign(np.sin(2 * np.pi * 160 * tt(d))) * 0.2 * np.minimum(1, (d - tt(d)) * 30), t, 0.15, 0.3)
+for t in at('lapse'):    # time-lapse: fast scroll ticks rising
+    for j in range(16): S.add(fol, S.click(1.2 + j * 0.06, 0.5), t + j * 0.05, 0.2, 0.3)
+    S.add(fol, S.whoosh(0.6, 0.5), t + 0.2, 0.25)
 for t in at('pop'): S.add(fol, S.pop(0.7), t, 0.3)
-for t in at('click'): S.add(fol, S.click(0.9, 1.0), t, 0.6, -0.4)
-for t in at('snore'):
-    for j in range(2):
-        d = 0.9; x = S.lp(S.noise(d), 500) * np.sin(np.pi * tt(d) / d) ** 2 * (1 + 0.6 * np.sin(2 * np.pi * 28 * tt(d)))
-        S.add(fol, x, t + j * 1.0, 0.3)
-for t in at('rustle'): S.add(fol, S.bp(S.noise(0.7), 800, 5000) * np.sin(np.pi * tt(0.7) / 0.7), t, 0.25)
+for t in at('ding'): S.add(fol, S.ding(0.6), t, 0.2, 0.4)
+for t in at('hops'):
+    for j in range(3): S.add(fol, S.thump(0.4, 120), t + 0.2 + j * 0.27, 0.25, 0.3 - j * 0.15)
 for t in at('thump'): S.add(fol, S.thump(1.0, 70), t, 0.8); S.add(fol, S.bp(S.noise(0.2), 400, 3000) * S.env_exp(0.2, 0.05), t, 0.3)
 for t in at('kibble'):
     rng = np.random.default_rng(3)
     for j in range(40): S.add(fol, S.click(1.4 + rng.random(), 0.5), t + 0.1 + rng.random() * 1.4, 0.18, 0.2)
-for t in at('crunch'):
-    for j in range(8): S.add(fol, S.bp(S.noise(0.06), 1500, 6000) * S.env_exp(0.06, 0.02), t + j * 0.22, 0.25, 0.3)
+for t in at('plink'):    # kibble bouncing off the cat's hat
+    for j in range(4): S.add(fol, S.click(2.2, 0.6), t + j * 0.18, 0.25, 0.3)
 
 room = S.lp(S.brown(DUR), 300)[:len(buf)] * 0.026
 buf += room[:, None] + fol + mus

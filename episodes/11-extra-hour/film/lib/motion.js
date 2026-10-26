@@ -82,7 +82,9 @@ export function sum(...ps) {   // add numeric motion fields together (pose + idl
 // lines: [{ id, char, t, text }], words: { id: [[w, a, b], ...] }. Returns the chunk to show at t or null.
 export function wordChunk(lines, words, t, maxChars = 16) {
   for (const L of lines) {
-    const W = words[L.id]; if (!W) continue;
+    let W = words[L.id]; if (!W) continue;
+    const toks = L.text.split(/\s+/).filter(Boolean);
+    if (toks.length === W.length) W = W.map((w, i) => [toks[i], w[1], w[2]]);   // show the script's spelling (six, not 6)
     const end = L.t + W[W.length - 1][2] + 0.25;
     if (t < L.t || t > end) continue;
     const stress = new Set(L.text.split(/\s+/).filter(w => /[A-Z]{2,}/.test(w)).map(w => w.replace(/[^A-Za-z']/g, '').toLowerCase()));

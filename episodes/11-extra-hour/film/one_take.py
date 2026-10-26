@@ -12,14 +12,16 @@ SR = 24000
 VOICE = {'steve': 'Y9z2nW5YxRRbI3XaIf8x', 'snuggles': 'nPczCjzI2devNBz1zQrb'}
 # feelings come from the words and one light tag per sentence; no "..." or [pause] (they read as AI)
 TAKES = {
-    'steve': (['11_02_steve', '11_03_steve', '11_04_steve', '11_07_steve'],
-              "[pleased, stretching] Extra hour. I'm gonna sleep SO much. "
-              "[frustrated whisper] No. No, no, no. Sleep. Come ON. "
-              "[drowsy, relieved mumble] Okay. Here it comes. "
+    'steve': (['11_02_steve', '11_04_steve', '11_05_steve', '11_06_steve', '11_09_steve'],
+              "[excited, giddy] Free hour. FREE hour. "
+              "[determined, under his breath] Okay. Cold side. Let's go. "
+              "[whispering, bargaining with himself] Just ONE video. "
+              "[drowsy, relieved mumble] Here it comes. "
               "[quiet, flat, half asleep] Happy daylight saving.",
               {'stability': 0.5, 'similarity_boost': 0.85, 'style': 0.45, 'use_speaker_boost': True}),
-    'snuggles': (['11_01_snuggles', '11_05_snuggles', '11_06_snuggles'],
-                 "[hushed, like a nature documentary] Saturday night. The clocks go back one hour. The human thinks it's a gift. "
+    'snuggles': (['11_01_snuggles', '11_03_snuggles', '11_07_snuggles', '11_08_snuggles'],
+                 "[hushed, like a nature documentary] Saturday night. One free hour. The human is very excited. "
+                 "[dry] His body did not get the memo. "
                  "[flat, matter-of-fact] Breakfast is at six. "
                  "[flat] MY six.",
                  {'stability': 0.5, 'similarity_boost': 0.85, 'style': 0.4, 'use_speaker_boost': True}),

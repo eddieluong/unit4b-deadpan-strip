@@ -10,6 +10,27 @@
 | Loop | yes: the last shot (dark kitchen, 5:0x) leads back to frame 1 (awake at 5:02) |
 | Built from | `channel/PERFORMANCE.md` Tập 1: 45.5 % viewed, swipe at 0:18 → hook asks / punch answers, something new every 2–3 s, 25–30 s, a question for the comments. |
 
+
+## v2 (2026-10-26) — after "stiff" + "lie on his back, cat sits straight on his face"
+Bed seen from its foot (Steve on his back, face to camera); cat asleep at the foot of the bed from frame 1, wakes before
+him; three specific attempts; motion layer v2 (purposeful only); kinetic word captions. 35.0 s, punch "MY six." at 29.6 s (84.6 %).
+
+| Time | Picture | Line |
+|---|---|---|
+| 0:00 | Hook: wide awake at 5:02, the cat purring at the foot of the bed | — |
+| 0:01.6 | Saturday night, sitting up; 3.1 s clock insert 1:59 → 1:00, beam of light, "+1 hour" | Cat: "Saturday night. One free hour. The human is very excited." |
+| 0:06.9 | Grins, arms wide; reaches for the lamp; click, dark, zzz | Steve: "Free hour. FREE hour." |
+| 0:10.8 | Clock insert 5:02 → eyes wide | Cat: "His body did not get the memo." |
+| 0:14.0 | Attempt 1: sits up, the pillow flips over (cold side), slams down, eyes squeezed | Steve: "Okay. Cold side. Let's go." |
+| 0:17.1 | Clock 5:20 → attempt 2: phone glow | Steve: "Just ONE video." |
+| 0:20.0 | Time-lapse on the phone → clock 5:41, dead inside | — |
+| 0:21.4 | Attempt 3: sheep; the third sheep stops, stares, walks off | — |
+| 0:23.6 | 5:58, drifting off, smiling | Steve: "Here it comes." |
+| 0:25.3 | Close: the cat's eyes snap open (5:59) | — |
+| 0:26.1 | Three hops up the blanket, sits on his face: THUMP, 6:00, music stops | — |
+| 0:27.6 | Cat on his face | Cat: "Breakfast is at six." … "MY six." |
+| 0:31.2 | Kitchen: eyes shut, pours kibble — misses the bowl, onto the cat's hat; oven still 6:01 | Steve: "Happy daylight saving." |
+
 **Title options** (≤ 50 characters)
 1. POV: you get an extra hour of sleep  ← on-screen title
 2. Daylight saving time with a cat
