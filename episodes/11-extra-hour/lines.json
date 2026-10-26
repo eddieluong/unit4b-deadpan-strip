@@ -104,22 +104,10 @@
   "text": "[furious, yelling, exploding] Are you KIDDING me?! Five more MINUTES, you little"
  },
  {
-  "id": "11_n01",
+  "id": "11_meow",
   "char": "snuggles",
-  "expr": "deadpan",
-  "stability": 0.5,
-  "style": 0.4,
-  "speed": 0.95,
-  "text": "[flat, matter-of-fact] Breakfast is at six."
- },
- {
-  "id": "11_n02",
-  "char": "snuggles",
-  "expr": "deadpan",
-  "stability": 0.5,
-  "style": 0.4,
-  "speed": 0.95,
-  "text": "[flat] MY six."
+  "sfx": "ElevenLabs sound-generation: a single short, flat, unimpressed meow",
+  "text": "Meow."
  },
  {
   "id": "11_s13",

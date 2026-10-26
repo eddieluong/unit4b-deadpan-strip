@@ -16,7 +16,7 @@ at = lambda k: [e['t'] for e in EV if e['type'] == k]
 buf = np.zeros((int(DUR * SR), 2))
 
 # ---------- voices (level per line from VOICE_PROSODY.md: never flatten every line to the same level) ----------
-GAIN_DB = {'11_s02': +1.5, '11_s04': +1, '11_s08': -1.5, '11_s10': -2, '11_s11': -2, '11_s12a': +1, '11_s12b': +2.5, '11_n01': -1, '11_n02': -2, '11_s13': -3}
+GAIN_DB = {'11_s02': +1.5, '11_s04': +1, '11_s08': -1.5, '11_s10': -2, '11_s11': -2, '11_meow': -3, '11_s12a': +1, '11_s12b': +2.5, '11_s13': -3}
 voice_on = np.zeros(len(buf))
 for e in EV:
     if e['type'] != 'voice': continue

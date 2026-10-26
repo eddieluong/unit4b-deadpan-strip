@@ -31,10 +31,9 @@ const LINE_DEFS = [   // id, char, caption text, gap after (s) — gaps follow t
   ['11_s09', 'steve', 'I watched ONE video.', 0.6],
   ['11_s10', 'steve', 'It was five forty-one.', 0.7],
   ['11_s11', 'steve', 'And at five fifty-eight, I was finally, FINALLY drifting off.', 1.35],
+  ['11_meow', 'snuggles', 'Meow.', 0.35],                                 // the cat doesn't talk: one flat meow, sitting on his face
   ['11_s12a', 'steve', 'MMMPH!', 0.28],                                   // in the scene: under the cat
-  ['11_s12b', 'steve', 'Are you KIDDING me?! Five more MINUTES, you little—', 0.65],   // in the scene: the explosion (+ bleep)
-  ['11_n01', 'snuggles', 'Breakfast is at six.', 0.8],
-  ['11_n02', 'snuggles', 'MY six.', 0.6],
+  ['11_s12b', 'steve', 'Are you KIDDING me?! Five more MINUTES, you little—', 1.6],   // in the scene: the explosion (+ bleep)
   ['11_s13', 'steve', "Cats don't do daylight saving.", 0.8],
 ];
 const TITLE = ['POV: you get an', 'extra hour of sleep'];
@@ -54,8 +53,8 @@ function buildTimeline() {
     off: L_('11_s03').t, snap: wt('11_s03', 6), wide: L_('11_s04').t, tie: wt('11_s04', 2),
     tried: L_('11_s05').t, pFlip: L_('11_s06').t + 0.1, down: end('11_s06'), c520: L_(CUT_SHEEP ? '11_s09' : '11_s07').t,
     sheep: CUT_SHEEP ? -1 : L_('11_s07').t, sheep3: CUT_SHEEP ? -1 : L_('11_s08').t, phone: L_('11_s09').t, lapse: end('11_s09') - 0.25, c541: L_('11_s10').t,
-    c558: L_('11_s11').t, catEye: end('11_s11') + 0.15, hop: end('11_s11') + 0.75, land: L_('11_s12a').t - 0.15, burst: L_('11_s12b').t - 0.1, bleep: end('11_s12b') - 0.2,
-    my: L_('11_n01').t, kitchen: L_('11_s13').t - 0.35,
+    c558: L_('11_s11').t, catEye: end('11_s11') + 0.15, hop: end('11_s11') + 0.75, land: L_('11_meow').t - 0.3, burst: L_('11_s12b').t - 0.1, bleep: end('11_s12b') - 0.2,
+    meow: L_('11_meow').t, my: end('11_s12b') + 0.3, kitchen: L_('11_s13').t - 0.6,
   };
   STEVE = [
     { t: 0, expr: 'happy', sit: 1, arm: 'wide', tilt: -4 },
@@ -74,7 +73,7 @@ function buildTimeline() {
     { t: T.burst, dur: 0.15, expr: 'furious', sit: 1, arm: 'wide', tilt: -4, fx: ['vein', 'steam'] },   // bursts up, furious
     { t: T.bleep, dur: 0.1, expr: 'furious', sit: 1, arm: 'hips', tilt: 6, fx: ['vein', 'steam'] },
     { t: T.my, dur: 0.3, expr: 'angry', sit: 1, arm: 'hips', tilt: 0, look: 0.6, fx: ['vein'] },
-    { t: L_('11_n02').t, dur: 0.3, expr: 'dead_inside', sit: 1, arm: 'hold', look: 0.6, fx: [] },
+    { t: T.my + 0.2, dur: 0.3, expr: 'dead_inside', sit: 1, arm: 'hold', look: 0.6, fx: [] },   // the cat wins
   ];
   CAT = [
     { t: 0, expr: 'sleepy', x: CATBED.x, y: CATBED.y, scale: 3.4, tilt: 0 },
@@ -83,9 +82,10 @@ function buildTimeline() {
     { t: T.hop, dur: 0.27, expr: 'deadpan', x: 660, y: 1250, scale: 3.8, tilt: 0 },
     { t: T.hop + 0.27, dur: 0.27, expr: 'deadpan', x: 600, y: 1170, scale: 4.1 },
     { t: T.hop + 0.54, dur: 0.26, expr: 'deadpan', x: FACE.x, y: FACE.y, scale: 4.4 },
-    { t: T.land + 0.5, dur: 0.3, expr: 'smug', x: FACE.x, y: FACE.y, scale: 4.4 },
+    { t: T.meow, dur: 0.1, expr: 'neutral', mouth: 'O', x: FACE.x, y: FACE.y, scale: 4.4, tilt: -4 },    // "Meow." on his face
+    { t: T.meow + 0.9, dur: 0.2, expr: 'deadpan', x: FACE.x, y: FACE.y, scale: 4.4, tilt: 0 },
     { t: T.burst, dur: 0.2, expr: 'deadpan', x: 680, y: 1255, scale: 4.2 },                            // knocked onto his lap, unbothered
-    { t: L_('11_n02').t - 0.1, dur: 0.2, expr: 'deadpan', x: 680, y: 1255, scale: 4.2, tilt: 8 },
+    { t: T.my, dur: 0.25, expr: 'smug', look: -0.6, x: 680, y: 1255, scale: 4.2, tilt: -6 },          // on his lap, satisfied
   ];
   const push = (a, b, z0, z1) => t => z0 + (z1 - z0) * ease.inOut(seg(t, a, b));
   if (!CUT_SHEEP) STEVE.push({ t: T.sheep, expr: 'dead_inside', sit: 0, look: 0 }); STEVE.sort((a, b) => a.t - b.t);
@@ -336,7 +336,7 @@ function shotCatEye(t) {
 function shotHop(t) {
   bedroom(t); lamp(t, false);
   const { top } = steveInBed(t); blanket(t, top); bedClock(t, t < T.land ? '5:59' : '6:00');
-  if (t >= T.land) {   // muffled: his arms flail out from under the blanket
+  if (t >= L_('11_s12a').t) {   // muffled: his arms flail out from under the blanket
     const up = Math.floor(onTwos(t) * 6) % 2, p = spen(t, 39);
     p.line([[360, 1100], [300, up ? 1040 : 1075], [235, up ? 1010 : 1060]], 9); p.dot(232, up ? 1008 : 1058, 15, 15, INK);
     p.line([[720, 1100], [780, up ? 1075 : 1040], [845, up ? 1060 : 1010]], 9); p.dot(848, up ? 1058 : 1008, 15, 15, INK);
