@@ -16,11 +16,14 @@ const NUM = ['x', 'y', 'lean', 'tilt', 'headDy', 'look', 'lid', 'tail', 'scale']
 
 // keys: [{ t, dur?, ...pose }] sorted by t. Discrete fields (expr, eyes, mouth, fx) switch at the key;
 // numeric fields and arms tween from the previous key over `dur` (default 0.28 s) with a little overshoot.
-export function track(keys, t, defDur = 0.28) {
+export const onTwos = t => Math.floor(t * 12) / 12;      // characters move at 12 fps (classic 2D), camera stays at 24
+export const boilFrame = t => Math.floor(t * 8);        // line boil at 8 fps, steady, never every frame
+
+export function track(keys, t, defDur = 0.25) {
   let i = 0;
   while (i + 1 < keys.length && keys[i + 1].t <= t) i++;
   const cur = keys[i], prev = keys[Math.max(0, i - 1)];
-  const age = Math.max(0, t - cur.t), dur = cur.dur ?? defDur, k = i === 0 ? 1 : ease.outBack(clamp01(age / dur));
+  const age = Math.max(0, t - cur.t), dur = cur.dur ?? defDur, k = i === 0 ? 1 : ease.inOut(clamp01(age / dur));
   const out = { ...cur, age };
   delete out.t; delete out.dur;
   for (const f of NUM) {
@@ -29,7 +32,7 @@ export function track(keys, t, defDur = 0.28) {
   }
   for (const f of ['arm', 'armL', 'armR']) {
     const a = armOf(prev, f), b = armOf(cur, f);
-    if (a && b && a !== b && k < 1.05) out[f] = { a, b, k };
+    if (a && b && a !== b && k < 1) out[f] = { a, b, k };
   }
   return out;
 }
@@ -38,23 +41,21 @@ const armOf = (p, f) => p[f] ?? (f !== 'arm' ? p.arm : undefined) ?? 'down';
 export function idle(t, seed = 0) {
   const s = seed * 1.7;
   return {
-    headDy: 0.7 * Math.sin(2 * Math.PI * t / 3.1 + s),          // breathing
-    tilt: 2.4 * Math.sin(2 * Math.PI * t / 5.3 + s * 2) + 1.2 * Math.sin(2 * Math.PI * t / 2.3 + s),
-    lean: 1.1 * Math.sin(2 * Math.PI * t / 4.4 + s * 3),
-    tail: Math.sin(2 * Math.PI * t / 1.9 + s),
+    headDy: 0.35 * Math.sin(2 * Math.PI * t / 3.6 + s),          // breathing only — no automatic head wobble
+    tail: 0.6 * Math.sin(2 * Math.PI * t / 2.8 + s),
   };
 }
 
 // words: [[word, start, end], ...] relative to the line start (from asr_check words.json). Returns extra headDy/tilt.
-export function speech(words, t0, t) {
+export function speech(words, t0, t, text = '') {
   if (!words) return { headDy: 0, tilt: 0 };
+  const stressed = new Set(text.split(/\s+/).filter(x => /[A-Z]{2,}/.test(x)).map(x => x.replace(/[^A-Za-z']/g, '').toLowerCase()));
   let dy = 0, tl = 0;
   words.forEach(([w, a], j) => {
     const age = t - (t0 + Math.max(0, a));
     if (age < 0 || age > 0.3) return;
-    const big = /[A-Z]{2,}/.test(w), amp = big ? 2.6 : 1.0;
-    const e = Math.sin(Math.PI * age / 0.3);
-    dy -= amp * e; tl += (j % 2 ? 1 : -1) * amp * 1.4 * e;
+    if (!stressed.has(w.replace(/[^A-Za-z']/g, '').toLowerCase())) return;   // a nod only on the stressed word
+    dy -= 1.6 * Math.sin(Math.PI * age / 0.3);
   });
   return { headDy: dy, tilt: tl };
 }

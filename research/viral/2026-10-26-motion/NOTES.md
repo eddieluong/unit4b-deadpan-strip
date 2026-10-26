@@ -23,3 +23,11 @@ Targets for UNIT 4B: motion median ≥ 1.8 with no character still > ~1 s; a new
 camera move every ~1–2.5 s; kinetic word captions. Tools: `styles/deadpan-strip/demo/motion.js` (track / idle /
 speech / pop / wordChunk) and lean / tilt / headDy / tail + new arm poses (wave, facepalm, chin, cross, reach, wide)
 in `cast_stick.js`. Test: `styles/deadpan-strip/demo/motion-test/`.
+
+## v2 after user feedback (same day): "not smooth, display glitches, are the motions needed?"
+v1 stacked every kind of motion at once: line boil on every frame (24 fps) + continuous head wobble + a nod on every
+word + overshoot + squash/stretch. Result: jitter, plus glitches (pillow as a white ring round the neck, hands drawn
+over the face, elbows like antennae). Rule now: **every motion needs a reason** — a pose change when the idea changes,
+one nod on the stressed word, one slow camera move to guide the eye. Characters animate on twos (12 fps), line boil
+at a steady 8 fps, eases in-out with no overshoot, no automatic wobble (breathing only, 0.35 units), arms behind the
+head unless a hand touches the face.

@@ -34,7 +34,7 @@ function armPts(sx, sh, pose = 'down', k = 1) {
     case 'reach': return [P(0, 0), P(10, 6), P(22, 14)];
     case 'wide': return [P(0, 0), P(12, 2), P(21, 9)];
     case 'point': return [P(0, 0), P(11, 1), P(23, 4)];
-    case 'up': return [P(0, 0), P(10, 8), P(13, 22)];
+    case 'up': return [P(0, 0), P(13, 12), P(6, 22)];
     case 'hips': return [P(0, 0), P(10, -8), P(4, -17)];
     case 'shrug': return [P(0, 0), P(10, -6), P(17, 3)];
     case 'hold': return [P(0, 0), P(8, -11), P(-1, -10)];
@@ -110,8 +110,10 @@ function drawSteve(pen, C, p) {
     pen.part(roundPoly([[-6.5, 62], [6.5, 62], [8, 37], [-8, 37]], 2.5), C.color, { shade: 0.18 });
     pen.part(roundPoly([[-8, 65], [8, 65], [6, 61], [-6, 61]], 2), C.color, { shade: 0.3 });
     pen.line([[-1.6, 61], [-1.8, 55]], pen.lw * 0.5); pen.line([[1.6, 61], [1.8, 55]], pen.lw * 0.5);
+    const touch = ['facepalm', 'chin'].includes(p.armL) || ['facepalm', 'chin'].includes(p.armR) || ['facepalm', 'chin'].includes(p.arm);
+    if (!touch) arms(pen, p, [0, 60]);   // behind the head (hands behind the head stay hidden)
     pivot(pen, [0, 64], p.tilt || 0, () => headFace(pen, p, hy, r, { before: () => pen.part(spikes(r, hy), C.hair, { shade: false }) }));
-    arms(pen, p, [0, 60]);   // after the head, so a hand can touch the face (facepalm, chin)
+    if (touch) arms(pen, p, [0, 60]);    // a hand on the face goes in front
   });
 }
 

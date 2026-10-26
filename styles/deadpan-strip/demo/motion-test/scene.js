@@ -3,7 +3,7 @@
 // kinetic word captions. Compare with episodes/11-extra-hour (v1) at 6.4–10.6 s.
 import { drawCharacter, paper, panel } from './lib/cast_stick.js';
 import { VPen, roundPoly, ellipsePts } from './lib/cast_v2.js';
-import { track, idle, speech, pop, drawLive, sum, wordChunk, ease } from './lib/motion.js';
+import { track, idle, speech, sum, wordChunk, ease, onTwos, boilFrame } from './lib/motion.js';
 
 const W = 1080, H = 1920, cv = document.getElementById('c'), ctx = cv.getContext('2d');
 const PX = 40, PY = 150, PW = 1000, PH = 1420, K = 7, INK = '#2a2230';
@@ -13,20 +13,18 @@ const DUR = 5.6;
 let VOICE = {}, WORDS = {};
 const EV = [{ t: 0.5, type: 'voice', id: '11_02_steve' }];
 
-const frameOf = t => Math.floor(t * 24);
+const frameOf = boilFrame;
 const spen = (t, seed) => { const p = new VPen(ctx, 0, 0, 1, { lw: 2.4, hand: true, frame: frameOf(t), seed }); p.T = q => q; return p; };
 
 // Steve's acting: one pose per phrase, landing on the words (line starts at 0.5 s)
 const STEVE = [
   { t: 0, expr: 'neutral', arm: 'hold', look: -0.3, lean: 0, tilt: 0 },
-  { t: 0.45, expr: 'happy', arm: 'wide', lean: -5, tilt: -6, fx: ['sparkle'] },                 // "Extra hour."
-  { t: 2.2, expr: 'smug', arm: 'up', lean: 7, tilt: 9, look: 0.2 },                             // "I'm gonna sleep"
-  { t: 2.85, dur: 0.22, expr: 'grin', arm: 'wide', lean: -3, tilt: -8, headDy: 2, fx: ['sparkle'] },   // "SO much!"
-  { t: 4.3, expr: 'smug', arm: 'up', lean: 9, tilt: 12, look: 0.3 },                            // settles back, pleased
+  { t: 0.45, expr: 'happy', arm: 'hold', lean: 0, tilt: -4 },                                   // "Extra hour." — delighted
+  { t: 2.2, dur: 0.35, expr: 'smug', arm: 'up', lean: 6, tilt: 6, look: 0.2 },                 // "I'm gonna sleep SO much" — leans back, hands behind his head
 ];
 const CAT = [
   { t: 0, expr: 'side_eye', look: -0.6, tilt: 0 },
-  { t: 3.3, expr: 'deadpan', look: -0.9, tilt: 12 },                                             // slowly turns to look at him
+  { t: 3.3, dur: 0.6, expr: 'deadpan', look: -0.9, tilt: 8 },                                   // one slow look at him: the only thing the cat does
 ];
 
 function steveMouth(t) {
@@ -49,7 +47,7 @@ function room(t) {
   b.part(roundPoly([[330, 800], [750, 800], [750, 1110], [330, 1110]], 40), '#9a6b4a', { shade: 0.15 });
   b.part([[300, 1060], [780, 1060], [840, 1330], [240, 1330]], '#f4f1ea', { shade: 0.08 });
   b.part(roundPoly([[240, 1330], [840, 1330], [840, 1420], [240, 1420]], 8), '#9a6b4a', { shade: 0.15 });
-  b.part(ellipsePts(540, 975, 170, 60, 36), '#ffffff', { shade: 0.12 });
+  b.part(roundPoly([[405, 900], [675, 900], [685, 1075], [395, 1075]], 34), '#ffffff', { shade: 0.12 });
   const n = spen(t, 25);
   n.part(roundPoly([[70, 1090], [255, 1090], [255, 1400], [70, 1400]], 6), '#b98a5e', { shade: 0.15 });
   n.part(roundPoly([[88, 1000], [238, 1000], [238, 1090], [88, 1090]], 10), '#2f2b36', { shade: false });
@@ -64,21 +62,21 @@ function blanket(t, top, wiggle) {
 }
 
 function steve(t) {
-  const base = track(STEVE, t);
-  const L = LINES[0], talk = speech(WORDS[L.id], L.t, t);
-  const pose = sum(base, idle(t, 1), talk);
+  const tq = onTwos(t), base = track(STEVE, tq);
+  const L = LINES[0], talk = speech(WORDS[L.id], L.t, tq, L.text);
+  const pose = sum(base, idle(tq, 1), talk);
   const m = steveMouth(t); if (m) pose.mouth = m;
   if ((t + 0.7) % 4.2 < 0.17 && pose.expr !== 'happy') pose.eyes = 'closed';
-  const x = 540, y = 1410, sq = pop(base.age);
+  const x = 540, y = 1410;
   ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, 1140); ctx.clip();
-  drawLive(ctx, () => drawCharacter(ctx, 'steve', x, y, K, pose, { frame: frameOf(t) }), x, y, sq);
+  drawCharacter(ctx, 'steve', x, y, K, pose, { frame: frameOf(t) });
   ctx.restore();
-  blanket(t, 1140, base.expr === 'grin' || base.expr === 'happy' ? t * 9 : t * 2);   // happy wiggle under the blanket
+  blanket(t, 1140, 0);
 }
 function cat(t) {
-  const base = track(CAT, t), pose = sum(base, idle(t, 4));
+  const tq = onTwos(t), base = track(CAT, tq), pose = sum(base, idle(tq, 4));
   const x = (WIN.x0 + WIN.x1) / 2, y = WIN.y1 + 26;
-  drawLive(ctx, () => drawCharacter(ctx, 'snuggles', x, y, 4.2, pose, { frame: frameOf(t) }), x, y, pop(base.age, 0.6));
+  drawCharacter(ctx, 'snuggles', x, y, 4.2, pose, { frame: frameOf(t) });
 }
 
 function captions(t) {
@@ -101,8 +99,7 @@ function render(t) {
   paper(ctx, W, H, 11);
   ctx.fillStyle = INK; ctx.textAlign = 'center'; ctx.font = '600 52px Fredoka';
   ctx.fillText('POV: you get an', 540, 72); ctx.fillText('extra hour of sleep', 540, 132); ctx.textAlign = 'start';
-  const punch = t > 3.3 && t < 3.7 ? 0.07 * Math.sin(Math.PI * (t - 3.3) / 0.4) : 0;   // punch-in on "SO"
-  const z = 1.15 + 0.2 * ease.inOut(Math.min(1, t / DUR)) + punch, fx = 560 - 40 * (t / DUR), fy = 960;
+  const z = 1.15 + 0.12 * ease.inOut(Math.min(1, t / DUR)), fx = 560 - 30 * ease.inOut(Math.min(1, t / DUR)), fy = 960;   // one slow push-in, nothing else
   ctx.save(); ctx.beginPath(); ctx.rect(PX, PY, PW, PH); ctx.clip();
   ctx.translate(540, 900); ctx.scale(z, z); ctx.translate(-fx, -fy);
   room(t); cat(t); steve(t);
