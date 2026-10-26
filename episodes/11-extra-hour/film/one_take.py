@@ -12,18 +12,11 @@ SR = 24000
 VOICE = {'steve': 'Y9z2nW5YxRRbI3XaIf8x', 'snuggles': 'nPczCjzI2devNBz1zQrb'}
 # feelings come from the words and one light tag per sentence; no "..." or [pause] (they read as AI)
 TAKES = {
-    'steve': (['11_02_steve', '11_04_steve', '11_05_steve', '11_06_steve', '11_09_steve'],
-              "[excited, giddy] One more HOUR of sleep. "
-              "[determined, under his breath] Okay. Cold side. Let's go. "
-              "[whispering, bargaining with himself] Just ONE video. "
-              "[drowsy, relieved mumble] Here it comes. "
-              "[quiet, flat, half asleep] Happy daylight saving.",
+    'steve': (['11_s01', '11_s02', '11_s03', '11_s04', '11_s05', '11_s06', '11_s07', '11_s08', '11_s09', '11_s10', '11_s11', '11_s12', '11_s13'],
+              "[conversational, dry, telling a friend] The clocks just went back an hour. [pleased] One FREE hour of sleep. [deadpan] So my body, being an idiot, woke me up at five a.m. [dry] Wide awake. Like I had a MEETING. [determined] I tried everything. [matter-of-fact] Cold side of the pillow. [matter-of-fact] Counting sheep. [flat] The sheep got bored. [guilty] I watched ONE video. [flat] It was five forty-one. [slowing down, drowsy, hopeful] And at five fifty-eight, I was finally, FINALLY drifting off. [flat, quiet] When the cat sat on my face. [resigned, dry] Cats don't do daylight saving.",
               {'stability': 0.5, 'similarity_boost': 0.85, 'style': 0.45, 'use_speaker_boost': True}),
-    'snuggles': (['11_01_snuggles', '11_03_snuggles', '11_07_snuggles', '11_08_snuggles'],
-                 "[hushed, like a nature documentary] Tonight the clocks go back one hour. The human gets an extra hour of sleep. "
-                 "[dry] His body did not get the memo. "
-                 "[flat, matter-of-fact] Breakfast is at six. "
-                 "[flat] MY six.",
+    'snuggles': (['11_n01', '11_n02'],
+                 '[flat, matter-of-fact] Breakfast is at six. [flat] MY six.',
                  {'stability': 0.5, 'similarity_boost': 0.85, 'style': 0.4, 'use_speaker_boost': True}),
 }
 

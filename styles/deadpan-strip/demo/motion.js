@@ -85,6 +85,10 @@ export function wordChunk(lines, words, t, maxChars = 16) {
     let W = words[L.id]; if (!W) continue;
     const toks = L.text.split(/\s+/).filter(Boolean);
     if (toks.length === W.length) W = W.map((w, i) => [toks[i], w[1], w[2]]);   // show the script's spelling (six, not 6)
+    else {   // ASR split words differently ("5am", "541", a stray word): spread the script words over the spoken span
+      const a0 = Math.max(0, W[0][1]), b0 = W[W.length - 1][2], tot = toks.reduce((s, w) => s + w.length + 1, 0);
+      let acc = 0; W = toks.map(w => { const st = a0 + (b0 - a0) * acc / tot; acc += w.length + 1; return [w, st, a0 + (b0 - a0) * acc / tot]; });
+    }
     const end = L.t + W[W.length - 1][2] + 0.25;
     if (t < L.t || t > end) continue;
     const stress = new Set(L.text.split(/\s+/).filter(w => /[A-Z]{2,}/.test(w)).map(w => w.replace(/[^A-Za-z']/g, '').toLowerCase()));

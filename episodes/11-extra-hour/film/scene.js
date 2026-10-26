@@ -16,35 +16,100 @@ const LIE_Y = 1560, SIT_Y = 1410;                       // Steve's (hidden) feet
 const CATBED = { x: 720, y: 1330 };                     // the cat asleep at the foot of the bed
 const FACE = { x: 540, y: 1095 };                       // where the cat sits on his face
 
-const LINES = [
-  ['11_01_snuggles', 'snuggles', 1.7, 'Tonight the clocks go back one hour. The human gets an extra hour of sleep.'],
-  ['11_02_steve', 'steve', 7.0, 'One more HOUR of sleep.'],
-  ['11_03_snuggles', 'snuggles', 11.7, 'His body did not get the memo.'],
-  ['11_04_steve', 'steve', 14.5, "Okay. Cold side. Let's go."],
-  ['11_05_steve', 'steve', 18.8, 'Just ONE video.'],
-  ['11_06_steve', 'steve', 25.0, 'Here it comes.'],
-  ['11_07_snuggles', 'snuggles', 28.7, 'Breakfast is at six.'],
-  ['11_08_snuggles', 'snuggles', 30.6, 'MY six.'],
-  ['11_09_steve', 'steve', 33.1, 'Happy daylight saving.'],
-].map(([id, char, t, text]) => ({ id, char, t, text }));
-const DUR = 36.2;
-const TITLE = ['POV: you get an', 'extra hour of sleep'];
-const T = {
-  cold: 1.6, flip: 2.2, rewind: 3.1, flipEnd: 4.6, steve: 6.9, reach: 9.6, off: 10.1, snap: 10.8, memo: 11.5,
-  sitUp: 14.0, pFlip: 14.4, down: 17.0, c520: 18.0, phone: 18.6, lapse: 21.1, c541: 21.9, sheep: 22.5,
-  c558: 24.7, catEye: 26.4, hop: 27.2, land: 28.0, my: 30.5, kitchen: 32.0,
-};
-let VOICE = {}, WORDS = {};
-
-const EV = [
-  ...LINES.map(L => ({ t: L.t, type: 'voice', id: L.id })),
-  { t: 0.0, type: 'tick' }, { t: 0.3, type: 'purr' }, { t: T.cold, type: 'lullaby' }, { t: T.flip, type: 'buzz' }, { t: T.rewind, type: 'whoosh' }, { t: T.rewind + 0.5, type: 'choir' },
-  { t: T.off, type: 'click' }, { t: T.snap, type: 'sting' }, { t: T.snap + 0.6, type: 'tick2' },
-  { t: T.pFlip, type: 'whoosh' }, { t: T.pFlip + 0.35, type: 'pillow' }, { t: T.down, type: 'pillow' },
-  { t: T.phone, type: 'buzz' }, { t: T.lapse, type: 'lapse' }, { t: T.sheep, type: 'pop' },
-  { t: T.c558, type: 'hum' }, { t: T.catEye, type: 'ding' }, { t: T.hop, type: 'hops' }, { t: T.land - 0.05, type: 'stop' },
-  { t: T.land, type: 'thump' }, { t: T.kitchen + 0.2, type: 'kibble' }, { t: T.kitchen + 0.9, type: 'plink' }, { t: T.kitchen + 0.2, type: 'outro' },
+// v5 (voice-led, research/viral/2026-10-26-storytelling): Steve tells it in the first person at ~2.3 words/s; one picture
+// per sentence; the timeline is computed from the voice take (each line starts after the previous one + its gap, and
+// shots cut on the line's first word or on a named word), so nothing is timed by hand.
+const LINE_DEFS = [   // id, char, caption text, gap after (s)
+  ['11_s01', 'steve', 'The clocks just went back an hour.', 0.25],
+  ['11_s02', 'steve', 'One FREE hour of sleep.', 0.15],
+  ['11_s03', 'steve', 'So my body, being an idiot, woke me up at five a.m.', 0.1],
+  ['11_s04', 'steve', 'Wide awake. Like I had a MEETING.', 0.15],
+  ['11_s05', 'steve', 'I tried everything.', 0.1],
+  ['11_s06', 'steve', 'Cold side of the pillow.', 0.1],
+  ['11_s07', 'steve', 'Counting sheep.', 0.1],
+  ['11_s08', 'steve', 'The sheep got bored.', 0.15],
+  ['11_s09', 'steve', 'I watched ONE video.', 0.1],
+  ['11_s10', 'steve', 'It was five forty-one.', 0.15],
+  ['11_s11', 'steve', 'And at five fifty-eight, I was finally, FINALLY drifting off.', 1.5],
+  ['11_s12', 'steve', 'When the cat sat on my face.', 0.2],
+  ['11_n01', 'snuggles', 'Breakfast is at six.', 0.35],
+  ['11_n02', 'snuggles', 'MY six.', 0.4],
+  ['11_s13', 'steve', "Cats don't do daylight saving.", 0.7],
 ];
+const TITLE = ['POV: you get an', 'extra hour of sleep'];
+let LINES = [], DUR = 0, T = {}, EV = [], SHOTS = [], STEVE = [], CAT = [];
+let VOICE = {}, WORDS = {};
+const L_ = id => LINES.find(l => l.id === id);
+const end = id => L_(id).t + VOICE[id].dur;
+const wt = (id, i) => L_(id).t + Math.max(0, (WORDS[id] || [])[i]?.[1] ?? 0);   // time the i-th word starts
+
+function buildTimeline() {
+  let t = 0.2;
+  LINES = LINE_DEFS.map(([id, char, text, gap]) => { const L = { id, char, text, t }; t += VOICE[id].dur + gap; return L; });
+  DUR = +t.toFixed(2);
+  T = {
+    flip: 0, rewind: wt('11_s01', 4), flipEnd: L_('11_s02').t,
+    off: L_('11_s03').t, snap: wt('11_s03', 6), wide: L_('11_s04').t, tie: wt('11_s04', 2),
+    tried: L_('11_s05').t, pFlip: L_('11_s06').t + 0.1, down: end('11_s06'), c520: L_('11_s07').t,
+    sheep: L_('11_s07').t, sheep3: L_('11_s08').t, phone: L_('11_s09').t, lapse: end('11_s09') - 0.25, c541: L_('11_s10').t,
+    c558: L_('11_s11').t, catEye: end('11_s11') + 0.15, hop: end('11_s11') + 0.75, land: L_('11_s12').t - 0.15,
+    my: L_('11_n01').t, kitchen: L_('11_s13').t - 0.35,
+  };
+  STEVE = [
+    { t: 0, expr: 'happy', sit: 1, arm: 'wide', tilt: -4 },
+    { t: T.flipEnd, dur: 0.3, expr: 'happy', arm: 'wide', sit: 1, tilt: -6, fx: ['sparkle'] },        // "One FREE hour of sleep."
+    { t: T.off, dur: 0.3, expr: 'sleepy', mouth: 'smile', arm: 'hold', sit: 0, tilt: 0, fx: [] },     // asleep, smiling
+    { t: T.snap, dur: 0.08, expr: 'shocked', eyes: 'wide', mouth: 'line', sit: 0 },                    // 5:02, eyes snap open
+    { t: T.tie, dur: 0.2, expr: 'shocked', eyes: 'wide', mouth: 'line', sit: 1, arm: 'hold' },        // "like I had a MEETING": sitting up in a tie
+    { t: T.tried, dur: 0.25, expr: 'angry', eyes: 'closed', sit: 0, arm: 'hold', fx: ['sweat'] },      // "I tried everything."
+    { t: T.pFlip - 0.25, dur: 0.2, expr: 'angry', sit: 1, fx: [] },                                    // cold side of the pillow
+    { t: T.down, dur: 0.25, expr: 'angry', eyes: 'closed', sit: 0 },
+    { t: T.sheep, expr: 'dead_inside', sit: 0, look: 0 },                                              // sheep
+    { t: T.phone, dur: 0.2, expr: 'nervous', mouth: 'line', look: 0.6, sit: 0 },                       // one video
+    { t: T.c541, dur: 0.15, expr: 'dead_inside', look: 0.6, sit: 0 },
+    { t: T.c558, dur: 0.6, expr: 'sleepy', eyes: 'dot', lid: 0.55, mouth: 'smile', sit: 0, look: 0 },  // drifting off
+    { t: T.catEye, dur: 1.0, expr: 'sleepy', eyes: 'dot', lid: 0.92, mouth: 'smile', sit: 0 },
+    { t: T.land, dur: 0.06, expr: 'shocked', eyes: 'wide', sit: 0 },
+  ];
+  CAT = [
+    { t: 0, expr: 'sleepy', x: CATBED.x, y: CATBED.y, scale: 3.4, tilt: 0 },
+    { t: T.catEye, dur: 0.08, expr: 'shocked', eyes: 'wide', x: CATBED.x, y: CATBED.y, scale: 3.4 },
+    { t: T.catEye + 0.35, dur: 0.15, expr: 'deadpan', x: CATBED.x, y: CATBED.y, scale: 3.4, tilt: -8 },
+    { t: T.hop, dur: 0.27, expr: 'deadpan', x: 660, y: 1250, scale: 3.8, tilt: 0 },
+    { t: T.hop + 0.27, dur: 0.27, expr: 'deadpan', x: 600, y: 1170, scale: 4.1 },
+    { t: T.hop + 0.54, dur: 0.26, expr: 'deadpan', x: FACE.x, y: FACE.y, scale: 4.4 },
+    { t: T.land + 0.5, dur: 0.3, expr: 'smug', x: FACE.x, y: FACE.y, scale: 4.4 },
+    { t: L_('11_n02').t - 0.1, dur: 0.2, expr: 'deadpan', x: FACE.x, y: FACE.y, scale: 4.4, tilt: 6 },
+  ];
+  const push = (a, b, z0, z1) => t => z0 + (z1 - z0) * ease.inOut(seg(t, a, b));
+  SHOTS = [   // [start, draw(t)] — one picture per sentence
+    [0, t => { withCamera(1, 540, 900, () => shotClockFlip(t)); }],
+    [T.flipEnd, t => withCamera(push(T.flipEnd, T.off, 1.3, 1.4)(t), 540, 960, () => shotSaturday(t))],
+    [T.off, t => withCamera(1.2, 540, 1000, () => shotDark(t))],
+    [T.snap, t => { withCamera(1, 540, 900, () => shotClock(t, '5:02')); timeTag('5:02 AM', t); }],
+    [T.wide, t => { withCamera(push(T.wide, T.tie, 2.0, 2.15)(t), 540, 1000, () => shotMemo(t)); timeTag('5:02 AM', t); }],
+    [T.tie, t => { withCamera(1.45, 540, 960, () => shotTie(t)); timeTag('5:02 AM', t); }],
+    [T.tried, t => { withCamera(1.6, 540, 1000, () => shotMemo(t, '5:04')); timeTag('5:04 AM', t); }],
+    [T.pFlip - 0.25, t => { withCamera(1.4, 540, 960, () => shotPillow(t)); timeTag('5:05 AM', t); }],
+    [T.sheep, t => { withCamera(1.15, 520, 960, () => shotSheep(t)); timeTag('5:12 AM', t); }],
+    [T.phone, t => { withCamera(push(T.phone, T.c541, 1.8, 2.0)(t), 600, 1010, () => shotPhone(t)); timeTag(t < T.lapse ? '5:20 AM' : `5:${20 + Math.floor(21 * seg(onTwos(t), T.lapse, T.c541 - 0.05))} AM`, t); }],
+    [T.c541, t => { withCamera(1, 540, 900, () => shotClock(t, '5:41')); timeTag('5:41 AM', t); }],
+    [T.c558, t => { withCamera(push(T.c558, T.catEye, 1.8, 2.0)(t), 540, 1010, () => shotDroop(t)); timeTag('5:58 AM', t); }],
+    [T.catEye, t => withCamera(2.6, CATBED.x, CATBED.y - 110, () => shotCatEye(t))],
+    [T.hop, t => { withCamera(push(T.hop, T.my, 1.25, 1.45)(t), 560, 1080, () => shotHop(t), 540 + (t >= T.land && t < T.land + 0.25 ? (Math.floor(t * 24) % 2 ? 12 : -12) : 0)); timeTag(t >= T.land ? '6:00 AM' : '5:59 AM', t); }],
+    [T.my, t => withCamera(push(T.my, T.kitchen, 2.2, 2.3)(t), FACE.x, FACE.y - 130, () => shotHop(t), 540, 860)],
+    [T.kitchen, t => withCamera(push(T.kitchen, DUR, 1.26, 1.32)(t), 610, 1080, () => shotKitchen(t), 540, 940)],
+  ];
+  EV = [
+    ...LINES.map(L => ({ t: L.t, type: 'voice', id: L.id })),
+    { t: 0.05, type: 'buzz' }, { t: T.rewind, type: 'whoosh' }, { t: T.rewind + 0.5, type: 'choir' }, { t: T.flipEnd, type: 'lullaby' },
+    { t: T.off, type: 'click' }, { t: T.off + 0.1, type: 'purr' }, { t: T.snap, type: 'sting' }, { t: T.snap + 0.6, type: 'tick2' },
+    { t: T.tie, type: 'pop' }, { t: T.pFlip, type: 'whoosh' }, { t: T.pFlip + 0.6, type: 'pillow' }, { t: T.down, type: 'pillow' },
+    { t: T.sheep, type: 'pop' }, { t: T.phone, type: 'buzz' }, { t: T.lapse, type: 'lapse' }, { t: T.c558, type: 'hum' },
+    { t: T.catEye, type: 'ding' }, { t: T.hop, type: 'hops' }, { t: T.land - 0.05, type: 'stop' }, { t: T.land, type: 'thump' },
+    { t: T.kitchen + 0.2, type: 'kibble' }, { t: T.kitchen + 0.9, type: 'plink' }, { t: T.kitchen + 0.2, type: 'outro' }, { t: 0.0, type: 'tick' },
+  ].sort((a, b) => a.t - b.t);
+}
 
 // ---------- helpers ----------
 const frameOf = boilFrame;
@@ -136,36 +201,6 @@ function lamp(t, on) {
 }
 
 // ---------- acting tracks (t in seconds, poses eased between keys) ----------
-const STEVE = [
-  { t: 0, expr: 'shocked', eyes: 'wide', mouth: 'line', fx: [], sit: 0, arm: 'hold' },                // cold open: 5:02, wide awake
-  { t: T.cold, expr: 'neutral', look: -0.8, sit: 1, arm: 'hold', tilt: 0 },                          // Saturday night, sitting up
-  { t: T.flip + 0.3, expr: 'happy', look: -0.5, sit: 1, tilt: -5 },                                 // the clock goes back
-  { t: T.steve, dur: 0.3, expr: 'grin', arm: 'wide', sit: 1, tilt: 4, look: 0 },                     // "Free hour."
-  { t: 7.75, dur: 0.25, expr: 'happy', arm: 'wide', sit: 1, tilt: -6 },                              // "…HOUR of sleep."
-  { t: T.reach, dur: 0.3, expr: 'smug', armL: 'hold', armR: 'reach', sit: 1, tilt: 6, look: 0.9 },  // reaches for the lamp
-  { t: T.off + 0.2, dur: 0.3, expr: 'sleepy', arm: 'hold', sit: 0, tilt: 0, look: 0 },               // lies down, dark
-  { t: T.snap, dur: 0.08, expr: 'shocked', eyes: 'wide', mouth: 'line', fx: [], sit: 0 },           // eyes snap open
-  { t: T.sitUp, dur: 0.25, expr: 'angry', sit: 1, arm: 'hold', tilt: 0, fx: [] },                   // attempt 1: sits up, flips the pillow
-  { t: T.pFlip + 0.5, dur: 0.2, expr: 'angry', sit: 1, tilt: -5 },
-  { t: T.down, dur: 0.25, expr: 'angry', eyes: 'closed', sit: 0, tilt: 0, fx: ['sweat'] },           // slams back down, eyes squeezed
-  { t: T.phone, dur: 0.2, expr: 'nervous', mouth: 'line', sit: 0, look: 0.6, fx: [] },              // attempt 2: the phone
-  { t: T.c541 - 0.1, dur: 0.15, expr: 'dead_inside', sit: 0, look: 0.6 },                            // 21 minutes later
-  { t: T.sheep, expr: 'dead_inside', sit: 0, look: 0 },                                             // attempt 3: sheep
-  { t: T.c558, dur: 0.6, expr: 'sleepy', eyes: 'dot', lid: 0.55, mouth: 'smile', sit: 0, fx: [] },   // drifting off
-  { t: T.catEye, dur: 1.2, expr: 'sleepy', eyes: 'dot', lid: 0.92, mouth: 'smile', sit: 0 },
-  { t: T.land, dur: 0.06, expr: 'shocked', eyes: 'wide', sit: 0 },                                  // (hidden under the cat)
-];
-const CAT = [
-  { t: 0, expr: 'sleepy', x: CATBED.x, y: CATBED.y, scale: 3.4, tilt: 0 },                           // asleep at the foot of the bed
-  { t: T.catEye, dur: 0.08, expr: 'shocked', eyes: 'wide', x: CATBED.x, y: CATBED.y, scale: 3.4 },  // 5:59:59 — awake
-  { t: T.catEye + 0.5, dur: 0.2, expr: 'deadpan', x: CATBED.x, y: CATBED.y, scale: 3.4, tilt: -8 },
-  { t: T.hop, dur: 0.27, expr: 'deadpan', x: 660, y: 1250, scale: 3.9, tilt: 0 },                    // three hops up the blanket
-  { t: T.hop + 0.27, dur: 0.27, expr: 'deadpan', x: 600, y: 1170, scale: 4.1 },
-  { t: T.hop + 0.54, dur: 0.26, expr: 'deadpan', x: FACE.x, y: FACE.y, scale: 4.4 },
-  { t: T.land + 0.5, dur: 0.3, expr: 'smug', x: FACE.x, y: FACE.y, scale: 4.4 },
-  { t: T.my - 0.1, dur: 0.2, expr: 'deadpan', x: FACE.x, y: FACE.y, scale: 4.4, tilt: 6 },
-];
-
 function steveInBed(t, extra = {}) {
   const tq = onTwos(t), base = track(STEVE, tq), talk = talking('steve', tq);
   const pose = sum(base, idle(tq, 1), talk ? talk.nod : {}, extra);
@@ -258,7 +293,7 @@ function shotClockFlip(t) {   // the phone says why; the clock rewinds 2:00 → 
   ctx.fillText('to 1:00. Enjoy the extra hour of sleep!', 225, y0 + 180);
   ctx.restore();
 }
-function shotMemo(t) { bedScene(t, { clock: '5:02' }); night(0.9); }
+function shotMemo(t, clock = '5:02') { bedScene(t, { clock }); night(0.9); }
 function shotPillow(t) { bedScene(t, { clock: '5:05', pillowFlip: true }); night(0.85); if (t > T.pFlip + 0.6 && t < T.down + 0.6) hand('cold side', 760, 860, 54, -0.06, '#bfe3ff', 'Fredoka', '600'); }
 function shotPhone(t) { bedScene(t, { clock: t < T.c541 ? '5:20' : '5:41', phone: true }); night(0.85, { x: 640, y: 1030, r: 300, c: 'rgba(170,200,255,0.5)' }); }
 function sheepBubble(t, x, y) {   // the third sheep stops, looks at us, and walks off
@@ -276,12 +311,12 @@ function sheepBubble(t, x, y) {   // the third sheep stops, looks at us, and wal
   };
   const tq = onTwos(t), jump = (t0, seed) => { const k = seg(tq, t0, t0 + 0.6); if (k > 0 && k < 1) sheep(x - 190 + 380 * k, y + 40 - Math.sin(Math.PI * k) * 110, false, seed); };
   jump(T.sheep, 63); jump(T.sheep + 0.5, 64);
-  const s3 = T.sheep + 1.0;
+  const s3 = T.sheep3 - 0.3;
   if (tq >= s3 && tq < s3 + 0.3) sheep(x - 190 + 120 * seg(tq, s3, s3 + 0.3), y + 40, false, 65);
   else if (tq >= s3 + 0.3 && tq < s3 + 1.2) sheep(x - 70, y + 40, true, 65);                          // stops, stares
   else if (tq >= s3 + 1.2) sheep(x - 70 - 260 * seg(tq, s3 + 1.2, s3 + 1.9), y + 40, false, 65);      // walks off
 }
-function shotSheep(t) { bedScene(t, { clock: '5:45' }); night(0.85); ctx.save(); ctx.translate(540, 600); ctx.scale(1.25, 1.25); ctx.translate(-540, -600); sheepBubble(t, 540, 600); ctx.restore(); }
+function shotSheep(t) { bedScene(t, { clock: '5:12' }); night(0.85); ctx.save(); ctx.translate(540, 600); ctx.scale(1.25, 1.25); ctx.translate(-540, -600); sheepBubble(t, 540, 600); ctx.restore(); }
 function shotDroop(t) { bedScene(t, { clock: '5:58' }); night(0.85); }
 function shotCatEye(t) {
   bedroom(t); blanket(t, 1092); cat(t);
@@ -299,6 +334,15 @@ function shotHop(t) {
   cat(t);
   if (t >= T.land && t < T.land + 0.3) hand('THUMP', 770, 820, 66, 0.08, INK, 'Fredoka', '600');
   night(0.8);
+}
+function shotTie(t) {   // "like I had a MEETING": sitting bolt upright in bed, in a tie, holding a briefcase
+  bedroom(t); lamp(t, false);
+  const { top } = steveInBed(t); blanket(t, top); bedClock(t, '5:02'); cat(t);
+  const p = spen(t, 95);
+  p.part([[528, 985], [552, 985], [560, 1100], [540, 1130], [520, 1100]], '#c0392b', { shade: 0.15, lw: 3 });       // the tie
+  p.part(roundPoly([[600, 1040], [720, 1040], [720, 1120], [600, 1120]], 8), '#7a5238', { shade: 0.15 });          // the briefcase
+  p.line([[640, 1040], [645, 1018], [675, 1018], [680, 1040]], 5);
+  night(0.75);
 }
 // ---------- kitchen (the button) ----------
 function shotKitchen(t) {
@@ -347,38 +391,20 @@ function render(t) {
   paper(ctx, W, H, 11);
   ctx.fillStyle = INK; ctx.textAlign = 'center'; ctx.font = '600 52px Fredoka';
   ctx.fillText(TITLE[0], 540, 72); ctx.fillText(TITLE[1], 540, 132); ctx.textAlign = 'start';
-  const push = (a, b, z0, z1) => z0 + (z1 - z0) * ease.inOut(seg(t, a, b));   // one slow camera move per shot
-  let tag = null;
-  if (t < T.cold) { withCamera(push(0, T.cold, 1.5, 1.6), 420, 1030, () => { bedScene(t, { clock: '5:02' }); night(1, { x: 540, y: 990, r: 280, c: 'rgba(170,200,255,0.5)' }); }); tag = '5:02 AM'; }
-  else if (t < T.flip) withCamera(push(T.cold, T.flip, 1.15, 1.2), 540, 980, () => shotSaturday(t));
-  else if (t < T.flipEnd) withCamera(1, 540, 900, () => shotClockFlip(t));
-  else if (t < T.steve) withCamera(push(T.flipEnd, T.steve, 1.15, 1.22), 540, 980, () => shotSaturday(t));
-  else if (t < T.off) withCamera(push(T.steve, T.off, 1.5, 1.6), 590, 960, () => shotSaturday(t));
-  else if (t < T.snap) withCamera(1.2, 540, 1000, () => shotDark(t));
-  else if (t < T.memo) { withCamera(1, 540, 900, () => shotClock(t, '5:02')); tag = '5:02 AM'; }
-  else if (t < T.sitUp) { withCamera(push(T.memo, T.sitUp, 1.9, 2.1), 540, 1000, () => shotMemo(t)); tag = '5:02 AM'; }
-  else if (t < T.c520) { withCamera(1.4, 540, 960, () => shotPillow(t)); tag = '5:05 AM'; }
-  else if (t < T.phone) { withCamera(1, 540, 900, () => shotClock(t, '5:20')); tag = '5:20 AM'; }
-  else if (t < T.c541) { withCamera(push(T.phone, T.c541, 1.8, 2.0), 600, 1010, () => shotPhone(t)); tag = t < T.lapse ? '5:20 AM' : `5:${20 + Math.floor(21 * seg(onTwos(t), T.lapse, T.c541 - 0.1))} AM`; }
-  else if (t < T.sheep) { withCamera(1, 540, 900, () => shotClock(t, '5:41')); tag = '5:41 AM'; }
-  else if (t < T.c558) { withCamera(1.15, 520, 960, () => shotSheep(t)); tag = '5:45 AM'; }
-  else if (t < T.catEye) { withCamera(push(T.c558, T.catEye, 1.8, 2.0), 540, 1010, () => shotDroop(t)); tag = '5:58 AM'; }
-  else if (t < T.hop) { withCamera(2.6, CATBED.x, CATBED.y - 110, () => shotCatEye(t)); }
-  else if (t < T.my) { withCamera(push(T.hop, T.my, 1.25, 1.45), 560, 1080, () => shotHop(t), 540 + (t >= T.land && t < T.land + 0.25 ? (Math.floor(t * 24) % 2 ? 12 : -12) : 0)); tag = t >= T.land ? '6:00 AM' : '5:59 AM'; }
-  else if (t < T.kitchen) withCamera(push(T.my, T.kitchen, 2.2, 2.3), FACE.x, FACE.y - 130, () => shotHop(t), 540, 860);
-  else withCamera(push(T.kitchen, DUR, 1.26, 1.32), 610, 1080, () => shotKitchen(t), 540, 940);
-  if (tag) timeTag(tag, t);
+  let k = 0; while (k + 1 < SHOTS.length && SHOTS[k + 1][0] <= t) k++;
+  SHOTS[k][1](t);
   panel(ctx, PX, PY, PW, PH, 5, null, frameOf(t));
   ctx.font = '600 30px Fredoka'; ctx.fillStyle = 'rgba(42,34,48,0.55)'; ctx.textAlign = 'right'; ctx.fillText('UNIT 4B', PX + PW - 24, PY + PH - 22); ctx.textAlign = 'start';
   const cap = captions(t); window.__texts = cap ? [cap] : [];
 }
 
-window.DUR = DUR; window.EV = EV; window.render = render; window.TEXTS = t => { render(t); return window.__texts; };
+window.render = render; window.TEXTS = t => { render(t); return window.__texts; };
 (async () => {
   for (const [fam, file, weight] of [['Patrick Hand', 'fonts/patrick-hand-latin-400-normal.woff2', '400'], ['Fredoka', 'fonts/fredoka-latin-600-normal.woff2', '600']]) {
     const f = new FontFace(fam, `url(${file})`, { weight }); await f.load(); document.fonts.add(f);
   }
   VOICE = await (await fetch('voice/voice.json')).json();
   WORDS = await (await fetch('voice/words.json')).json();
+  buildTimeline(); window.DUR = DUR; window.EV = EV;
   render(0); window.READY = true;
 })();

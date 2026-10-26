@@ -1,83 +1,137 @@
 [
  {
-  "id": "11_01_snuggles",
-  "char": "snuggles",
-  "expr": "deadpan",
-  "stability": 0.5,
-  "style": 0.4,
-  "speed": 0.95,
-  "text": "[hushed, like a nature documentary] Tonight the clocks go back one hour. The human gets an extra hour of sleep."
- },
- {
-  "id": "11_02_steve",
+  "id": "11_s01",
   "char": "steve",
-  "expr": "happy",
-  "stability": 0.5,
-  "style": 0.5,
-  "speed": 1.05,
-  "text": "[excited, giddy] One more HOUR of sleep."
- },
- {
-  "id": "11_03_snuggles",
-  "char": "snuggles",
-  "expr": "deadpan",
-  "stability": 0.5,
-  "style": 0.4,
-  "speed": 0.95,
-  "text": "[dry] His body did not get the memo."
- },
- {
-  "id": "11_04_steve",
-  "char": "steve",
-  "expr": "angry",
-  "stability": 0.5,
-  "style": 0.5,
-  "speed": 1.05,
-  "text": "[determined, under his breath] Okay. Cold side. Let's go."
- },
- {
-  "id": "11_05_steve",
-  "char": "steve",
-  "expr": "nervous",
+  "expr": "neutral",
   "stability": 0.5,
   "style": 0.45,
   "speed": 1.0,
-  "text": "[whispering, bargaining with himself] Just ONE video."
+  "text": "[conversational, dry, telling a friend] The clocks just went back an hour."
  },
  {
-  "id": "11_06_steve",
+  "id": "11_s02",
   "char": "steve",
-  "expr": "sleepy",
+  "expr": "neutral",
   "stability": 0.5,
   "style": 0.45,
-  "speed": 0.9,
-  "text": "[drowsy, relieved mumble] Here it comes."
+  "speed": 1.0,
+  "text": "[pleased] One FREE hour of sleep."
  },
  {
-  "id": "11_07_snuggles",
+  "id": "11_s03",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.5,
+  "style": 0.45,
+  "speed": 1.0,
+  "text": "[deadpan] So my body, being an idiot, woke me up at five a.m."
+ },
+ {
+  "id": "11_s04",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.5,
+  "style": 0.45,
+  "speed": 1.0,
+  "text": "[dry] Wide awake. Like I had a MEETING."
+ },
+ {
+  "id": "11_s05",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.5,
+  "style": 0.45,
+  "speed": 1.0,
+  "text": "[determined] I tried everything."
+ },
+ {
+  "id": "11_s06",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.5,
+  "style": 0.45,
+  "speed": 1.0,
+  "text": "[matter-of-fact] Cold side of the pillow."
+ },
+ {
+  "id": "11_s07",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.5,
+  "style": 0.45,
+  "speed": 1.0,
+  "text": "[matter-of-fact] Counting sheep."
+ },
+ {
+  "id": "11_s08",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.5,
+  "style": 0.45,
+  "speed": 1.0,
+  "text": "[flat] The sheep got bored."
+ },
+ {
+  "id": "11_s09",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.5,
+  "style": 0.45,
+  "speed": 1.0,
+  "text": "[guilty] I watched ONE video."
+ },
+ {
+  "id": "11_s10",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.5,
+  "style": 0.45,
+  "speed": 1.0,
+  "text": "[flat] It was five forty-one."
+ },
+ {
+  "id": "11_s11",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.5,
+  "style": 0.45,
+  "speed": 1.0,
+  "text": "[slowing down, drowsy, hopeful] And at five fifty-eight, I was finally, FINALLY drifting off."
+ },
+ {
+  "id": "11_s12",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.5,
+  "style": 0.45,
+  "speed": 1.0,
+  "text": "[flat, quiet] When the cat sat on my face."
+ },
+ {
+  "id": "11_n01",
   "char": "snuggles",
-  "expr": "smug",
+  "expr": "deadpan",
   "stability": 0.5,
   "style": 0.4,
   "speed": 0.95,
   "text": "[flat, matter-of-fact] Breakfast is at six."
  },
  {
-  "id": "11_08_snuggles",
+  "id": "11_n02",
   "char": "snuggles",
   "expr": "deadpan",
   "stability": 0.5,
   "style": 0.4,
-  "speed": 0.9,
+  "speed": 0.95,
   "text": "[flat] MY six."
  },
  {
-  "id": "11_09_steve",
+  "id": "11_s13",
   "char": "steve",
-  "expr": "dead_inside",
+  "expr": "neutral",
   "stability": 0.5,
   "style": 0.45,
-  "speed": 0.95,
-  "text": "[quiet, flat, half asleep] Happy daylight saving."
+  "speed": 1.0,
+  "text": "[resigned, dry] Cats don't do daylight saving."
  }
 ]
