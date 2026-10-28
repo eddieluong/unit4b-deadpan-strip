@@ -12,8 +12,8 @@ dashboard → Content. Instagram: the Reel → View insights.
 
 | # | Video | Length | Posted | Views 48 h | Avg % viewed | Viewed vs swiped | Likes | Comments | Subs | Swipe-away point | Main lesson |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | We Missed You (v8) | 39.8 s | 2026-10-24 | 1.3K | 45.5 % | — | 8 | 0 | 0 | ~0:18 | Hook gave away the ending; 0:14–0:21 had nothing new |
-| 2 | The Extra Hour (v10) | 47.3 s | 2026-10-26 | (read 28 Oct) | | | | | | | voice-led, beat-paced, emotion arc + bleeped explosion, cat only meows |
+| 1 | We Missed You (v8) | 39.8 s | 2026-10-24 | 1.3K | 45.5 % | 17.3 % stayed | 8 | 0 | 0 | ~0:18 | Hook gave away the ending; 0:14–0:21 had nothing new |
+| 2 | The Extra Hour (v10) | 47.3 s | 2026-10-26 | 683 | ~63 % (0:30 of 0:48) | 30.1 % stayed | 6 | 1 (ours) | 0 | first seconds (70 % swiped) | Story now holds viewers (avg view 0:30 vs 0:18) but the opening loses 70 %: frame 1 was a phone notice + clock |
 
 ## Entry template (copy for each video)
 
@@ -72,3 +72,30 @@ Links: YouTube https://youtube.com/shorts/sysVz2F47k8 · Facebook https://www.fa
 Instagram https://www.instagram.com/unit4bcomedy/reel/De8YgKLNFzw/. Question comment posted on YouTube (pinning needs the
 owner's phone verification). Tests vs Tập 1: voice-led narration (~1.8 words/s, was 1.2), beat-based pauses, emotion arc
 with one bleeped explosion, the cause shown physically (cat on his face → meow). Fill the numbers on 28 Oct (48 h).
+
+### Numbers at 48 h (2026-10-28, YouTube Studio)
+| | Tập 1 | Tập 2 |
+|---|---|---|
+| Views | 1.3K (1.4K now) | 683 (flat after day 1; 97 % from the Shorts feed) |
+| Stayed to watch (vs swiped away) | 17.3 % | **30.1 %** |
+| Average view duration | 0:18 of 0:40 (45 %) | **0:30 of 0:48 (~63 %)** |
+| Likes / comments | 8 / 0 | 6 / 1 (our question) |
+
+### What worked (keep)
+- Voice-led narration, beat-based pauses, emotion arc: those who stay watch ~63 % (was 45 %); "a part that kept viewers
+  watching longer than usual" flagged by Studio again.
+- Stayed-to-watch rose 17 % → 30 %.
+
+### What didn't
+- **The first frame.** 70 % still swipe in the first seconds. Frame 1 was a phone notice over a clock — UI, not a
+  character, no emotion, nothing odd. YouTube stopped pushing after day 1 (views flat), consistent with a low stay rate.
+- No comments from viewers (the question was ours, unpinned: pinning needs phone verification).
+
+### Rules changed
+- PREPRODUCTION #19: **frame 1 = the funniest/strangest image of the short with a character's face in it** (the climax
+  or the absurd result: Steve with a cat on his face, a machine flashing at him, the queue staring), + the premise line
+  spoken from 0.0 s. Explanations (notices, rules) come after the hook, not as the hook.
+
+### Test for the next video
+- Tập 3 (Self-checkout): cold open on the climax image (red light flashing, the whole queue staring at Steve holding a
+  banana) with the premise line at 0.0 s. Compare stayed-to-watch with Tập 2 (30.1 %).
