@@ -14,6 +14,7 @@ dashboard → Content. Instagram: the Reel → View insights.
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | We Missed You (v8) | 39.8 s | 2026-10-24 | 1.3K | 45.5 % | 17.3 % stayed | 8 | 0 | 0 | ~0:18 | Hook gave away the ending; 0:14–0:21 had nothing new |
 | 2 | The Extra Hour (v10) | 47.3 s | 2026-10-26 | 683 | ~63 % (0:30 of 0:48) | 30.1 % stayed | 6 | 1 (ours) | 0 | first seconds (70 % swiped) | Story now holds viewers (avg view 0:30 vs 0:18) but the opening loses 70 %: frame 1 was a phone notice + clock |
+| 3 | Self-Checkout | 58.1 s | 2026-10-28 | (read 30 Oct) | | | | | | | frame 1 = arrest pose (rule #19); three voices; one peak (4) |
 
 ## Entry template (copy for each video)
 
@@ -99,3 +100,9 @@ with one bleeped explosion, the cause shown physically (cat on his face → meow
 ### Test for the next video
 - Tập 3 (Self-checkout): cold open on the climax image (red light flashing, the whole queue staring at Steve holding a
   banana) with the premise line at 0.0 s. Compare stayed-to-watch with Tập 2 (30.1 %).
+
+## Tập 3 — Self-Checkout  (posted 2026-10-28 ~16:30 VN, `Tap03-self-checkout.mp4`, 58.1 s)
+Links: YouTube https://youtube.com/shorts/A8EUF5YzIYE · Facebook https://www.facebook.com/reel/2520662781750579/ ·
+Instagram https://www.instagram.com/unit4bcomedy/reel/DfCE5FNBxjR/. Question comment posted as @unit4bcomedy.
+Test vs Tập 2: frame 1 = the climax with Steve's face (arrest pose, alarm, staring queue) — compare stayed-to-watch with
+Tập 2's 30.1 %. Read the numbers on 30 Oct (48 h).

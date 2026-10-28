@@ -105,3 +105,12 @@ Link in bio everywhere: the YouTube channel URL (once it exists).
    Link it to the Facebook Page (Accounts Center) to cross-post Reels.
 4. **Facebook:** from a personal profile → Pages → Create new Page: name, category, intro, profile picture, cover.
 Turn on two-factor authentication on all four before the first post.
+
+## Posting checklist (lessons from Tập 2–3)
+- YouTube: the Sweet Kurt Google account owns several channels (UNIT 4B, Head Office Explains, Untold Legend Archive).
+  Before commenting, check the avatar next to the comment box says UNIT 4B; switch at youtube.com/channel_switcher.
+  Pinning a comment needs the owner's phone verification (youtube.com/verify).
+- Facebook: the account may be acting as another Page; switch to UNIT 4B (facebook.com/unit4bcomedy → Switch) and
+  check "What's on your mind, UNIT 4B?" before creating the Reel.
+- Instagram web: pick Original in the crop step (default is 1:1); decline the notifications prompt.
+- Upload files must be < 10 MB for the browser tool: re-encode the release copy (x264 CRF 27).
