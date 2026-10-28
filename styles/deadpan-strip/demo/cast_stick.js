@@ -28,6 +28,7 @@ function armPts(sx, sh, pose = 'down', k = 1) {
   const [x0, y0] = sh, P = (dx, dy) => [x0 + sx * dx * k, y0 + dy * k];
   switch (pose) {
     case 'wave': return [P(0, 0), P(9, 12), P(14, 27)];
+    case 'surrender': return [P(0, 0), P(15, 8), P(21, 31)];   // both hands up, clear of the head
     case 'facepalm': return [P(0, 0), P(9, -4), P(3, 21)];
     case 'chin': return [P(0, 0), P(9, -8), P(2, 11)];
     case 'cross': return [P(0, 0), P(8, -8), P(-7, -5)];
