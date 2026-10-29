@@ -36,7 +36,8 @@ VO = Steve tells it later (no lip-sync); in-scene = said in the moment (lip-sync
 | 2 | Steve | VO | Responsible. Organised. For the KIDS. | proud | 2 | kids | 0.7 (after a joke) | daylight, the shop: Steve proudly holding a huge bag "100 PIECES"; then home, he fills a bowl, sticks a note on the cupboard "FOR THE KIDS" | bag lift, note slap |
 | 3 | Steve | VO | Monday, I had one. Quality control. | sly | 2 | one | 0.35 (list) | tag "MON": Steve sneaks one from the bowl; bag counter "99" | hand dips |
 | 4 | Steve | VO | Wednesday, a few. Small ones don't count. | guilty, justifying | 3 | count | 0.35 (list) | tag "WED": bowl half empty, wrappers in his pockets; counter "41" | wrapper falls from pocket |
-| 5 | Steve | VO | Friday… I don't remember Friday. | haunted | 3 | Friday | 0.7 (laugh) | tag "FRI": Steve on the sofa in a sea of wrappers, chocolate on his face, thousand-yard stare; counter "0"; the cat stares at him | slow push-in on his face |
+| 5 | Steve | VO | Friday… I don't remember Friday. | haunted | 3 | Friday | 0.3 | tag "FRI": night, Steve on the sofa lit by the TV (a horror film), the big bag in his lap; eyes glued to the screen, his hand goes bag → mouth → bag on autopilot; wrappers pile up on the floor | the hand loop (steady rhythm, eyes never move) |
+| 5b | — | — | (silent: rustle… nothing) | — | 3 | — | 1.0 (silent beat, then laugh) | his hand digs into the bag and finds nothing; he looks down into the empty bag, then at the wrapper mountain, then at the camera — blank, stunned; counter "0"; the cat on the armrest stares at him | hand stops; head turns down (one move), then to camera |
 | 6 | Steve | VO | Saturday. Halloween. Six p.m. | dread | 3 | six | 0.6 (turn) | calendar "OCT 31" + clock 6:00 PM; tag on screen: "6 PM: kids start ringing for candy"; the empty bowl | clock hand ticks to 6 |
 | 7 | — | — | (doorbell: ding-dong) | — | — | — | 0.8 (silent beat) | Steve's face freezes, eyes go to the empty bowl | eyes only |
 | 8 | Steve | VO | So I did what every adult does. | resigned | 3 | every | 0.6 | Steve's hand on the light switch | — |
@@ -49,7 +50,7 @@ VO = Steve tells it later (no lip-sync); in-scene = said in the moment (lip-sync
 | 15 | Steve | VO | Ten minutes later, the ghost left something on the mat. | flat | 1 | something | 0.8 (before the button) | doorstep, porch light: one sweet on the mat and a crayon note: **"FOR THE SAD MAN"** | hold (let them read) |
 | 16 | Steve | VO | …I ate it. | flat, defeated | 1 | ate | — | Steve on the floor in the dark, chewing, dead stare — back to frame 1 (loop) | chewing |
 
-~70 words; at natural pace with these pauses ≈ 40–44 s. Punch (#13) ≈ 31 s → ~72 %.
+~70 words; at natural pace with these pauses ≈ 42–46 s. Punch (#13) ≈ 33 s → ~73 %.
 
 ## Emotion arc
 ```
@@ -69,3 +70,8 @@ held breath → the cat's meow → the kid's flat line (contrast) → the only p
 - SFX: doorbell, knocks, light-switch click, wrapper crinkles, a meow (sound-generation, as Tập 2), chewing. Halloween music bed (pizzicato, low) until the lights go off, then silence.
 - Pinned question / caption: "Be honest: how much of the Halloween candy did you eat before the kids came?"
 - Schedule: owner OK today → stills + voice 30 Oct → post Sat 31 Oct ~19:00 VN (≈ 08:00 ET).
+
+## Owner notes
+- 2026-10-29: "add him eating the whole bag while watching TV, then finding none left and freezing" → row 5 is now the TV
+  autopilot loop (hand bag → mouth, eyes on the screen) and a new silent row 5b: the hand finds nothing, he looks into
+  the empty bag, then blankly at the camera (1.0 s). It also explains "I don't remember Friday" visually.
