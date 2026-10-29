@@ -9,15 +9,20 @@ import numpy as np, soundfile as sf
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SR = 24000
-VOICE = {'steve': 'Y9z2nW5YxRRbI3XaIf8x', 'steve_scene': 'Y9z2nW5YxRRbI3XaIf8x', 'nana': '4m2IGvkby0duGcRUvLDs'}
+VOICE = {'steve': 'Y9z2nW5YxRRbI3XaIf8x', 'steve_scene': 'Y9z2nW5YxRRbI3XaIf8x', 'penny': 'uLjMe2KKO62jRu3id160'}
 # feelings come from the words and one light tag per sentence; no "..." or [pause] (they read as AI)
 TAKES = {
-    'steve': (['13_s01', '13_s02', '13_s03', '13_s04', '13_s05', '13_s06', '13_s07', '13_s08', '13_s09', '13_s13', '13_s14', '13_s15', '13_s16'], "[dry, telling a friend] The weather app said strong winds. [deadpan] Somehow, everyone heard TOILET PAPER. [reasonable] I went out for bread and batteries. Normal storm stuff. [disbelief] Every single cart. Toilet paper. [escalating disbelief] Forty rolls. Sixty rolls. One man had a FRIDGE box full of it. [sarcastic] It's WIND. What is the wind going to DO? [proud] I said I wasn't going to buy any. [dread, slower] Then I saw the shelf. [hushed] One pack left. [defeated] She was eighty. She WON. [resigned] So I bought paper towels. Forty-eight packs. [flat] The storm was a light breeze. [flat, dry] The only disaster was the cat.",
+    'steve': (['14_s01', '14_s02', '14_s03', '14_s04', '14_s05', '14_s06', '14_s08', '14_s09', '14_s15', '14_s16'],
+              "[dry, confessing to a friend] I bought the Halloween candy a week early. [proud] Responsible. Organised. For the KIDS. "
+              "[sly] Monday, I had one. Quality control. [guilty, justifying] Wednesday, a few. Small ones don't count. "
+              "[haunted, slower] Friday. I don't remember Friday. [dread] Saturday. Halloween. Six p.m. "
+              "[resigned] So I did what every adult does. [whispering] Lights off. On the floor. Not home. "
+              "[flat] Ten minutes later, the ghost left something on the mat. [flat, defeated] I ate it.",
               {'stability': 0.3, 'similarity_boost': 0.85, 'style': 0.6, 'use_speaker_boost': True}),
-    'steve_scene': (['13_s12', '13_s12b'], '[panicked, shouting] YOU let go! [weak, from the floor, apologetic] Sorry!',
+    'steve_scene': (['14_s13'], "[panicked, shouting from the floor] NOBODY'S HOME!",
               {'stability': 0.0, 'similarity_boost': 0.85, 'style': 0.8, 'use_speaker_boost': True}),
-    'nana': (['13_n11'], '[sweet, firm, smiling] Let go, dear.',
-              {'stability': 0.5, 'similarity_boost': 0.85, 'style': 0.4, 'use_speaker_boost': True}),
+    'penny': (['14_p12'], "[flat, matter-of-fact, a small child] He's on the FLOOR.",
+              {'stability': 0.5, 'similarity_boost': 0.85, 'style': 0.3, 'use_speaker_boost': True}),
 }
 
 
