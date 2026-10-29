@@ -27,6 +27,7 @@ Writing rules: `JOKES.md` §0. Review after render: `QA.md`. Numbers: `channel/P
 | 17 | "There must be silent moments so the viewer understands the story" | After each turn of the story leave a silent beat (0.6–1 s) on a picture that explains it — usually the character's face reacting (Kuleshov), not an empty insert; a silent beat never shows only an object for > 3 s. |
 | 18 | "I don't want the cat to talk — it just meows; climbs onto him / his face, then meows; then cut to feeding" | Animals act like animals: no lines, only their sound (a real-sounding meow from ElevenLabs sound-generation) and body language; the cause is shown physically (cat on his face → meow → he explodes → feeding). Snuggles' voice is reserved for formats where he is explicitly the narrator. |
 | 19 | Tập 2 data: 30.1 % stayed to watch (70 % swiped in the first seconds) with a phone notice + clock as frame 1 | Frame 1 = the strangest/funniest image with a character's face (usually the climax or the absurd result) + the premise line from 0.0 s; rule explanations come after the hook. |
+| 20 | Tập 5 stills: "why is he lying down in the first frames?" | A pose must say the story beat by itself at phone size: hiding = sitting against the wall under the window, finger on lips, not lying flat (reads as passed out). Avoid rotating a character 90°: the face goes sideways and small. Lying only when the beat *is* lying (asleep in bed, knocked out). |
 
 ## 2. The script table (write this, get the owner's OK, then produce)
 One row per line. Columns:
