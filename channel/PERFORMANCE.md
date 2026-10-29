@@ -106,3 +106,11 @@ Links: YouTube https://youtube.com/shorts/A8EUF5YzIYE · Facebook https://www.fa
 Instagram https://www.instagram.com/unit4bcomedy/reel/DfCE5FNBxjR/. Question comment posted as @unit4bcomedy.
 Test vs Tập 2: frame 1 = the climax with Steve's face (arrest pose, alarm, staring queue) — compare stayed-to-watch with
 Tập 2's 30.1 %. Read the numbers on 30 Oct (48 h).
+
+## Tập 4 — Storm Stock-Up  (posted 2026-10-29, `Tap04-storm-stockup.mp4`, 55.7 s)
+Links: YouTube https://youtube.com/shorts/XJXUFs969gs · Facebook https://www.facebook.com/reel/1127695759951561/ ·
+Instagram https://www.instagram.com/unit4bcomedy/reel/DfD5WS6hT8S/. Question comment "What's the weirdest thing you've
+seen people panic-buy?" posted as @unit4bcomedy (also in the Instagram caption).
+Tests: frame 1 = the absurd result (Steve walled in by 48 packs of paper towels, cat on top) + a cat button again.
+Known risk: punch "She WON." at 68 % (three-beat ending of ~15 s) — watch the retention curve after 0:38.
+Read the numbers on 31 Oct (48 h).
