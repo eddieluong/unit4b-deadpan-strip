@@ -36,7 +36,7 @@ VO = Steve tells it later (no lip-sync); in-scene = said in the moment (lip-sync
 | 2 | Steve | VO | Responsible. Organised. For the KIDS. | proud | 2 | kids | 0.7 (after a joke) | daylight, the shop: Steve proudly holding a huge bag "100 PIECES"; then home, he fills a bowl, sticks a note on the cupboard "FOR THE KIDS" | bag lift, note slap |
 | 3 | Steve | VO | Monday, I had one. Quality control. | sly | 2 | one | 0.35 (list) | tag "MON": Steve sneaks one from the bowl; bag counter "99" | hand dips |
 | 4 | Steve | VO | Wednesday, a few. Small ones don't count. | guilty, justifying | 3 | count | 0.35 (list) | tag "WED": bowl half empty, wrappers in his pockets; counter "41" | wrapper falls from pocket |
-| 5 | Steve | VO | Friday… I don't remember Friday. | haunted | 3 | Friday | 0.3 | tag "FRI": night, Steve on the sofa lit by the TV (a horror film), the big bag in his lap; eyes glued to the screen, his hand goes bag → mouth → bag on autopilot; wrappers pile up on the floor | the hand loop (steady rhythm, eyes never move) |
+| 5 | Steve | VO | Friday… I don't remember Friday. | haunted | 3 | Friday | 0.3 | tag "FRI": night, Steve on the sofa lit by the TV (a horror film), the big bag in his lap; eyes glued to the screen, his hand goes bag → mouth → bag on autopilot; **the bag shrinks over 4 held frames** (full and round → half → saggy → flat and crumpled) while the wrapper pile on the floor grows and the TV light changes colour (time passing) | the hand loop (steady rhythm, eyes never move); the bag/pile change in 4 cuts ~0.6 s apart, same framing (a time-lapse, so it reads at a glance) |
 | 5b | — | — | (silent: rustle… nothing) | — | 3 | — | 1.0 (silent beat, then laugh) | his hand digs into the bag and finds nothing; he looks down into the empty bag, then at the wrapper mountain, then at the camera — blank, stunned; counter "0"; the cat on the armrest stares at him | hand stops; head turns down (one move), then to camera |
 | 6 | Steve | VO | Saturday. Halloween. Six p.m. | dread | 3 | six | 0.6 (turn) | calendar "OCT 31" + clock 6:00 PM; tag on screen: "6 PM: kids start ringing for candy"; the empty bowl | clock hand ticks to 6 |
 | 7 | — | — | (doorbell: ding-dong) | — | — | — | 0.8 (silent beat) | Steve's face freezes, eyes go to the empty bowl | eyes only |
@@ -75,3 +75,6 @@ held breath → the cat's meow → the kid's flat line (contrast) → the only p
 - 2026-10-29: "add him eating the whole bag while watching TV, then finding none left and freezing" → row 5 is now the TV
   autopilot loop (hand bag → mouth, eyes on the screen) and a new silent row 5b: the hand finds nothing, he looks into
   the empty bag, then blankly at the camera (1.0 s). It also explains "I don't remember Friday" visually.
+- 2026-10-29: "show the bag emptying over a few frames" → row 5: 4 held states of the bag (full → half → saggy → flat),
+  same framing, ~0.6 s apart, wrapper pile growing and TV light changing; Steve's pose and stare stay identical (only the
+  hand loops), so the change in the bag is the only thing that moves.
