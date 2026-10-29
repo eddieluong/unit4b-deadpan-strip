@@ -194,12 +194,14 @@ function lying(t, x, y, extra = {}) {   // Steve flat on his back on the floor, 
   who('steve', x, t, STEVE, extra, K, y);
   ctx.restore();
 }
-const LIE = [990, FLOOR - 50];   // where he lies: feet at the right, head at ~x 400, under the window
+// Hiding = sitting on the floor right under the window, back to the wall, hugging the empty bowl, a finger on his lips.
+// (Self-review: lying flat read as "passed out", the face was sideways and small; sitting keeps the face upright and readable.)
+const HIDE_X = 760;
 function hiding(t, { bowlOn = true, extra = {}, cat = {} } = {}) {   // the frame-1 composition
-  wrapperPile(560, FLOOR + 60, 26, 300, t);
-  lying(t, LIE[0], LIE[1], extra);
-  if (bowlOn) bowl(600, FLOOR - 118, 0, t, 0.55);   // the empty bowl on his chest
-  who('snuggles', 170, t, null, { expr: 'deadpan', look: 0.5, ...cat }, 4.2, FLOOR + 20);
+  wrapperPile(640, FLOOR + 60, 26, 300, t);
+  who('snuggles', 520, t, null, { expr: 'deadpan', look: 0.6, ...cat }, 4.4, FLOOR + 10);
+  who('steve', HIDE_X, t, STEVE, extra, K, FLOOR + 105);
+  if (bowlOn) bowl(HIDE_X, FLOOR - 120, 0, t, 0.6);   // the empty bowl hugged in his lap
 }
 
 // ---------- the timeline, computed from the voice take ----------
@@ -218,7 +220,7 @@ function buildTimeline() {
   T.bagSteps = [0, 1, 2, 3].map(i => T.fri + i * Math.max(0.5, (end('14_s05') - T.fri) / 4));
   const chew = []; for (let k = T.fri; k < T.empty - 0.1; k += 0.5) chew.push({ t: k, dur: 0.18, armR: 'chin' }, { t: k + 0.25, dur: 0.18, armR: 'hold' });
   STEVE = [
-    { t: 0, expr: 'nervous', arm: 'down', look: 0.6, fx: ['sweat'] },
+    { t: 0, expr: 'nervous', sit: 1, armL: 'hold', armR: 'chin', look: -0.5, fx: ['sweat'] },
     { t: T.shop, dur: 0.2, expr: 'proud', armR: 'point', armL: 'hips', look: 0.3 },
     { t: T.kids, dur: 0.2, expr: 'happy', armR: 'point', armL: 'down', look: 0.8 },
     { t: T.mon, dur: 0.2, expr: 'smug', armR: 'chin', armL: 'down', look: -0.6 },
@@ -231,19 +233,19 @@ function buildTimeline() {
     { t: T.ding1, dur: 0.1, expr: 'horrified', arm: 'down', look: 0.9 },
     { t: T.adult, dur: 0.2, expr: 'deadpan', armL: 'reach', armR: 'down', look: -0.8 },
     { t: T.dark, dur: 0.2, expr: 'nervous', arm: 'down', look: 0 },
-    { t: T.drop, dur: 0.2, expr: 'nervous', arm: 'down', look: 0 },
-    { t: T.ding2, dur: 0.1, expr: 'nervous', arm: 'down', look: 0, fx: ['sweat'] },
-    { t: T.meow + 0.3, dur: 0.15, expr: 'horrified', arm: 'down', look: -0.9, fx: ['sweat'] },
-    { t: T.ghost, dur: 0.15, expr: 'horrified', arm: 'down', look: 0.9 },
-    { t: T.peak, dur: 0.1, expr: 'furious', arm: 'down', look: 0, fx: ['sweat', 'vein'] },
-    { t: T.slide, dur: 0.2, expr: 'embarrassed', arm: 'down', look: 0.6 },
-    { t: T.eat, dur: 0.2, expr: 'dead_inside', arm: 'down', look: 0 },
+    { t: T.drop, dur: 0.2, expr: 'nervous', sit: 1, armL: 'hold', armR: 'chin', look: -0.5 },
+    { t: T.ding2, dur: 0.1, expr: 'nervous', sit: 1, armL: 'hold', armR: 'chin', look: 0, fx: ['sweat'] },
+    { t: T.meow + 0.3, dur: 0.15, expr: 'horrified', sit: 1, armL: 'hold', armR: 'chin', look: -0.9, fx: ['sweat'] },
+    { t: T.ghost, dur: 0.15, expr: 'horrified', sit: 1, armL: 'hold', armR: 'down', look: 0.3 },
+    { t: T.peak, dur: 0.1, expr: 'furious', sit: 1, armL: 'hold', armR: 'down', look: 0, fx: ['sweat', 'vein'] },
+    { t: T.slide, dur: 0.2, expr: 'embarrassed', sit: 1, armL: 'hold', armR: 'down', look: 0.6 },
+    { t: T.eat, dur: 0.2, expr: 'dead_inside', sit: 1, armL: 'hold', armR: 'chin', look: 0 },
   ].sort((a, b) => a.t - b.t);
   const push = (a, b, z0, z1) => t => z0 + (z1 - z0) * ease.inOut(seg(t, a, b));
   const glows = ['#7fb3ff', '#ff9f6b', '#9dff9a', '#c79bff'];
   const bagStep = t => { let i = 0; while (i + 1 < 4 && T.bagSteps[i + 1] <= t) i++; return i; };
   SHOTS = [
-    [0, t => withCamera(1.08, 580, 1000, () => {   // frame 1: flat on the dark floor, empty bowl, wrappers, a ghost at the window
+    [0, t => withCamera(1.35, 720, 900, () => {   // frame 1: flat on the dark floor, empty bowl, wrappers, a ghost at the window
       room(t, { dark: true }); darkness(0.55); ghostAtWindow(t, { look: 0, down: 1 }); hiding(t);
     })],
     [T.shop, t => withCamera(1.2, 470, 950, () => {   // the shop: a huge bag, so responsible
@@ -297,26 +299,26 @@ function buildTimeline() {
     [T.adult, t => withCamera(1.6, 380, 950, () => { room(t); who('steve', 470, t, STEVE); })],   // his hand on the switch
     [T.dark, t => withCamera(1.08, 580, 1000, () => {   // click: dark; he drops to the floor; the cat lies down next to him
       room(t, { dark: true });
-      if (t < T.drop) { darkness(0.55); who('steve', 500, t, STEVE); }
-      else { darkness(0.55); hiding(t, { bowlOn: false }); }
+      if (t < T.drop) { darkness(0.55); who('steve', HIDE_X, t, STEVE); }
+      else { darkness(0.55); hiding(t); }
     })],
-    [T.ding2, t => withCamera(push(T.ding2, T.meow, 1.6, 1.8)(t), 420, 1250, () => {   // ding-dong ×2, knocks; he holds his breath
-      room(t, { dark: true }); darkness(0.55); hiding(t, { bowlOn: false });
-      if (t > T.ding2 && t < T.ding2 + 0.5) sfxText('DING DONG', 560, 1000, 56, -0.1);
-      if (t > T.ding3 && t < T.ding3 + 0.5) sfxText('DING DONG', 600, 1080, 56, 0.08);
-      if (t > T.knock && t < T.knock + 0.8) sfxText('KNOCK KNOCK', 520, 1040, 50, -0.05);
+    [T.ding2, t => withCamera(push(T.ding2, T.meow, 1.6, 1.8)(t), 680, 1150, () => {   // ding-dong ×2, knocks; he holds his breath
+      room(t, { dark: true }); darkness(0.55); hiding(t);
+      if (t > T.ding2 && t < T.ding2 + 0.5) sfxText('DING DONG', 640, 900, 56, -0.1);
+      if (t > T.ding3 && t < T.ding3 + 0.5) sfxText('DING DONG', 720, 960, 56, 0.08);
+      if (t > T.knock && t < T.knock + 0.8) sfxText('KNOCK KNOCK', 680, 930, 50, -0.05);
     })],
-    [T.meow, t => withCamera(2.0, 260, 1280, () => {   // the cat, right by his ear: MEOW
+    [T.meow, t => withCamera(2.0, 640, 1180, () => {   // the cat, right by his ear: MEOW
       room(t, { dark: true }); darkness(0.55);
       const open = t >= T.meow && t < T.meow + 0.7;
-      hiding(t, { bowlOn: false, cat: open ? { expr: 'neutral', mouth: 'O', look: 0.6 } : { expr: 'deadpan', look: 0.6 } });
-      if (open) sfxText('MEOW!', 220, 1110, 64, -0.1);
+      hiding(t, { cat: open ? { expr: 'neutral', mouth: 'O', look: 0.6 } : { expr: 'deadpan', look: 0.6 } });
+      if (open) sfxText('MEOW!', 520, 1040, 64, -0.1);
     })],
     [T.ghost, t => withCamera(1.5, 770, 760, () => {   // the ghost at the window looks straight down at him
       room(t, { dark: true }); darkness(0.5); ghostAtWindow(t, { look: 0, down: 1 });
     })],
-    [T.peak, t => withCamera(push(T.peak, T.slide, 1.2, 1.3)(t), 560, 1050, () => {   // NOBODY'S HOME! — still flat on the floor
-      room(t, { dark: true }); darkness(0.5); ghostAtWindow(t, { look: 0, down: 1, slide: seg(t, T.slide, T.slide + 0.8) }); hiding(t, { bowlOn: false });
+    [T.peak, t => withCamera(push(T.peak, T.slide, 1.35, 1.45)(t), 720, 900, () => {   // NOBODY'S HOME! — still flat on the floor
+      room(t, { dark: true }); darkness(0.5); ghostAtWindow(t, { look: 0, down: 1, slide: seg(t, T.slide, T.slide + 0.8) }); hiding(t);
     }, 540 + (t < T.peak + 0.3 ? (Math.floor(t * 24) % 2 ? 10 : -10) : 0))],
     [T.mat, t => withCamera(1.0, 540, 900, () => {   // the doorstep: one sweet and a crayon note
       ctx.fillStyle = '#3a3550'; ctx.fillRect(PX - 800, PY - 800, PW + 1600, FLOOR - PY + 800);
@@ -329,7 +331,7 @@ function buildTimeline() {
       hand('FOR THE', 540, 1168, 64, -0.06, '#e67e22', 'Patrick Hand'); hand('SAD MAN', 540, 1240, 80, -0.06, '#e67e22', 'Patrick Hand');
       candy(560, 1360, 34, t, 777, 0.2);
     })],
-    [T.eat, t => withCamera(1.08, 580, 1000, () => {   // back to frame 1: chewing on the floor in the dark
+    [T.eat, t => withCamera(1.35, 720, 900, () => {   // back to frame 1: chewing on the floor in the dark
       room(t, { dark: true }); darkness(0.55);
       const chewing = Math.floor(t * 4) % 2 ? 'small' : 'line';
       hiding(t, { extra: { mouth: chewing } });
