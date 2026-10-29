@@ -57,6 +57,7 @@ and exits non-zero on a failure. Run it, then do the rest by eye on a contact sh
 - [ ] No character or prop hides another; nothing important is cut by the panel edge.
 - [ ] Cutaways and fantasies are marked as such (dream border, colour shift).
 - [ ] Captions don't cover the punchline face; title stays clear of the art.
+- [ ] Title clears the phone's top safe area (iPhone camera/Dynamic Island + Shorts top bar): no text above y ≈ 170 of 1920 (PREPRODUCTION #21).
 
 ### Sound
 - [ ] Music stops dead before or at the punchline.

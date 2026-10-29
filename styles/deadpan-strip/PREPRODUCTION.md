@@ -28,6 +28,7 @@ Writing rules: `JOKES.md` §0. Review after render: `QA.md`. Numbers: `channel/P
 | 18 | "I don't want the cat to talk — it just meows; climbs onto him / his face, then meows; then cut to feeding" | Animals act like animals: no lines, only their sound (a real-sounding meow from ElevenLabs sound-generation) and body language; the cause is shown physically (cat on his face → meow → he explodes → feeding). Snuggles' voice is reserved for formats where he is explicitly the narrator. |
 | 19 | Tập 2 data: 30.1 % stayed to watch (70 % swiped in the first seconds) with a phone notice + clock as frame 1 | Frame 1 = the strangest/funniest image with a character's face (usually the climax or the absurd result) + the premise line from 0.0 s; rule explanations come after the hook. |
 | 20 | Tập 5 stills: "why is he lying down in the first frames?" | A pose must say the story beat by itself at phone size: hiding = sitting against the wall under the window, finger on lips, not lying flat (reads as passed out). Avoid rotating a character 90°: the face goes sideways and small. Lying only when the beat *is* lying (asleep in bed, knocked out). |
+| 21 | Tập 5 on iPhone: "the POV header is hidden by the camera and sensors" | Keep the title out of the phone's top safe area: title baselines at y ≈ 190 and 250 (was 72/132) on the 1080×1920 frame, art panel from y ≈ 290 (PY 290, PH 1330), captions at y ≈ 1500. Check a still at phone size with the top ~170 px masked before render. |
 
 ## 2. The script table (write this, get the owner's OK, then produce)
 One row per line. Columns:
@@ -64,7 +65,7 @@ Write the line up to the swear ("you little—"), add a 1 kHz bleep (0.6 s) and 
 4. Full render → QA.md checklist → owner review. Changes at this stage should be small.
 
 ## 6. Production defaults that already work (don't re-decide)
-- Format: voice-led, Steve first person (VO) + Snuggles deadpan; title line on top; kinetic word captions (stressed word in yellow).
+- Format: voice-led, Steve first person (VO) + Snuggles deadpan; title line on top (below the iPhone safe area, #21: title y 190/250, panel PY 290 PH 1330, captions y 1500); kinetic word captions (stressed word in yellow).
 - Timeline built from the voice take (`scene.js` LINE_DEFS + `buildTimeline()`); split by word timings (`split_words.py`).
 - Bed seen from its foot; clocks as full-frame inserts; time tags; the cat planted in frame 1.
 - Motion v2 (`motion.js`): on twos, 8 fps boil, eased poses, no overshoot; mouths only for in-scene lines.
