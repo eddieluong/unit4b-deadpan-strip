@@ -12,7 +12,7 @@ const PX = 40, PY = 150, PW = 1000, PH = 1420, FLOOR = 1400, K = 7, INK = '#2a22
 
 const LINE_DEFS = [   // id, char, caption, gap after (beat: after a joke 0.7, list 0.35, turn 0.6, silent beat 0.8–1.0)
   ['14_s01', 'steve', 'I bought the Halloween candy a week early.', 0.4],
-  ['14_s02', 'steve', 'Responsible. Organised. For the KIDS.', 0.7],
+  ['14_s02', 'steve', 'Responsible. Organized. For the KIDS.', 0.7],
   ['14_s03', 'steve', 'Monday, I had one. Quality control.', 0.35],
   ['14_s04', 'steve', "Wednesday, a few. Small ones don't count.", 0.35],
   ['14_s05', 'steve', "Friday… I don't remember Friday.", 2.6],                 // + the empty bag and the stare (5b)
