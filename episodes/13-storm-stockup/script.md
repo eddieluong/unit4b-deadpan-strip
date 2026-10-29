@@ -1,4 +1,4 @@
-# 13 · Storm Stock-Up  (channel: Tập 4) — DRAFT for the owner's review (PREPRODUCTION gate 1)
+# 13 · Storm Stock-Up  (channel: Tập 4) — produced 2026-10-29 after self-review
 
 | | |
 |---|---|
@@ -14,6 +14,12 @@
 **The joke in one sentence:** The weather app warns of strong winds; Steve goes out for bread and batteries, finds every
 cart full of toilet paper, swears he won't join in, ends up in a tug-of-war with an old lady over the last pack — the
 storm is a light breeze, and the cat unrolls all 48 rolls.
+
+## Self-review changes (before voicing)
+1. #6 "Nobody's losing… that." hinted at a toilet joke — unclear and crude for an international audience → "It's WIND. What is the wind going to DO?"
+2. Logic: frame 1 showed a toilet-paper fortress though he never got any → it is **48 packs of PAPER TOWELS** (labelled); he stockpiled anyway, just the wrong paper; the cat unrolls those.
+3. "So I bought… paper towels." → no "…" (rigid TTS pauses); the beat comes from the edit.
+4. Character fit: from the floor he still says "Sorry!" (the over-apologiser).
 
 ## Script table
 VO = Steve tells it later (no lip-sync); in-scene = said in the moment (lip-sync). Intensity 1 flat … 5 explosion.
