@@ -15,6 +15,7 @@ dashboard → Content. Instagram: the Reel → View insights.
 | 1 | We Missed You (v8) | 39.8 s | 2026-10-24 | 1.3K | 45.5 % | 17.3 % stayed | 8 | 0 | 0 | ~0:18 | Hook gave away the ending; 0:14–0:21 had nothing new |
 | 2 | The Extra Hour (v10) | 47.3 s | 2026-10-26 | 683 | ~63 % (0:30 of 0:48) | 30.1 % stayed | 6 | 1 (ours) | 0 | first seconds (70 % swiped) | Story now holds viewers (avg view 0:30 vs 0:18) but the opening loses 70 %: frame 1 was a phone notice + clock |
 | 3 | Self-Checkout | 58.1 s | 2026-10-28 | (read 30 Oct) | | | | | | | frame 1 = arrest pose (rule #19); three voices; one peak (4) |
+| 4 | Storm Stock-Up | 55.7 s | 2026-10-29 | (read 31 Oct) | | | | | | | frame 1 = absurd result (paper-towel tower); punch at 68 % |
 
 ## Entry template (copy for each video)
 
