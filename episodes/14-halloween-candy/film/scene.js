@@ -8,7 +8,10 @@ import { VPen, roundPoly, ellipsePts } from './lib/cast_v2.js';
 import { track, idle, sum, wordChunk, ease, onTwos, boilFrame } from './lib/motion.js';
 
 const W = 1080, H = 1920, cv = document.getElementById('c'), ctx = cv.getContext('2d');
-const PX = 40, PY = 150, PW = 1000, PH = 1420, FLOOR = 1400, K = 7, INK = '#2a2230';
+// Layout (PREPRODUCTION #21): the title sits below the iPhone top safe area. ?legacy=1 renders the posted Tập 5 layout.
+const LEGACY = new URLSearchParams(location.search).has('legacy');
+const PX = 40, PY = LEGACY ? 150 : 320, PW = 1000, PH = LEGACY ? 1420 : 1300, FLOOR = 1400, K = 7, INK = '#2a2230';
+const TITLE_Y = LEGACY ? [72, 132] : [230, 290], CAP_Y = LEGACY ? 1480 : 1500, CAM_Y = PY + PH / 2 - (LEGACY ? 5 : 70);
 
 const LINE_DEFS = [   // id, char, caption, gap after (beat: after a joke 0.7, list 0.35, turn 0.6, silent beat 0.8–1.0)
   ['14_s01', 'steve', 'I bought the Halloween candy a week early.', 0.4],
@@ -38,7 +41,7 @@ const seg = (t, a, b) => Math.max(0, Math.min(1, (t - a) / (b - a)));
 const pen = (x, y, s, t, seed = 1) => new VPen(ctx, x, y, s, { lw: Math.max(2.4, s * 0.85), hand: true, frame: frameOf(t), seed });
 const spen = (t, seed) => { const p = pen(0, 0, 1, t, seed); p.T = q => q; return p; };
 const rnd = s => { const x = Math.sin(s * 127.1) * 43758.5453; return x - Math.floor(x); };
-function withCamera(zoom, fx, fy, fn, sx = 540, sy = 900) {
+function withCamera(zoom, fx, fy, fn, sx = 540, sy = CAM_Y) {
   ctx.save(); ctx.beginPath(); ctx.rect(PX, PY, PW, PH); ctx.clip();
   ctx.translate(sx, sy); ctx.scale(zoom, zoom); ctx.translate(-fx, -fy); fn(); ctx.restore();
 }
@@ -370,21 +373,21 @@ function ghostAtWindow(t, { look = 0, down = 0, slide = 0, peer = 0 } = {}) {   
 // ---------- kinetic captions ----------
 function captions(t) {
   const c = wordChunk(LINES, WORDS, t); if (!c) return null;
-  ctx.save(); ctx.translate(540, 1480);
+  ctx.save(); ctx.translate(540, CAP_Y);
   ctx.font = '600 80px Fredoka'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
   const parts = c.words.map(w => ({ ...w, wd: ctx.measureText(w.w).width })), gap = 22;
   let x = -(parts.reduce((a, p) => a + p.wd, 0) + gap * (parts.length - 1)) / 2;
   const col = { ghost: '#e8f0ff', cat: '#d9e6ff' }[c.char] || '#ffffff';
   for (const p of parts) { ctx.lineWidth = 16; ctx.strokeStyle = INK; ctx.strokeText(p.w, x, 0); ctx.fillStyle = p.stress ? '#ffd84a' : col; ctx.fillText(p.w, x, 0); x += p.wd + gap; }
   ctx.restore();
-  return { id: c.id, text: c.words.map(w => w.w).join(' '), x0: 80, y0: 1420, x1: 1000, y1: 1540 };
+  return { id: c.id, text: c.words.map(w => w.w).join(' '), x0: 80, y0: CAP_Y - 60, x1: 1000, y1: CAP_Y + 60 };
 }
 
 function render(t) {
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.filter = 'none';
   paper(ctx, W, H, 11);
   ctx.fillStyle = INK; ctx.textAlign = 'center'; ctx.font = '600 50px Fredoka';
-  ctx.fillText(TITLE[0], 540, 72); ctx.fillText(TITLE[1], 540, 132); ctx.textAlign = 'start';
+  ctx.fillText(TITLE[0], 540, TITLE_Y[0]); ctx.fillText(TITLE[1], 540, TITLE_Y[1]); ctx.textAlign = 'start';
   let k = 0; while (k + 1 < SHOTS.length && SHOTS[k + 1][0] <= t) k++;
   SHOTS[k][1](t);
   panel(ctx, PX, PY, PW, PH, 5, null, frameOf(t));
