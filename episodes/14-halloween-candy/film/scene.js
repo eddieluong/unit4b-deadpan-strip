@@ -197,9 +197,9 @@ function lying(t, x, y, extra = {}) {   // Steve flat on his back on the floor, 
 // Hiding = sitting on the floor right under the window, back to the wall, hugging the empty bowl, a finger on his lips.
 // (Self-review: lying flat read as "passed out", the face was sideways and small; sitting keeps the face upright and readable.)
 const HIDE_X = 760;
-function hiding(t, { bowlOn = true, extra = {}, cat = {} } = {}) {   // the frame-1 composition
+function hiding(t, { bowlOn = true, extra = {}, cat = {}, catX = 520 } = {}) {   // the frame-1 composition
   wrapperPile(640, FLOOR + 60, 26, 300, t);
-  who('snuggles', 520, t, null, { expr: 'deadpan', look: 0.6, ...cat }, 4.4, FLOOR + 10);
+  who('snuggles', catX, t, null, { expr: 'deadpan', look: 0.6, ...cat }, 4.4, FLOOR + 10);
   who('steve', HIDE_X, t, STEVE, extra, K, FLOOR + 105);
   if (bowlOn) bowl(HIDE_X, FLOOR - 120, 0, t, 0.6);   // the empty bowl hugged in his lap
 }
@@ -216,11 +216,14 @@ function buildTimeline() {
     ding2: end('14_s09') + 0.4, ding3: end('14_s09') + 0.9, knock: end('14_s09') + 1.5, meow: L_('14_meow').t,
     ghost: L_('14_p12').t, peak: L_('14_s13').t, slide: end('14_s13') + 0.3, mat: L_('14_s15').t, eat: L_('14_s16').t,
   };
+  T.six = wt('14_s06', 2); T.face = end('14_s15') + 0.3;   // the note holds through the whole line, then his face
   // the bag empties over 4 held frames during line 5 (owner note): full → half → saggy → flat
   T.bagSteps = [0, 1, 2, 3].map(i => T.fri + i * Math.max(0.5, (end('14_s05') - T.fri) / 4));
   const chew = []; for (let k = T.fri; k < T.empty - 0.1; k += 0.5) chew.push({ t: k, dur: 0.18, armR: 'chin' }, { t: k + 0.25, dur: 0.18, armR: 'hold' });
   STEVE = [
     { t: 0, expr: 'nervous', sit: 1, armL: 'hold', armR: 'chin', look: -0.5, fx: ['sweat'] },
+    { t: 1.3, dur: 0.15, expr: 'horrified', sit: 1, armL: 'hold', armR: 'chin', look: 0.5, tilt: -8, fx: ['sweat'] },   // eyes dart up to the window
+    { t: 2.5, dur: 0.15, expr: 'nervous', sit: 1, armL: 'hold', armR: 'chin', look: -0.5, tilt: 0, fx: ['sweat'] },
     { t: T.shop, dur: 0.2, expr: 'proud', armR: 'point', armL: 'hips', look: 0.3 },
     { t: T.kids, dur: 0.2, expr: 'happy', armR: 'point', armL: 'down', look: 0.8 },
     { t: T.mon, dur: 0.2, expr: 'smug', armR: 'chin', armL: 'down', look: -0.6 },
@@ -234,11 +237,13 @@ function buildTimeline() {
     { t: T.adult, dur: 0.2, expr: 'deadpan', armL: 'reach', armR: 'down', look: -0.8 },
     { t: T.dark, dur: 0.2, expr: 'nervous', arm: 'down', look: 0 },
     { t: T.drop, dur: 0.2, expr: 'nervous', sit: 1, armL: 'hold', armR: 'chin', look: -0.5 },
-    { t: T.ding2, dur: 0.1, expr: 'nervous', sit: 1, armL: 'hold', armR: 'chin', look: 0, fx: ['sweat'] },
+    { t: T.drop + 1.7, dur: 0.15, expr: 'nervous', sit: 1, armL: 'hold', armR: 'chin', look: 0.6, tilt: -6 },   // glances at the door
+    { t: T.ding2, dur: 0.1, expr: 'nervous', sit: 1, armL: 'hold', armR: 'chin', look: 0, tilt: 0, fx: ['sweat'] },
     { t: T.meow + 0.3, dur: 0.15, expr: 'horrified', sit: 1, armL: 'hold', armR: 'chin', look: -0.9, fx: ['sweat'] },
     { t: T.ghost, dur: 0.15, expr: 'horrified', sit: 1, armL: 'hold', armR: 'down', look: 0.3 },
     { t: T.peak, dur: 0.1, expr: 'furious', sit: 1, armL: 'hold', armR: 'down', look: 0, fx: ['sweat', 'vein'] },
     { t: T.slide, dur: 0.2, expr: 'embarrassed', sit: 1, armL: 'hold', armR: 'down', look: 0.6 },
+    { t: T.face, dur: 0.2, expr: 'sad', sit: 1, armL: 'hold', armR: 'down', look: 0 },
     { t: T.eat, dur: 0.2, expr: 'dead_inside', sit: 1, armL: 'hold', armR: 'chin', look: 0 },
   ].sort((a, b) => a.t - b.t);
   const push = (a, b, z0, z1) => t => z0 + (z1 - z0) * ease.inOut(seg(t, a, b));
@@ -246,7 +251,7 @@ function buildTimeline() {
   const bagStep = t => { let i = 0; while (i + 1 < 4 && T.bagSteps[i + 1] <= t) i++; return i; };
   SHOTS = [
     [0, t => withCamera(1.35, 720, 900, () => {   // frame 1: flat on the dark floor, empty bowl, wrappers, a ghost at the window
-      room(t, { dark: true }); darkness(0.55); ghostAtWindow(t, { look: 0, down: 1 }); hiding(t);
+      room(t, { dark: true }); darkness(0.55); ghostAtWindow(t, { look: Math.sin(onTwos(t) * 2.2), down: 1, peer: 50 * Math.sin(onTwos(t) * 2.2) }); hiding(t);
     })],
     [T.shop, t => withCamera(1.2, 470, 950, () => {   // the shop: a huge bag, so responsible
       shop(t); who('steve', 400, t, STEVE); bag(400 + 25 * K, FLOOR - 64 * K + 215, 1, t, 0.85);   // hanging from his outstretched hand
@@ -275,21 +280,26 @@ function buildTimeline() {
       });
       dayTag('FRI', [62, 35, 11, 0][i], t);
     }],
-    [T.sat, t => withCamera(1, 540, 900, () => {   // SAT 6 PM: the calendar, the clock, the rule, the empty bowl
+    [T.sat, t => withCamera(t < T.six ? 1.45 : 1, t < T.six ? 300 : 540, t < T.six ? 560 : 900, () => {   // SAT 6 PM: the calendar, the clock, the rule, the empty bowl
       room(t, { win: false });
       const p = spen(t, 30);
       p.part(roundPoly([[120, 300], [480, 300], [480, 700], [120, 700]], 8), '#fffdf6', { shade: 0.06, lw: 4 });
       p.part([[120, 300], [480, 300], [480, 400], [120, 400]], '#c0392b', { shade: false, lw: 4 });
       hand('OCTOBER', 300, 352, 48, 0, '#ffffff', 'Fredoka', '600'); hand('31', 300, 530, 170, 0, INK, 'Fredoka', '600'); hand('SATURDAY', 300, 650, 40, 0, INK, 'Fredoka', '600');
+      const kf = ease.inOut(seg(t, T.sat + 0.15, T.sat + 0.75));   // yesterday's page falls away
+      if (kf < 1) { ctx.save(); ctx.translate(300 - 60 * kf, 400 + 700 * kf * kf); ctx.rotate(-0.5 * kf); ctx.translate(-300, -400);
+        p.part(roundPoly([[120, 400], [480, 400], [480, 700], [120, 700]], 8), '#fffdf6', { shade: 0.06, lw: 4 }); hand('30', 300, 530, 170, 0, INK, 'Fredoka', '600'); hand('FRIDAY', 300, 650, 40, 0, INK, 'Fredoka', '600'); ctx.restore(); }
       p.part(ellipsePts(780, 600, 150, 150, 48), '#fffdf6', { shade: 0.06, lw: 5 });
-      const k = ease.out(seg(t, T.sat, T.sat + 0.8)), mn = (-0.12 + 0.12 * k) * Math.PI * 2;   // the minute hand ticks up to 12
+      const k = Math.min(1, Math.floor(seg(t, T.six, T.six + 0.9) * 3 + 1e-6) / 3), mn = (-0.05 + 0.05 * k) * Math.PI * 2;   // three ticks up to 12
       p.line([[780, 600], [780, 690]], 9);                                                       // hour hand on 6
       p.line([[780, 600], [780 + Math.sin(mn) * 120, 600 - Math.cos(mn) * 120]], 6);
       p.dot(780, 600, 10, 10, INK);
       hand('6:00 PM', 780, 800, 50, 0, INK, 'Fredoka', '600');
-      const kb = ease.out(seg(t, T.sat + 0.9, T.sat + 1.3));
-      p.part(roundPoly([[90, 900 - 40 * (1 - kb)], [990, 900 - 40 * (1 - kb)], [990, 1040], [90, 1040]], 18), '#ffd84a', { shade: false, lw: 4 });
-      hand('6 PM: kids start ringing', 540, 948, 50, 0, INK, 'Fredoka', '600'); hand('doorbells for candy', 540, 1004, 50, 0, INK, 'Fredoka', '600');
+      const kb = ease.out(seg(t, T.six + 1.0, T.six + 1.4));
+      if (kb > 0) {   // the rule pops in only after the clock hits six
+        p.part(roundPoly([[90, 900 - 40 * (1 - kb)], [990, 900 - 40 * (1 - kb)], [990, 1040], [90, 1040]], 18), '#ffd84a', { shade: false, lw: 4 });
+        hand('6 PM: kids start ringing', 540, 948, 50, 0, INK, 'Fredoka', '600'); hand('doorbells for candy', 540, 1004, 50, 0, INK, 'Fredoka', '600');
+      }
       bowl(540, 1330, 0, t);
     })],
     [T.ding1, t => withCamera(push(T.ding1, T.adult, 2.0, 2.2)(t), 600, 800, () => {   // ding-dong: his face freezes, eyes to the empty bowl
@@ -300,7 +310,7 @@ function buildTimeline() {
     [T.dark, t => withCamera(1.08, 580, 1000, () => {   // click: dark; he drops to the floor; the cat lies down next to him
       room(t, { dark: true });
       if (t < T.drop) { darkness(0.55); who('steve', HIDE_X, t, STEVE); }
-      else { darkness(0.55); hiding(t); }
+      else { darkness(0.55); hiding(t, { catX: 1200 - 680 * ease.inOut(seg(t, T.drop + 0.3, T.drop + 1.5)) }); }
     })],
     [T.ding2, t => withCamera(push(T.ding2, T.meow, 1.6, 1.8)(t), 680, 1150, () => {   // ding-dong ×2, knocks; he holds his breath
       room(t, { dark: true }); darkness(0.55); hiding(t);
@@ -320,7 +330,7 @@ function buildTimeline() {
     [T.peak, t => withCamera(push(T.peak, T.slide, 1.35, 1.45)(t), 720, 900, () => {   // NOBODY'S HOME! — still flat on the floor
       room(t, { dark: true }); darkness(0.5); ghostAtWindow(t, { look: 0, down: 1, slide: seg(t, T.slide, T.slide + 0.8) }); hiding(t);
     }, 540 + (t < T.peak + 0.3 ? (Math.floor(t * 24) % 2 ? 10 : -10) : 0))],
-    [T.mat, t => withCamera(1.0, 540, 900, () => {   // the doorstep: one sweet and a crayon note
+    [T.mat, t => withCamera(push(T.mat, T.face, 1.0, 1.3)(t), 540, push(T.mat, T.face, 900, 1150)(t), () => {   // the doorstep: one sweet and a crayon note
       ctx.fillStyle = '#3a3550'; ctx.fillRect(PX - 800, PY - 800, PW + 1600, FLOOR - PY + 800);
       ctx.fillStyle = '#7b6a5a'; ctx.fillRect(PX - 800, 1000, PW + 1600, 1200);
       const p = spen(t, 40);
@@ -331,6 +341,7 @@ function buildTimeline() {
       hand('FOR THE', 540, 1168, 64, -0.06, '#e67e22', 'Patrick Hand'); hand('SAD MAN', 540, 1240, 80, -0.06, '#e67e22', 'Patrick Hand');
       candy(560, 1360, 34, t, 777, 0.2);
     })],
+    [T.face, t => withCamera(2.3, HIDE_X, 900, () => { room(t, { dark: true }); darkness(0.55); hiding(t); })],   // his face: the sad man
     [T.eat, t => withCamera(1.35, 720, 900, () => {   // back to frame 1: chewing on the floor in the dark
       room(t, { dark: true }); darkness(0.55);
       const chewing = Math.floor(t * 4) % 2 ? 'small' : 'line';
@@ -341,15 +352,15 @@ function buildTimeline() {
     ...LINES.map(L => ({ t: L.t, type: 'voice', id: L.id })),
     { t: 0.0, type: 'night' }, { t: T.shop, type: 'murmur' }, { t: T.kids, type: 'slap' }, { t: T.mon, type: 'crinkle' }, { t: T.wed + 0.5, type: 'crinkle' },
     ...T.bagSteps.map(x => ({ t: x, type: 'crinkle' })), { t: T.empty, type: 'rustle' }, { t: T.cam, type: 'sting' },
-    { t: T.sat, type: 'tick' }, { t: T.ding1, type: 'ding' }, { t: T.dark, type: 'click' }, { t: T.drop, type: 'thud' },
+    { t: T.sat + 0.15, type: 'crinkle' }, { t: T.six, type: 'tick' }, { t: T.ding1, type: 'ding' }, { t: T.dark, type: 'click' }, { t: T.drop, type: 'thud' },
     { t: T.ding2, type: 'ding' }, { t: T.ding3, type: 'ding' }, { t: T.knock, type: 'knock' }, { t: T.peak, type: 'stop' },
     { t: T.mat, type: 'sting' }, { t: T.eat, type: 'chew' },
   ].sort((a, b) => a.t - b.t);
 }
-function ghostAtWindow(t, { look = 0, down = 0, slide = 0 } = {}) {   // the ghost pressed to the glass, clipped by the window
+function ghostAtWindow(t, { look = 0, down = 0, slide = 0, peer = 0 } = {}) {   // the ghost pressed to the glass, clipped by the window
   const [a, b, c, d] = WIN;
   ctx.save(); ctx.beginPath(); ctx.rect(a, b, c - a, d - b); ctx.clip();
-  const gx = 770 + 420 * ease.inOut(slide), gy = d + 120;
+  const gx = 770 + peer + 420 * ease.inOut(slide), gy = d + 120;
   ghost(gx, gy, 1.9, t, { look, down });
   const hp = spen(t, 83); for (const sx of [-1, 1]) hp.part(ellipsePts(gx + sx * 120, gy - 250, 26, 20, 16), '#fbfbf7', { shade: 0.08, lw: 3 });   // hands on the glass
   ctx.restore();
