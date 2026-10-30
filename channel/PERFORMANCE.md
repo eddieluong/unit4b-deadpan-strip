@@ -17,6 +17,7 @@ dashboard → Content. Instagram: the Reel → View insights.
 | 3 | Self-Checkout | 58.1 s | 2026-10-28 | (read 30 Oct) | | | | | | | frame 1 = arrest pose (rule #19); three voices; one peak (4) |
 | 4 | Storm Stock-Up | 55.7 s | 2026-10-29 | (read 31 Oct) | | | | | | | frame 1 = absurd result (paper-towel tower); punch at 68 % |
 | 5 | Halloween Candy | 50.4 s | 2026-10-29 | (read 31 Oct) | | | | | | | seasonal, posted 2 days early; hiding pose under the window; punch 81 % |
+| 6 | Early Black Friday | 49.3 s | 2026-10-30 | (read 1 Nov) | | | | | | | planted word payoff ("Patience") + loop ending; punch 85 % |
 
 ## Entry template (copy for each video)
 
@@ -123,3 +124,11 @@ Instagram https://www.instagram.com/unit4bcomedy/reel/DfEfN8gBl-H/. Question com
 candy did you eat before the kids came?" posted as @unit4bcomedy (also in the Instagram caption).
 Tests: dated seasonal topic, posted 2 days before Halloween (owner: "đăng luôn") instead of on the day; frame 1 = Steve
 hiding under the window with a ghost at the glass (#19, #20); punch at 81 %. Read the numbers on 31 Oct (48 h).
+
+## Tập 6 — Early Black Friday  (posted 2026-10-30 ~16:50 VN, `Tap06-early-black-friday.mp4`, 49.3 s)
+Title "Never wait for Black Friday." Links: Facebook https://www.facebook.com/reel/1665623641813225/ · YouTube (pending:
+Chrome signed into a Google account without the UNIT 4B channel) · Instagram (pending: logged out). Question comment
+"Be honest: do you buy on the early deal or wait for Black Friday?" posted as UNIT 4B on Facebook.
+Tests: planted word that pays off ("Patience." → "Thank you for your PATIENCE.") + a loop ending ("Cyber Monday starts
+SUNDAY." back to frame 1); posted the day it was made (owner: "đăng ngay hôm nay") instead of 4 Nov; beard removed
+(read as fake), time shown by hair/eye bags/sleeping bag/pizza boxes; punch at 84.9 %. Read the numbers on 1 Nov (48 h).
