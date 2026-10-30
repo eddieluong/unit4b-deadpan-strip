@@ -127,12 +127,18 @@ function tvBox(x, y, t, h = 270) {   // the TV box he hugs (bottom centre); a pi
   hand('55"', x, y - h * 0.9, 40, 0, INK);
 }
 // Steve SITTING on the aisle floor in a sleeping bag up to his chest; a hip at hipY. box: hugging the TV box in front of his belly.
-function bagSeat(x, t, { hipY = 1205, s = 10, bw = 1, box = true, extra = {}, over = {} } = {}) {
+const STAINS = [[-120, 0.30, 46, 24, '#6b5a3a'], [90, 0.55, 58, 30, '#5a4a30'], [-30, 0.80, 40, 20, '#7a6a44'], [170, 0.25, 36, 22, '#4f5a3a'], [-190, 0.62, 50, 26, '#5a4a30'], [30, 0.12, 34, 18, '#8a6d3b'], [130, 0.85, 44, 22, '#6b5a3a'], [-90, 0.42, 30, 16, '#4a3f2c']];
+function stains(p, x, top, bot, bw, dirt) {   // dirt 0..1: more brown blotches on the sleeping bag
+  const n = Math.round(dirt * STAINS.length);
+  for (let i = 0; i < n; i++) { const [dx, fy, rx, ry, c] = STAINS[i]; p.part(ellipsePts(x + dx * bw, top + 40 + (bot - top - 60) * fy, rx * bw, ry, 18), c, { shade: false, lw: 0.01 }); }
+}
+function bagSeat(x, t, { hipY = 1205, s = 10, bw = 1, box = true, dirt = 1, extra = {}, over = {} } = {}) {
   const bot = hipY + 22 * s + 10, top = hipY - 130, p = spen(t, 62);
   const tq = onTwos(t), base = track(STEVE, tq), pose = sum({ expr: 'neutral', ...base }, idle(tq, x), extra);
   pose.sit = 1; pose.armL = 'down'; pose.armR = 'down'; Object.assign(pose, over);
   drawCharacter(ctx, 'steve', x, hipY + 22 * s, s, pose, { frame: frameOf(t) });
   p.part(roundPoly([[x - 150 * bw, top], [x + 150 * bw, top], [x + 262 * bw, bot - 30], [x + 250 * bw, bot], [x - 250 * bw, bot], [x - 262 * bw, bot - 30]], 60), '#3f8f7a', { shade: 0.14, lw: 6 });   // the bag, up to his chest
+  stains(p, x, top, bot, bw, dirt);
   p.part(roundPoly([[x - 150 * bw, top], [x + 150 * bw, top], [x + 160 * bw, top + 30], [x - 160 * bw, top + 30]], 16), '#2f6e5d', { shade: false, lw: 4 });   // folded-over rim
   p.line([[x + 60 * bw, top + 30], [x + 70 * bw, bot - 10]], 5, 'rgba(255,255,255,0.7)');
   if (box) {
@@ -194,10 +200,11 @@ const steve = (t, x = SX, extra = {}, scale = K, y = FLOOR) => who('steve', x, t
 const penny = (t, x = PXX, extra = {}, y = STOOL_Y, scale = K) => who('penny', x, t, PENNY, extra, scale, y);
 function bagFrame(t, { x = 540, over = {}, tvbox = true, plant = true } = {}) {   // frame-1 composition: Steve sitting in the bag, hugging the box
   if (plant) cart(170, FLOOR + 30, t, true);
+  pizza(905, FLOOR + 36, 7, t);
   bagSeat(x, t, { box: tvbox, over });
 }
 
-// Steve's pointing arm at the $509 tag, drawn over his beard so it is always clearly visible (sleeve + hand + finger).
+// Steve's pointing arm at the $509 tag, drawn over his spiked hair and face so it is always clearly visible (sleeve + hand + finger).
 function pointArm(t, x, wag = 0) {
   const p = spen(t, 77), sh = [x + 30, FLOOR - 59 * K], el = [x + 130, sh[1] + 70 + wag], hd = [x + 235, sh[1] + 12 + wag], ft = [x + 300, hd[1] - 22];
   p.line([sh, el, hd], 38, INK); p.line([sh, el, hd], 28, CAST.steve.color);
@@ -218,36 +225,36 @@ function buildTimeline() {
   T.slap4 = end('15_s13') - 0.9; T.tl = [0, 1, 2, 3].map(i => T.r8 + i * 1.0);
   T.unroll = end('15_p12') - 0.9;
   STEVE = [
-    { t: 0, expr: 'nervous', sit: 1, beard: 3, armL: 'hold', armR: 'hold', look: -0.4, fx: ['sweat'] },
-    { t: 1.1, dur: 0.12, expr: 'nervous', sit: 1, beard: 3, armL: 'hold', armR: 'hold', look: 0.6, tilt: -4, fx: ['sweat'] },        // blink / eyes flick to the banner
-    { t: 2.0, dur: 0.12, expr: 'deadpan', sit: 1, beard: 3, armL: 'hold', armR: 'hold', look: -0.3, tilt: 0, fx: ['sweat'] },
-    { t: T.r2, dur: 0.2, expr: 'happy', beard: 0, armL: 'down', armR: 'point', look: 0.5, lean: 0 },
-    { t: T.slap1, dur: 0.2, expr: 'happy', beard: 0, armR: 'point', armL: 'hips', look: 0.5, lean: 8 },                                // leans in
-    { t: T.r3, dur: 0.2, expr: 'smug', beard: 0, armR: 'up', armL: 'hips', look: 0.6, lean: -2 },                                       // finger wag
-    { t: T.r3 + 0.6, dur: 0.15, expr: 'smug', beard: 0, armR: 'wave', armL: 'hips', look: 0.6, tilt: 5 },
-    { t: T.r3 + 1.2, dur: 0.15, expr: 'smug', beard: 0, armR: 'up', armL: 'hips', look: 0.6, tilt: -4 },
-    { t: T.r4, dur: 0.2, expr: 'smug', beard: 0, armR: 'cross', armL: 'cross', look: 0.7, lean: 0, tilt: 0 },
-    { t: T.r5, dur: 0.2, expr: 'smug', beard: 1, armL: 'hold', armR: 'hold', look: 0.4, lean: 3 },                                      // hand rub: hold ↔ chin
-    ...[0, 1, 2].flatMap(i => [{ t: T.r5 + 0.5 + i * 0.5, dur: 0.12, expr: 'smug', beard: 1, armL: 'chin', armR: 'hold', look: 0.4 }, { t: T.r5 + 0.75 + i * 0.5, dur: 0.12, expr: 'smug', beard: 1, armL: 'hold', armR: 'chin', look: 0.4 }]),
-    { t: T.r6, dur: 0.12, expr: 'shocked', beard: 1, armL: 'down', armR: 'down', look: 0.7, lean: 0 },
-    { t: T.r6b, dur: 0.2, expr: 'confused', beard: 1, armL: 'hold', armR: 'up', look: -0.2, fx: ['sweat'] },                            // finger maths
-    { t: T.r6b + 0.4, dur: 0.1, expr: 'confused', beard: 1, armL: 'hold', armR: 'wave', look: -0.2, fx: ['sweat'] },
-    { t: T.r6b + 0.8, dur: 0.1, expr: 'dead_inside', beard: 2, armL: 'hold', armR: 'up', look: -0.2, fx: ['sweat'] },
-    { t: T.r7, dur: 0.2, expr: 'deadpan', beard: 2, armL: 'cross', armR: 'cross', look: 0.5, lean: 0 },
-    { t: T.r8, dur: 0.1, expr: 'dead_inside', beard: 2, sit: 1, armL: 'hold', armR: 'hold', look: 0.4 },
-    { t: T.tl[2], dur: 0.1, expr: 'dead_inside', beard: 3, sit: 1, armL: 'hold', armR: 'hold', look: 0.4, fx: ['sweat'] },
-    { t: T.r9, dur: 0.1, expr: 'nervous', beard: 3, sit: 1, armL: 'hold', armR: 'hold', look: 0.3, fx: ['sweat'] },
-    { t: T.shutter, dur: 0.2, expr: 'nervous', beard: 3, armL: 'down', armR: 'down', look: 0.5, fx: ['sweat'] },                                  // stands up, hopeful
-    { t: T.shutter + 1.2, dur: 0.2, expr: 'happy', beard: 3, armL: 'down', armR: 'down', look: 0.6 },
-    { t: T.shutter + 2.4, dur: 0.2, expr: 'nervous', beard: 3, armL: 'down', armR: 'down', look: 0.5, fx: ['sweat'] },
-    { t: T.zap, dur: 0.08, expr: 'shocked', beard: 3, armL: 'down', armR: 'down', look: 0.5 },
-    { t: T.close, dur: 0.1, expr: 'shocked', beard: 3, armL: 'down', armR: 'down', look: 0.5, tilt: 0 },                                  // frozen; eye twitch below
-    { t: T.close + 0.35, dur: 0.05, expr: 'horrified', beard: 3, armL: 'down', armR: 'down', look: 0.5, tilt: 3 },
-    { t: T.close + 0.5, dur: 0.05, expr: 'shocked', beard: 3, armL: 'down', armR: 'down', look: 0.5, tilt: 0 },
-    { t: T.r11, dur: 0.1, expr: 'furious', beard: 3, puff: 0.55, armL: 'hips', armR: 'point', look: 0.6, lean: 5, fx: ['sweat', 'vein'] },
-    { t: T.r12, dur: 0.2, expr: 'furious', beard: 3, puff: 0.55, armL: 'hips', armR: 'point', look: 0.6, lean: 5, fx: ['sweat', 'vein'] },
-    { t: end('15_p12') + 0.1, dur: 0.3, expr: 'dead_inside', beard: 3, puff: 0, armL: 'down', armR: 'down', look: 0.6, lean: 0, fx: ['sweat'] },
-    { t: T.r13, dur: 0.2, expr: 'dead_inside', sit: 1, beard: 3, armL: 'hold', armR: 'hold', look: -0.3, fx: ['sweat'] },
+    { t: 0, expr: 'nervous', sit: 1, hair: 3, bags: 1, armL: 'hold', armR: 'hold', look: -0.4, fx: ['sweat'] },
+    { t: 1.1, dur: 0.12, expr: 'nervous', sit: 1, hair: 3, bags: 1, armL: 'hold', armR: 'hold', look: 0.6, tilt: -4, fx: ['sweat'] },        // blink / eyes flick to the banner
+    { t: 2.0, dur: 0.12, expr: 'deadpan', sit: 1, hair: 3, bags: 1, armL: 'hold', armR: 'hold', look: -0.3, tilt: 0, fx: ['sweat'] },
+    { t: T.r2, dur: 0.2, expr: 'happy', hair: 0, bags: 0, armL: 'down', armR: 'point', look: 0.5, lean: 0 },
+    { t: T.slap1, dur: 0.2, expr: 'happy', hair: 0, armR: 'point', armL: 'hips', look: 0.5, lean: 8 },                                // leans in
+    { t: T.r3, dur: 0.2, expr: 'smug', hair: 0, armR: 'up', armL: 'hips', look: 0.6, lean: -2 },                                       // finger wag
+    { t: T.r3 + 0.6, dur: 0.15, expr: 'smug', hair: 0, armR: 'wave', armL: 'hips', look: 0.6, tilt: 5 },
+    { t: T.r3 + 1.2, dur: 0.15, expr: 'smug', hair: 0, armR: 'up', armL: 'hips', look: 0.6, tilt: -4 },
+    { t: T.r4, dur: 0.2, expr: 'smug', hair: 0, armR: 'cross', armL: 'cross', look: 0.7, lean: 0, tilt: 0 },
+    { t: T.r5, dur: 0.2, expr: 'smug', hair: 1, armL: 'hold', armR: 'hold', look: 0.4, lean: 3 },                                      // hand rub: hold ↔ chin
+    ...[0, 1, 2].flatMap(i => [{ t: T.r5 + 0.5 + i * 0.5, dur: 0.12, expr: 'smug', hair: 1, armL: 'chin', armR: 'hold', look: 0.4 }, { t: T.r5 + 0.75 + i * 0.5, dur: 0.12, expr: 'smug', hair: 1, armL: 'hold', armR: 'chin', look: 0.4 }]),
+    { t: T.r6, dur: 0.12, expr: 'shocked', hair: 1, armL: 'down', armR: 'down', look: 0.7, lean: 0 },
+    { t: T.r6b, dur: 0.2, expr: 'confused', hair: 1, armL: 'hold', armR: 'up', look: -0.2, fx: ['sweat'] },                            // finger maths
+    { t: T.r6b + 0.4, dur: 0.1, expr: 'confused', hair: 1, armL: 'hold', armR: 'wave', look: -0.2, fx: ['sweat'] },
+    { t: T.r6b + 0.8, dur: 0.1, expr: 'dead_inside', hair: 1, armL: 'hold', armR: 'up', look: -0.2, fx: ['sweat'] },
+    { t: T.r7, dur: 0.2, expr: 'deadpan', hair: 1, armL: 'cross', armR: 'cross', look: 0.5, lean: 0 },
+    { t: T.r8, dur: 0.1, expr: 'dead_inside', hair: 2, bags: 0.4, sit: 1, armL: 'hold', armR: 'hold', look: 0.4 },
+    { t: T.tl[2], dur: 0.1, expr: 'dead_inside', hair: 3, bags: 1, sit: 1, armL: 'hold', armR: 'hold', look: 0.4, fx: ['sweat'] },
+    { t: T.r9, dur: 0.1, expr: 'nervous', hair: 3, bags: 1, sit: 1, armL: 'hold', armR: 'hold', look: 0.3, fx: ['sweat'] },
+    { t: T.shutter, dur: 0.2, expr: 'nervous', hair: 3, bags: 1, armL: 'down', armR: 'down', look: 0.5, fx: ['sweat'] },                                  // stands up, hopeful
+    { t: T.shutter + 1.2, dur: 0.2, expr: 'happy', hair: 3, bags: 1, armL: 'down', armR: 'down', look: 0.6 },
+    { t: T.shutter + 2.4, dur: 0.2, expr: 'nervous', hair: 3, bags: 1, armL: 'down', armR: 'down', look: 0.5, fx: ['sweat'] },
+    { t: T.zap, dur: 0.08, expr: 'shocked', hair: 3, bags: 1, armL: 'down', armR: 'down', look: 0.5 },
+    { t: T.close, dur: 0.1, expr: 'shocked', hair: 3, bags: 1, armL: 'down', armR: 'down', look: 0.5, tilt: 0 },                                  // frozen; eye twitch below
+    { t: T.close + 0.35, dur: 0.05, expr: 'horrified', hair: 3, bags: 1, armL: 'down', armR: 'down', look: 0.5, tilt: 3 },
+    { t: T.close + 0.5, dur: 0.05, expr: 'shocked', hair: 3, bags: 1, armL: 'down', armR: 'down', look: 0.5, tilt: 0 },
+    { t: T.r11, dur: 0.1, expr: 'furious', hair: 3, bags: 1, puff: 1, armL: 'hips', armR: 'point', look: 0.6, lean: 5, fx: ['sweat', 'vein'] },
+    { t: T.r12, dur: 0.2, expr: 'furious', hair: 3, bags: 1, puff: 1, armL: 'hips', armR: 'point', look: 0.6, lean: 5, fx: ['sweat', 'vein'] },
+    { t: end('15_p12') + 0.1, dur: 0.3, expr: 'dead_inside', hair: 3, bags: 1, puff: 0, armL: 'down', armR: 'down', look: 0.6, lean: 0, fx: ['sweat'] },
+    { t: T.r13, dur: 0.2, expr: 'dead_inside', sit: 1, hair: 3, bags: 1, armL: 'hold', armR: 'hold', look: -0.3, fx: ['sweat'] },
   ].sort((a, b) => a.t - b.t);
   PENNY = [
     { t: 0, expr: 'deadpan', armL: 'down', armR: 'point', gun: true },
@@ -298,11 +305,11 @@ function buildTimeline() {
       });
     }],
     [T.r7, t => twoShot(t, { tv: true, tag: tagAt(t), banners: 3, rope: 1, sign: true })],
-    ...[0, 1, 2, 3].map(i => [T.tl[i], t => withCamera(1, 540, CAM_Y, () => {   // row 8: 4 held frames, same framing; only beard, boxes, tag, lights change
+    ...[0, 1, 2, 3].map(i => [T.tl[i], t => withCamera(1, 540, CAM_Y, () => {   // row 8: 4 held frames, same framing; only hair, eye bags, bag dirt, boxes, tag, lights change
       const tags = [469, 489, 479, 499], st = [2, 2, 3, 3][i], nights = [0, 0.6, 0, 0.6];
       const o = { tv: true, tag: { price: tags[i], date: '' }, banners: 3, rope: 1, sign: true, night: nights[i] };
       aisle(t, o); stool(PXX, STOOL_Y, t); penny(t, PXX); pizza(500, FLOOR + 36, [1, 3, 5, 7][i], t);
-      bagSeat(240, t, { s: 9.5, hipY: 1215, bw: 0.75, box: false, extra: { tilt: -6 }, over: { beard: st, look: 0.9, fx: i > 1 ? ['sweat'] : [] } });
+      bagSeat(240, t, { s: 9.5, hipY: 1215, bw: 0.75, box: false, dirt: [0.25, 0.5, 0.75, 1][i], extra: { tilt: -6 }, over: { hair: st, bags: [0.4, 0.6, 0.9, 1][i], look: 0.9, fx: i > 1 ? ['sweat'] : [] } });
     })]),
     [T.r9, t => t < T.shutter ? withCamera(1, 540, CAM_Y, () => {   // row 9: the calendar, 27, six o'clock
       ctx.fillStyle = '#dfe7ec'; ctx.fillRect(PX, PY, PW, PH);
@@ -331,7 +338,7 @@ function buildTimeline() {
       stool(PXX, STOOL_Y, t); penny(t, PXX); steve(t, SX + 120, { sit: 0 });
       if (t > T.zap && t < T.zap + 0.4) sfxText('ZAP!', 700, 780, 80, -0.1);
     }, 540, t < T.close ? CAM_Y : CAM_Y)],
-    [T.r11, t => withCamera(1, 540, CAM_Y, () => {   // row 11: THE peak, the beard bristles, pointing at $509
+    [T.r11, t => withCamera(1, 540, CAM_Y, () => {   // row 11: THE peak, the hair spikes up, pointing at $509
       aisle(t, { tv: true, tag: { price: 509, date: '' }, banners: 3, rope: 1, sign: true });
       stool(PXX, STOOL_Y, t); penny(t, PXX); const jx = t < T.r11 + 0.3 ? (Math.floor(t * 24) % 2 ? 6 : -6) : 0; steve(t, SX + jx); pointArm(t, SX + jx, jx);
     })],

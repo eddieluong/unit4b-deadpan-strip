@@ -113,29 +113,33 @@ function drawSteve(pen, C, p) {
     pen.line([[-1.6, 61], [-1.8, 55]], pen.lw * 0.5); pen.line([[1.6, 61], [1.8, 55]], pen.lw * 0.5);
     const touch = ['facepalm', 'chin'].includes(p.armL) || ['facepalm', 'chin'].includes(p.armR) || ['facepalm', 'chin'].includes(p.arm);
     if (!touch) arms(pen, p, [0, 60]);   // behind the head (hands behind the head stay hidden)
-    pivot(pen, [0, 64], p.tilt || 0, () => headFace(pen, p, hy, r, { before: () => { pen.part(spikes(r, hy), C.hair, { shade: false }); beard(pen, p.beard || 0, hy, r, p.puff || 0); } }));
+    pivot(pen, [0, 64], p.tilt || 0, () => { headFace(pen, p, hy, r, { before: () => hairdo(pen, p.hair || 0, hy, r, p.puff || 0, C.hair) }); eyeBags(pen, p.bags || 0, hy, r); });
     if (touch) arms(pen, p, [0, 60]);    // a hand on the face goes in front
   });
 }
 
-// Steve's beard, 4 stages: 0 clean, 1 stubble, 2 short, 3 long scruffy (the colour of his hair, a bit lighter so the mouth reads).
-const BEARD = '#6b5340';
-function beard(pen, st, hy, r, puff = 0) {
-  if (!st) return;
-  if (st === 1) {   // stubble: a grey shadow on the jaw plus dots
-    pen.part([[-13.5, hy - 2], [-12, hy - 11], [-6, hy - 14.6], [6, hy - 14.6], [12, hy - 11], [13.5, hy - 2], [9, hy - 7], [0, hy - 8.5], [-9, hy - 7]], 'rgba(120,108,100,0.35)', { shade: false, lw: 0.01 });
-    for (let i = 0; i < 46; i++) { const a = Math.PI * (1.08 + 0.84 * ((i * 0.618) % 1)), rr = 9 + 5 * ((i * 0.37) % 1); pen.dot(Math.cos(a) * rr, hy + Math.sin(a) * rr * 0.95 + 1, 0.42, 0.42, INK); }
-    return;
+// Steve's hair, 4 stages: 0 neat, 1 messy, 2 wild, 3 slept-on (flat on his left, sticking up on his right). puff 0..1 = outrage, spikes shoot up.
+// bags 0..1: dark eye bags under the eyes (drawn after the face).
+function hairdo(pen, st, hy, r, puff = 0, color = '#17131d') {
+  st = Math.round(st || 0); const n = [9, 11, 13, 13][st], pts = [];
+  const H = (i) => {   // spike height for index i (odd = tips)
+    const f = i / n, v = (i * 7) % 5;
+    if (st === 0) return 3.2;
+    if (st === 1) return 7 + v * 0.9;
+    if (st === 2) return 11 + v * 1.6;
+    return f < 0.5 ? 12 + v * 2.6 + 4 * (0.5 - f) * 4 : 0.8 + 8 * puff + v * 0.4;   // slept-on: tall tufts on the right, flattened on the left
+  };
+  for (let i = 0; i <= n; i++) { const a = Math.PI * (0.06 + 0.88 * i / n), rr = i % 2 ? r + H(i) + 9 * puff + (st === 3 && i / n < 0.5 ? 0 : 0) : r + 0.6; const lean = st >= 2 ? (st === 3 ? 0.18 : 0.1) * (i % 2 ? 1 : 0) : 0; pts.push([Math.cos(a - lean) * rr, hy + Math.sin(a - lean) * rr]); }
+  for (let i = 0; i <= 10; i++) { const a = Math.PI * (0.94 - 0.88 * i / 10); pts.push([Math.cos(a) * (r - 4), hy + 2 + Math.sin(a) * (r - 4.5)]); }
+  pen.part(pts, color, { shade: false });
+  if (st === 3) {   // the flattened side: a smooth swoop plastered down over the left temple
+    pen.part([[-r - 1.5, hy + 1], [-r + 1, hy + 9], [-r * 0.45, hy + r - 0.5], [-r * 0.2, hy + r - 3], [-r + 4, hy + 3]], color, { shade: false, lw: pen.lw * 0.8 });
   }
-  const L = st === 2 ? 0 : 1, out = [[-14.6, hy + 1], [-15, hy - 8], [-12.5, hy - 14 - 4 * L]];
-  if (!L) out.push([-7, hy - 19], [0, hy - 20.5], [7, hy - 19]);
-  else { for (let i = 0; i <= 8; i++) out.push([-10 + i * 2.5, hy - 20 - (i % 2 ? 3 : 9) * Math.sin(Math.PI * (0.1 + 0.8 * i / 8)) - 1.5 * ((i * 5) % 3)]); }   // chest length, ragged tips
-  out.push([12.5, hy - 14 - 4 * L], [15, hy - 8], [14.6, hy + 1], [10, hy - 6.5], [4, hy - 8.4], [-4, hy - 8.4], [-10, hy - 6.5]);
-  if (puff) for (const q of out) { q[0] *= 1 + 0.32 * puff; q[1] -= 1.5 * puff * (hy - q[1]) / 20; }
-  pen.part(out, BEARD, { shade: 0.2, lw: pen.lw * 0.9 });
-  if (L && st === 3) {   // strand lines (light and dark) so it reads as hair, not a solid block
-    for (let j = 0; j < 8; j++) { const x = -10 + j * 2.85, tip = hy - 21 - (j % 3) * 3 - (j % 2 ? 0 : 3), ph = puff ? 1.3 : 1; pen.line([[x * 0.9 * ph, hy - 10], [x * 0.95 * ph, (hy - 10 + tip) / 2 + 1], [(x + (j % 2 ? 1 : -1)) * ph, tip]], pen.lw * 0.32, j % 2 ? '#9b7b5c' : '#3a2c20'); }
-  } else if (L) for (const x of [-7, -2, 4, 9]) pen.line([[x, hy - 11], [x * 1.15 + 1, hy - 22 - (x % 3)]], pen.lw * 0.35, '#3a2c20');
+}
+function eyeBags(pen, k, hy, r) {
+  if (!k) return;
+  const g = r * 0.38, ey = hy + 1 - 3.6;
+  for (const sx of [-1, 1]) pen.part([[sx * g - 3, ey + 0.6], [sx * g, ey - 0.6 - 1.6 * k], [sx * g + 3, ey + 0.6], [sx * g, ey - 0.1]], `rgba(70,45,90,${0.55 + 0.4 * k})`, { shade: false, lw: 0.01 });
 }
 
 // Nana Knuckles — a towering white beehive with a knitting needle, round glasses, a lavender dress.
