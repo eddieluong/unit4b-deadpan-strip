@@ -1,0 +1,93 @@
+<title>UNIT 4B Launch Kit</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600&family=Patrick+Hand&display=swap">
+<style>
+/* Layout: one column of platform blocks in setup order; each block = steps, then copyable fields, then the art to upload. */
+:root {
+  --bg: #f6f1e7; --surface: #fffdf8; --ink: #2a2230; --muted: #6e6470; --line: #e3d8c6;
+  --accent: #e9a91c; --accent-ink: #2a2230; --ok: #2e7d4f; --chip: #f3e6c4;
+  --display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --hand: "Patrick Hand", "Comic Sans MS", cursive;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1d1a21; --surface: #27232c; --ink: #f1ebe0; --muted: #b3a9b4; --line: #3b3541;
+  --accent: #f2b632; --accent-ink: #1d1a21; --ok: #6fcf97; --chip: #3a3223; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #1d1a21; --surface: #27232c; --ink: #f1ebe0; --muted: #b3a9b4; --line: #3b3541;
+  --accent: #f2b632; --accent-ink: #1d1a21; --ok: #6fcf97; --chip: #3a3223; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font: 16px/1.55 var(--body); }
+.wrap { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 56px; display: grid; gap: 28px; }
+header { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; }
+header img { width: 84px; height: 84px; border-radius: 50%; }
+h1 { font: 600 2.1rem/1.05 var(--display); margin: 0; text-wrap: balance; }
+.tag { font: 1.3rem var(--hand); color: var(--muted); margin: 2px 0 0; }
+.intro { margin: 0; color: var(--muted); max-width: 62ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; }
+.facts span { background: var(--chip); border-radius: 999px; padding: 4px 12px; font-size: .9rem; }
+.platform { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 16px; min-width: 0; }
+.platform h2 { font: 600 1.45rem var(--display); margin: 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.when { font: 500 .8rem var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+ol.steps { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; }
+ol.steps li { padding-left: 2px; }
+ol.steps label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+ol.steps input { margin-top: .35em; accent-color: var(--ok); width: 18px; height: 18px; flex: none; }
+ol.steps input:checked + span { color: var(--muted); text-decoration: line-through; }
+.fields { display: grid; gap: 10px; }
+.field { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; align-items: start; border-top: 1px dashed var(--line); padding-top: 10px; min-width: 0; }
+.field .k { grid-column: 1 / -1; font: 600 .78rem var(--body); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); display: flex; gap: 8px; }
+.field .k em { font-style: normal; font-weight: 400; letter-spacing: 0; text-transform: none; }
+.field .v { white-space: pre-wrap; overflow-wrap: anywhere; min-width: 0; }
+.field .v.big { font: 600 1.1rem var(--display); }
+button.copy { font: 600 .85rem var(--body); background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 8px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+button.copy:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+button.copy.done { background: var(--ok); color: var(--surface); }
+.art { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+figure { margin: 0; display: grid; gap: 6px; min-width: 0; }
+figure img { width: 100%; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); }
+figcaption { font-size: .82rem; color: var(--muted); }
+.note { font-size: .9rem; color: var(--muted); margin: 0; }
+.post { background: var(--chip); border-radius: 10px; padding: 12px 14px; display: grid; gap: 10px; }
+.post h3 { font: 600 1rem var(--display); margin: 0; }
+footer { color: var(--muted); font-size: .9rem; display: grid; gap: 6px; }
+code { font: .9em ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+@media (prefers-reduced-motion: no-preference) { button.copy { transition: background .15s; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <img src="data:image/jpeg;base64,{{AVATAR}}" alt="UNIT 4B avatar: Steve's sweaty face on mustard">
+    <div>
+      <h1>UNIT 4B launch kit</h1>
+      <p class="tag">Small problems. Big feelings.</p>
+    </div>
+  </header>
+  <p class="intro">Everything to set up the four channels tonight and post Tập 1. Create each account yourself, then tick the steps and paste the fields. Ticks are saved in this browser only.</p>
+  <div class="facts"><span>Name: UNIT 4B</span><span>Handle: @unit4bcomedy</span><span>Backups: unit4btoons · unit4b_comedy · weareunit4b</span><span>Turn on 2-step verification everywhere</span></div>
+
+  <!-- PLATFORMS -->
+  {{PLATFORMS}}
+
+  <footer>
+    <p><strong>Video file:</strong> <code>episodes/10-we-missed-you/film/out/Tap01-we-missed-you.mp4</code> on your computer (39.8 s, 1080×1920). All four platforms accept uploads from a desktop browser.</p>
+    <p><strong>Full-size art on GitHub:</strong> <code>channel/branding/art/</code> in eddieluong/unit4b-deadpan-strip. Here, long-press or right-click an image to save it.</p>
+    <p>When an account exists and you're logged in on Chrome, ask Claude to fill the profile for you; it shows each field before saving.</p>
+  </footer>
+</div>
+
+<script>
+const KEY = 'unit4b-launch-ticks';
+let ticks = {};
+try { ticks = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { ticks = {}; }
+document.querySelectorAll('ol.steps input').forEach(cb => {
+  cb.checked = !!ticks[cb.id];
+  cb.addEventListener('change', () => { ticks[cb.id] = cb.checked; try { localStorage.setItem(KEY, JSON.stringify(ticks)); } catch (e) {} });
+});
+document.querySelectorAll('button.copy').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const el = document.getElementById(btn.dataset.for), text = el.innerText;
+    const ok = () => { btn.textContent = 'Copied'; btn.classList.add('done'); setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1400); };
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected, press Ctrl+C'; };
+    try { navigator.clipboard.writeText(text).then(ok, fallback); } catch (e) { fallback(); }
+  });
+});
+</script>

@@ -1,0 +1,101 @@
+[
+ {
+  "id": "13_s01",
+  "char": "steve",
+  "vo": true,
+  "text": "[dry, telling a friend] The weather app said strong winds."
+ },
+ {
+  "id": "13_s02",
+  "char": "steve",
+  "vo": true,
+  "text": "[deadpan] Somehow, everyone heard TOILET PAPER."
+ },
+ {
+  "id": "13_s03",
+  "char": "steve",
+  "vo": true,
+  "text": "[reasonable] I went out for bread and batteries. Normal storm stuff."
+ },
+ {
+  "id": "13_s04",
+  "char": "steve",
+  "vo": true,
+  "text": "[disbelief] Every single cart. Toilet paper."
+ },
+ {
+  "id": "13_s05",
+  "char": "steve",
+  "vo": true,
+  "text": "[escalating disbelief] Forty rolls. Sixty rolls. One man had a FRIDGE box full of it."
+ },
+ {
+  "id": "13_s06",
+  "char": "steve",
+  "vo": true,
+  "text": "[sarcastic] It's WIND. What is the wind going to DO?"
+ },
+ {
+  "id": "13_s07",
+  "char": "steve",
+  "vo": true,
+  "text": "[proud] I said I wasn't going to buy any."
+ },
+ {
+  "id": "13_s08",
+  "char": "steve",
+  "vo": true,
+  "text": "[dread, slower] Then I saw the shelf."
+ },
+ {
+  "id": "13_s09",
+  "char": "steve",
+  "vo": true,
+  "text": "[hushed] One pack left."
+ },
+ {
+  "id": "13_n11",
+  "char": "nana",
+  "text": "[sweet, firm, smiling] Let go, dear."
+ },
+ {
+  "id": "13_s12",
+  "char": "steve",
+  "text": "[panicked, shouting] YOU let go!"
+ },
+ {
+  "id": "13_s13",
+  "char": "steve",
+  "vo": true,
+  "text": "[defeated] She was eighty. She WON."
+ },
+ {
+  "id": "13_s12b",
+  "char": "steve",
+  "text": "[weak, from the floor, apologetic] Sorry!"
+ },
+ {
+  "id": "13_s14",
+  "char": "steve",
+  "vo": true,
+  "text": "[resigned] So I bought paper towels. Forty-eight packs."
+ },
+ {
+  "id": "13_s15",
+  "char": "steve",
+  "vo": true,
+  "text": "[flat] The storm was a light breeze."
+ },
+ {
+  "id": "13_s16",
+  "char": "steve",
+  "vo": true,
+  "text": "[flat, dry] The only disaster was the cat."
+ },
+ {
+  "id": "13_meow",
+  "char": "snuggles",
+  "sfx": "meow (ElevenLabs sound-generation, from Tập 2)",
+  "text": "Meow."
+ }
+]

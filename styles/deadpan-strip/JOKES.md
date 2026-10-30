@@ -2,13 +2,45 @@
 
 For an international, English-speaking audience on YouTube Shorts, TikTok and Reels. Read with `CAST.md` and `STYLE.md`.
 
+## 0. Voice-led storytelling for stiff animation (2026-10-26 — read first)
+
+Research: `research/viral/2026-10-26-storytelling/` (TRANSCRIPTS.md measured, CHANNELS.md, LITERATURE.md).
+Our art is nearly static, so **the voice carries the short and the pictures illustrate it** ("illustrated radio" —
+Hanna-Barbera, Casually Explained, Ricky Gervais Show). Reference shorts talk 2.2–3.7 words/s; Tập 1–2 talked 1.2–1.3
+and left silent stretches the drawings couldn't hold. This replaces the "show, don't say / 5–8 lines" calibration below
+for the next episodes (test on one episode, compare retention with Tập 1–2, then keep or roll back one notch).
+
+1. **Funny with the screen off.** Read the script aloud with no pictures; if it isn't funny, the drawings won't save it.
+2. **One opinionated voice, from second 0, at its natural pace (~2 words/s)** with beat-based pauses (PREPRODUCTION.md #16). Usually Steve telling it to us in the
+   first person, conversational and dry ("Last night…", "My toxic trait is…", "Every time I…"); Snuggles may interrupt
+   with one deadpan aside. No title-card openings, no silent first second.
+3. **The first sentence states the premise as a judgement** (≤ 2 s), and raises a question the viewer is sure will be
+   answered within 30 s. Never open on the thing that gives away the ending.
+4. **A laugh or a new fact every 5–8 s**: lists and escalations work best ("I tried everything: … The sheep got bored.").
+5. **A turn at 12–18 s** (escalation or a new problem): swipes cluster where the payoff becomes guessable.
+6. **Every joke plants one wrong assumption and flips it** (incongruity → resolution that makes sense afterwards).
+7. **Concrete, odd, international words**: numbers, objects, times ("five forty-one", "one banana"); no idioms or puns.
+8. **Each sentence gets its own drawing** — cut between stills (a new picture or new words every ~1.5 s, spacing
+   irregular); draw what the words say literally; move only on the punchline.
+9. **Flat voice, big picture**: the delivery stays a tired real person; exaggeration lives in the cutaway drawing.
+   Punchline: lower and slower, with one held beat only before the biggest reveal.
+10. **Plant early, pay off late; end on a reframe, a self-own or a worse second example** that can loop to the start.
+11. **Edit for the face (Kuleshov)**: hold a deadpan face → cut to the absurd thing → cut back; no acting needed.
+13. **Voice-over ≠ lip-sync.** When a character narrates what happened, the pictures are a flashback: the character on screen doesn't mouth the narration (closed mouth, the face acts the state — asleep, wide awake). Lip-sync only when they speak inside the scene (the present).
+12. **Show any rule the joke needs** (daylight saving, a holiday, a custom) before the joke uses it.
+
 ## 1. Rules for every short
 
-- **Length**: 20–40 s, one joke. A second joke only as an extra panel after the first lands.
+- **Length is free** (owner, 2026-10-26): never speed up or squeeze to hit a length; pace the pauses by beat (PREPRODUCTION.md #16). Keep something new every 2–3 s (Tập 1 lost viewers in a 5–6 s stretch with nothing new). A second joke only as an extra panel after the first lands.
 - **Hook in the first 1.5 s**: open on the strangest image in the episode *and* a line that raises a question ("Who's Ted?", "Why is the thermostat gone?"). No logos, no intros, no establishing shots.
 - **Punchline at 70–85 % of the runtime**, then a 0.8–1.6 s silent beat, then at most one button (reaction, extra panel or aside).
 - **Loop the ending** when possible: the last frame or line flows back into the first, so the short replays itself.
 - **Captions always**, burned in. Many viewers watch muted and many speak English as a second language.
+- **Start from a real-life problem, never from the cast's lore.** Every short opens on an everyday annoyance the viewer has lived (a missed delivery, a rent hike, a broken Wi-Fi, a noisy neighbor). The joke must land for someone who has never seen another episode: if it only works when you already know Nana is a retired assassin or that Ted died in 4B, rewrite it so the screen shows what the viewer needs. Backstory may add a second layer, never carry the punchline.
+- **Emotionalize it, but keep the person real.** The small everyday problem is a big deal *inside* the character, and the film shows that with visuals (a one-frame melt, a quick "what I pictured" cutaway, the greyscale drain, solemn music) and with Snuggles' noir narration. The character's voice stays the voice of a real tired adult: sighs, muttering, talking to themself, refreshing the app again. One short peak at most per short; the punchline is said flat ("...cool."). Nobody sobs or screams over a delivery; reference channels (TheOdd1sOut, Casually Explained, Jaiden, Domics) keep the voice conversational and put the exaggeration in the picture. See `research/viral/2026-10-23-channels/NOTES.md`.
+- **Voices: emotional and natural, like a real person.** Not flat TTS, not theatre. Write lines the way people talk (contractions, "okay", trailing off with "..."), give each line one honest feeling (tired, pleased, annoyed, defeated) with a light v3 tag ([sighs], [mumbling to himself], [quietly], [exhales]), and render with stability ~0.35 (natural band, still expressive) and normal speed. Reserve stability 0.0 and shouting for the rare real peak.
+- **Show, don't say — but don't go silent.** Cut a line only when it just describes what the picture already shows ("he refreshed the app forty-one times" over a wall of tally marks). Keep the lines that add something the image can't: attitude, irony, inner logic, the character's voice ("Nine to five. Easy." before a disaster; "He's close." right before the map shows stop 14 of 87; "Thirty seconds. I'll be thirty seconds."). Faces and props carry the facts; short muttered lines carry the personality. Typical short: 5–8 short lines.
+- **Direct every line: stress and pace follow the feeling.** Before voicing, give each line a pace (excited or rushed ≈ 1.1–1.2×, deflated or stunned ≈ 0.85×) and one stressed word in CAPS ("NOBODY comes in thirty seconds", "I was RIGHT here"). Shape rhythm with punctuation ("..." hesitation, "—" a break, commas to run words together) and pace tags ([speeding up], [slowly], [trailing off]). When a line changes feeling halfway ("...cool." → "cool cool cool"), split it into two takes with different speeds. Check with `asr_check.py` word timings that the pace really changed.
 - **Universal topics**: rent, landlords, roommates, Wi-Fi, work from home, bosses, dating apps, getting older, deliveries, smart homes, Mondays, adulting.
 - **Language that survives subtitles**: short sentences, common words, idioms everyone knows (taken literally is fine). No puns that need a native ear, no local politics, slang, brands or celebrities.
 - **Dark, never cruel**: death, ghosts, crime and money are fair game when they are absurd. Never punch down (race, religion, disability, real tragedies, real people). Violence is implied, never shown. Penny is never in danger; she is always the most powerful person in the room.
@@ -123,6 +155,8 @@ Voice file: `voice-samples/ep07_dad_joke.lines.json` (ElevenLabs modes in bracke
 **Dad joke rules**: the pun must be obvious within 2 seconds for a non-native speaker (boo/booze, grave/great, spirit). Ted is always proud of it. The reaction is never laughter.
 
 ## 7. Writing checklist
+
+Before delivering any video, also run the full review in `QA.md` (lessons from Tập 1 and the hook / length / framing / sound checks).
 
 - Can a 13-year-old in Brazil reading the captions get it? If not, simplify.
 - Is the first frame strange enough to stop a thumb?

@@ -1,0 +1,120 @@
+[
+ {
+  "id": "11_s01",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.3,
+  "style": 0.6,
+  "text": "[cheerful] The clocks just went back an hour."
+ },
+ {
+  "id": "11_s02",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.3,
+  "style": 0.6,
+  "text": "[excited, almost singing] One FREE hour of sleep!"
+ },
+ {
+  "id": "11_s03",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.3,
+  "style": 0.6,
+  "text": "[annoyed] So my body, being an IDIOT, woke me up at five a.m."
+ },
+ {
+  "id": "11_s04",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.3,
+  "style": 0.6,
+  "text": "[sarcastic] Wide awake. Like I had a MEETING."
+ },
+ {
+  "id": "11_s05",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.3,
+  "style": 0.6,
+  "text": "[through gritted teeth] I tried EVERYTHING."
+ },
+ {
+  "id": "11_s06",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.3,
+  "style": 0.6,
+  "text": "[quick, frustrated] Cold side of the pillow."
+ },
+ {
+  "id": "11_s07",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.3,
+  "style": 0.6,
+  "text": "[quick, frustrated] Counting sheep."
+ },
+ {
+  "id": "11_s08",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.3,
+  "style": 0.6,
+  "text": "[exasperated] The SHEEP got bored."
+ },
+ {
+  "id": "11_s09",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.3,
+  "style": 0.6,
+  "text": "[guilty whisper] I watched ONE video."
+ },
+ {
+  "id": "11_s10",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.3,
+  "style": 0.6,
+  "text": "[groaning] It was five FORTY-ONE."
+ },
+ {
+  "id": "11_s11",
+  "char": "steve",
+  "expr": "neutral",
+  "stability": 0.3,
+  "style": 0.6,
+  "text": "[whispering, hopeful, slowing down] And at five fifty-eight, I was finally, FINALLY drifting off."
+ },
+ {
+  "id": "11_s12a",
+  "char": "steve",
+  "expr": "furious",
+  "stability": 0.0,
+  "style": 0.8,
+  "text": "[muffled screaming into a pillow] Mmmph! MMMPH!"
+ },
+ {
+  "id": "11_s12b",
+  "char": "steve",
+  "expr": "furious",
+  "stability": 0.0,
+  "style": 0.8,
+  "text": "[furious, yelling, exploding] Are you KIDDING me?! Five more MINUTES, you little"
+ },
+ {
+  "id": "11_meow",
+  "char": "snuggles",
+  "sfx": "ElevenLabs sound-generation: a single short, flat, unimpressed meow",
+  "text": "Meow."
+ },
+ {
+  "id": "11_s13",
+  "char": "steve",
+  "expr": "dead_inside",
+  "stability": 0.3,
+  "style": 0.5,
+  "text": "[defeated, flat] Cats don't do daylight saving."
+ }
+]

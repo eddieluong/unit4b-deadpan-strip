@@ -1,0 +1,15 @@
+[
+ {"id": "14_s01", "char": "steve", "vo": true, "text": "[dry, confessing to a friend] I bought the Halloween candy a week early."},
+ {"id": "14_s02", "char": "steve", "vo": true, "text": "[proud] Responsible. Organized. For the KIDS."},
+ {"id": "14_s03", "char": "steve", "vo": true, "text": "[sly] Monday, I had one. Quality control."},
+ {"id": "14_s04", "char": "steve", "vo": true, "text": "[guilty, justifying] Wednesday, a few. Small ones don't count."},
+ {"id": "14_s05", "char": "steve", "vo": true, "text": "[haunted, slower] Friday... I don't remember Friday."},
+ {"id": "14_s06", "char": "steve", "vo": true, "text": "[dread] Saturday. Halloween. Six p.m."},
+ {"id": "14_s08", "char": "steve", "vo": true, "text": "[resigned] So I did what every adult does."},
+ {"id": "14_s09", "char": "steve", "vo": true, "text": "[whispering] Lights off. On the floor. Not home."},
+ {"id": "14_meow", "char": "snuggles", "sfx": "meow (ElevenLabs sound-generation, as Tập 2)", "text": "Meow."},
+ {"id": "14_p12", "char": "penny", "text": "[flat, matter-of-fact, child] He's on the FLOOR."},
+ {"id": "14_s13", "char": "steve", "text": "[panicked, shouting from the floor] NOBODY'S HOME!"},
+ {"id": "14_s15", "char": "steve", "vo": true, "text": "[flat] Ten minutes later, the ghost left something on the mat."},
+ {"id": "14_s16", "char": "steve", "vo": true, "text": "[flat, defeated] I ate it."}
+]
