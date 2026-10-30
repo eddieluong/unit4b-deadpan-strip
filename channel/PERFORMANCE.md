@@ -127,8 +127,9 @@ hiding under the window with a ghost at the glass (#19, #20); punch at 81 %. Rea
 
 ## Tập 6 — Early Black Friday  (posted 2026-10-30 ~16:50 VN, `Tap06-early-black-friday.mp4`, 49.3 s)
 Title "Never wait for Black Friday." Links: Facebook https://www.facebook.com/reel/1665623641813225/ · YouTube (pending:
-Chrome signed into a Google account without the UNIT 4B channel) · Instagram (pending: logged out). Question comment
-"Be honest: do you buy on the early deal or wait for Black Friday?" posted as UNIT 4B on Facebook.
+Chrome signed into a Google account without the UNIT 4B channel) ·
+Instagram https://www.instagram.com/unit4bcomedy/reel/DfHUQ00BrKc/. Question comment "Be honest: do you buy on the early
+deal or wait for Black Friday?" posted on Facebook and Instagram (also in the Instagram caption).
 Tests: planted word that pays off ("Patience." → "Thank you for your PATIENCE.") + a loop ending ("Cyber Monday starts
 SUNDAY." back to frame 1); posted the day it was made (owner: "đăng ngay hôm nay") instead of 4 Nov; beard removed
 (read as fake), time shown by hair/eye bags/sleeping bag/pizza boxes; punch at 84.9 %. Read the numbers on 1 Nov (48 h).
