@@ -107,11 +107,16 @@ confirm under Content → the Short → Edit]. So for Shorts:
 - Try a Facebook/Instagram pre-test of two openings before a YouTube upload.
 - Create two playlists ("Steve vs. Everyday Machines", "Seasonal") and add the 7 Shorts; set Tập 7's thumbnail by hand.
 
-### C. Strategy question for the owner (not decided here)
-The audience YouTube finds today is 25–44, Vietnam and the Philippines. Two directions:
-(a) keep the US target and push universal topics + US posting time + captions until the US share rises; or
-(b) accept Southeast Asia as the core audience and write jokes that land there (still in English, simpler words).
-Recommendation: (a) for the next 3 Shorts with the tests above, then decide from the geography numbers.
+### C. Decision (owner, 2026-11-06): global English audience, run the 3-Short plan
+"không nhất thiết phải là khán giả mỹ, hướng đến global, làm theo đề xuất 3 tập".
+Plan for the next 3 Shorts (Tập 8–10), one variable per Short on top of the A-list base:
+| Short | Base (all three) | Variable | Success signal at 48 h |
+|---|---|---|---|
+| Tập 8 | 25–30 s, universal topic, burned-in captions, louder first second | — (new base) | % viewed ≥ 70 %, stayed ≥ 50 % |
+| Tập 9 | same | posting at 07:00–08:00 VN (US evening / EU night) | share of views outside VN + PH above Tập 8 |
+| Tập 10 | same | auto-dubbing off (owner flips the upload default) | stayed / % viewed vs Tập 8–9 |
+Read geography per Short (Studio → the Short → Analytics → Audience) and log it in PERFORMANCE.md.
+After Tập 10: keep what moved the numbers, then decide the next variable.
 
 ## 5. Data still missing
 - Retention curves of Tập 3, 5, 6 (only Tập 4 read) — Studio → the Short → Analytics → Engagement.

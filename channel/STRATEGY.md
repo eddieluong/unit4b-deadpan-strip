@@ -72,3 +72,8 @@ Every video gets a `channel/PERFORMANCE.md` entry at 48 h and 7 d; rules that co
 | Tue 27 – Wed 28 | produce Tập 3 (Self-checkout) with the voice-driven timeline; post ~28–29 Oct |
 | Thu 29 – Fri 30 | Tập 1 + Tập 2 48 h post-mortems; produce Tập 4 (Leaving the house); post ~31 Oct |
 | then | every 2–3 days; after Tập 4 review the 3-video test and pick the main series |
+
+## Update 2026-11-06 — audience decision
+Owner: target a **global English audience** (not only the US). Studio showed Vietnam 42.6 %, Philippines 21.5 %, US 2.6 %.
+Next 3 Shorts follow `channel/DIAGNOSIS-2026-11.md` §4: 25–30 s, topics that need no country-specific custom, burned-in
+captions, louder first second; one test variable per Short (posting time, auto-dubbing).
