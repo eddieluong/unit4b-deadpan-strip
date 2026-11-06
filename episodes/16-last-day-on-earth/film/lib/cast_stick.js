@@ -21,6 +21,10 @@ function resolvePose(C, pose) {
 // ---------- stick limbs ----------
 // Arms bend at an elbow so poses read clearly as silhouettes. sh = shoulder [x, y], k = length factor.
 function armPts(sx, sh, pose = 'down', k = 1) {
+  if (pose && pose.hand) {   // ep16: reach a prop. hand = [dx, dy] units from the shoulder (screen-style, y up), bend = [bx, by] shifts the elbow
+    const [x0, y0] = sh, [hx, hy] = pose.hand, [bx, by] = pose.bend || [0, -3];
+    return [[x0, y0], [x0 + hx * 0.5 * k + bx, y0 + hy * 0.5 * k + by], [x0 + hx * k, y0 + hy * k]];
+  }
   if (pose && typeof pose === 'object') {   // blend between two named poses: { a, b, k: 0..1 } (k may overshoot slightly)
     const A = armPts(sx, sh, pose.a, k), B = armPts(sx, sh, pose.b, k);
     return A.map((q, i) => [q[0] + (B[i][0] - q[0]) * pose.k, q[1] + (B[i][1] - q[1]) * pose.k]);
@@ -50,7 +54,6 @@ const smooth = pts => { // turn an elbow polyline into a soft curve through the 
 };
 function arms(pen, p, sh, k = 1) {
   for (const [sx, pose] of [[-1, p.armL || p.arm], [1, p.armR || p.arm]]) {
-    if (pose === 'none') continue;   // ep16: arms drawn by the scene (holding props)
     const pts = smooth(armPts(sx, sh, pose, k)), e = pts[pts.length - 1];
     pen.line(pts, pen.lw);
     pen.dot(e[0], e[1], 1.5 * k, 1.5 * k, INK);
@@ -137,10 +140,10 @@ function hairdo(pen, st, hy, r, puff = 0, color = '#17131d') {
     pen.part([[-r - 1.5, hy + 1], [-r + 1, hy + 9], [-r * 0.45, hy + r - 0.5], [-r * 0.2, hy + r - 3], [-r + 4, hy + 3]], color, { shade: false, lw: pen.lw * 0.8 });
   }
 }
-function eyeBags(pen, k, hy, r) {
+function eyeBags(pen, k, hy, r) {   // tired eyes: two thin curved lines under each eye (no filled shapes)
   if (!k) return;
-  const g = r * 0.38, ey = hy + 1 - 3.6;
-  for (const sx of [-1, 1]) pen.part([[sx * g - 3, ey + 0.6], [sx * g, ey - 0.6 - 1.6 * k], [sx * g + 3, ey + 0.6], [sx * g, ey - 0.1]], `rgba(70,45,90,${0.55 + 0.4 * k})`, { shade: false, lw: 0.01 });
+  const g = r * 0.38, ey = hy + 1 - 4.2;
+  for (const sx of [-1, 1]) pen.line([[sx * g - 3, ey + 0.6], [sx * g, ey - 0.7 - 0.4 * k], [sx * g + 3, ey + 0.6]], pen.lw * 0.4, 'rgba(70,55,90,0.6)');
 }
 
 // Nana Knuckles — a towering white beehive with a knitting needle, round glasses, a lavender dress.

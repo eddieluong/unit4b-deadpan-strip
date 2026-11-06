@@ -24,7 +24,8 @@ function caption(lines, y0, size = 80, stress = []) {   // lines: arrays of word
   });
   ctx.restore();
 }
-const limb = (p, pts, w = 30) => { p.line(pts, w + 8, INK); p.line(pts, w, SLEEVE); const h = pts[pts.length - 1]; p.dot(h[0], h[1], 25, 22, '#fffdf8'); };
+const armTo = (X, shY, sc, hx, hy, bend) => ({ hand: [(hx - X) / sc, (shY - hy) / sc], bend });
+const limb_unused = (p, pts, w = 30) => { p.line(pts, w + 8, INK); p.line(pts, w, SLEEVE); const h = pts[pts.length - 1]; p.dot(h[0], h[1], 25, 22, '#fffdf8'); };
 const headOf = (x, y, s) => [x, y - 80 * s, 15 * s];   // standing head centre + radius (screen px)
 function teardrop(p, x, y, sz, rot = 0) {
   ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
@@ -38,85 +39,78 @@ function still1(t) {
     ctx.fillStyle = '#26305a'; ctx.fillRect(PX, PY, PW, PH);
     ctx.fillStyle = '#1b2244'; ctx.fillRect(PX, 1400, PW, 300);
     const p = spen(t, 3);
-    // window with a moon, behind the bed head
     p.part(roundPoly([[640, 400], [960, 400], [960, 760], [640, 760]], 10), '#14193a', { shade: false, lw: 5 });
     p.line([[800, 400], [800, 760]], 5); p.line([[640, 580], [960, 580]], 5);
     ctx.fillStyle = '#f4efd0'; ctx.beginPath(); ctx.arc(720, 480, 34, 0, 7); ctx.fill(); ctx.fillStyle = '#14193a'; ctx.beginPath(); ctx.arc(734, 472, 30, 0, 7); ctx.fill();
-    // bedside clock
     p.part(roundPoly([[70, 1180], [330, 1180], [330, 1400], [70, 1400]], 10), '#3a4378', { shade: 0.1, lw: 5 });
     p.part(roundPoly([[84, 1090], [316, 1090], [316, 1180], [84, 1180]], 8), '#0d1126', { shade: false, lw: 5 });
     hand('2:00 AM', 200, 1136, 46, 0, '#ff5a4a');
-    // bed: headboard + mattress
-    p.part(roundPoly([[340, 560], [1040, 560], [1040, 1400], [340, 1400]], 30), '#6b4a3a', { shade: 0.12, lw: 6 });
-    p.part(roundPoly([[360, 1380], [1060, 1380], [1060, 1520], [360, 1520]], 18), '#c8d0ea', { shade: 0.1, lw: 5 });
-    p.part(roundPoly([[360, 1520], [1060, 1520], [1060, 1700], [360, 1700]], 8), '#6b4a3a', { shade: 0.12, lw: 5 });
-    p.part(roundPoly([[430, 720], [720, 720], [740, 1180], [430, 1180]], 60), '#e6e8f6', { shade: 0.12, lw: 5 });   // pillow behind his back
-    const s = 11, X = 520, Y = 1400;
-    drawCharacter(ctx, 'steve', X, Y, s, { expr: 'dead_inside', eyes: 'pinpoint', brow: 'worried', mouth: 'line', fx: [], look: 0.95, sit: 1, hair: 3, bags: 1, armL: 'none', armR: 'none', tilt: -3, lean: 4 }, { frame: boilFrame(t) });
-    // blanket over his legs
-    p.part(roundPoly([[X - 230, Y - 255], [X + 130, Y - 290], [X + 330, Y - 310], [X + 520, Y - 220], [X + 560, Y - 20], [X - 230, Y - 20]], 90), '#8a5fb0', { shade: 0.14, lw: 6 });
-    p.line([[X + 60, Y - 285], [X + 90, Y - 40]], 4, 'rgba(255,255,255,0.35)');
-    // phone, screen to the viewer, held in both hands
-    const px = 830, py = 1050, pw = 330, ph = 560;
-    ctx.save(); ctx.translate(px, py); ctx.rotate(-0.07);
+    // bed: headboard, mattress, base, pillow
+    p.part(roundPoly([[300, 560], [1040, 560], [1040, 1400], [300, 1400]], 30), '#6b4a3a', { shade: 0.12, lw: 6 });
+    p.part(roundPoly([[320, 1380], [1060, 1380], [1060, 1520], [320, 1520]], 18), '#c8d0ea', { shade: 0.1, lw: 5 });
+    p.part(roundPoly([[320, 1520], [1060, 1520], [1060, 1700], [320, 1700]], 8), '#6b4a3a', { shade: 0.12, lw: 5 });
+    p.part(roundPoly([[330, 800], [560, 800], [570, 1180], [330, 1180]], 60), '#e6e8f6', { shade: 0.12, lw: 5 });   // pillow behind his back
+    const s = 11, X = 440, Y = 1400, shY = Y - 45 * s;
+    // phone (screen to the viewer) behind his hands
+    const px = 800, py = 900, pw = 310, ph = 520;
+    ctx.save(); ctx.translate(px, py); ctx.rotate(-0.05);
     ctx.save(); const gl = ctx.createRadialGradient(0, 0, 40, 0, 0, 640); gl.addColorStop(0, 'rgba(120,200,255,0.42)'); gl.addColorStop(1, 'rgba(120,200,255,0)'); ctx.fillStyle = gl; ctx.fillRect(-900, -900, 1800, 1800); ctx.restore();
     const q = spen(t, 9);
     q.part(roundPoly([[-pw / 2, -ph / 2], [pw / 2, -ph / 2], [pw / 2, ph / 2], [-pw / 2, ph / 2]], 36), '#1a1e32', { shade: false, lw: 6 });
     q.part(roundPoly([[-pw / 2 + 16, -ph / 2 + 22], [pw / 2 - 16, -ph / 2 + 22], [pw / 2 - 16, ph / 2 - 22], [-pw / 2 + 16, ph / 2 - 22]], 20), '#e8f4ff', { shade: false, lw: 2 });
     q.part(roundPoly([[-pw / 2 + 16, -ph / 2 + 22], [pw / 2 - 16, -ph / 2 + 22], [pw / 2 - 16, -ph / 2 + 92], [-pw / 2 + 16, -ph / 2 + 92]], 12), '#d9382c', { shade: false, lw: 2 });
-    hand('BREAKING', 0, -ph / 2 + 58, 40, 0, '#fff');
-    ['WORLD', 'WAR 3:', 'ANY DAY', 'NOW?'].forEach((w, i) => hand(w, 0, -90 + i * 80, 60, 0, i === 3 ? '#d9382c' : INK));
-    q.line([[-110, 218], [110, 218]], 12, '#c8d6e8'); q.line([[-110, 190], [60, 190]], 12, '#c8d6e8');
+    hand('BREAKING', 0, -ph / 2 + 58, 38, 0, '#fff');
+    ['WORLD', 'WAR 3:', 'ANY DAY', 'NOW?'].forEach((w, i) => hand(w, 0, -80 + i * 74, 58, 0, i === 3 ? '#d9382c' : INK));
     ctx.restore();
-    // arms: shoulders -> hands on the phone's lower edges
-    const A = spen(t, 12), shR = [X + 78, Y - 45 * s + 10], shL = [X - 78, Y - 45 * s + 10];
-    limb(A, [shR, [X + 190, Y - 120], [px - 100, py + 235]]);
-    limb(A, [shL, [X - 40, Y - 150], [px - 150, py + 250]]);
+    // Steve sits up in bed; library arms reach the phone's lower sides
+    drawCharacter(ctx, 'steve', X, Y, s, { expr: 'dead_inside', eyes: 'pinpoint', brow: 'worried', mouth: 'line', fx: [], look: 0.95, sit: 1, hair: 0, bags: 1,
+      armL: armTo(X, shY, s, 680, 1050, [0, -4]), armR: armTo(X, shY, s, 790, 1100, [0, -5]) }, { frame: boilFrame(t) });
+    // blanket over his legs
+    p.part(roundPoly([[X - 300, Y - 120], [X + 40, Y - 160], [X + 330, Y - 190], [X + 560, Y - 140], [X + 600, Y - 20], [X - 300, Y - 20]], 90), '#8a5fb0', { shade: 0.14, lw: 6 });
+    p.line([[X + 120, Y - 170], [X + 140, Y - 40]], 4, 'rgba(255,255,255,0.35)');
     // blue light on his face
     const hc = headOf(X, Y + 15 * s, s); ctx.save(); ctx.globalCompositeOperation = 'screen';
-    const fg = ctx.createRadialGradient(hc[0] + 120, hc[1] + 40, 20, hc[0] + 60, hc[1], 330); fg.addColorStop(0, 'rgba(110,190,255,0.55)'); fg.addColorStop(1, 'rgba(110,190,255,0)');
+    const fg = ctx.createRadialGradient(hc[0] + 120, hc[1] + 40, 20, hc[0] + 60, hc[1], 330); fg.addColorStop(0, 'rgba(110,190,255,0.5)'); fg.addColorStop(1, 'rgba(110,190,255,0)');
     ctx.beginPath(); ctx.arc(hc[0], hc[1], hc[2] - 7, 0, 7); ctx.clip(); ctx.fillStyle = fg; ctx.fillRect(hc[0] - 400, hc[1] - 400, 800, 800); ctx.restore();
   });
   caption([['World', 'War', 'THREE']], CAP_Y, 80, ['THREE']);
 }
 
-// ---------- STILL 2 · row 8: the peak, on a wobbly chair ----------
+// ---------- STILL 2 · row 8: the peak, standing on a wobbly chair ----------
 function still2(t) {
   clipPanel(() => {
     ctx.fillStyle = '#d8cfba'; ctx.fillRect(PX, PY, PW, PH); ctx.fillStyle = '#a89a80'; ctx.fillRect(PX, 1580, PW, 100);
     const p = spen(t, 3); p.line([[PX, 1580], [PX + PW, 1580]], 4);
     ctx.fillStyle = 'rgba(24,30,70,0.38)'; ctx.fillRect(PX, PY, PW, PH);
-    p.part(roundPoly([[700, 420], [980, 420], [980, 800], [700, 800]], 8), '#12173a', { shade: false, lw: 5 }); p.line([[840, 420], [840, 800]], 4);   // night window
-    // chair + Steve + laptop tilt together about the chair's near foot
-    ctx.save(); ctx.translate(430, 1580); ctx.rotate(0.06); ctx.translate(-430, -1580);
-    const seat = 1420, X = 290, s = 10.2, c = spen(t, 21);
-    c.part(roundPoly([[120, seat - 330], [160, seat - 330], [160, seat], [120, seat]], 6), '#e8a53a', { shade: 0.12, lw: 5 });   // chair back post
-    c.line([[130, seat - 250], [440, seat - 250]], 0.1); 
-    for (const lx of [150, 430]) c.part(roundPoly([[lx - 14, seat], [lx + 14, seat], [lx + 18, 1580], [lx - 18, 1580]], 4), '#c8862a', { shade: 0.12, lw: 5 });
-    c.part(roundPoly([[110, seat - 6], [460, seat - 6], [460, seat + 36], [110, seat + 36]], 8), '#f2c14e', { shade: 0.12, lw: 5 });
-    drawCharacter(ctx, 'steve', X, seat - 8, s, { expr: 'furious', look: 0.9, mouth: 'scream', fx: ['vein', 'sweat'], hair: 1, bags: 1, armL: 'none', armR: 'none', tilt: 5, lean: 6 }, { frame: boilFrame(t) });
-    // laptop held out in front, screen to the viewer
-    const L = spen(t, 33), lx0 = 480, lx1 = 990, sy0 = 700, sy1 = 1050;
-    L.part(roundPoly([[lx0 + 10, sy1], [lx1 - 10, sy1], [lx1 + 30, sy1 + 56], [lx0 - 30, sy1 + 56]], 10), '#8a93a8', { shade: 0.12, lw: 5 });
-    L.part(roundPoly([[lx0, sy0], [lx1, sy0], [lx1, sy1], [lx0, sy1]], 18), '#2a2f44', { shade: false, lw: 6 });
-    L.part(roundPoly([[lx0 + 16, sy0 + 16], [lx1 - 16, sy0 + 16], [lx1 - 16, sy1 - 16], [lx0 + 16, sy1 - 16]], 8), '#f6f8fc', { shade: false, lw: 2 });
-    L.part([[lx0 + 16, sy0 + 16], [lx1 - 16, sy0 + 16], [lx1 - 16, sy0 + 72], [lx0 + 16, sy0 + 72]], '#d9e4f4', { shade: false, lw: 2 });
-    hand('To: Gary', lx0 + 130, sy0 + 46, 38, 0, INK); hand('Subject: URGENT', lx0 + 340, sy0 + 46, 28, 0, '#7a6a8a');
-    hand('— And', 735, sy0 + 125, 60, 0, INK); hand('ANOTHER thing', 735, sy0 + 195, 60, 0, '#d9382c'); 
-    L.line([[lx0 + 40, sy0 + 270], [lx0 + 300, sy0 + 270]], 8, '#c8d0e0');
-    L.part(roundPoly([[lx1 - 170, sy0 + 292], [lx1 - 36, sy0 + 292], [lx1 - 36, sy0 + 340], [lx1 - 170, sy0 + 340]], 12), '#2f6ac8', { shade: false, lw: 3 }); hand('SEND', lx1 - 103, sy0 + 317, 30, 0, '#fff');
-    // both hands hammering the keys; typing blur marks
-    const sh = [[X + 74, seat - 8 - 60 * s + 8], [X - 74, seat - 8 - 60 * s + 8]];
-    limb(L, [sh[0], [X + 190, sy1 - 20], [620, sy1 + 36]]);
-    limb(L, [sh[1], [X + 40, sy1 + 110], [800, sy1 + 44]]);
-    for (const [a, b] of [[590, 1040], [640, 1025], [830, 1040], [870, 1025]]) L.line([[a, b], [a - 14, b - 30]], 5, INK);
-    // flying sweat
-    const hc = headOf(X, seat - 8, s);
-    [[-1, -0.5, 14], [-0.9, 0.45, 12], [-1.2, 0.0, 10]].forEach(([dx, dy, z], i) => teardrop(L, hc[0] + dx * 230, hc[1] + dy * 240 - 30, z * 1.6, dx * 0.5));
+    p.part(roundPoly([[640, 400], [900, 400], [900, 740], [640, 740]], 8), '#12173a', { shade: false, lw: 5 }); p.line([[770, 400], [770, 740]], 4);
+    const s = 10.2, X = 300, seat = 1400, shY = seat - 60 * s;
+    // desk with the laptop at his hand height
+    const D = spen(t, 33), dy = 1060;
+    D.part(roundPoly([[480, dy], [1070, dy], [1070, dy + 36], [480, dy + 36]], 6), '#9a7a58', { shade: 0.14, lw: 5 });
+    D.part(roundPoly([[1000, dy + 36], [1040, dy + 36], [1040, 1580], [1000, 1580]], 4), '#8a6a48', { shade: 0.14, lw: 5 });
+    D.part(roundPoly([[520, dy + 36], [560, dy + 36], [560, 1580], [520, 1580]], 4), '#8a6a48', { shade: 0.14, lw: 5 });
+    const lx0 = 510, lx1 = 960, sy0 = 700, sy1 = dy - 8;
+    D.part(roundPoly([[lx0 - 10, sy1], [lx1 + 10, sy1], [lx1 + 30, sy1 + 8], [lx0 - 30, sy1 + 8]], 4), '#8a93a8', { shade: 0.12, lw: 5 });
+    D.part(roundPoly([[lx0, sy0], [lx1, sy0], [lx1, sy1], [lx0, sy1]], 18), '#2a2f44', { shade: false, lw: 6 });
+    D.part(roundPoly([[lx0 + 14, sy0 + 14], [lx1 - 14, sy0 + 14], [lx1 - 14, sy1 - 40], [lx0 + 14, sy1 - 40]], 8), '#f6f8fc', { shade: false, lw: 2 });
+    D.part([[lx0 + 14, sy0 + 14], [lx1 - 14, sy0 + 14], [lx1 - 14, sy0 + 66], [lx0 + 14, sy0 + 66]], '#d9e4f4', { shade: false, lw: 2 });
+    hand('To: Gary', lx0 + 110, sy0 + 40, 34, 0, INK); hand('Subject: URGENT', lx0 + 300, sy0 + 40, 24, 0, '#7a6a8a');
+    hand('— And', 735, sy0 + 112, 54, 0, INK); hand('ANOTHER thing', 735, sy0 + 172, 56, 0, '#d9382c');
+    D.part(roundPoly([[lx1 - 160, sy1 - 100], [lx1 - 34, sy1 - 100], [lx1 - 34, sy1 - 58], [lx1 - 160, sy1 - 58]], 12), '#2f6ac8', { shade: false, lw: 3 }); hand('SEND', lx1 - 97, sy1 - 79, 28, 0, '#fff');
+    // chair + Steve, tilting together on the chair's near foot
+    ctx.save(); ctx.translate(500, 1580); ctx.rotate(0.05); ctx.translate(-500, -1580);
+    const c = spen(t, 21);
+    c.part(roundPoly([[80, seat - 340], [124, seat - 340], [124, seat], [80, seat]], 6), '#e8a53a', { shade: 0.12, lw: 5 });
+    for (const lx of [120, 470]) c.part(roundPoly([[lx - 14, seat], [lx + 14, seat], [lx + 22, 1580], [lx - 22, 1580]], 4), '#c8862a', { shade: 0.12, lw: 5 });
+    c.part(roundPoly([[70, seat - 4], [520, seat - 4], [520, seat + 44], [70, seat + 44]], 8), '#f2c14e', { shade: 0.12, lw: 5 });
+    const hy = seat - 4;
+    drawCharacter(ctx, 'steve', X, hy, s, { expr: 'furious', look: 0.9, mouth: 'scream', fx: ['vein', 'sweat'], hair: 1, bags: 1,
+      armL: armTo(X, hy - 60 * s, s, 600, dy - 40, [0, -4]), armR: armTo(X, hy - 60 * s, s, 700, dy - 36, [0, -5]) }, { frame: boilFrame(t) });
+    const hc = headOf(X, hy, s);
+    [[-1, -0.5, 14], [-0.9, 0.45, 12], [-1.2, 0.0, 10]].forEach(([dx, dy2, z]) => teardrop(c, hc[0] + dx * 230 + 40, hc[1] + dy2 * 240 - 30, z * 1.6, dx * 0.5));
     ctx.restore();
-    // wobble marks at the chair feet
-    const w = spen(t, 44); w.line([[80, 1560], [50, 1540]], 5); w.line([[70, 1590], [34, 1590]], 5); w.line([[500, 1480], [530, 1455]], 5);
-    sfxText('#@$%&!', 770, 540, 125, -0.08, '#ff5a4a');
+    const w = spen(t, 44); w.line([[40, 1560], [14, 1540]], 5); w.line([[30, 1590], [0, 1590]], 5); w.line([[560, 1500], [590, 1475]], 5);
+    sfxText('#@$%&!', 720, 540, 125, -0.08, '#ff5a4a');
   });
   caption([['And', 'ANOTHER', 'thing']], CAP_Y, 80, ['ANOTHER']);
 }
@@ -126,46 +120,41 @@ function still3(t) {
   clipPanel(() => {
     ctx.fillStyle = '#e4dcc6'; ctx.fillRect(PX, PY, PW, PH); ctx.fillStyle = '#b9a98a'; ctx.fillRect(PX, 1560, PW, 160);
     const p = spen(t, 3); p.line([[PX, 1560], [PX + PW, 1560]], 4);
-    for (let x = PX + 30; x < PX + PW; x += 90) p.line([[x, PY], [x, 1560]], 2, 'rgba(150,130,100,0.28)');   // wallpaper stripes
-    // door frame on the right + dark flat inside
-    const fx0 = 650, fx1 = 990, ftop = 420;
-    p.part(roundPoly([[fx0, ftop], [fx1, ftop], [fx1, 1560], [fx0, 1560]], 4), '#4a3f4f', { shade: false, lw: 6 });
-    // the hot tub: huge, wedged crooked through the doorway
-    ctx.save(); ctx.translate(840, 1180); ctx.rotate(-0.09); ctx.translate(-840, -1180);
+    for (let x = PX + 30; x < PX + PW; x += 90) p.line([[x, PY], [x, 1560]], 2, 'rgba(150,130,100,0.28)');
+    const fx0 = 600, fx1 = 980, ftop = 440;
+    p.part(roundPoly([[fx0, ftop], [fx1, ftop], [fx1, 1560], [fx0, 1560]], 4), '#4a3f55', { shade: false, lw: 6 });
+    // the hot tub: huge, wedged diagonally across the doorway
+    ctx.save(); ctx.translate(790, 1010); ctx.rotate(-0.38); ctx.translate(-790, -1010);
     const T = spen(t, 55);
-    T.part(roundPoly([[560, 990], [1120, 990], [1120, 1480], [560, 1480]], 120), '#2fa6c8', { shade: 0.16, lw: 7 });
-    T.part(roundPoly([[560, 990], [1120, 990], [1120, 1080], [560, 1080]], 45), '#f2f6fa', { shade: 0.1, lw: 6 });
-    for (const [jx, jy] of [[680, 1220], [800, 1260], [920, 1220], [1030, 1270], [740, 1360], [880, 1380], [1000, 1380]]) T.part(ellipsePts(jx, jy, 20, 20, 16), '#1d7f9c', { shade: false, lw: 4 });
-    T.part(roundPoly([[770, 1090], [1010, 1090], [1010, 1160], [770, 1160]], 10), '#fff1a8', { shade: 0.08, lw: 4 }); hand('HOT TUB $8,400', 890, 1126, 28, 0, INK);
+    T.part(roundPoly([[420, 800], [1160, 800], [1160, 1260], [420, 1260]], 120), '#2fa6c8', { shade: 0.16, lw: 7 });
+    T.part(roundPoly([[420, 800], [1160, 800], [1160, 900], [420, 900]], 50), '#f2f6fa', { shade: 0.1, lw: 6 });
+    for (const [jx, jy] of [[540, 1010], [680, 1060], [820, 1010], [960, 1060], [1090, 1010], [610, 1170], [760, 1190], [900, 1170], [1040, 1190]]) T.part(ellipsePts(jx, jy, 20, 20, 16), '#1d7f9c', { shade: false, lw: 4 });
+    T.part(roundPoly([[640, 930], [950, 930], [950, 1000], [640, 1000]], 10), '#fff1a8', { shade: 0.08, lw: 4 }); hand('HOT TUB $8,400', 795, 966, 36, 0, INK);
     ctx.restore();
-    // frame jambs on top so the tub reads as stuck in the door
-    const F = spen(t, 56); F.part(roundPoly([[fx0 - 34, ftop - 30], [fx0 + 8, ftop - 30], [fx0 + 8, 1560], [fx0 - 34, 1560]], 4), '#8a5a3a', { shade: 0.14, lw: 6 });
+    const F = spen(t, 56);   // jambs and lintel on top: the tub is stuck in the door
+    F.part(roundPoly([[fx0 - 34, ftop - 30], [fx0 + 8, ftop - 30], [fx0 + 8, 1560], [fx0 - 34, 1560]], 4), '#8a5a3a', { shade: 0.14, lw: 6 });
     F.part(roundPoly([[fx1 - 8, ftop - 30], [fx1 + 34, ftop - 30], [fx1 + 34, 1560], [fx1 - 8, 1560]], 4), '#8a5a3a', { shade: 0.14, lw: 6 });
     F.part(roundPoly([[fx0 - 34, ftop - 40], [fx1 + 34, ftop - 40], [fx1 + 34, ftop + 8], [fx0 - 34, ftop + 8]], 4), '#8a5a3a', { shade: 0.14, lw: 6 });
-    F.part(roundPoly([[800, 340], [900, 340], [900, 380], [800, 380]], 8), '#e0b04a', { shade: 0.1, lw: 4 }); hand('4B', 850, 361, 34, 0, INK);
-    // Steve with the box
-    const X = 360, s = 10.6, Y = 1560;
-    drawCharacter(ctx, 'steve', X, Y, s, { expr: 'dead_inside', mouth: 'line', fx: ['gloom'], look: 0.3, hair: 3, bags: 1, armL: 'none', armR: 'none' }, { frame: boilFrame(t) });
-    const hc = headOf(X, Y, s), B = spen(t, 66), bx0 = 170, bx1 = 560, by0 = 1060, by1 = 1370;
-    // desk things + droopy plant inside the box
+    F.part(roundPoly([[750, 350], [850, 350], [850, 392], [750, 392]], 8), '#e0b04a', { shade: 0.1, lw: 4 }); hand('4B', 800, 372, 34, 0, INK);
+    // Steve holding the box of desk things; library arms reach the box sides
+    const X = 290, s = 10.6, Y = 1560, shY = Y - 60 * s, bx0 = 110, bx1 = 480, by0 = 1070, by1 = 1380;
+    drawCharacter(ctx, 'steve', X, Y, s, { expr: 'dead_inside', mouth: 'line', fx: ['gloom'], look: 0.3, hair: 0, bags: 1,
+      armL: armTo(X, shY, s, bx0 + 8, 1180, [-3, -2]), armR: armTo(X, shY, s, bx1 - 8, 1180, [3, -2]) }, { frame: boilFrame(t) });
+    const hc = headOf(X, Y, s), B = spen(t, 66);
     B.part(roundPoly([[bx0 + 20, by0 - 10], [bx0 + 80, by0 - 10], [bx0 + 70, by0 + 40], [bx0 + 30, by0 + 40]], 4), '#b5673a', { shade: 0.12, lw: 4 });
     B.line([[bx0 + 50, by0 - 8], [bx0 + 52, by0 - 130], [bx0 + 130, by0 - 120], [bx0 + 175, by0 - 60]], 7, '#7a5a38');
     B.line([[bx0 + 50, by0 - 8], [bx0 + 20, by0 - 90], [bx0 - 40, by0 - 70], [bx0 - 60, by0 - 10]], 7, '#7a5a38');
     B.part(ellipsePts(bx0 + 176, by0 - 52, 20, 11, 10), '#a88a52', { shade: false, lw: 3 }); B.part(ellipsePts(bx0 - 58, by0 - 6, 20, 11, 10), '#a88a52', { shade: false, lw: 3 });
-    B.part(roundPoly([[bx0 + 240, by0 - 50], [bx0 + 310, by0 - 50], [bx0 + 310, by0 + 20], [bx0 + 240, by0 + 20]], 6), '#d9382c', { shade: 0.1, lw: 4 });   // mug
-    B.line([[bx0 + 310, by0 - 30], [bx0 + 336, by0 - 22], [bx0 + 310, by0 - 6]], 5);
-    B.part(roundPoly([[bx0 + 310, by0 - 100], [bx0 + 370, by0 - 70], [bx0 + 360, by0 - 60], [bx0 + 300, by0 - 90]], 3), '#4a8f6a', { shade: false, lw: 3 });   // stapler tip
+    B.part(roundPoly([[bx0 + 230, by0 - 50], [bx0 + 296, by0 - 50], [bx0 + 296, by0 + 20], [bx0 + 230, by0 + 20]], 6), '#d9382c', { shade: 0.1, lw: 4 });
+    B.line([[bx0 + 296, by0 - 30], [bx0 + 320, by0 - 22], [bx0 + 296, by0 - 6]], 5);
     B.part(roundPoly([[bx0, by0], [bx1, by0], [bx1 - 24, by1], [bx0 + 24, by1]], 10), '#c9a46a', { shade: 0.14, lw: 6 });
-    B.part(roundPoly([[bx0 + 120, by0 + 60], [bx1 - 120, by0 + 60], [bx1 - 130, by0 + 120], [bx0 + 130, by0 + 120]], 6), '#e9d8b4', { shade: 0.08, lw: 4 });   // tape strip
-    hand('DESK', (bx0 + bx1) / 2, by0 + 190, 56, 0, INK);
-    // arms hugging the box
-    const sy = Y - 60 * s + 8; limb(B, [[X + 76, sy], [bx1 + 40, by0 + 130], [bx1 - 24, by0 + 40]]); limb(B, [[X - 76, sy], [bx0 - 36, by0 + 130], [bx0 + 24, by0 + 40]]);
-    // cake frosting on his face and in his hair
+    B.part(roundPoly([[bx0 + 110, by0 + 40], [bx1 - 110, by0 + 40], [bx1 - 120, by0 + 100], [bx0 + 120, by0 + 100]], 6), '#e9d8b4', { shade: 0.08, lw: 4 });
+    hand('DESK', (bx0 + bx1) / 2, by0 + 180, 56, 0, INK);
+    // cake frosting: white drips on forehead, cheek and chin + a few crumbs (no colour blobs)
     const Fr = spen(t, 77), [hx, hy, hr] = hc;
-    for (const [dx, dy, rx, ry, col] of [[-0.55, 0.35, 34, 22, '#f7b6d2'], [0.5, 0.5, 30, 20, '#fff4f8'], [0.05, 0.9, 40, 18, '#f7b6d2'], [-0.1, -0.7, 36, 20, '#fff4f8'], [0.7, -0.2, 22, 15, '#f7b6d2']])
-      Fr.part(ellipsePts(hx + dx * hr, hy + dy * hr, rx, ry, 16), col, { shade: 0.1, lw: 3 });
-    Fr.part(ellipsePts(hx + 0.62 * hr, hy + 0.85 * hr, 9, 22, 10), '#f7b6d2', { shade: false, lw: 2.5 });   // drip
-    ctx.fillStyle = '#c0392b'; ctx.beginPath(); ctx.arc(hx - 0.55 * hr, hy + 0.3 * hr, 8, 0, 7); ctx.fill();   // a cherry crumb
+    for (const [dx, dy, rx, ry] of [[-0.62, 0.7, 24, 14], [0.0, 0.92, 38, 16], [-0.15, -0.72, 34, 16]]) Fr.part(ellipsePts(hx + dx * hr, hy + dy * hr, rx, ry, 16), '#fffefc', { shade: 0.06, lw: 3.5 });
+    for (const [dx, dy, len] of [[-0.15, -0.65, 44], [-0.15, 0.95, 46]]) Fr.part(roundPoly([[hx + dx * hr - 9, hy + dy * hr], [hx + dx * hr + 9, hy + dy * hr], [hx + dx * hr + 8, hy + dy * hr + len], [hx + dx * hr - 8, hy + dy * hr + len]], 8), '#fffefc', { shade: 0.06, lw: 3.5 });
+    for (const [dx, dy] of [[0.25, 0.3], [-0.3, 0.2], [0.7, 0.2], [0.1, 0.75]]) Fr.dot(hx + dx * hr, hy + dy * hr, 6, 5, '#7a4a2a');
   });
   caption([["The", "world", "didn't", "end."], ['My', 'JOB', 'did.']], CAP_Y - 40, 76, ['JOB']);
 }
