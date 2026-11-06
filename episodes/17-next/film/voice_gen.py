@@ -12,11 +12,11 @@ TAKES = {
  'steve': ([('s2', "[hushed, thrilled] They're TYPING."), ('s3', "[pleading, whispering] No. Come BACK."),
             ('s5', "[strained, not fine] Okay. I'm FINE."), ('s7', "[rising dread, awe] Is that a paragraph? It's a PARAGRAPH."),
             ('s9', "[flat, dead inside] Kay.")],
-           {'stability': 0.35, 'similarity_boost': 0.85, 'style': 0.4, 'use_speaker_boost': True}),
+           {'stability': 0.35, 'similarity_boost': 0.85, 'style': 0.4, 'use_speaker_boost': True, 'speed': 1.12}),
  'snuggles': ([('s1', "[flat, noir] Nine forty-one. He asked ONE question."), ('s4', "[flat, noir] They came back. They left AGAIN."),
                ('s6', "[noir, tense] Someone was writing. Someone was writing a LOT."), ('s10', "[flat] Nine hours. One LETTER."),
                ('s11', "[dry, flat] Revenge. Served in LOWERCASE.")],
-              {'stability': 0.5, 'similarity_boost': 0.85, 'style': 0.35, 'use_speaker_boost': True}),
+              {'stability': 0.5, 'similarity_boost': 0.85, 'style': 0.35, 'use_speaker_boost': True, 'speed': 1.12}),
 }
 SPEED = json.load(open(os.path.join(HERE, 'speeds.json'))) if os.path.exists(os.path.join(HERE, 'speeds.json')) else {}
 # script order: (id, pause_after); silent beats folded into pauses: 2b=0.8 after s2 (+0.2), 7b 1.0 + 8 2.5 after s7 (+0.3)
@@ -33,7 +33,7 @@ def generate(c):
 def split(c, M):
     ids = [i for i, _ in TAKES[c][0]]; parts = [re.sub(r'\[[^\]]*\]', '', t).strip() for _, t in TAKES[c][0]]
     x, _ = sf.read(os.path.join(OUT, f'take_{c}.wav')); r = rms(x); db = 20*np.log10(r/r.max())
-    segs, _ = M.transcribe(resample_poly(x, 2, 3).astype(np.float32), language='en', word_timestamps=True, beam_size=5, initial_prompt=' '.join(parts))
+    segs, _ = M.transcribe(resample_poly(x, 2, 3).astype(np.float32), language='en', word_timestamps=True, beam_size=5, condition_on_previous_text=False)
     tw = [(norm(w.word), w.start, w.end) for s in segs for w in s.words if norm(w.word)]
     print(c, 'heard:', ' '.join(w for w, _, _ in tw))
     tstr, owner = '', []
@@ -55,7 +55,18 @@ def split(c, M):
     for k, i in enumerate(ids):
         a, b = cuts[k], cuts[k+1]; loud = np.where(db[a:b] > -32)[0]
         s = max(a, a+loud[0]-4); e = min(b, a+loud[-1]+30)   # 40 ms pre-roll, 300 ms tail
-        y = x[s*240:e*240].copy(); res[i] = (y, db[a:b].max())
+        y = x[s*240:e*240].copy(); ry = rms(y); dy = 20*np.log10(ry/ry.max()); q = dy < -38; j = 0; keep = []
+        while j < len(q):   # internal pauses > 0.6 s -> 0.5 s (crossfaded at the quietest part)
+            if q[j]:
+                k2 = j
+                while k2 < len(q) and q[k2]: k2 += 1
+                if j > 0 and k2 < len(q) and k2-j > 40: keep.append((j+15, k2-15))
+                j = k2
+            else: j += 1
+        for a2, b2 in reversed(keep):
+            A, B, xf = a2*240, b2*240, 240
+            y = np.concatenate([y[:A], y[A:A+xf]*np.linspace(1, 0, xf) + y[B:B+xf]*np.linspace(0, 1, xf), y[B+xf:]])
+        res[i] = (y, db[a:b].max())
     return res
 def finish(i, y):
     sp = SPEED.get(i, 1.0)
@@ -69,7 +80,7 @@ if __name__ == '__main__':
     from faster_whisper import WhisperModel
     M = WhisperModel('base.en', device='cpu', compute_type='int8'); lines = {}
     for c in TAKES:
-        if '--split' not in sys.argv: generate(c)
+        if not os.path.exists(os.path.join(OUT, f'take_{c}.wav')): generate(c)
         lines.update(split(c, M))
     ys = {i: finish(i, y) for i, (y, _) in lines.items()}
     t, tl = 0.0, []
