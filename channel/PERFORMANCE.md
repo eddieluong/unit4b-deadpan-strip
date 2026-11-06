@@ -14,10 +14,13 @@ dashboard → Content. Instagram: the Reel → View insights.
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | We Missed You (v8) | 39.8 s | 2026-10-24 | 1.3K | 45.5 % | 17.3 % stayed | 8 | 0 | 0 | ~0:18 | Hook gave away the ending; 0:14–0:21 had nothing new |
 | 2 | The Extra Hour (v10) | 47.3 s | 2026-10-26 | 683 | ~63 % (0:30 of 0:48) | 30.1 % stayed | 6 | 1 (ours) | 0 | first seconds (70 % swiped) | Story now holds viewers (avg view 0:30 vs 0:18) but the opening loses 70 %: frame 1 was a phone notice + clock |
-| 3 | Self-Checkout | 58.1 s | 2026-10-28 | (read 30 Oct) | | | | | | | frame 1 = arrest pose (rule #19); three voices; one peak (4) |
-| 4 | Storm Stock-Up | 55.7 s | 2026-10-29 | (read 31 Oct) | | | | | | | frame 1 = absurd result (paper-towel tower); punch at 68 % |
-| 5 | Halloween Candy | 50.4 s | 2026-10-29 | (read 31 Oct) | | | | | | | seasonal, posted 2 days early; hiding pose under the window; punch 81 % |
-| 6 | Early Black Friday | 49.3 s | 2026-10-30 | (read 1 Nov) | | | | | | | planted word payoff ("Patience") + loop ending; punch 85 % |
+| 3 | Self-Checkout | 58.1 s | 2026-10-28 | 1,238 (lifetime, read 6 Nov) | ~48 % (0:28) | 38.7 % stayed | 14 | 1 (ours) | +2 | | frame 1 = arrest pose (rule #19); three voices; one peak (4) |
+| 4 | Storm Stock-Up | 55.7 s | 2026-10-29 | 1,412 (lifetime, read 6 Nov) | ~57 % (0:32) | 40.9 % stayed | 17 | 1 (ours) | +2 | ~25 % gone by 0:07, 50 % by 0:28 | frame 1 = absurd result (paper-towel tower); punch at 68 % |
+| 5 | Halloween Candy | 50.4 s | 2026-10-29 | 1,244 (lifetime, read 6 Nov) | ~42 % (0:21) | 43.8 % stayed | 16 | 1 (ours) | | | seasonal, posted 2 days early; hiding pose under the window; punch 81 % |
+| 6 | Early Black Friday | 49.3 s | 2026-10-30 | 715 (lifetime, read 6 Nov) | ~57 % (0:28) | 46.8 % stayed | 11 | 1 (ours) | | | planted word payoff ("Patience") + loop ending; punch 85 % |
+
+Studio numbers for all Shorts and the channel (geography: Vietnam 42.6 %, Philippines 21.5 %, US 2.6 %):
+`data/analytics/studio-2026-11-06*`; diagnosis in `channel/DIAGNOSIS-2026-11.md`.
 
 ## Entry template (copy for each video)
 
