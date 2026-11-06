@@ -1,13 +1,13 @@
 # Tập 8 — Typing... · release metadata (2026-11-06)
 
 File: `channel/release/tap08/Tap08-typing.mp4` (main checkout; source `episodes/17-next/film/out/Tap08-typing.mp4`) Tập 8 render (29.8 s, 1080x1920; make the CRF 27 copy here at posting time) ·
-Thumbnail: `channel/release/tap08/thumb_*.png` (picked by the owner at gate 8a)
+**Owner pick (2026-11-06): title A + thumbnail B** (`thumb_B.png`, "9 HOURS" + giant "k").
 Role in the 3-Short plan: **base test** (universal topic, captions, louder first second). Post at the normal time;
 Tập 9 is the posting-time test, Tập 10 the auto-dubbing test.
 
 ## YouTube Short
 - Title options (all situation-first, front-loaded, no US-only reference; `#shorts` suffix as in Tập 7):
-  - **A (recommended):** `When you see "typing..." for 9 hours. #shorts` (36 chars before the tag; hook word first, does not spoil the "k")
+  - **A (PICKED):** `When you see "typing..." for 9 hours. #shorts` (36 chars before the tag; hook word first, does not spoil the "k")
   - B: `They're typing... They stopped. Again. #shorts` (38; the loop of the dots, universal)
   - C: `One question. Nine hours. One letter. #shorts` (37; echoes the line, spoils the punch)
 - Description (first 125 chars = hook):
@@ -35,7 +35,7 @@ Nine hours. One letter. 🙃 What's the worst reply you ever got? #relatable #co
 (DIAGNOSIS A5; the channel phone must be verified once for pinning to work)
 
 ## Studio steps for the owner
-1. Upload the CRF 27 file; paste title A, the description and the tags; set the thumbnail by hand.
+1. Upload the CRF 27 file; paste title A, the description and the tags; set `thumb_B.png` as the thumbnail by hand.
 2. Audience: not made for kids · Category Comedy · Language English.
 3. Altered/synthetic content: answer as in Tập 7 (No).
 4. Auto-dubbing: do not change the current setting.

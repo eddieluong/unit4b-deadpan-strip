@@ -134,7 +134,7 @@ Tạo bằng Voice Design theo hướng hoạt hình hài (prompt ở `design_pr
 | Nana Knuckles | bản 3 | `4m2IGvkby0duGcRUvLDs` |
 | Penny Pincher | bản 3 | `uLjMe2KKO62jRu3id160` |
 | Dead Ted | bản 3 | `izA0O6Rq9ZDMyG36oEyJ` |
-| Sgt. Snuggles | bản 1 | `l4SjkRNDNFXHMWSAVCoK` |
+| Sgt. Snuggles | "Brian" (premade, từ 2026-10-23) | `nPczCjzI2devNBz1zQrb` (giọng noir cũ: `l4SjkRNDNFXHMWSAVCoK`) |
 
 Penny dùng giọng hoạt hình do người lớn lồng (ElevenLabs không cho tạo giọng trẻ em).
 
