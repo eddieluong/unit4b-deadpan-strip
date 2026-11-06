@@ -82,3 +82,4 @@ and exits non-zero on a failure. Run it, then do the rest by eye on a contact sh
 - Seated stick figures: `pose.sit` lowers the body; the floor is at local `+pen.sit`.
 - When a camera push-in is used, put on-screen tags (time labels) in screen space, after the camera, or they get cropped.
 - Keep the original takes in `voice_el/` and derive trimmed versions into `voice/`; document trims in `lines.json` (`film_trim`).
+- Characters stay on-model: draw arms with `cast_stick.js` `arms()` (thin ink from the shoulders; hand-target pose `{hand,bend}` for props), never scene-drawn tubes. Check key stills side by side with the previous episode's sheet (ep16 v1 had neck arms, bruise-like eye bags and blobs).
