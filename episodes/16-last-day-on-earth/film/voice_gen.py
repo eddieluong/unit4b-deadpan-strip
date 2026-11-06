@@ -9,20 +9,20 @@ INT = {'16_s01': 2, '16_s02': 2, '16_s03': 3, '16_s04': 2, '16_s05': 2, '16_s06'
        '16_s10': 1, '16_s11': 2, '16_s12': 3, '16_s13': 1, '16_p14': 1}
 def vs(i):
     n = INT[i]
-    if i == '16_p14': return {'stability': 0.5, 'similarity_boost': 0.85, 'style': 0.3, 'use_speaker_boost': True}
-    if n <= 2: return {'stability': 0.5, 'similarity_boost': 0.85, 'style': 0.3, 'use_speaker_boost': True}
-    if n <= 4: return {'stability': 0.3, 'similarity_boost': 0.85, 'style': 0.6, 'use_speaker_boost': True}
+    if i in ('16_s13','16_p14'): return {'stability': 0.5, 'similarity_boost': 0.85, 'style': 0.3, 'use_speaker_boost': True}
+    if n <= 2: return {'stability': 0.0, 'similarity_boost': 0.85, 'style': 0.3, 'use_speaker_boost': True}
+    if n <= 4: return {'stability': 0.0, 'similarity_boost': 0.85, 'style': 0.6, 'use_speaker_boost': True}
     return {'stability': 0.0, 'similarity_boost': 0.85, 'style': 0.8, 'use_speaker_boost': True}
-def gen(l, seed):
+def gen(l, seed, suf=''):
     body = {'text': l.get('spoken', l['text']), 'model_id': 'eleven_v3', 'seed': seed, 'voice_settings': vs(l['id'])}
     req = urllib.request.Request(f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE[l['char']]}?output_format=pcm_24000",
         data=json.dumps(body).encode(), headers={'xi-api-key': os.environ['ELEVENLABS_API_KEY'], 'Content-Type': 'application/json'})
     pcm = np.frombuffer(urllib.request.urlopen(req).read(), dtype='<i2').astype(np.float32) / 32768
-    sf.write(os.path.join(HERE, 'voice_el', l['id'] + '.wav'), pcm, SR)
+    sf.write(os.path.join(HERE, 'voice_el', l['id'] + suf + '.wav'), pcm, SR)
 def rms(x, hop=240):
     n = len(x) // hop; return np.sqrt((x[:n*hop].reshape(n, hop)**2).mean(1) + 1e-12)
-def trim(l):
-    x, _ = sf.read(os.path.join(HERE, 'voice_el', l['id'] + '.wav')); r = rms(x); db = 20*np.log10(r/r.max())
+def trim(l, suf='', outdir='voice'):
+    x, _ = sf.read(os.path.join(HERE, 'voice_el', l['id'] + suf + '.wav')); r = rms(x); db = 20*np.log10(r/r.max())
     loud = np.where(db > -35)[0]; s = max(0, loud[0]-4); e = min(len(r), loud[-1]+11)   # 40 ms pre, 110 ms tail
     y = x[s*240:e*240].copy(); r = rms(y); db = 20*np.log10(r/r.max()); q = db < -38; j = 0; keep = []
     while j < len(q):
@@ -36,10 +36,17 @@ def trim(l):
         A, B, xf = a*240, b*240, 240
         y = np.concatenate([y[:A], y[A:A+xf]*np.linspace(1,0,xf) + y[B:B+xf]*np.linspace(0,1,xf), y[B+xf:]])
     fi, fo = int(.015*SR), int(.1*SR); y[:fi] *= np.linspace(0,1,fi); y[-fo:] *= np.linspace(1,0,fo)**1.5
-    sf.write(os.path.join(HERE, 'voice', l['id'] + '.wav'), y, SR); return len(y)/SR, len(x)/SR, len(keep)
+    sf.write(os.path.join(HERE, outdir, l['id'] + suf + '.wav'), y, SR); return len(y)/SR, len(x)/SR, len(keep)
 if __name__ == '__main__':
-    ids = [a for a in sys.argv[1:] if not a.startswith('--')]; out = {}
+    v1 = json.load(open(os.path.join(HERE, 'v1_dur.json')))
+    res = {}
     for l in LINES:
-        if ids and l['id'] not in ids: continue
-        if '--split' not in sys.argv: gen(l, int(os.environ.get('SEEDBASE', 1600)) + int(l['id'][-2:]))
-        out[l['id']] = trim(l); print(l['id'], out[l['id']])
+        i = l['id']; c = {}
+        for suf, sd in (('_a', 3100), ('_b', 4100)):
+            gen(l, sd + int(i[-2:]), suf)
+            d, o, k = trim(l, suf, 'voice_tmp'); c[suf] = d
+        ok = [s for s in c if c[s] <= 1.5 * v1[i]]
+        pick = min(ok or c, key=lambda s: c[s]) if i in ('16_s10', '16_s11') else (ok or list(c))[0]
+        import shutil; shutil.copy(os.path.join(HERE, 'voice_tmp', i + pick + '.wav'), os.path.join(HERE, 'voice', i + '.wav'))
+        res[i] = {'v1': v1[i], 'a': round(c['_a'], 2), 'b': round(c['_b'], 2), 'pick': pick}; print(i, res[i])
+    json.dump(res, open(os.path.join(HERE, 'out', 'v2_choice.json'), 'w'), indent=1)
