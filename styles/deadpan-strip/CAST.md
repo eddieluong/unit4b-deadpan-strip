@@ -6,7 +6,7 @@ Shared by every episode. Visuals live in `demo/cast.js` (`CAST`), voices in `voi
 
 ## Sweaty Steve — The new tenant (straight man)
 - **The name is the joke**: he is always sweating. Viewers learn his whole personality from two words. Others call him "Steve".
-- **Look**: chibi, head about 2/3 of his height: spiky black hair, a mustard hoodie `#e2b23c` with the hood behind his neck, stick limbs. Default lid 0: always a little alarmed. **Visual gag**: the sweat drop. It is almost always there; the day it's missing is a joke.
+- **Look**: chibi, head about 2/3 of his height: spiky black hair, a mustard hoodie `#e2b23c` with the hood behind his neck, stick limbs. **Skin: warm `#e2ac84`** (owner decision 2026-11-06, from Tập 8; the old near-white `#fffdf8` broke STYLE §1). Default lid 0: always a little alarmed. **Visual gag**: the sweat drop. It is almost always there; the day it's missing is a joke.
 - **Personality**: 29, freelance designer, chronic over-apologizer. Polite to a fault, even to the ghost and the cat. Just wants a normal apartment.
 - **Comic function**: the audience's eyes. Asks the reasonable question; gets the unreasonable answer.
 - **Go-to faces**: nervous, awkward, shocked, horrified, cringe. Rarely smug.

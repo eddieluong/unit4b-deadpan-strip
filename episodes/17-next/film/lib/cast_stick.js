@@ -8,6 +8,7 @@ export { nameTab, EXPRESSIONS, EXPRESSION_NAMES, paper, panel, PAPER };
 
 export const INK = '#2a2230';
 const HEAD = '#fffdf8';
+const STEVE_SKIN_B = '#e2ac84';   // owner-approved skin B = Steve's default
 export { CAST } from './cast_v2.js';
 import { CAST } from './cast_v2.js';
 
@@ -117,7 +118,7 @@ function drawSteve(pen, C, p) {
     pen.line([[-1.6, 61], [-1.8, 55]], pen.lw * 0.5); pen.line([[1.6, 61], [1.8, 55]], pen.lw * 0.5);
     const touch = ['facepalm', 'chin'].includes(p.armL) || ['facepalm', 'chin'].includes(p.armR) || ['facepalm', 'chin'].includes(p.arm);
     if (!touch) arms(pen, p, [0, 60]);   // behind the head (hands behind the head stay hidden)
-    pivot(pen, [0, 64], p.tilt || 0, () => { headFace(pen, p, hy, r, { skin: (typeof window !== 'undefined' && window.STEVE_SKIN) || undefined, before: () => hairdo(pen, p.hair || 0, hy, r, p.puff || 0, C.hair) }); eyeBags(pen, p.bags || 0, hy, r); });
+    pivot(pen, [0, 64], p.tilt || 0, () => { headFace(pen, p, hy, r, { skin: (typeof window !== 'undefined' && window.STEVE_SKIN) || STEVE_SKIN_B, before: () => hairdo(pen, p.hair || 0, hy, r, p.puff || 0, C.hair) }); eyeBags(pen, p.bags || 0, hy, r); });
     if (touch) arms(pen, p, [0, 60]);    // a hand on the face goes in front
   });
 }

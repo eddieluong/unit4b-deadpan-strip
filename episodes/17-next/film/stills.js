@@ -47,31 +47,36 @@ function drop(p, x, y, sz, rot = 0) {
   p.part([[0, -sz * 1.4], [sz * 0.8, sz * 0.2], [sz * 0.7, sz * 0.7], [0, sz * 1.1], [-sz * 0.7, sz * 0.7], [-sz * 0.8, sz * 0.2]], '#8fd3f4', { shade: false, lw: 3 }); ctx.restore();
 }
 
-// ---------- STILL 1 · frame 1 (t=0.0) ----------
+// ---------- STILL 1 · frame 1 (t=0.0) · DAYTIME, 9:41 am ----------
 function still1(t) {
-  wall(t, '#232a52', '#141833');
+  wall(t, '#ffe6b0', '#f4bf80');
   const p = spen(t, 3);
-  ctx.fillStyle = '#10142c'; ctx.fillRect(0, 1480, W, 440); p.line([[0, 1480], [W, 1480]], 5);   // floor
-  // window with moon
-  p.part(roundPoly([[60, 330], [260, 330], [260, 700], [60, 700]], 8), '#0e1230', { shade: false, lw: 5 }); p.line([[160, 330], [160, 700]], 4); p.line([[60, 515], [260, 515]], 4);
-  ctx.fillStyle = '#f4efd0'; ctx.beginPath(); ctx.arc(110, 420, 26, 0, 7); ctx.fill(); ctx.fillStyle = '#0e1230'; ctx.beginPath(); ctx.arc(122, 414, 23, 0, 7); ctx.fill();
-  // the storm-cloud bubble: giant, dots bounce (phase 0), swelling shadow below
-  ctx.save(); const sg = ctx.createRadialGradient(540, 760, 40, 540, 760, 560); sg.addColorStop(0, 'rgba(8,10,28,0.5)'); sg.addColorStop(1, 'rgba(8,10,28,0)'); ctx.fillStyle = sg; ctx.fillRect(0, 400, W, 700); ctx.restore();
-  const bp = spen(t, 11); bubble(bp, 560, 520, 840, 360, true, -120);
-  for (const [x, y, z] of [[1000, 760, 22], [30, 840, 16]]) bp.line([[x, y], [x - 30, y + 60]], 5, '#8fa0d8');   // rain ticks = storm
-  // Steve close-up (face 26 % of frame height) + phone held below his chin, screen toward him
-  const s = 17, X = 390, hc0 = 1090, Y = hc0 + 80 * s, shY = Y - 60 * s;
-  const phx = 390, phy = 1500;
-  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'wide', brow: 'worried', mouth: 'small', fx: ['sweat'], look: 0.1, hair: 1, bags: 1,
-    armL: armTo(X, shY, s, phx - 110, phy + 30, [0, -3]), armR: armTo(X, shY, s, phx + 110, phy + 30, [0, -3]) }, { frame: boilFrame(t) });
-  const hc = headOf(X, Y, s); faceGlow(hc);
-  drop(spen(t, 21), hc[0] + hc[2] + 70, hc[1] - 90, 22, 0.35);
-  // phone back (dark) with a glow rim
-  ctx.save(); const gl = ctx.createRadialGradient(phx, phy, 40, phx, phy, 420); gl.addColorStop(0, 'rgba(120,200,255,0.35)'); gl.addColorStop(1, 'rgba(120,200,255,0)'); ctx.fillStyle = gl; ctx.fillRect(0, 1100, W, 540); ctx.restore();
-  const q = spen(t, 9); q.part(roundPoly([[phx - 105, phy - 150], [phx + 105, phy - 150], [phx + 105, phy + 150], [phx - 105, phy + 150]], 30), '#2a3050', { shade: 0.1, lw: 6 });
-  q.dot(phx - 55, phy - 105, 17, 17, '#12162e'); q.dot(phx - 18, phy - 105, 11, 11, '#12162e');
-  // Snuggles beside him, staring up
-  const cs = 12.5, cX = 870, cY = 1180 + 34 * cs;
+  ctx.fillStyle = '#d9a066'; ctx.fillRect(0, 1480, W, 440); p.line([[0, 1480], [W, 1480]], 5);   // floor
+  // bright day window: blue sky, sun, cloud
+  p.part(roundPoly([[40, 330], [200, 330], [200, 700], [40, 700]], 8), '#7ec8f5', { shade: false, lw: 5 });
+  ctx.fillStyle = '#fff3a0'; ctx.beginPath(); ctx.arc(150, 410, 30, 0, 7); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.ellipse(90, 600, 40, 20, 0, 0, 7); ctx.ellipse(120, 586, 28, 20, 0, 0, 7); ctx.fill();
+  p.line([[120, 330], [120, 700]], 4); p.line([[40, 515], [200, 515]], 4);
+  ctx.save(); ctx.globalCompositeOperation = 'screen'; ctx.fillStyle = 'rgba(255,230,150,0.18)'; ctx.beginPath(); ctx.moveTo(40, 700); ctx.lineTo(200, 700); ctx.lineTo(760, 1480); ctx.lineTo(200, 1480); ctx.fill(); ctx.restore();   // sunbeam
+  // the storm-cloud bubble: giant, dots bounce, soft shadow below
+  ctx.save(); const sg = ctx.createRadialGradient(560, 760, 40, 560, 760, 560); sg.addColorStop(0, 'rgba(120,80,60,0.28)'); sg.addColorStop(1, 'rgba(120,80,60,0)'); ctx.fillStyle = sg; ctx.fillRect(0, 400, W, 700); ctx.restore();
+  const bp = spen(t, 11); bubble(bp, 610, 520, 780, 360, true, -120, '#f2f4fb');
+  // Steve close-up (face 26 % of frame height); phone small, held to his right, screen lit
+  const s = 17, X = 340, hc0 = 1090, Y = hc0 + 80 * s, shY = Y - 60 * s;
+  const phx = 730, phy = 1390, pw = 100, ph = 150;
+  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'wide', brow: 'worried', mouth: 'small', fx: ['sweat'], look: 0.3, hair: 1, bags: 1,
+    armL: armTo(X, shY, s, phx - pw - 5, phy + 60, [0, -3]), armR: armTo(X, shY, s, phx + pw + 5, phy + 60, [0, -3]) }, { frame: boilFrame(t) });
+  const hc = headOf(X, Y, s);
+  drop(spen(t, 21), hc[0] - hc[2] - 40, hc[1] - 60, 22, -0.35);
+  // phone: lit screen with the message
+  const q = spen(t, 9); q.part(roundPoly([[phx - pw, phy - ph], [phx + pw, phy - ph], [phx + pw, phy + ph], [phx - pw, phy + ph]], 24), '#2a3050', { shade: 0.1, lw: 6 });
+  ctx.fillStyle = '#eaf6ff'; ctx.beginPath(); ctx.roundRect(phx - pw + 12, phy - ph + 16, 2 * pw - 24, 2 * ph - 32, 14); ctx.fill();
+  ctx.fillStyle = '#4a90e2'; ctx.beginPath(); ctx.roundRect(phx - pw + 20, phy - 90, 2 * pw - 40, 130, 18); ctx.fill();
+  const wrap = (str, y0, col, sz) => { const ws = str.split(' '); let l = '', ys = y0; ctx.font = `600 ${sz}px Fredoka`; for (const w of ws) { if (ctx.measureText(l + w).width > 2 * pw - 70 && l) { text(l.trim(), phx, ys, sz, col); ys += sz + 4; l = ''; } l += w + ' '; } text(l.trim(), phx, ys, sz, col); };
+  wrap('Are we still on for tonight?', phy - 62, '#fff', 25);
+  text('Seen 9:41', phx + 20, phy + 85, 28, '#2a2230');
+  // Snuggles beside the phone, staring up (low right)
+  const cs = 8, cX = 975, cY = 1400 + 34 * cs;
   drawCharacter(ctx, 'snuggles', cX, cY, cs, { eyes: 'wide', look: 0.1, mouth: 'line', tail: 0.4 }, { frame: boilFrame(t) });
   title(); plate('snuggles', ['Nine forty-one.', 'He asked ONE question.'], ['ONE']);
 }
@@ -103,19 +108,19 @@ function still2(t) {
   title(); plate('steve', ['Is that a paragraph?', "It's a PARAGRAPH."], ['PARAGRAPH']);
 }
 
-// ---------- STILL 3 · PUNCH (line 9) ----------
+// ---------- STILL 3 · PUNCH (line 9) · night, 9 h later ----------
 function still3(t) {
-  wall(t, '#262c58', '#141833');
+  wall(t, '#3a3f72', '#242a55');
   const p = spen(t, 7);
-  // the giant cloud's edge far above + a dotted sway path: the tiny bubble drifted all the way down
-  p.line([[540, 270], [610, 350], [470, 440], [600, 520]], 4, 'rgba(160,175,230,0.5)');
-  ctx.save(); ctx.fillStyle = 'rgba(8,10,28,0.35)'; ctx.fillRect(0, 280, W, 900); ctx.restore();
-  const bp = spen(t, 13); bubble(bp, 560, 700, 880, 700, false, -150, '#eef0f8');
-  text('k', 560, 690, 560, '#2a2230', 'Fredoka', 0, '600');
-  // Steve in the corner: lids half dropped, flat
-  const s = 11.5, X = 270, hc0 = 1360, Y = hc0 + 80 * s;
+  p.line([[640, 270], [700, 350], [600, 440], [690, 520]], 4, 'rgba(190,200,245,0.55)');
+  const bp = spen(t, 13); bubble(bp, 540, 640, 880, 640, false, 160, '#eef0f8');
+  text('k', 540, 630, 520, '#2a2230', 'Fredoka', 0, '600');
+  // Steve right of centre, lifted so the mustard shirt shows above the plate; warm lamp light on him
+  const s = 11.5, X = 700, hc0 = 1130, Y = hc0 + 80 * s;
+  ctx.save(); const lg = ctx.createRadialGradient(X, hc0 + 300, 40, X, hc0 + 300, 520); lg.addColorStop(0, 'rgba(255,214,140,0.55)'); lg.addColorStop(1, 'rgba(255,214,140,0)'); ctx.fillStyle = lg; ctx.fillRect(0, 900, W, 800); ctx.restore();
   drawCharacter(ctx, 'steve', X, Y, s, { expr: 'deadpan', lid: 0.55, mouth: 'line', fx: ['gloom'], look: 0.6, hair: 0, bags: 1, arm: 'down' }, { frame: boilFrame(t) });
-  const hc = headOf(X, Y, s); faceGlow(hc, 'rgba(110,190,255,0.3)', 120, -60);
+  ctx.save(); ctx.globalCompositeOperation = 'screen'; const g2 = ctx.createRadialGradient(X, hc0 + 350, 20, X, hc0 + 350, 260); g2.addColorStop(0, 'rgba(255,200,110,0.3)'); g2.addColorStop(1, 'rgba(255,200,110,0)'); ctx.fillStyle = g2; ctx.fillRect(X - 300, hc0 + 100, 600, 520); ctx.restore();
+  const hc = headOf(X, Y, s); faceGlow(hc, 'rgba(255,214,150,0.25)', -60, 40);
   title(); plate('steve', ['…k.']);
 }
 
