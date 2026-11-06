@@ -149,10 +149,12 @@ planted word pays off ("nothing MATTERS" → Penny "That still MATTERS.") + loop
 
 ## Tập 8 — Typing...  (posted 2026-11-06 ~16:40 VN, `Tap08-typing.mp4`, 29.8 s)
 Title `When you see "typing..." for 9 hours. #shorts` (title A) · thumbnail B ("9 HOURS" + giant "k").
-Links: YouTube https://youtube.com/shorts/jLJ6X_fgGO0 · Facebook / Instagram: not yet.
+Links: YouTube https://youtube.com/shorts/jLJ6X_fgGO0 · Facebook https://www.facebook.com/reel/1496663622330286/ ·
+Instagram https://www.instagram.com/unit4bcomedy/reel/DfZUYr8hJ9m/ (FB/IG posted ~17:30 VN, same caption with the question).
 Uploaded by Claude from Chrome Browser 1 (title, description, file); the owner set audience, tags, altered-content (No),
 playlist "Steve vs. Everyday Machines", Public and the thumbnail by hand (extension upload again did not take, same as Tập 7).
-Pinned question: "What's the worst one-letter reply you ever got?"
+Question comment: "What's the worst one-letter reply you ever got?" posted as @unit4bcomedy on YouTube; NOT pinned
+(pinning needs the channel phone verified, owner step). On FB/IG the question is in the caption.
 Tests (DIAGNOSIS-2026-11 §4C, new base): 29.8 s (vs 45–58 s), universal topic (typing dots), burned-in captions,
 full-bleed panel + face ≥ 25 % + motion by 0.3 s, warm skin for Steve; punch at 78.6 %; normal posting time.
 Read on 8 Nov ~16:40 VN (48 h): stayed-to-watch (target ≥ 50 %), % viewed (target ≥ 70 %), geography (VN/PH vs rest).
