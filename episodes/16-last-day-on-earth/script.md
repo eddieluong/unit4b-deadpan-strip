@@ -44,3 +44,8 @@ calm) → 2–3 dread → **1 flat punch at ~78 %** → 1 Penny button ≤4 s, l
 ## Open questions for owner
 - Boss name "Gary" OK? (one name, international, no lore needed)
 - Hot tub as the "maxed card" object (also the final-shot gag), or something else?
+
+## Deliverables
+- Video: `film/out/Tap07-last-day-on-earth.mp4` (v2, 45.6 s, punch 81.9 %, -14.0 LUFS, QA pass)
+- Thumbnail: option A "NOTHING MATTERS" (owner pick 2026-11-06) → `film/thumbs/thumb_A.png`, copy `film/out/Tap07-thumbnail.png`
+- Next: title, description, pinned question comment, post.
