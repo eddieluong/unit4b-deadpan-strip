@@ -45,6 +45,13 @@ def main():
     print('static >= 3 s', ', '.join(f'{x:.1f}–{y:.1f}' for x, y in runs) or 'none')
     fails += ['static stretch'] if runs else []
 
+    # hook: frames at 0.0 / 0.5 / 1.0 s must clearly differ (blurred like the static check)
+    raw0 = run(['ffmpeg', '-v', 'error', '-i', a.video, '-vf', 'fps=2,scale=135:240,format=gray', '-frames:v', '3', '-f', 'rawvideo', '-']).stdout
+    h = np.frombuffer(raw0, np.uint8).reshape(-1, 240, 135).astype(float)[:, 25:190, 5:130].reshape(-1, 33, 5, 25, 5).mean(axis=(2, 4))
+    d01, d12, d02 = (np.abs(h[i] - h[j]).mean() for i, j in ((0, 1), (1, 2), (0, 2)))
+    print(f'hook diff     0-0.5 {d01:.1f}, 0.5-1.0 {d12:.1f}, 0-1.0 {d02:.1f}   (each must be >= 4)')
+    fails += ['hook frames 0/0.5/1.0 too similar'] if min(d01, d12, d02) < 4 else []
+
     # first 1.8 s level
     pcm = np.frombuffer(run(['ffmpeg', '-v', 'error', '-i', a.video, '-t', '1.8', '-ac', '1', '-ar', '16000', '-f', 's16le', '-']).stdout, np.int16) / 32768
     lvl = 20 * np.log10(np.sqrt(np.mean(pcm ** 2)) + 1e-9)
