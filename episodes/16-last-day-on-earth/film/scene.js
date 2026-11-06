@@ -432,10 +432,10 @@ function buildTimeline() {
       bp.part([[bx - 8, by - 4], [bx - 36, by - 40 * fl - 14], [bx + 8, by - 22]], '#2f88c8', { shade: false, lw: 3 });
     })],
     // ---- row 10 · the head lifts, one eye opens, frosting drips; then he stretches in the sun
-    [T.r10, t => withCamera(1.6, 430, 880, () => {
+    [T.r10, t => withCamera(1.6, 430, 960, () => {
       kitchenSet(t, { sky: 1 }); const X = 420, Y = 1560, s = 10, up = ease.inOut(seg(t, T.r10 + 0.2, T.r10 + 1.2)), op = seg(t, T.r10 + 0.9, T.r10 + 1.1);
       who('steve', X, Y, s, t, { expr: 'dead_inside', eyes: op > 0.3 ? 'dot' : 'closed', brow: 'worried', mouth: op > 0.5 ? 'smile' : 'line', hair: 3, bags: 1, headDy: lerp(-20.5, 0, up), tilt: lerp(-14, 3, up), armL: 'down', armR: 'down', sit: 1 }, { noBlink: true });
-      kitchenFront(t, { cake: 0.6 }); const hc = headC(X, Y, s, 15, lerp(-20.5, 0, up)); frosting(t, hc);
+      kitchenFront(t, { cake: 0.3 }); const hc = headC(X, Y, s, 15, lerp(-20.5, 0, up)); frosting(t, hc);
       const bp = spen(t, 61), bx = hc[0] + 10, by = hc[1] - hc[2] - 8 - 120 * up * 0 + 0; bp.part(ellipsePts(bx, by, 36, 28, 18), '#4aa8e8', { shade: 0.1, lw: 4 }); bp.part([[bx + 30, by - 4], [bx + 52, by - 10], [bx + 32, by + 10]], '#ffb43a', { shade: false, lw: 3 }); bp.dot(bx + 14, by - 8, 5, 5, INK);
     })],
     [T.r10 + 1.7, t => withCamera(1.15 + 0.05 * seg(t, T.r10 + 1.7, T.r10 + 3.4), 470, 1050, () => {
