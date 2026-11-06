@@ -133,3 +133,13 @@ deal or wait for Black Friday?" posted on all three (also in the Instagram capti
 Tests: planted word that pays off ("Patience." → "Thank you for your PATIENCE.") + a loop ending ("Cyber Monday starts
 SUNDAY." back to frame 1); posted the day it was made (owner: "đăng ngay hôm nay") instead of 4 Nov; beard removed
 (read as fake), time shown by hair/eye bags/sleeping bag/pizza boxes; punch at 84.9 %. Read the numbers on 1 Nov (48 h).
+
+## Tập 7 — Last Day on Earth  (posted 2026-11-06 ~10:40 VN, `Tap07-last-day-on-earth.mp4`, 45.6 s)
+Title "When the news says World War 3 is coming." Links: YouTube https://youtube.com/shorts/58gXRhcWbuU ·
+Facebook https://www.facebook.com/reel/1138412621906656 · Instagram https://www.instagram.com/unit4bcomedy/reel/DfYpW8XJUQx/.
+Question comment "Be honest: what's the first thing you'd do if the world ended tomorrow?" posted as UNIT 4B on all three.
+YouTube posted the same day from the Sweet Kurt Chrome profile (Browser 1). Custom thumbnail (option A) did NOT take
+via the extension upload (PNG and 720x1280 JPG) — set it by hand in Studio.
+Tests: news-anxiety topic (WW3, no real country named); voice v2 with acting tags + Creative stability (vs flat v1);
+planted word pays off ("nothing MATTERS" → Penny "That still MATTERS.") + loop to the 2 A.M. phone; shortest so far
+(45.6 s); punch at 81.9 %. Read the numbers on 8 Nov (48 h).

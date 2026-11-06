@@ -48,4 +48,4 @@ calm) → 2–3 dread → **1 flat punch at ~78 %** → 1 Penny button ≤4 s, l
 ## Deliverables
 - Video: `film/out/Tap07-last-day-on-earth.mp4` (v2, 45.6 s, punch 81.9 %, -14.0 LUFS, QA pass)
 - Thumbnail: option A "NOTHING MATTERS" (owner pick 2026-11-06) → `film/thumbs/thumb_A.png`, copy `film/out/Tap07-thumbnail.png`
-- Next: title, description, pinned question comment, post.
+- Posted 2026-11-06: YT https://youtube.com/shorts/58gXRhcWbuU · FB https://www.facebook.com/reel/1138412621906656 · IG https://www.instagram.com/unit4bcomedy/reel/DfYpW8XJUQx/ · 48 h check 2026-11-08.
