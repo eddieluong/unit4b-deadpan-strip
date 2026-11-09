@@ -93,58 +93,67 @@ function phoneAt(x, y, w, h, rot, screen) {
 function still1(t) {
   SEED = 7; room(t, true);
   const s = 17, X = 330, hc0 = 900, Y = hc0 + 80 * s, shY = Y - 60 * s;
-  const phx = 800, phy = 1060;
-  // Steve (head+shoulders), arms up to the phone
-  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'dot', lid: 0.5, brow: 'worried', mouth: 'small', fx: ['sweat'], look: 0.5, hair: 3, bags: 1,
-    armL: armTo(X, shY, s, phx - 130, phy + 120, [0, -3]), armR: armTo(X, shY, s, phx + 120, phy + 150, [0, -3]) }, { frame: boilFrame(t) });
+  const phx = 810, phy = 1070;
+  // pillow behind his head
+  const pl = spen(t, 14);
+  pl.part(roundPoly([[-40, 560], [650, 540], [680, 1250], [-40, 1270]], 120), '#f4f1ff', { shade: 0.1, lw: 6 });
+  pl.line([[40, 700], [90, 1100]], 4, 'rgba(42,34,48,0.18)');
+  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'dot', lid: 0.5, brow: 'worried', mouth: 'small', fx: ['sweat'], look: 0.5, hair: 2, bags: 1,
+    armL: armTo(X, shY, s, phx - 140, phy + 150, [0, -3]), armR: armTo(X, shY, s, phx + 130, phy + 170, [0, -3]) }, { frame: boilFrame(t) });
   const hc = headOf(X, Y, s);
-  faceGlow(hc, 'rgba(255,170,215,0.6)', 170, 40);
-  // pillow + blanket over his body
+  faceGlow(hc, 'rgba(255,170,215,0.65)', 200, 20);
+  // blanket up to the chest
   const bp = spen(t, 15);
-  bp.part(roundPoly([[-60, 1270], [140, 1230], [520, 1250], [760, 1290], [1140, 1270], [1140, 1930], [-60, 1930]], 60), '#7fa7d9', { shade: 0.12, lw: 6 });
-  for (const x of [140, 420, 700]) bp.line([[x, 1330], [x + 30, 1600]], 4, 'rgba(42,34,48,0.35)');
-  // cat half-buried at the left, ears and fedora out
-  drawCharacter(ctx, 'snuggles', 150, 1300 + 34 * 8 - 60, 8, { eyes: 'dot', lid: 0.35, mouth: 'line', look: 0.4 }, { frame: boilFrame(t) });
-  // phone, tilted, screen towards the viewer, counter badge
-  phoneAt(phx, phy, 260, 400, 0.12, (w, h) => {
+  bp.part(roundPoly([[-60, 1290], [200, 1260], [520, 1280], [760, 1310], [1140, 1290], [1140, 1930], [-60, 1930]], 60), '#7fa7d9', { shade: 0.12, lw: 6 });
+  for (const x of [140, 420, 700]) bp.line([[x, 1380], [x + 30, 1600]], 4, 'rgba(42,34,48,0.35)');
+  // cat, buried to the neck in cards, fully inside the frame
+  drawCharacter(ctx, 'snuggles', 215, 1640, 8, { eyes: 'dot', lid: 0.35, mouth: 'line', look: 0.4 }, { frame: boilFrame(t) });
+  // phone, screen to the viewer
+  phoneAt(phx, phy, 260, 400, 0.08, (w, h) => {
     ctx.fillStyle = '#ff9fc0'; ctx.beginPath(); ctx.roundRect(-w / 2 + 22, -h / 2 + 40, w - 44, 150, 14); ctx.fill(); rose(0, -h / 2 + 115, 46);
     text('Good Morning', 0, -h / 2 + 235, 30, '#a02a58'); ctx.fillStyle = '#ffe29a'; ctx.beginPath(); ctx.roundRect(-w / 2 + 22, 20, w - 44, 120, 14); ctx.fill(); sun(0, 80, 34);
   });
-  glowBlob(phx - 20, phy - 120, 380, 'rgba(255,170,215,0.45)');
-  // avalanche: arc of cards pouring out of the phone up-left then down onto his chest and the blanket
-  const flow = [[780, 760, 150, 0.4, 0], [640, 640, 120, -0.5, 1], [900, 880, 110, 0.9, 2], [880, 640, 100, 0.3, 1], [1010, 790, 100, -0.4, 0], [560, 800, 100, 0.8, 2], [720, 540, 100, -0.2, 0]];
-  flow.forEach(([x, y, w, r, k]) => card(x, y, w, r, k));
-  sparkle(500, 560, 36); sparkle(940, 560, 28, '#fff7a8'); sparkle(610, 1180, 24);
-  pileRow(560, 1060, 1240, 1560, 11, 170, 260); pileRow(40, 560, 1400, 1580, 6, 160, 240);
-  card(470, 1235, 190, -0.25, 0); card(560, 1185, 170, 0.35, 1);   // chest/lap
-  // counter badge
-  ctx.save(); ctx.fillStyle = '#e63946'; ctx.strokeStyle = INK; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(960, 930, 62, 0, 7); ctx.fill(); ctx.stroke(); ctx.restore(); text('47', 960, 934, 62, '#fff');
+  glowBlob(phx - 20, phy - 120, 380, 'rgba(255,170,215,0.4)');
+  // fountain of cards leaving the screen: motion streaks, then cards in flight, a few overlapping the screen edge
+  ctx.save(); ctx.strokeStyle = 'rgba(255,255,255,0.85)'; ctx.lineWidth = 7; ctx.lineCap = 'round';
+  for (const [x0, x1, y1] of [[760, 700, 520], [810, 800, 440], [860, 920, 500], [900, 1000, 600], [720, 640, 640]]) { ctx.beginPath(); ctx.moveTo(x0, 930); ctx.quadraticCurveTo((x0 + x1) / 2, y1 - 60, x1, y1); ctx.stroke(); }
+  ctx.restore();
+  for (const [x, y, w, r, k] of [[800, 1000, 120, -0.25, 0], [760, 860, 130, 0.3, 1], [880, 780, 130, -0.5, 2], [700, 640, 130, 0.4, 0], [940, 620, 120, 0.6, 1], [820, 520, 120, -0.3, 2], [1010, 760, 100, 0.8, 0], [620, 840, 110, -0.7, 1]]) card(x, y, w, r, k);
+  sparkle(560, 560, 34); sparkle(1000, 480, 28, '#fff7a8'); sparkle(640, 1010, 24);
+  // falling onto his chest and the blanket
+  card(590, 1170, 170, -0.3, 0); card(450, 1260, 190, 0.25, 1);
+  pileRow(480, 1060, 1280, 1580, 11, 170, 260); pileRow(20, 480, 1450, 1600, 6, 160, 240);
+  ctx.save(); ctx.fillStyle = '#e63946'; ctx.strokeStyle = INK; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(955, 880, 56, 0, 7); ctx.fill(); ctx.stroke(); ctx.restore(); text('47', 955, 884, 56, '#fff');
   title(); plate('snuggles', ['Six A.M. The family', 'group chat woke UP.'], ['UP']);
 }
 
 // ---------- STILL 2 · CLIMAX ----------
 function still2(t) {
   SEED = 21; room(t, false);
-  // card pile climbing the sides up to the ceiling
-  pileRow(-40, 330, 20, 1100, 22, 190, 300); pileRow(760, 1120, 20, 1100, 22, 190, 300);
+  pileRow(-40, 330, 20, 1200, 22, 190, 300); pileRow(760, 1120, 20, 1200, 22, 190, 300);
   pileRow(300, 780, 20, 220, 8, 170, 240);
-  const s = 12, X = 540, hc0 = 840, Y = hc0 + 80 * s, shY = Y - 60 * s;
-  const pcx = 540, pcy = 1360;
-  glowBlob(pcx, pcy, 700, 'rgba(255,120,190,0.7)');
-  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'pinpoint', brow: 'worried', mouth: 'O', fx: ['sweat', 'gloom'], look: 0, hair: 2, bags: 1,
-    armL: armTo(X, shY, s, pcx - 190, pcy - 40, [-6, -2]), armR: armTo(X, shY, s, pcx + 190, pcy - 40, [6, -2]) }, { frame: boilFrame(t) });
+  const s = 12, X = 540, hc0 = 860, Y = hc0 + 80 * s, shY = Y - 60 * s;
+  const pcx = 540, pcy = 1470;
+  glowBlob(pcx, pcy, 700, 'rgba(255,120,190,0.6)');
+  // Steve leaning over the bed, both arms straight down onto the pillow
+  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'pinpoint', brow: 'worried', mouth: 'O', fx: ['sweat', 'gloom'], look: 0, hair: 2, bags: 1, lean: 0,
+    armL: armTo(X, shY, s, pcx - 200, pcy - 60, [-8, 0]), armR: armTo(X, shY, s, pcx + 200, pcy - 60, [8, 0]) }, { frame: boilFrame(t) });
   const hc = headOf(X, Y, s); faceGlow(hc, 'rgba(255,140,200,0.4)', 0, 150);
-  // roses/cards squeezing out of the pillow seams
-  for (const [x, y, w, r, k] of [[250, 1330, 130, -0.9, 0], [850, 1320, 130, 0.9, 2], [330, 1520, 140, -0.4, 1], [760, 1530, 140, 0.5, 0]]) card(x, y, w, r, k);
-  // pillow with a pink glow, hands on top
+  // mattress/blanket hides his legs
+  const bp = spen(t, 16);
+  bp.part(roundPoly([[-60, 1420], [540, 1400], [1140, 1420], [1140, 1930], [-60, 1930]], 50), '#7fa7d9', { shade: 0.12, lw: 6 });
+  for (const [x, y, w, r, k] of [[210, 1330, 130, -0.9, 0], [880, 1320, 130, 0.9, 2], [140, 1560, 140, -0.4, 1], [930, 1560, 140, 0.5, 0]]) card(x, y, w, r, k);
+  // pillow glowing pink from inside (phone underneath)
   const pp = spen(t, 17);
-  pp.part(roundPoly([[pcx - 330, pcy - 150], [pcx + 330, pcy - 150], [pcx + 360, pcy + 150], [pcx - 360, pcy + 150]], 90), '#ffc2dc', { shade: 0.1, lw: 7 });
-  glowBlob(pcx, pcy, 420, 'rgba(255,110,180,0.55)');
-  pp.line([[pcx - 280, pcy + 100], [pcx - 120, pcy + 70], [pcx + 60, pcy + 110], [pcx + 280, pcy + 80]], 4, 'rgba(42,34,48,0.4)');
-  for (const [x, y, r] of [[pcx - 360, pcy - 20, 40], [pcx + 366, pcy - 10, 40], [pcx - 150, pcy + 160, 34], [pcx + 180, pcy + 158, 34], [pcx - 330, pcy + 130, 30]]) rose(x, y, r);
-  for (const [x, y] of [[300, 1150], [790, 1170], [400, 1700 - 520], [690, 1150]]) sparkle(x, y, 30);
-  // his hands pressing down
-  for (const sx of [-1, 1]) { ctx.fillStyle = '#e2ac84'; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.ellipse(pcx + sx * 190, pcy - 150, 46, 34, 0, 0, 7); ctx.fill(); ctx.stroke(); }
+  pp.part(roundPoly([[pcx - 340, pcy - 110], [pcx + 340, pcy - 110], [pcx + 370, pcy + 110], [pcx - 370, pcy + 110]], 80), '#ffc2dc', { shade: 0.1, lw: 7 });
+  glowBlob(pcx, pcy, 440, 'rgba(255,90,170,0.7)'); glowBlob(pcx, pcy, 240, 'rgba(255,255,255,0.55)');
+  pp.line([[pcx - 280, pcy + 70], [pcx - 120, pcy + 50], [pcx + 60, pcy + 80], [pcx + 280, pcy + 60]], 4, 'rgba(42,34,48,0.35)');
+  ctx.save(); ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = 6; ctx.lineCap = 'round';   // light leaking from the seams
+  for (const [x, y, dx, dy] of [[-370, 0, -60, -10], [370, 0, 60, -10], [-250, 110, -30, 50], [250, 110, 30, 50], [-200, -110, -20, -50], [200, -110, 20, -50]]) { ctx.beginPath(); ctx.moveTo(pcx + x, pcy + y); ctx.lineTo(pcx + x + dx, pcy + y + dy); ctx.stroke(); }
+  ctx.restore();
+  for (const [x, y, r] of [[pcx - 376, pcy - 10, 44], [pcx + 380, pcy, 44], [pcx - 160, pcy + 118, 36], [pcx + 190, pcy + 116, 36], [pcx - 330, pcy + 90, 30], [pcx + 20, pcy - 118, 34]]) rose(x, y, r);
+  for (const [x, y] of [[250, 1230], [830, 1250], [690, 1250]]) sparkle(x, y, 30);
+  for (const sx of [-1, 1]) { ctx.fillStyle = '#e2ac84'; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.ellipse(pcx + sx * 200, pcy - 60, 48, 36, 0, 0, 7); ctx.fill(); ctx.stroke(); }
   title(); plate('steve', ['Stop BLOOMING!'], ['BLOOMING']);
 }
 
@@ -153,7 +162,7 @@ function still3(t) {
   SEED = 33; room(t, true);
   const s = 17, X = 320, hc0 = 920, Y = hc0 + 80 * s, shY = Y - 60 * s;
   const phx = 800, phy = 1200, pw = 360, ph = 560;
-  drawCharacter(ctx, 'steve', X, Y, s, { expr: 'deadpan', lid: 0.55, mouth: 'line', look: 0.7, hair: 3, bags: 1, fx: ['gloom'],
+  drawCharacter(ctx, 'steve', X, Y, s, { expr: 'deadpan', lid: 0.55, mouth: 'line', look: 0.7, hair: 2, bags: 1, fx: ['gloom'],
     armL: armTo(X, shY, s, phx - pw / 2 - 20, phy + 150, [0, -3]), armR: armTo(X, shY, s, phx - pw / 2 - 20, phy + 150, [0, -3]) }, { frame: boilFrame(t) });
   const hc = headOf(X, Y, s); faceGlow(hc, 'rgba(255,225,235,0.35)', 200, 40);
   const bp = spen(t, 15);
