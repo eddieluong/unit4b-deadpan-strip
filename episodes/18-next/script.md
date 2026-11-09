@@ -1,76 +1,79 @@
-# Tập 9 — Good Morning  (episode 18, v1 for gate 1; owner picked idea A + test (a), 2026-11-09)
+# Tập 9 — One Percent  (episode 18, v1 for gate 1; owner switched Tập 9 to idea C on 2026-11-09)
 
-**Real problem:** the family group chat floods your phone with glittery "Good morning" pictures at 6 A.M. every day,
-and you can't leave: someone always adds you back. Works on Zalo, Viber, WhatsApp, Messenger (no brand shown).
+"Good Morning" (script OK'd, 3 stills v2) is shelved for a later slot in `episodes/19-good-morning/`.
+
+**Real problem:** your phone is at 1 % and you have to send one message. The charger cable never reaches.
 **Base (same as Tập 8):** 25–30 s, universal topic, burned-in captions every line, full-bleed panel, face ≥ 25 %.
 **Variable (test a):** post at 07:00–08:00 VN, the only Short that day. Nothing else changes.
-**Tập 8 lesson applied (no new variable, just the existing rule):** the premise must read in the first second. Line 1
-names the problem out loud from 0.0 s ("family group chat"), the title says it too, and the image is the problem itself.
-**Title line (inside the panel, top):** "POV: the family group chat at 6 A.M."
-**Mechanism:** flood → Steve leaves → peace → "Mom added you" ×3 (escalation, on ones) → peak (he smothers the phone) →
-silent beat, a soft message from Grandma → flat punch: he gives in → button: by Tuesday he is the one sending. Loop.
-**Frame 1 (#19):** Steve in bed, face lit by the phone in close-up (≥ 25 % of the frame), eyes half-open, sweat drop; an
-AVALANCHE of glittery rose and sunrise pictures pouring out of the screen onto him; the cat half-buried beside him, ears
-sticking out; message counter "47" ticking up on the phone.
-**Est.** ~36 words, ~27 s, punch at ~20.6 s (76 %), button ≤ 4 s.
+**Tập 8 lesson applied (existing rule, not a new variable):** the premise reads in the first second: "1%" is in the title,
+in the first spoken words and filling the picture.
+**Title line (inside the panel, top):** "POV: your phone is at 1%"
+**Mechanism:** plant (1 %, one message) → cable too short ×3 (floor, behind the fridge, contortion with the cat watching)
+→ one peak (plugging in) → relief (2 %) → he sends → the cat stretches and the plug pops out → black screen → flat punch
+to the cat → button: the power bank is at 1 % too. Loop.
+**Character fix vs IDEAS v0 (fit was 3/5):** the cat causes the failure (lies on the cable, then stretches), and Steve is
+polite even to the cat that ruined him ("…Thank you."): Steve's over-apologizing nature, zero lore needed.
+**Frame 1 (#19):** extreme close-up of Steve's sweaty face (≥ 30 % of the frame) lit red by the phone held up to camera;
+the screen is one giant blinking red battery "1%"; sweat drops flying; in the foreground his other hand holds the plug a
+finger's width from the wall socket, cable pulled tight; the cat's eyes peek in at the frame edge.
+**Est.** ~38 words, ~27 s, punch at ~21 s (78 %), button ≤ 4 s.
 
 | # | Speaker | VO / in-scene | Line | Emotion | Int. | Stress | Pause after | Picture (for a viewer with no context) | Motion (reason) |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | Snuggles | VO | Six A.M. The family group chat woke UP. | noir, flat | 2 | up | 0.3 | Frame 1: roses and sunrises pour out of the phone onto Steve in bed; counter 47 → 52 | pictures pour from 0.0 s, counter ticks; 1.0 s cut to a close-up of one glitter rose spinning in front of Steve's face (picture change by 1 s) |
-| 2 | Steve | in-scene | Why are they all AWAKE? | groggy disbelief | 2 | awake | 0.3 | Steve sits up, buried to the chest; a sparkle GIF bounces off his forehead | sit-up in 3 poses, sparkle bounce, hair spikes jiggle |
-| 3 | Steve | in-scene | I deleted my PHOTOS for this. | betrayed | 3 | photos | 0.3 | pop-up "Storage full"; Steve drags his own selfie album into the bin, a rose takes its place | pop-up slams in, drag + drop, one selfie waves goodbye (micro-gag) |
-| 4 | Steve | in-scene | That's it. I'm LEAVING. | resolve | 3 | leaving | 0.2 | thumb taps "Leave group" in close-up; the flood stops mid-air and drops | finger tap on the stressed word, pictures freeze then fall |
-| 4b | — | silent | — | relief | 1 | — | 0.8 | peace: birds outside, sunbeam, Steve sinks into the pillow smiling, the cat stretches | slow sink, cat stretch, dust motes (never still) |
-| 5 | — | sfx | *ping* | — | — | — | 0.3 | full-frame notification: "Mom added you." (held 1.2 s) | notification drops in with a bounce; roses start pouring again |
-| 6 | Steve | in-scene | No. | flat | 2 | no | 0.2 | Steve leaves again → *ping* "Auntie added you." | tap, ping, pour (on ones, 0.7 s) |
-| 6b | Steve | in-scene | NO. | louder | 3 | no | 0.2 | leaves → *ping* "Grandma added you." The pile reaches the ceiling | tap, ping, pile jumps up in a step |
-| 7 | Snuggles | VO | Nobody leaves. They ADD you back. | dry, noir | 2 | add | 0.2 | the cat's face pops out of the pile, unimpressed | cat ears turn, a petal falls off the fedora |
-| 8 | Steve | in-scene | Stop BLOOMING! | desperate (peak) | 4 | blooming | 0.3 | Steve shoves the phone under the pillow and lies on it; the pillow glows pink, roses squeeze out the seams | push-down in 3 poses, pillow bulges and glows, petals spray |
-| 8b | — | silent | — | tension → soft | 2 | — | 1.0 | one small, quiet *ping*. Steve lifts the pillow: "Grandma: Steve? Are you okay? 🙏" (held 1.2 s) | lift pillow slowly, phone glow on his face, lids soften |
-| 9 | Steve | in-scene | …Good morning. | flat (PUNCH) | 1 | morning | 0.7 | close-up: Steve sends one glittery rose. Sent ✓ | send tap, the rose flies out of the screen; Steve's face, lids half (reaction hold) |
-| 10 | Snuggles | VO | By Tuesday, he was SENDING them. | dry | 1 | sending | — | button (≤ 4 s): Tuesday 6:00 A.M., Steve wide awake, grinning, forwarding a sparkling "HAPPY TUESDAY" sunrise; the group renamed "🌸 STEVE IS BACK 🌸"; hearts flood in; the cat is buried again | type + send on ones, hearts pour; push-in on the phone as roses pour toward camera → match cut to frame 1 (loop) |
+| 1 | Snuggles | VO | One percent. One message. One MAN. | noir, flat | 2 | man | 0.3 | Frame 1: Steve's red-lit face, giant blinking "1%", plug a finger short of the socket | 1% blinks from 0.0 s, sweat drops fly, plug strains toward socket; 1.0 s cut to wide: Steve stretched across the room on one tiptoe (picture change by 1 s) |
+| 2 | Steve | in-scene | Okay. Nobody MOVE. | hushed panic | 3 | move | 0.3 | wide: Steve freezes mid-stretch; the cat freezes mid-step too, one paw up | freeze pose on the stressed word, only the 1% blinks, cat paw wobbles |
+| 3 | Steve | in-scene | It's THIS close. | pleading | 3 | this | 0.3 | Steve lying flat on the floor, arm stretched, plug 1 cm from the socket; he shows the gap with two fingers | slide down to the floor in 3 poses, fingers pinch the gap, cable twangs |
+| 4 | Snuggles | VO | The other socket was behind the fridge. Of COURSE. | dry, noir | 2 | course | 0.2 | Steve drags the fridge; behind it, the socket; the cable now reaches the fridge's back but not the socket | fridge scrape in steps, a magnet falls off (micro-gag) |
+| 4b | — | silent | — | strain | 3 | — | 0.8 | the silent third: Steve twisted under the table, phone in his teeth, foot on the wall, plug in hand; the cat watches, then lies down on the cable | contortion on twos, his leg trembles, cat flops onto the cable |
+| 5 | Steve | in-scene | Come ON! | desperate (peak) | 4 | on | 0.2 | the plug goes in with a spark; the phone screen: "2%" with a tiny lightning bolt | jab the plug, spark smear 1 frame, "ding" |
+| 6 | Snuggles | VO | Two percent. He felt RICH. | dry | 2 | rich | 0.3 | Steve on the floor, exhaling, hugging the phone like a baby; a halo of light from the screen | slow exhale, chest drops, light pulses |
+| 7 | Steve | in-scene | "On my WAY." Send. | relief, quick | 2 | way | 0.2 | close-up thumb types "On my way" and taps Send; bubble: "Sending…" with a spinner | type on ones, tap, spinner turns |
+| 7b | — | silent | — | dread | 2 | — | 1.0 | the cat stands up and stretches, long, on the cable; the plug slides out of the socket… pop | slow stretch in 3 poses, plug inches out, pop |
+| 8 | — | sfx | *power-down tone* | — | — | — | 0.6 | the screen goes black mid-"Sending…"; Steve's face reflected in the black glass | screen collapses to a dot, reflection fades in |
+| 9 | Steve | in-scene | …Thank you. | flat, polite (PUNCH) | 1 | thank | 0.7 | Steve turns his head to the cat, face blank, lids half; the cat licks its paw | head turn on twos, cat lick loop (reaction hold) |
+| 10 | Snuggles | VO | Plan B ran in the FAMILY. | dry | 1 | family | — | button (≤ 4 s): Steve pulls a power bank from a drawer, presses its button: its four lights blink… one; tiny red "1%"; push-in on Steve's sweaty face lit red → match cut to frame 1 (loop) | drawer yank, button press, lights die one by one, push-in |
 
-**Muttered attitude lines (6):** 2, 3, 4, 6/6b, 8, 9. Snuggles carries the narration (1, 7, 10). Family = names on screen only.
-**On-screen text:** title, "Storage full", "Mom / Auntie / Grandma added you", Grandma's message, "HAPPY TUESDAY", group name:
-every one held ≥ 1 s (QA row 12). Captions never over the punch face.
+**Muttered attitude lines (5):** 2, 3, 5, 7, 9. Snuggles carries the narration (1, 4, 6, 10). The cat acts only (no lines).
+**On-screen text:** title, "1%", "2%", "On my way", "Sending…", power bank "1%": each held ≥ 1 s. Captions never over the
+punch face. No phone brand or OS look.
 
 ## Emotion arc
 ```
-Int 4 |                                         8
-    3 |              3   4                6b
-    2 |  1   2                    6   7          8b
-    1 |                      4b  5                    9  10
+Int 4 |                                5
+    3 |       2   3          4b
+    2 |  1               4                 6   7   7b
+    1 |                                                  8   9  10
       0s ---- 4 ---- 8 ---- 12 ---- 16 ---- 20 ---- 24 ---- 27s
 ```
-2 (noir set-up) → 2–3 annoyed → 3 resolve → 1 relief (false calm) → 2–3 escalation ×3 → **4 one peak "Stop BLOOMING!"** →
-quiet soft beat (Grandma) → **1 flat punch "…Good morning." at ~20.6 s (76 %)** → 1 dry button ≤ 4 s, loop to frame 1.
+2 (noir set-up) → 3 panic, pleading → 2 dry → 3 strain (silent third) → **4 one peak "Come ON!"** → 2 relief, "rich" →
+dread (the cat) → black → **1 flat punch "…Thank you." at ~21 s (78 %)** → 1 dry button ≤ 4 s, loop to frame 1.
 
 ## Rough timing
 | Beat | Time |
 |---|---|
 | 1 | 0.0–2.6 |
-| 2 | 2.8–4.3 |
-| 3 | 4.5–6.6 |
-| 4, 4b | 6.8–9.3 |
-| 5, 6, 6b | 9.3–14.4 |
-| 7 | 14.6–16.6 |
-| 8 | 16.8–18.3 |
-| 8b | 18.6–19.9 |
-| 9 punch | 20.0–21.3 (76 % of 27 s) |
-| 10 button + loop | 22.0–27.0 |
+| 2 | 2.8–4.2 |
+| 3 | 4.4–5.9 |
+| 4 | 6.1–9.0 |
+| 4b | 9.0–11.0 |
+| 5 | 11.0–12.0 |
+| 6 | 12.2–14.2 |
+| 7 | 14.4–16.0 |
+| 7b, 8 | 16.0–19.6 |
+| 9 punch | 20.6–21.6 (78 % of 27 s) |
+| 10 button + loop | 22.3–27.0 |
 
 ## Self-check (scorecard + QA, v1)
-- Zero lore: Steve = a guy in bed, the cat = narrator; family = names on notifications. No brand logo on the chat UI.
-- One peak only (line 8, int. 4). Punch flat, ≤ 8 words. Button ≤ 4 s and loops into frame 1.
-- Every beat has an action; no shot over ~2.5 s; silent beats 0.8 / 1.0 s on a face.
-- Not in BANK.md (closest: Tập 8 phone chat, but a different problem and mechanism; no "mirror silhouette" ending reused).
-- Risk: "Mom added you" is guessable; the surprise is the punch (Steve gives in out of guilt) and the button (he becomes
-  the sender). Grandma's message must read in 1.2 s: keep it 5 words.
-- Snuggles VO is a narrator voice, not a cat "line" in-scene (same as Tập 8).
+- Zero lore: a guy, a phone, a cat. Snuggles = narrator voice. Universal; no country-specific plug shape shown in detail.
+- One peak only (line 5, int. 4). Punch flat, 2 words. Button ≤ 4 s and loops into frame 1.
+- Every beat has an action; silent beats 0.8–1.0 s on a face or a moving cat (never an object alone > 1 s).
+- Not in BANK.md. The cat is a watcher until 7b, then the cause: a planted payoff (it lies on the cable in 4b).
+- Risk: the power-bank button is a familiar gag; the surprise is the cat + Steve thanking it. Line 10 wording to judge:
+  "Plan B ran in the FAMILY." (alt: "The backup was ALSO at one percent." — clearer, longer).
 
 ## Skill check — `youtube` hook/Shorts checklist, pass only, no rewrite
-- Hook in 1–3 s: ✓ problem named at 0.0 s in voice + title + picture.
+- Hook in 1–3 s: ✓ "1%" in title, first words and picture at 0.0 s.
 - Visual change ≥ every 3 s: ✓ (house plan ~1.5–2.5 s).
 - Completion / loop: ✓ 27 s, button match-cuts to frame 1.
-- Comments: question for the pinned comment: "What does YOUR family group chat send at 6 A.M.?" (answerable from life).
+- Pinned question: "What's the lowest battery you ever left the house with?" (answerable from life).
 - No conflicts with house rules found.
