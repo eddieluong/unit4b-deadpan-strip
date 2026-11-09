@@ -126,11 +126,9 @@ function still1(t) {
   drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'wide', brow: 'worried', mouth: 'small', fx: ['sweat'], look: 0.5, hair: 2, bags: 1,
     armL: armTo(X, Y - 60 * s, s, phx - 40, phy + 330, [0, -3]), armR: { hand: [0, -4], bend: [0, 0] } }, { frame: boilFrame(t) });
   ctx.restore();
-  const hc = headOf(X, Y, s); faceGlow(hc, 'rgba(255,45,60,0.9)', 230, 0);
-  ctx.save(); ctx.beginPath(); ctx.arc(hc[0], hc[1], hc[2] - 6, 0, 7); ctx.clip();   // red wash, strongest on the phone side
-  const rg = ctx.createLinearGradient(hc[0] - hc[2], 0, hc[0] + hc[2], 0); rg.addColorStop(0, 'rgba(255,40,55,0.0)'); rg.addColorStop(0.5, 'rgba(255,40,55,0.12)'); rg.addColorStop(1, 'rgba(255,30,50,0.5)'); ctx.fillStyle = rg; ctx.fillRect(hc[0] - 400, hc[1] - 400, 800, 800); ctx.restore();
-  glowBlob(X + 200, 1300, 330, 'rgba(255,40,55,0.45)');
-  ctx.save(); ctx.strokeStyle = 'rgba(255,70,80,0.9)'; ctx.lineWidth = 12; ctx.lineCap = 'round'; ctx.beginPath(); ctx.arc(hc[0], hc[1], hc[2] - 2, -0.7, 0.9); ctx.stroke(); ctx.restore();   // red rim light
+  const hc = headOf(X, Y, s);
+  glowBlob(X + 200, 1300, 330, 'rgba(255,40,55,0.18)');
+  ctx.save(); ctx.strokeStyle = 'rgba(255,70,80,0.85)'; ctx.lineWidth = 9; ctx.lineCap = 'round'; ctx.beginPath(); ctx.arc(hc[0], hc[1], hc[2] - 5, -0.75, 0.75); ctx.stroke(); ctx.restore();   // thin red rim light on the phone side
   glowBlob(phx, phy, 520, 'rgba(255,40,55,0.35)'); handAt(phx - 20, phy + 265, 56);
   for (const [x, y, z, r] of [[60, 640, 26, -0.6], [700, 520, 24, 0.7], [690, 1100, 22, 1.2], [70, 1000, 24, -1.1], [650, 640, 18, 0.4]]) flyDrop(x, y, z, r);
   // foreground: wall socket, plug a finger's width away, taut cable, fist
