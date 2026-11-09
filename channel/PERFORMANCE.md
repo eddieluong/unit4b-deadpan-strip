@@ -146,6 +146,9 @@ via the extension upload (PNG and 720x1280 JPG) — set it by hand in Studio.
 Tests: news-anxiety topic (WW3, no real country named); voice v2 with acting tags + Creative stability (vs flat v1);
 planted word pays off ("nothing MATTERS" → Penny "That still MATTERS.") + loop to the 2 A.M. phone; shortest so far
 (45.6 s); punch at 81.9 %. Read the numbers on 8 Nov (48 h).
+**Read 9 Nov (~3 days, `data/analytics/studio-2026-11-09.md`):** YouTube 106 views, stayed 31.1 %, AVD 0:18 (~39 % viewed),
+3 likes, 1 comment, 0 subs, Shorts feed 91.5 %, Vietnam 81.1 % (only country shown). FB 31 views (drop at 0:02).
+IG 1,716 views, 17 likes (100 % non-followers). Worst YouTube reach so far; posted the same day as Tập 8.
 
 ## Tập 8 — Typing...  (posted 2026-11-06 ~16:40 VN, `Tap08-typing.mp4`, 29.8 s)
 Title `When you see "typing..." for 9 hours. #shorts` (title A) · thumbnail B ("9 HOURS" + giant "k").
@@ -158,3 +161,8 @@ Question comment: "What's the worst one-letter reply you ever got?" posted as @u
 Tests (DIAGNOSIS-2026-11 §4C, new base): 29.8 s (vs 45–58 s), universal topic (typing dots), burned-in captions,
 full-bleed panel + face ≥ 25 % + motion by 0.3 s, warm skin for Steve; punch at 78.6 %; normal posting time.
 Read on 8 Nov ~16:40 VN (48 h): stayed-to-watch (target ≥ 50 %), % viewed (target ≥ 70 %), geography (VN/PH vs rest).
+**Read 9 Nov (~3 days):** YouTube 156 views, stayed 31.5 % (target 50 %, MISS; Tập 6 46.8 %), AVD 0:17 (~57 % viewed,
+target 70 %, MISS; = Tập 6), 1 like, 1 comment, +1 sub, Shorts feed 96.2 %, Vietnam 58.3 %, new viewers 98.1 %.
+FB 41 views (drop at 0:02). IG 1,705 views, 13 likes, 1 save. **Lesson:** the shorter cut lifted % viewed vs Tập 7
+(39 → 57 %) but not above Tập 6; the full-bleed/bigger-face notch did NOT lift stayed (31.5 % vs 46.8 %). Sample is
+small (156); two Shorts on one day may have split the test audience. IG gives ~11x the YouTube views.
