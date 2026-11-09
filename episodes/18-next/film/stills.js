@@ -122,58 +122,62 @@ function still1(t) {
   ctx.fillStyle = '#2b0d12'; ctx.beginPath(); ctx.roundRect(phx - pw + 14, phy - ph + 18, 2 * pw - 28, 2 * ph - 36, 24); ctx.fill();
   batteryIcon(phx - 14, phy, 190, 150, '#2b0d12', '1%', '#ff4a55');
   ctx.save(); ctx.translate(phx, phy); ctx.rotate(Math.PI / 2); ctx.restore();
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, 1700); ctx.clip();
   drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'wide', brow: 'worried', mouth: 'small', fx: ['sweat'], look: 0.5, hair: 2, bags: 1,
     armL: armTo(X, Y - 60 * s, s, phx - 40, phy + 330, [0, -3]), armR: { hand: [0, -4], bend: [0, 0] } }, { frame: boilFrame(t) });
-  const hc = headOf(X, Y, s); faceGlow(hc, 'rgba(255,45,60,0.65)', 230, 0);
+  ctx.restore();
+  const hc = headOf(X, Y, s); faceGlow(hc, 'rgba(255,45,60,0.9)', 230, 0);
+  ctx.save(); ctx.beginPath(); ctx.arc(hc[0], hc[1], hc[2] - 6, 0, 7); ctx.clip();   // red wash, strongest on the phone side
+  const rg = ctx.createLinearGradient(hc[0] - hc[2], 0, hc[0] + hc[2], 0); rg.addColorStop(0, 'rgba(255,40,55,0.0)'); rg.addColorStop(0.5, 'rgba(255,40,55,0.12)'); rg.addColorStop(1, 'rgba(255,30,50,0.5)'); ctx.fillStyle = rg; ctx.fillRect(hc[0] - 400, hc[1] - 400, 800, 800); ctx.restore();
+  glowBlob(X + 200, 1300, 330, 'rgba(255,40,55,0.45)');
+  ctx.save(); ctx.strokeStyle = 'rgba(255,70,80,0.9)'; ctx.lineWidth = 12; ctx.lineCap = 'round'; ctx.beginPath(); ctx.arc(hc[0], hc[1], hc[2] - 2, -0.7, 0.9); ctx.stroke(); ctx.restore();   // red rim light
   glowBlob(phx, phy, 520, 'rgba(255,40,55,0.35)'); handAt(phx - 20, phy + 265, 56);
   for (const [x, y, z, r] of [[60, 640, 26, -0.6], [700, 520, 24, 0.7], [690, 1100, 22, 1.2], [70, 1000, 24, -1.1], [650, 640, 18, 0.4]]) flyDrop(x, y, z, r);
   // foreground: wall socket, plug a finger's width away, taut cable, fist
-  socketAt(880, 1400, 1.05); plug(640, 1405, 1.1);
-  ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 16; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(575, 1405); ctx.lineTo(-20, 1590); ctx.stroke(); ctx.strokeStyle = '#f2f2f2'; ctx.lineWidth = 8; ctx.stroke(); ctx.restore();
+  socketAt(880, 1400, 1.05);
+  ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 16; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(865, 1030); ctx.lineTo(560, 1405); ctx.stroke(); ctx.strokeStyle = '#f2f2f2'; ctx.lineWidth = 8; ctx.stroke(); ctx.restore();   // taut cable: phone → plug
   ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 8; ctx.beginPath(); ctx.moveTo(740, 1300); ctx.lineTo(760, 1295); ctx.stroke(); ctx.restore();
-  handAt(560, 1405, 62);
+  plug(640, 1405, 1.1); handAt(560, 1405, 62);
   for (const dy of [-34, 0, 34]) { ctx.fillStyle = '#e2ac84'; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.ellipse(618, 1405 + dy, 34, 15, 0, 0, 7); ctx.fill(); ctx.stroke(); }
   // cat's eyes + fedora peeking at the left edge
-  drawCharacter(ctx, 'snuggles', 100, 1390 + 34 * 7, 7, { eyes: 'wide', look: 0.9, mouth: 'line' }, { frame: boilFrame(t) });
+  drawCharacter(ctx, 'snuggles', 150, 1390 + 34 * 7, 7, { eyes: 'wide', look: 0.9, mouth: 'line' }, { frame: boilFrame(t) });
   title(); plate('snuggles', ['One percent. One message.', 'One MAN.'], ['MAN']);
 }
 
 // ---------- STILL 2 · CLIMAX ----------
 function still2(t) {
   room(t, false);
-  ctx.fillStyle = '#c99a62'; ctx.fillRect(0, 1500, W, 420); spen(t, 5).line([[0, 1500], [W, 1500]], 5);
-  const tp = spen(t, 41); tp.part(roundPoly([[-40, 780], [1120, 780], [1120, 870], [-40, 870]], 10), '#a98660', { shade: 0.12, lw: 6 });
-  for (const x of [60, 1020]) tp.part(roundPoly([[x - 26, 870], [x + 26, 870], [x + 26, 1530], [x - 26, 1530]], 6), '#8a6a48', { shade: 0.12, lw: 6 });
-  const s = 9, th = 1.45, X = -75, Y = 1467, sn = Math.sin(th), cs = Math.cos(th);
+  ctx.fillStyle = '#c99a62'; ctx.fillRect(0, 1520, W, 400); spen(t, 5).line([[0, 1520], [W, 1520]], 5);
+  // low camera under the table: underside band on top, two legs at the sides
+  const tp = spen(t, 41);
+  for (const [x0, x1] of [[-30, 120], [960, 1110]]) tp.part(roundPoly([[x0, 280], [x1, 280], [x1, 1560], [x0, 1560]], 8), '#8a6a48', { shade: 0.12, lw: 6 });
+  tp.part(roundPoly([[-40, -40], [1120, -40], [1120, 330], [-40, 330]], 8), '#a98660', { shade: 0.15, lw: 6 });
+  ctx.fillStyle = 'rgba(60,40,30,0.25)'; ctx.fillRect(0, 300, W, 40);
+  const s = 16, th = 0.5, X = -13, Y = 2123, sn = Math.sin(th), cs = Math.cos(th);
   const loc = (dx, dy) => [(dx * cs + dy * sn) / s, (dx * sn - dy * cs) / s];
-  const sh = [X + 60 * s * sn, Y - 60 * s * cs], hcx = X + 80 * s * sn, hcy = Y - 80 * s * cs, hip = [X + 38 * s * sn, Y - 38 * s * cs];
-  socketAt(950, 1390, 0.8);
-  // cable from the plug down to the floor and left under everything
-  ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 16; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(860, 1395); ctx.bezierCurveTo(880, 1500, 860, 1540, 700, 1540); ctx.lineTo(-20, 1545); ctx.stroke(); ctx.strokeStyle = '#f2f2f2'; ctx.lineWidth = 8; ctx.stroke(); ctx.restore();
-  // bent legs, behind him
-  ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 15; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  for (const d of [0, 26]) { ctx.beginPath(); ctx.moveTo(hip[0], hip[1] + d * 0.4); ctx.lineTo(hip[0] - 120, hip[1] - 75 + d); ctx.lineTo(hip[0] - 210, hip[1] + 95 - d * 0.3); ctx.stroke(); ctx.fillStyle = '#e8503a'; ctx.beginPath(); ctx.ellipse(hip[0] - 232, hip[1] + 100 - d * 0.3, 30, 17, 0.2, 0, 7); ctx.fill(); ctx.stroke(); }
-  ctx.restore();
-  const [hu, hv] = loc(790 - sh[0], 1390 - sh[1]), [lu, lv] = loc(380 - sh[0], 1500 - sh[1]);
+  const sh = [X + 60 * s * sn, Y - 60 * s * cs], hcx = X + 80 * s * sn, hcy = Y - 80 * s * cs;
+  socketAt(985, 1400, 0.8);
+  // cable from the plug down to the floor and left under the cat
+  ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 16; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(735, 1405); ctx.bezierCurveTo(745, 1500, 720, 1570, 600, 1570); ctx.lineTo(300, 1580); ctx.stroke(); ctx.strokeStyle = '#f2f2f2'; ctx.lineWidth = 8; ctx.stroke(); ctx.restore();
+  const [hu, hv] = loc(745 - sh[0], 1405 - sh[1]), [lu, lv] = loc(330 - sh[0], 1470 - sh[1]);
   ctx.save(); ctx.translate(X, Y); ctx.rotate(th); ctx.translate(-X, -Y); ctx.beginPath(); ctx.rect(X - 600, Y - 3000, 1200, 3000 - 36 * s); ctx.clip();
   drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'pinpoint', brow: 'worried', mouth: 'line', fx: ['sweat'], look: 0, hair: 2, bags: 1,
     armL: { hand: [lu, lv], bend: [2, -2] }, armR: { hand: [hu, hv], bend: [0, -2] } }, { frame: boilFrame(t) });
   ctx.restore();
-  // phone, landscape, one end between his teeth, "2%" + bolt
-  const mx = hcx - 57, my = hcy + 7;
-  ctx.save(); ctx.translate(mx - 150, my + 4); ctx.rotate(-0.04); const q = spen(t, 9);
-  q.part(roundPoly([[-150, -95], [150, -95], [150, 95], [-150, 95]], 24), '#2a3050', { shade: 0.1, lw: 6 });
-  ctx.fillStyle = '#10261a'; ctx.beginPath(); ctx.roundRect(-136, -80, 272, 160, 14); ctx.fill(); text('2%', 20, 6, 96, '#7dff9a'); bolt(-85, 0, 2.1); ctx.restore();
-  ctx.save(); ctx.fillStyle = '#fffdf8'; ctx.strokeStyle = INK; ctx.lineWidth = 3; for (const dy of [-12, 12]) { ctx.beginPath(); ctx.roundRect(mx - 14, my - 6 + dy - 5, 24, 10, 3); ctx.fill(); ctx.stroke(); } ctx.restore();
-  faceGlow([hcx, hcy, 135], 'rgba(150,255,170,0.3)', -60, 0);
-  // plug in the socket: spark
-  plug(860, 1395, 0.8); handAt(800, 1395, 40);
-  ctx.save(); ctx.fillStyle = '#ffd23c'; ctx.strokeStyle = INK; ctx.lineWidth = 4; ctx.translate(920, 1395); ctx.beginPath();
-  for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8, r = i % 2 ? 20 : 62; ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r); } ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();
-  glowBlob(920, 1395, 240, 'rgba(255,230,120,0.55)');
-  // cat lying flat on the cable, watching
-  ctx.save(); ctx.translate(1000, 1575); ctx.rotate(-1.4); ctx.translate(-1000, -1575);
-  drawCharacter(ctx, 'snuggles', 1000, 1575, 5.5, { eyes: 'dot', lid: 0.45, look: 0.3, mouth: 'line' }, { frame: boilFrame(t) }); ctx.restore();
+  // phone clamped in his teeth, hanging in front of his chin, screen to camera
+  const mx = hcx - 48, my = hcy + 88;
+  phoneAt(mx, my + 135, 170, 260, 0.12, (w, h) => { ctx.fillStyle = '#10261a'; ctx.beginPath(); ctx.roundRect(-w / 2 + 12, -h / 2 + 16, w - 24, h - 32, 14); ctx.fill(); text('2%', 0, 20, 70, '#7dff9a'); bolt(0, -60, 1.5); });
+  ctx.save(); ctx.fillStyle = '#fffdf8'; ctx.strokeStyle = INK; ctx.lineWidth = 3; for (const dx of [-46, -12, 22, 56]) { ctx.beginPath(); ctx.roundRect(mx + dx - 12, my - 4, 24, 22, 4); ctx.fill(); ctx.stroke(); } ctx.restore();
+  faceGlow([hcx, hcy, 240], 'rgba(150,255,170,0.3)', 0, 140);
+  for (const [x, y, z, rr] of [[880, 800, 28, 0.5], [320, 760, 26, -0.6], [860, 1010, 22, 1.0]]) flyDrop(x, y, z, rr);
+  // plug going into the socket: spark
+  plug(795, 1405, 0.8); handAt(735, 1405, 44);
+  ctx.save(); ctx.fillStyle = '#ffd23c'; ctx.strokeStyle = INK; ctx.lineWidth = 4; ctx.translate(915, 1405); ctx.beginPath();
+  for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8, rr = i % 2 ? 22 : 66; ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); } ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();
+  glowBlob(915, 1405, 260, 'rgba(255,230,120,0.55)');
+  // cat lying on the cable, beside his hip, watching, clear of his face
+  ctx.save(); ctx.translate(380, 1545); ctx.rotate(-1.4); ctx.translate(-380, -1545);
+  drawCharacter(ctx, 'snuggles', 380, 1545, 7, { eyes: 'dot', lid: 0.45, look: 0.3, mouth: 'line' }, { frame: boilFrame(t) }); ctx.restore();
   title(); plate('steve', ['Come ON!'], ['ON']);
 }
 
@@ -181,27 +185,31 @@ function still2(t) {
 function still3(t) {
   room(t, true);
   ctx.fillStyle = '#c99a62'; ctx.fillRect(0, 1430, W, 490); spen(t, 5).line([[0, 1430], [W, 1430]], 5);
-  const s = 14, X = 330, Y = 2042, shY = Y - 60 * s;
+  const s = 14, X = 330, Y = 2042, hood = CAST.steve.color;
   socketAt(985, 1330, 0.85);
-  const phx = X + 70, phy = 1410;
-  // cable under the cat, unplugged plug on the floor near the socket
+  const phx = X + 40, phy = 1420;
   ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 16; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(900, 1585); ctx.bezierCurveTo(820, 1620, 640, 1560, 560, 1590); ctx.stroke(); ctx.strokeStyle = '#f2f2f2'; ctx.lineWidth = 8; ctx.stroke(); ctx.restore();
   plug(960, 1590, 0.7, 0.2);
-  ctx.save(); ctx.beginPath(); ctx.rect(X - 600, Y - 3000, 1200, 3000 - 36 * s); ctx.clip();
-  drawCharacter(ctx, 'steve', X, Y, s, { expr: 'deadpan', lid: 0.55, mouth: 'line', look: 1, tilt: 14, hair: 2, bags: 1, fx: ['gloom'],
-    armL: armTo(X, shY, s, phx - 50, phy + 130, [0, -3]), armR: armTo(X, shY, s, phx + 60, phy + 130, [0, -3]) }, { frame: boilFrame(t) });
-  ctx.restore();
-  // crossed legs on the floor
+  // seated legs: knees out, folded back in, small feet
   ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 15; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  for (const sx of [-1, 1]) { ctx.beginPath(); ctx.moveTo(X + sx * 10, 1512); ctx.lineTo(X + sx * 190, 1560); ctx.lineTo(X - sx * 60, 1592); ctx.stroke(); ctx.fillStyle = '#e8503a'; ctx.beginPath(); ctx.ellipse(X - sx * 80, 1595, 30, 17, 0, 0, 7); ctx.fill(); ctx.stroke(); }
+  for (const sx of [-1, 1]) { ctx.beginPath(); ctx.moveTo(X + sx * 40, 1500); ctx.lineTo(X + sx * 250, 1535); ctx.lineTo(X + sx * 80, 1600); ctx.stroke(); ctx.fillStyle = INK; ctx.beginPath(); ctx.ellipse(X + sx * 62, 1604, 22, 12, 0, 0, 7); ctx.fill(); }
   ctx.restore();
-  // normal-size phone in his hands: black, faint reflection
+  // wide, squat seated hoodie
+  const hp = spen(t, 18);
+  hp.part(roundPoly([[X - 120, 1190], [X + 120, 1190], [X + 185, 1540], [X - 185, 1540]], 40), hood, { shade: 0.18, lw: 6 });
+  hp.line([[X, 1230], [X, 1300]], 5); hp.part(roundPoly([[X - 90, 1400], [X + 90, 1400], [X + 100, 1500], [X - 100, 1500]], 30), hood, { shade: 0.3, lw: 4 });
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, 1185); ctx.clip();   // head only
+  drawCharacter(ctx, 'steve', X, Y, s, { expr: 'deadpan', lid: 0.55, mouth: 'line', look: 1, tilt: 14, hair: 2, bags: 1, fx: ['gloom', 'sweat'] }, { frame: boilFrame(t) });
+  ctx.restore();
+  hp.part(roundPoly([[X - 85, 1175], [X + 85, 1175], [X + 100, 1215], [X - 100, 1215]], 20), hood, { shade: 0.3, lw: 5 });
+  // arms resting on his lap, hands on the phone
+  ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 15; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  for (const [sx, hx] of [[-1, phx - 55], [1, phx + 60]]) { ctx.beginPath(); ctx.moveTo(X + sx * 118, 1250); ctx.lineTo(X + sx * 190, 1400); ctx.lineTo(hx, phy + 120); ctx.stroke(); } ctx.restore();
   ctx.save(); ctx.translate(phx, phy); ctx.rotate(0.08); const q = spen(t, 9);
   q.part(roundPoly([[-78, -125], [78, -125], [78, 125], [-78, 125]], 20), '#2a3050', { shade: 0.1, lw: 6 });
   ctx.fillStyle = '#0b0b12'; ctx.beginPath(); ctx.roundRect(-68, -113, 136, 226, 12); ctx.fill();
   ctx.fillStyle = 'rgba(255,255,255,0.12)'; ctx.beginPath(); ctx.ellipse(0, -10, 44, 52, 0, 0, 7); ctx.fill(); ctx.fillStyle = 'rgba(255,255,255,0.2)'; for (const dx of [-16, 14]) { ctx.beginPath(); ctx.ellipse(dx, -22, 7, 4, 0, 0, 7); ctx.fill(); } ctx.restore();
-  handAt(phx - 50, phy + 120, 34); handAt(phx + 60, phy + 120, 34);
-  // cat standing on the cable, licking a raised paw
+  handAt(phx - 55, phy + 120, 34); handAt(phx + 60, phy + 120, 34);
   drawCharacter(ctx, 'snuggles', 760, 1590, 8, { eyes: 'dot', lid: 0.55, look: -0.6, mouth: 'line', tail: 0.3 }, { frame: boilFrame(t) });
   ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 44; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(800, 1480); ctx.lineTo(768, 1385); ctx.stroke(); ctx.strokeStyle = '#3d3d4c'; ctx.lineWidth = 34; ctx.stroke(); ctx.fillStyle = '#e89aac'; ctx.beginPath(); ctx.ellipse(785, 1372, 12, 8, 0.3, 0, 7); ctx.fill(); ctx.restore();
   title(); plate('steve', ['…Thank you.'], ['Thank']);
