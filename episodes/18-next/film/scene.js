@@ -326,8 +326,8 @@ function phoneIns(t, o = {}) {
     ctx.restore();
   }
   if (o.reflect) { // Steve's flat face reflected in the black glass
-    ctx.save(); ctx.globalAlpha = 0.5 * o.reflect; ctx.beginPath(); ctx.roundRect(-sw / 2, -shh / 2, sw, shh, 50); ctx.clip();
-    drawCharacter(ctx, 'steve', 0, shh / 2 + 380, 18, { expr: 'deadpan', lid: 0.5, mouth: 'line', look: 0, hair: 2, bags: 1, fx: ['sweat'] }, { frame: boilFrame(t) }); ctx.restore();
+    ctx.save(); ctx.globalAlpha = 0.65 * o.reflect; ctx.beginPath(); ctx.roundRect(-sw / 2, -shh / 2, sw, shh, 50); ctx.clip();
+    drawCharacter(ctx, 'steve', 0, 840, 12, { eyes: 'wide', lid: 0.3, mouth: 'line', look: 0, hair: 2, bags: 1, fx: ['sweat'] }, { frame: boilFrame(t) }); ctx.restore();
     ctx.save(); ctx.globalAlpha = 0.18; ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.moveTo(-sw / 2, -shh / 2 + 100); ctx.lineTo(sw / 2, -shh / 2 - 60); ctx.lineTo(sw / 2, -shh / 2 + 300); ctx.lineTo(-sw / 2, -shh / 2 + 480); ctx.fill(); ctx.restore();
   }
   ctx.restore();
@@ -401,10 +401,15 @@ function build() {
       const cx = 756; CATD(onTwos(t), cx, 1560, 7, { eyes: 'wide', look: -0.4, tail: 0.2 }); PAW(cx - 40, 1560 - 80, cx - 82 + 7 * Math.sin(t * 24), 1560 - 152 - 7 * Math.cos(t * 24), 30);
       drop(spen(t, 8), 520 + 8 * Math.sin(t * 9), 520 + ((t * 700) % 700) * 0.28, 22, 0, 0.9); }); }],
     // 5 · s3 slide to the floor in three poses, plug stays the same finger short
-    [6.4, t => { const m = onTwos(t), th = kf(m, [[6.4, 0], [6.6, 0], [6.8, 0.75], [7.0, 1.45], [7.3, Math.PI / 2]], t_ => t_), Xs = kf(m, [[6.4, 440], [6.6, 440], [7.1, 0]]), Ys = kf(m, [[6.4, FL - 18], [6.7, FL - 18], [7.1, 1250]]);
-      cam(kf(t, [[6.4, 1.0], [7.3, 1.1]]), 540, 1000, () => { roomW(t); const ph = [Xs + 120 * Math.sin(th) + 10, Ys - 110 * Math.cos(th) * 0.4 - 60];
-        const hc = SV(m, Xs, Ys, 10.4, { eyes: 'wide', brow: 'worried', mouth: 'O', fx: ['sweat'], look: 0.7, lean: 17 * (1 - seg(m, 6.4, 7.0)) }, { th, R: [790, 950], L: [Xs + 60 * 10.4 * Math.sin(th) - 90, Ys - 60 * 10.4 * Math.cos(th) + 10] });
-        cable(wob([380, 1150], [790 - 54, 950], 8, 3, t * 40), 14); plug(790, 950, 0.9); handAt(750, 950, 34); CATD(m, 756, 1560, 7, { eyes: 'wide', look: -0.4 }); }); }],
+    [6.4, t => { const m = onTwos(t), k = seg(m, 6.62, 7.05), e = eio(k), th = e * Math.PI / 2, Xs = lerp(440, -236, e), Ys = lerp(FL - 18, 1300, e), tl = -e * 90, PX = 806;
+      cam(kf(t, [[6.4, 1.0], [7.3, 1.04]]), 540, 1000, () => { roomW(t);
+        const flo = k > 0.5, ph = flo ? [200, 1400] : [lerp(330, 300, e), lerp(880, 1000, e)];
+        if (flo) { cable([[PX - 54, 950], [800, 1180], [830, 1420], [500, 1450], [260, 1430]], 14); phoneAt(ph[0], ph[1], 120, 200, 1.45, redPhone(t)); }
+        SV(m, Xs, Ys, 10.7, { eyes: 'wide', brow: 'worried', mouth: k > 0.2 ? 'small' : 'O', fx: ['sweat'], look: 0.7, lean: 17 * (1 - e), tilt: tl }, { th, R: [PX - 40, 950], L: [lerp(330, 900, e), lerp(880, 1090, e)] });
+        if (!flo) { cable(wob([lerp(370, 330, e), lerp(950, 1290, e)], [PX - 54, 950], 8, 3, t * 40), 14); phoneAt(ph[0], ph[1], 120, 200, lerp(0.1, 0.6, e), redPhone(t)); }
+        plug(PX, 950, 0.9); handAt(PX - 40, 950, 34);
+        if (k > 0.6) { const a = seg(k, 0.6, 1); ctx.save(); ctx.globalAlpha = a; for (const fx of [882, 920]) { ctx.fillStyle = SKIN; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.roundRect(fx - 13, 985, 26, 120, 13); ctx.fill(); ctx.stroke(); } handAt(901, 1100, 40); ctx.restore(); }
+        CATD(m, 756, 1560, 7, { eyes: 'wide', look: -0.4 }); }); }],
     // 6 · insert: two fingers show the gap, cable twangs
     [7.3, t => { const u = t - 7.3, tw = t > 8.15 ? 40 * Math.exp(-(t - 8.15) * 8) * Math.cos((t - 8.15) * 42) : 0; cam(kf(t, [[7.3, 1.0], [8.6, 1.1]]), 600, 940, () => gapW(t, { dx: 36 + 2 * Math.sin(onTwos(t) * 30) + tw, fingers: seg(t, 7.3, 7.6), vib: Math.abs(tw) })); }],
     // 7 · s4 the fridge is dragged in scrapes; a magnet drops
@@ -432,15 +437,17 @@ function build() {
         d: kf(t, [[15.7, 0], [16.0, -10], [16.9, 24], [17.5, 12]]), face: { eyes: D, lid: 0.75, mouth: 'smile', brow: undefined, tilt: 8, look: 0, fx: ['sweat'] }, cat: { lick: true } })); }],
     // 12 · s7 the message: type, tap Send, "Sending…"
     [17.5, t => { const n = kf(onTwos(t), [[17.55, 0], [18.15, 9]], x => x), tap = t > 18.25 && t < 18.42, sending = t >= 18.3; cam(kf(t, [[17.5, 1.0], [18.7, 1.05]]), 540, 960, () => phoneIns(t, { typed: Math.floor(n), tap, sending, thumb: seg(t, 17.5, 17.85) })); }],
-    // 13 · 7b the cat stands and stretches on the cable
-    [18.7, t => { const stand = seg(t, 18.9, 19.1), str = seg(t, 19.15, 19.5), m = onTwos(t); cam(kf(t, [[18.7, 1.1], [19.55, 1.5]]), 760, 1480, () => sitW(t, { plug: 'in', screen: 'green', hug: 1, halo: 0.25, d: 8,
-        face: { eyes: D, lid: 0.7, mouth: 'smile', brow: undefined, tilt: 8, look: 0.3 }, cat: { x: 790 - 60 * str, sx: 1 + 0.5 * str, sy: lerp(1, 1.12, stand) - 0.28 * str, pose: { eyes: 'dot', lid: 0.8 * str + 0.3, look: -0.6, headDy: -12 * str + 2 * stand, tail: 1 }, paws: str > 0.5 } })); }],
+    // 13 · 7b the cat stands and stretches ON the cable in 3 poses; the plug is dragged out of the socket
+    [18.7, t => { const m = onTwos(t), ph = m < 18.95 ? 0 : m < 19.2 ? 1 : 2, slide = kf(m, [[19.0, 0], [19.25, 8], [19.5, 48]]);
+      const C = [{ x: 790, sx: 1, sy: 1, rot: 0, lid: 0.3, hd: 0 }, { x: 785, sx: 0.95, sy: 1.2, rot: -0.08, lid: 0.15, hd: -8 }, { x: 740, sx: 1.35, sy: 0.82, rot: -0.42, lid: 0.95, hd: 6 }][ph];
+      cam(kf(t, [[18.7, 1.0], [19.55, 1.06]]), 520, 1120, () => sitW(t, { plug: 'in', plugSlide: slide, screen: 'green', hug: 1, halo: 0.25, d: 8,
+        face: { eyes: D, lid: 0.7, mouth: 'smile', brow: undefined, tilt: 8, look: 0.3 }, cat: { x: C.x, sx: C.sx, sy: C.sy, rot: C.rot, pose: { eyes: 'dot', lid: C.lid, look: -0.6, headDy: C.hd, tail: 1 }, paws: ph === 2 } })); }],
     [19.55, t => { const out = kf(onTwos(t), [[19.55, 0], [19.8, 18], [19.95, 70]], x => x), pop = t > 19.95 ? seg(t, 19.95, 20.1) : 0, fly = t > 19.95 ? seg(t, 19.95, 20.1) : 0;
-      cam(kf(t, [[19.55, 1.0], [20.1, 1.06]]), 540, 960, () => popW(t, { out, popped: pop > 0 ? pop : 0, fly })); }],
+      cam(kf(t, [[19.55, 1.0], [20.1, 1.06]]), 540, 960, () => { popW(t, { out, popped: pop > 0 ? pop : 0, fly }); const m = onTwos(t); CATD(m, 330, 2150 - 60 * fly, 12, { eyes: 'dot', lid: 0.9, look: -0.6, mouth: 'O' }, { rot: -0.3, sx: 1.2, sy: 0.85 }); }); }],
     // 14 · 8 power-down: the screen collapses to a dot, Steve's face fades in on the black glass
     [20.1, t => { const bl = seg(t, 20.2, 20.5), rf = seg(t, 20.75, 21.2); cam(kf(t, [[20.1, 1.0], [21.2, 1.07]]), 540, 960, () => phoneIns(t, { sending: true, black: bl, reflect: bl >= 1 ? rf : 0 })); }],
     // 15 · s9 THE PUNCH: head turn to the cat, flat; the cat licks its paw
-    [s.s9.start, t => { const m = onTwos(t), turn = seg(m, 21.3, 21.7); cam(kf(t, [[21.2, 1.0], [23.1, 1.07]]), 330, 1060, () => sitW(t, { plug: 'out', screen: 'black', cat: { lick: true },
+    [s.s9.start, t => { const m = onTwos(t), turn = seg(m, 21.3, 21.7); cam(kf(t, [[21.2, 1.0], [23.1, 1.05]]), 470, 1060, () => sitW(t, { plug: 'out', screen: 'black', cat: { lick: true },
         face: { look: lerp(-0.7, 1, turn), tilt: lerp(-4, 14, turn), lid: lerp(0.35, 0.55, turn) } })); }],
     // 16 · s10a button: yank the drawer, the power bank
     [23.1, t => { const m = onTwos(t), open = kf(m, [[23.35, 0], [23.5, 150], [23.65, 128]], eo), grab = seg(t, 23.7, 24.1), X = 400; const hold = [lerp(1000, 520, eio(grab)), lerp(1000, 760, eio(grab))];
@@ -448,7 +455,7 @@ function build() {
     [24.3, t => { const m = onTwos(t), k = seg(t, 24.35, 24.55), press = t > 24.55 && t < 24.7;
       const leds = t < 24.55 ? 0 : t < 24.8 ? 4 : t < 25.0 ? 3 : t < 25.2 ? 2 : 1; cam(kf(t, [[24.3, 1.0], [25.4, 1.08]]), 540, 960, () => bankIns(t, { leds: t < 24.6 ? 0 : leds, press, thumbK: k, txt: t > 25.25 })); }],
     // 17 · loop: push-in on the frame-1 composition, the power bank where the phone was
-    [25.4, t => cam(kf(t, [[25.4, 0.9], [27.3, 1.0]], eio), 540, 960, () => hookW(t, { bank: true, strain: 0 }))],
+    [25.4, t => cam(kf(t, [[25.4, 0.9], [27.0, 1.0]], eio), 540, 960, () => hookW(t, { bank: true, strain: 0 }))],
   ];
 }
 

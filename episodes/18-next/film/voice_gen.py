@@ -22,7 +22,7 @@ SPEED = json.load(open(os.path.join(HERE, 'speeds.json'))) if os.path.exists(os.
 # script order: (id, pause_after). Silent beats folded into pauses: 4b = 0.8 after s4 (+0.2); 7b 1.0 + 8 0.6 after s7 (+0.2)
 ORDER = [('s1', .3), ('s2', .3), ('s3', .3), ('s4', 1.6), ('s5', .3), ('s6', .3), ('s7', 2.6), ('s9', .88), ('s10a', 0)]
 # gate-4 film timing: frame 1 held 0.5 s before the first word; longer 4b/7b/8 holds; punch pinned at 21.2 s of a 27.3 s film
-ABS = {'s1': 0.5, 's9': 21.2}; FILM_TOTAL = 27.3
+ABS = {'s1': 0.5, 's9': 21.2}; FILM_TOTAL = 27.0
 CHOICE = json.load(open(os.path.join(HERE, 'choice.json'))) if os.path.exists(os.path.join(HERE, 'choice.json')) else {}  # id -> seed override
 def rms(x, hop=240):
     n = len(x) // hop; return np.sqrt((x[:n*hop].reshape(n, hop)**2).mean(1) + 1e-12)
