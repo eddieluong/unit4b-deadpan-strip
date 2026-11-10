@@ -2,7 +2,7 @@
 
 File: `episodes/18-next/film/out/one_percent_v2.mp4` (27.0 s, 1080x1920, owner OK'd v2; make the CRF 27 copy at posting time) ·
 Thumbnails: `thumb_A.png`, `thumb_B.png`, `thumb_C.png`, contact sheet `thumbsheet.png` (source `episodes/18-next/film/thumb.js`).
-**Recommended: title A + thumbnail A** (owner can overrule).
+**Owner pick (2026-11-10): title A + thumbnail A.** Post 2026-11-11, 07:00–08:00 VN.
 Role in the 3-Short plan: **posting-time test**. Post at **07:00–08:00 VN**, the only Short that day. Nothing else changes vs Tập 8
 (same captions, face size, format, auto-dubbing setting, playlist).
 
