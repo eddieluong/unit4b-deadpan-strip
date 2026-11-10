@@ -20,7 +20,9 @@ TAKES = {
 }
 SPEED = json.load(open(os.path.join(HERE, 'speeds.json'))) if os.path.exists(os.path.join(HERE, 'speeds.json')) else {}
 # script order: (id, pause_after). Silent beats folded into pauses: 4b = 0.8 after s4 (+0.2); 7b 1.0 + 8 0.6 after s7 (+0.2)
-ORDER = [('s1', .3), ('s2', .3), ('s3', .3), ('s4', .2 + .8), ('s5', .2), ('s6', .3), ('s7', .2 + 1.0 + .6), ('s9', .7), ('s10a', 0)]
+ORDER = [('s1', .3), ('s2', .3), ('s3', .3), ('s4', 1.6), ('s5', .3), ('s6', .3), ('s7', 2.6), ('s9', .88), ('s10a', 0)]
+# gate-4 film timing: frame 1 held 0.5 s before the first word; longer 4b/7b/8 holds; punch pinned at 21.2 s of a 27.3 s film
+ABS = {'s1': 0.5, 's9': 21.2}; FILM_TOTAL = 27.3
 CHOICE = json.load(open(os.path.join(HERE, 'choice.json'))) if os.path.exists(os.path.join(HERE, 'choice.json')) else {}  # id -> seed override
 def rms(x, hop=240):
     n = len(x) // hop; return np.sqrt((x[:n*hop].reshape(n, hop)**2).mean(1) + 1e-12)
@@ -102,13 +104,14 @@ if __name__ == '__main__':
     def mix(order, name):
         t, tl = 0.0, []
         for i, p in order:
+            t = ABS.get(i, t)
             d = len(ys[i]) / SR; tl.append({'id': i, 'start': round(t, 3), 'end': round(t + d, 3), 'speed': SPEED.get(i, 1.0)}); t += d + p
-        total = tl[-1]['end']; punch = [x for x in tl if x['id'] == 's9'][0]['start']
+        total = FILM_TOTAL; punch = [x for x in tl if x['id'] == 's9'][0]['start']
         buf = np.zeros(int((total + .3) * SR))
         for x in tl: y = ys[x['id']]; s0 = int(x['start'] * SR); buf[s0:s0 + len(y)] += y
         sf.write(os.path.join(OUT, name), buf, SR); return tl, total, punch
     tl, total, punch = mix(ORDER, 'voice_mix.wav')
     tl2, total2, punch2 = mix([(i if i != 's10a' else 's10b', p) for i, p in ORDER], 'voice_mix_10b.wav')
-    json.dump({'lines': tl, 'total': total, 'punch_start': punch, 'punch_pct': round(100 * punch / total, 1), 'total_10b': total2, 'punch_pct_10b': round(100 * punch2 / total2, 1), 'picks': report}, open(os.path.join(OUT, 'timeline.json'), 'w'), indent=1)
+    json.dump({'lines': tl, 'total': total, 'voice_end': tl[-1]['end'], 'punch_start': punch, 'punch_pct': round(100 * punch / total, 1), 'total_10b': total2, 'punch_pct_10b': round(100 * punch2 / total2, 1), 'picks': report}, open(os.path.join(OUT, 'timeline.json'), 'w'), indent=1)
     for i in ys: print(i, 'dur', round(len(ys[i]) / SR, 2), report[i])
     print('total', round(total, 2), 'punch', round(punch, 2), round(100 * punch / total, 1), '%  | 10b total', round(total2, 2), round(100 * punch2 / total2, 1), '%')
