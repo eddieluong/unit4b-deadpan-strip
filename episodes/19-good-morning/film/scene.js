@@ -127,10 +127,15 @@ function gripHand(x, y, rot) {
   ctx.restore();
 }
 function handAt(x, y, r) { ctx.fillStyle = SKIN; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.ellipse(x, y, r, r * 0.8, 0, 0, 7); ctx.fill(); ctx.stroke(); }
-function thumb(tx, ty, press = 0, rot = -0.45) {   // tip at (tx,ty), arm coming in from the bottom right
-  ctx.save(); ctx.translate(tx, ty); ctx.rotate(rot); const k = 1 - 0.06 * press; ctx.scale(k, k); ctx.fillStyle = SKIN; ctx.strokeStyle = INK; ctx.lineWidth = 7;
-  ctx.beginPath(); ctx.roundRect(-62, -20, 124, 900, 62); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = 'rgba(255,255,255,0.55)'; ctx.beginPath(); ctx.ellipse(0, 36, 30, 22, 0, 0, 7); ctx.fill(); ctx.restore();
+function thumb(tx, ty, press = 0, rot = -0.45) {   // pointing hand: index tip at (tx,ty), short forearm entering from the bottom-right edge
+  ctx.save(); ctx.translate(tx, ty); ctx.rotate(rot); const k = 1 - 0.06 * press; ctx.scale(k, k); ctx.strokeStyle = INK; ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  ctx.fillStyle = SKIN; ctx.beginPath(); ctx.roundRect(-58, 290, 116, 700, 40); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#f2b630'; ctx.beginPath(); ctx.roundRect(-66, 400, 132, 70, 18); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = SKIN; ctx.beginPath(); ctx.ellipse(6, 255, 80, 92, 0, 0, 7); ctx.fill(); ctx.stroke();
+  for (const [cx, cy] of [[-58, 215], [-62, 262], [-52, 309]]) { ctx.beginPath(); ctx.arc(cx, cy, 30, 0, 7); ctx.fill(); ctx.stroke(); }
+  ctx.save(); ctx.translate(70, 232); ctx.rotate(-0.5); ctx.beginPath(); ctx.ellipse(0, 0, 28, 50, 0, 0, 7); ctx.fill(); ctx.stroke(); ctx.restore();
+  ctx.beginPath(); ctx.roundRect(-22, 0, 44, 200, 22); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = 'rgba(255,255,255,0.5)'; ctx.beginPath(); ctx.ellipse(0, 26, 10, 16, 0, 0, 7); ctx.fill(); ctx.restore();
 }
 // Steve, with the approved still-2 shirt shape on every draw
 function steve(t, X, Y, s, pose) {
@@ -185,18 +190,17 @@ function bedW(t, o = {}) {
   const jig = o.jig ? shake(t, o.jig, 40) : [0, 0];
   phoneAt(phx + jig[0], phy + jig[1], 260, 400, 0.08, screen);
   if (!o.peace && !o.nopour) glowBlob(phx - 20, phy - 120, 380, 'rgba(255,170,215,0.4)');
-  if (!o.nopour) pour(t, phx, phy - 120, { vx: 230, cx: 150, ...(o.pourO || {}) });
+  if (!o.nopour) pour(t, phx, phy - 120, { vx: 110, cx: 190, ...(o.pourO || {}) });
   // pile on the blanket
   const lvl = o.pile ?? 1, pa = o.pileAlpha ?? 1; ctx.save(); ctx.globalAlpha = pa;
   if (lvl >= 1) { card(700, 1380, 150, -0.3, 0); card(330, 1440, 160, 0.25, 1); pileRow(600, 1060, 1400, 1560, 8, 170, 250); pileRow(20, 330, 1470, 1560, 3, 160, 220); }
-  if (lvl >= 2) { pileRow(-40, 1120, 1180, 1460, 14, 180, 260); }
-  if (lvl >= 3) { pileRow(-40, 1120, 1020 - (o.pileUp || 0), 1260, 16, 190, 270); }
+  if (lvl >= 2) { pileRow(-40, 1120, 1330, 1480, 8, 180, 250); pileRow(640, 1120, 1020, 1300, 8, 170, 230); }
+  if (lvl >= 3) { pileRow(650, 1120, 760 - (o.pileUp || 0), 1100, 9, 180, 250); pileRow(-40, 1120, 1280 - (o.pileUp || 0), 1400, 8, 190, 260); }
   ctx.restore();
   if (!o.peace) { ctx.save(); const k = o.badgeK ?? 1; ctx.translate(955, 880); ctx.scale(k, k); ctx.fillStyle = RED; ctx.strokeStyle = INK; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(0, 0, 56, 0, 7); ctx.fill(); ctx.stroke(); text(o.counter || '47', 0, 4, 54, '#fff'); ctx.restore(); }
   gripHand(phx + jig[0] - 120, phy + jig[1] + 90, 0.3);
   if (o.peace) { // sunbeam, motes, birds
-    ctx.save(); ctx.globalCompositeOperation = 'screen'; ctx.fillStyle = 'rgba(255,240,170,0.3)'; ctx.beginPath(); ctx.moveTo(600, 700); ctx.lineTo(1010, 700); ctx.lineTo(620, 1500); ctx.lineTo(0, 1500); ctx.fill(); ctx.restore();
-    for (let i = 0; i < 14; i++) { const px = 120 + 800 * hsh(i) + 30 * Math.sin(t * 0.9 + i), py = 700 + 650 * ((hsh(i + 9) + t * 0.05 * (0.5 + hsh(i + 3))) % 1); ctx.fillStyle = 'rgba(255,255,230,0.85)'; ctx.beginPath(); ctx.arc(px, py, 5 + 4 * hsh(i + 5), 0, 7); ctx.fill(); }
+        for (let i = 0; i < 14; i++) { const px = 120 + 800 * hsh(i) + 30 * Math.sin(t * 0.9 + i), py = 700 + 650 * ((hsh(i + 9) + t * 0.05 * (0.5 + hsh(i + 3))) % 1); ctx.fillStyle = 'rgba(255,255,230,0.85)'; ctx.beginPath(); ctx.arc(px, py, 5 + 4 * hsh(i + 5), 0, 7); ctx.fill(); }
     for (const [bx, by, ph] of [[720, 440, 0], [800, 380, 1.3]]) { const fx = bx + 40 * Math.sin(t * 1.2 + ph), fy = by + 14 * Math.sin(t * 2.4 + ph), fl = Math.sin(t * 18 + ph) * 10; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(fx - 28, fy - fl); ctx.quadraticCurveTo(fx - 12, fy - 14, fx, fy); ctx.quadraticCurveTo(fx + 12, fy - 14, fx + 28, fy - fl); ctx.stroke(); }
   }
   if (!o.peace) { const dp = spen(t, 31); drop(dp, 140, 700, 22, 0.3); drop(dp, 90, 860, 18, -0.2); drop(dp, 520, 1010, 20, 0.2); }
@@ -334,7 +338,8 @@ function albumScreen(t, w, h) {
 function leaveScreen(t, w, h) {
   header(w, h, 'Family Group', 'Group info');
   const rows = [['Mute notifications', '#fff'], ['Media & files', '#fff'], ['Search', '#fff'], ['Leave group', '#ffd6d6']], tap = seg(t, 9.72, 9.8);
-  rows.forEach(([lbl, col], i) => { const y = -h / 2 + 330 + i * 150; ctx.fillStyle = i === 3 && tap > 0 ? '#ff8a8a' : col; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.roundRect(-330, y - 56, 660, 112, 28); ctx.fill(); ctx.stroke(); text(lbl, i === 3 ? 10 : 0, y + 3, 50, i === 3 ? '#b3202e' : INK); });
+  rows.forEach(([lbl, col], i) => { const y = -h / 2 + 330 + i * 150; ctx.fillStyle = i === 3 ? (tap > 0 ? '#ff5a5a' : '#ffb3b3') : col; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.roundRect(-330, y - 56, 660, 112, 28); ctx.fill(); ctx.stroke(); text(lbl, i === 3 ? 10 : 0, y + 3, 54, i === 3 ? '#8a0f1c' : INK);
+    if (i === 3 && t > 9.7 && t < 10.1) { const r = seg(t, 9.7, 10.1); ctx.save(); ctx.strokeStyle = `rgba(255,70,70,${1 - r})`; ctx.lineWidth = 10; ctx.beginPath(); ctx.roundRect(-330 - r * 50, y - 56 - r * 40, 660 + r * 100, 112 + r * 80, 28 + r * 30); ctx.stroke(); ctx.restore(); } });
 }
 function grandmaScreen(t, w, h) {
   header(w, h, 'Family Group', 'Grandma is typing…');
@@ -378,7 +383,7 @@ function build() {
     // 1 · hook: frame 1 = approved still; cards pour, counter ticks 47 -> 52
     [0, t => cam(kf(t, [[0, 1.0], [1.0, 1.04]], eo), 540, 960, () => bedW(t, { counter: String(47 + Math.min(5, Math.floor(t * 5.5))), badgeK: 1 + 0.18 * Math.sin(Math.PI * ((t * 5.5) % 1)) }))],
     // 2 · close-up: one big glitter rose card spins in front of Steve's face
-    [1.0, t => cam(kf(t, [[1.0, 1.7], [1.9, 1.9]]), 330, 900, () => { bedW(t, { counter: '53', nopour: false, pourO: { sz: 90 } }); const a = (t - 1) * 6; ctx.save(); ctx.translate(300 + 150 * Math.sin(a * 0.35), 840 + 40 * Math.sin(a)); ctx.scale(Math.cos(a), 1); card(0, 0, 230, 0.25, 0, false); ctx.restore(); })],
+    [1.0, t => cam(kf(t, [[1.0, 1.7], [1.9, 1.9]]), 330, 900, () => { bedW(t, { counter: '53', nopour: false, pourO: { sz: 90 } }); const a = (t - 1) * 6; ctx.save(); ctx.translate(615 + 25 * Math.sin(a * 0.35), 560 + 40 * Math.sin(a)); ctx.scale(Math.cos(a), 1); card(0, 0, 190, 0.25, 0, false); ctx.restore(); })],
     // 3 · phone: the counter ticks, the chat scrolls
     [1.9, t => { const n = 53 + Math.floor((t - 1.9) * 7); cam(kf(t, [[1.9, 1.0], [3.52, 1.07]]), 540, 960, () => phoneBig(t, { screen: (w, h) => chatScreen(t, w, h), badge: String(n), badgeK: 1 + 0.2 * Math.sin(Math.PI * (((t - 1.9) * 7) % 1)) })); }],
     // 4 · s2: sit-up in three poses
@@ -391,8 +396,8 @@ function build() {
     [6.9, t => cam(kf(t, [[6.9, 1.15], [8.51, 1.28]]), 540, 960 - 60, () => { phoneBig(t, { screen: (w, h) => albumScreen(t, w, h) }); const d = seg(t, 7.0, 7.5); if (t < 7.6) thumb(lerp(420, 660, eio(d)) + 40, lerp(840, 1280, eio(d)), t > 7.4 ? 0 : 1); })],
     // 8 · s4 leave group: thumb taps on LEAVING, the flood freezes mid-air and drops
     [8.51, t => { cam(kf(t, [[8.51, 1.0], [10.3, 1.12]]), 540, 1040, () => { phoneBig(t, { screen: (w, h) => leaveScreen(t, w, h) });
-      const k = seg(t, 8.9, 9.65); thumb(lerp(980, 560, eo(k)) + 30, lerp(1800, 1270, eo(k)), t > 9.68 && t < 9.85 ? 1 : 0);
-      pour(t, 540, 1500, { freeze: 9.78, drop: 10.05, n: 14, vx: 480, vup: 1500, sz: 230 }); }); }],
+      const k = seg(t, 8.9, 9.65); thumb(lerp(1000, 590, eo(k)), lerp(1800, 1082, eo(k)), t > 9.68 && t < 9.85 ? 1 : 0);
+      if (t > 9.88) pour(t - 9.88, 540, 1500, { freeze: 0.2, drop: 0.3, n: 14, vx: 480, vup: 1500, sz: 230 }); }); }],
     // 9 · 4b peace: birds, sunbeam, he sinks into the pillow, the cat stretches
     [s.s4.end, t => { const m = onTwos(t), k = seg(t, 10.32, 11.0); cam(kf(t, [[10.32, 1.0], [11.0, 1.06]]), 540, 960, () => bedW(t, { peace: true, nopour: true, pile: 0, noBeam: false, dy: lerp(-20, 30, eio(k)), tilt: lerp(0, -6, k), screen: () => {}, face: { eyes: 'dot', lid: lerp(0.5, 0.95, k), mouth: 'smile', brow: undefined, fx: [], look: 0 }, cat: { sx: 1 + 0.12 * Math.sin(Math.PI * k), sy: 1 + 0.18 * Math.sin(Math.PI * k), pose: { lid: 0.8, mouth: 'line' } } })); }],
     // 10 · Mom added you (full-frame card on top of the returning flood)

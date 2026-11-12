@@ -24,3 +24,11 @@ Total 26.96 s, punch 77.9 %. End hold 2.0 s (loop push-in matches frame 1).
 duration 27.0 s; punch 77.9 %; no static >= 3 s; hook diff 62.8 (>= 4); first 1.8 s -17.3 dBFS; -14.0 LUFS, TP -3.0 dB. 1080x1920, 30 fps.
 ## Weak spots (v1)
 Thumb in the album and leave-group shots is a long plain bar; pour cards still overlap Steve's face in the close-ups at 1.4 s; Grandma bubble sits low in the 20.5 s insert; heart overlay crowds the 24 s phone; sfx are synthesised placeholders (pings, chirps).
+
+# v2 (5 review fixes) -> film/out/good_morning_v2.mp4, sheet_v2.png (`V=v2 sh render.sh`)
+Timing/audio unchanged: 26.96 s, punch 21.0 s = 77.9 %. QA PASS: -14.0 LUFS, TP -3.0 dB, hook diff 62.1, no static >= 3 s.
+1. Hook 0 to 1.5 s: pour cards now drift to the right of Steve (vx 110, cx 190); the spinning rose in the close-up moved beside the head. Face clear.
+2. Album shot: the finger bar is now an on-model pointing hand (short forearm, cuff, curled fingers, index out, skin #e2ac84, ink outline).
+3. Leave shot: the "Leave group" row is red and visible, the hand taps it at 9.68 to 9.85 (darker fill + flash ring); the card flood starts only at 9.88, then freezes and drops.
+4. Peace beat: removed the translucent light-shaft overlay that crossed the cat; only the soft room beam behind remains. Cat opaque.
+5. 12 to 15 s: pile now sits to the right and low (lvl 2/3 rows moved), so eyes and mouth stay readable.
