@@ -4,10 +4,12 @@ Writes voice/<id>.wav, voice/timeline.json, voice/take_<char>.wav (raw)."""
 import json, os, re, sys, difflib, subprocess, urllib.request
 import numpy as np, soundfile as sf
 from scipy.signal import resample_poly
-HERE = os.path.dirname(os.path.abspath(__file__)); OUT = os.path.join(HERE, 'voice'); os.makedirs(OUT, exist_ok=True)
+HERE = os.path.dirname(os.path.abspath(__file__))
+V2 = os.environ.get('STEVE_CLONE') == 'v2'   # STEVE_CLONE=v2 -> Steve = voice_id_clone_v2, output in voice/v2/ (own take cache; copy Snuggles take_*.wav there to reuse)
+OUT = os.path.join(HERE, 'voice', 'v2') if V2 else os.path.join(HERE, 'voice'); os.makedirs(OUT, exist_ok=True)
 SR = 24000; SEEDS = [1809, 2718]   # two takes per character; best take chosen per line
 _EL = json.load(open(os.path.join(HERE, '..', '..', '..', 'styles', 'deadpan-strip', 'elevenlabs.json')))['characters']
-VOICE = {'steve': _EL['steve']['voice_id'], 'snuggles': _EL['snuggles']['voice_id']}   # Steve = IVC clone (2026-11-12)
+VOICE = {'steve': _EL['steve']['voice_id_clone_v2' if V2 else 'voice_id'], 'snuggles': _EL['snuggles']['voice_id']}   # Steve = IVC clone (2026-11-12)
 # id, spoken text with light tags (CAPS = stress word). Numbers as words, no "..." in text.
 TAKES = {
  'steve': ([('s2', "[groggy, disbelieving] Why are they all AWAKE?"), ('s3', "[betrayed, whining] I deleted my PHOTOS for this."),
@@ -111,6 +113,7 @@ if __name__ == '__main__':
         for x in tl: y = ys[x['id']]; s0 = int(x['start'] * SR); buf[s0:s0 + len(y)] += y
         sf.write(os.path.join(OUT, name), buf, SR); return tl, total, punch
     tl, total, punch = mix(ORDER, 'voice_mix.wav')
+    if V2: subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', os.path.join(OUT, 'voice_mix.wav'), '-af', 'loudnorm=I=-14:TP=-1.5:LRA=7', '-ar', str(SR), '-ac', '1', os.path.join(OUT, 'preview.wav')], check=True)
     json.dump({'lines': tl, 'total': total, 'voice_end': tl[-1]['end'], 'punch_start': punch, 'punch_pct': round(100 * punch / total, 1), 'picks': report}, open(os.path.join(OUT, 'timeline.json'), 'w'), indent=1)
     for i in ys: print(i, 'dur', round(len(ys[i]) / SR, 2), report[i])
     print('total', round(total, 2), 'punch', round(punch, 2), round(100 * punch / total, 1), '%')
