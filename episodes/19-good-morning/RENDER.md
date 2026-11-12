@@ -21,6 +21,6 @@ Output: episodes/19-good-morning/film/out/good_morning_v1.mp4 (git-ignored). Con
 Total 26.96 s, punch 77.9 %. End hold 2.0 s (loop push-in matches frame 1).
 
 ## QA (tools/qa_video.py --punch 21.0): PASS
-duration 27.0 s; punch 77.9 %; no static >= 3 s; hook diff 36.4 (>= 4); first 1.8 s -17.3 dBFS; -14.0 LUFS, TP -3.0 dB. 1080x1920, 30 fps.
+duration 27.0 s; punch 77.9 %; no static >= 3 s; hook diff 62.8 (>= 4); first 1.8 s -17.3 dBFS; -14.0 LUFS, TP -3.0 dB. 1080x1920, 30 fps.
 ## Weak spots (v1)
 Thumb in the album and leave-group shots is a long plain bar; pour cards still overlap Steve's face in the close-ups at 1.4 s; Grandma bubble sits low in the 20.5 s insert; heart overlay crowds the 24 s phone; sfx are synthesised placeholders (pings, chirps).
