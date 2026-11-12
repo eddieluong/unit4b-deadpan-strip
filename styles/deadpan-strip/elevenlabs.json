@@ -6,7 +6,9 @@
  "_stability_note": "Eleven v3 stability works in three bands: 0.0 Creative (most expressive, follows audio tags hardest), 0.5 Natural, 1.0 Robust (steady, ignores many tags). Deadpan modes sit high, big emotions sit low.",
  "characters": {
   "steve": {
-   "voice_id": "Y9z2nW5YxRRbI3XaIf8x",
+   "voice_id": "prNYC4dAg4xnMXOGf79f",
+   "voice_id_old": "Y9z2nW5YxRRbI3XaIf8x",
+   "_voice_note": "old account Voice Design; cloned 2026-11-12 (IVC) from Tập 8–9 lines",
    "design_prompt": "Comedic cartoon voice of a young American man in his late twenties. High-strung, panicky and slightly nasal, always on the verge of a meltdown. His voice cracks and squeaks when stressed, he rambles fast, laughs nervously and gasps a lot. Animated sitcom energy, wildly expressive and exaggerated, never formal.",
    "library_search": "young american male, nervous, comedic, awkward",
    "fx": "",
