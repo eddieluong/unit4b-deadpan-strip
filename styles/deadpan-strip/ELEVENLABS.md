@@ -130,11 +130,13 @@ Tạo bằng Voice Design theo hướng hoạt hình hài (prompt ở `design_pr
 
 | Nhân vật | Bản | Voice ID |
 |---|---|---|
-| Sweaty Steve | bản 3 | `Y9z2nW5YxRRbI3XaIf8x` |
-| Nana Knuckles | bản 3 | `4m2IGvkby0duGcRUvLDs` |
-| Penny Pincher | bản 3 | `uLjMe2KKO62jRu3id160` |
-| Dead Ted | bản 3 | `izA0O6Rq9ZDMyG36oEyJ` |
+| Sweaty Steve | bản 3 | `LOYCqPiwanfdLVO55I4W` |
+| Nana Knuckles | bản 3 | `24qXy78DXDNKGKMxVGhR` |
+| Penny Pincher | bản 3 | `v3CZV0mLV8RjyzlavGz8` |
+| Dead Ted | bản 3 | `vAMuXk2qUJzKkPCTIZR8` |
 | Sgt. Snuggles | "Brian" (premade, từ 2026-10-23) | `nPczCjzI2devNBz1zQrb` (giọng noir cũ: `l4SjkRNDNFXHMWSAVCoK`) |
+
+Ngày 2026-11-12 các giọng Voice Design đã được copy sang workspace ElevenLabs mới (id mới ở bảng trên; id cũ nằm trong `elevenlabs.json` mục `voice_id_old`).
 
 Penny dùng giọng hoạt hình do người lớn lồng (ElevenLabs không cho tạo giọng trẻ em).
 

@@ -113,7 +113,7 @@ if __name__ == '__main__':
         for x in tl: y = ys[x['id']]; s0 = int(x['start'] * SR); buf[s0:s0 + len(y)] += y
         sf.write(os.path.join(OUT, name), buf, SR); return tl, total, punch
     tl, total, punch = mix(ORDER, 'voice_mix.wav')
-    if V2: subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', os.path.join(OUT, 'voice_mix.wav'), '-af', 'loudnorm=I=-14:TP=-1.5:LRA=7', '-ar', str(SR), '-ac', '1', os.path.join(OUT, 'preview.wav')], check=True)
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', os.path.join(OUT, 'voice_mix.wav'), '-af', 'loudnorm=I=-14:TP=-1.5:LRA=7', '-ar', str(SR), '-ac', '1', os.path.join(OUT, 'preview.wav')], check=True)
     json.dump({'lines': tl, 'total': total, 'voice_end': tl[-1]['end'], 'punch_start': punch, 'punch_pct': round(100 * punch / total, 1), 'picks': report}, open(os.path.join(OUT, 'timeline.json'), 'w'), indent=1)
     for i in ys: print(i, 'dur', round(len(ys[i]) / SR, 2), report[i])
     print('total', round(total, 2), 'punch', round(punch, 2), round(100 * punch / total, 1), '%')

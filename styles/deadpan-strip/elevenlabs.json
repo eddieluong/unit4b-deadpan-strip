@@ -6,10 +6,11 @@
  "_stability_note": "Eleven v3 stability works in three bands: 0.0 Creative (most expressive, follows audio tags hardest), 0.5 Natural, 1.0 Robust (steady, ignores many tags). Deadpan modes sit high, big emotions sit low.",
  "characters": {
   "steve": {
-   "voice_id": "prNYC4dAg4xnMXOGf79f",
+   "voice_id": "LOYCqPiwanfdLVO55I4W",
    "voice_id_old": "Y9z2nW5YxRRbI3XaIf8x",
+   "voice_id_clone_v1": "prNYC4dAg4xnMXOGf79f",
    "voice_id_clone_v2": "VKJKY6ggD6l8lts8yILS",
-   "_voice_note": "old account Voice Design; cloned 2026-11-12 (IVC) from Tập 8–9 lines",
+   "_voice_note": "original Voice Design v3, copied to the new workspace 2026-11-12 (new id); clones unused",
    "design_prompt": "Comedic cartoon voice of a young American man in his late twenties. High-strung, panicky and slightly nasal, always on the verge of a meltdown. His voice cracks and squeaks when stressed, he rambles fast, laughs nervously and gasps a lot. Animated sitcom energy, wildly expressive and exaggerated, never formal.",
    "library_search": "young american male, nervous, comedic, awkward",
    "fx": "",
@@ -100,7 +101,8 @@
    "design_preview": 3
   },
   "nana": {
-   "voice_id": "4m2IGvkby0duGcRUvLDs",
+   "voice_id": "24qXy78DXDNKGKMxVGhR",
+   "voice_id_old": "4m2IGvkby0duGcRUvLDs",
    "design_prompt": "Comedic cartoon voice of a tiny elderly British grandmother. Sweet, sing-song, wobbly old-lady voice that suddenly drops into a low, gravelly, menacing whisper, then bounces right back to sweet. Cheeky cackle, theatrical timing, wildly expressive, animated comedy style.",
    "library_search": "old british woman, grandma, warm, sweet",
    "fx": "",
@@ -191,7 +193,8 @@
    "design_preview": 3
   },
   "penny": {
-   "voice_id": "uLjMe2KKO62jRu3id160",
+   "voice_id": "v3CZV0mLV8RjyzlavGz8",
+   "voice_id_old": "uLjMe2KKO62jRu3id160",
    "design_prompt": "Comedic cartoon voice performed by an adult woman for a bossy cartoon landlord: small, high-pitched, squeaky and nasal, extremely sassy, bored and condescending, snappy clipped delivery with dramatic eye-roll sighs. Animated sitcom style, wildly expressive, never formal.",
    "library_search": "young girl, child, confident, clear",
    "fx": "",
@@ -283,7 +286,8 @@
    "design_preview": 3
   },
   "ted": {
-   "voice_id": "izA0O6Rq9ZDMyG36oEyJ",
+   "voice_id": "vAMuXk2qUJzKkPCTIZR8",
+   "voice_id_old": "izA0O6Rq9ZDMyG36oEyJ",
    "design_prompt": "Comedic cartoon voice of a middle-aged British man playing a grumpy, whiny ghost. Theatrical sighs and overdramatic groans, passive-aggressive and mopey, giggles at his own terrible puns, with a wobbly spooky quality. Animated comedy style, wildly expressive, never formal.",
    "library_search": "middle aged british man, dry, weary, sarcastic",
    "fx": "highpass=f=140,aecho=0.8:0.7:70|140:0.25|0.14",
