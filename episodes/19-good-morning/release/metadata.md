@@ -4,6 +4,7 @@ File: `episodes/19-good-morning/film/out/good_morning_v2.mp4` (26.96 s, 1080x192
 Thumbnails: `thumb_A.png`, `thumb_B.png`, `thumb_C.png`, contact sheet `thumbsheet.png` (source `episodes/19-good-morning/film/thumb.js`, run `node thumb.mjs . && python3 thumbsheet.py` in `film/`).
 Role in the 3-Short plan: **auto-dubbing test**. Variable = auto-dubbing OFF at upload. Nothing else changes vs Tập 8/9 (captions, face size, format, playlist).
 **Owner pick (2026-11-12): title B** `When Mom adds you back to the family group chat. #shorts` + **thumbnail A** (set by hand in Studio). Owner: "đăng luôn" (post now, 2026-11-12).
+**Uploaded (2026-11-12):** video id `drgy_WCVgPo` (https://youtube.com/shorts/drgy_WCVgPo), private draft; file uploaded = CRF 29 (tool 10 MB limit). Owner: thumbnail A, altered-content, auto-dubbing OFF (per-video edit page → Show more / Language → "Allow automatic dubbing"), Public.
 Posting slot: **TBD after the Tập 9 48 h post-mortem** (keep 07:00–08:00 VN only if Tập 9 beat Tập 8).
 
 ## Thumbnails (Short cover, 1080x1920; feed views never see it, it matters for the channel page and search)
