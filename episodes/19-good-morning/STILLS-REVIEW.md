@@ -27,3 +27,12 @@ Kept: head ~27 % of frame, blank half-lidded face, Grandma "Steve? Are you okay?
 ## Global
 - Same window, light, palette in all three; title pill and captions inside the panel/safe area: OK. No country-specific app branding: OK.
 - Still weak: Steve's torso in the climax is a plain column (arms are on-model); the hook hands are simple ellipses like in Tập 9.
+
+---
+# Round 2 (v3 -> v4), 2026-11-12
+
+| # | Still | Problem | Rule | Fix |
+|---|---|---|---|---|
+| R2-1 | HOOK | The two hands sat on a sun card at the bottom, far from the phone, which floated. | on-model (arms via cast_stick arms()), logic | Bottom hands deleted. Steve's arm is drawn by arms() from the shoulder to the phone's left edge; the hand touches the edge. Cards moved off the arm path; the 47 badge and the rose screen stay readable. |
+| R2-2 | PUNCH | Two skin ovals at the phone's bottom corners had no arms. | on-model, logic | Phone moved in front of his chest/right; blanket lowered so the shoulder and hoodie show; one arm drawn by arms() with the hand on the phone edge. Grandma text 32 px so it fits; "Sent ✓" and the flat face are clear. |
+| R2-3 | CLIMAX | OK as is. | | Unchanged. |

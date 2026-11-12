@@ -99,7 +99,7 @@ function still1(t) {
   pl.part(roundPoly([[-40, 560], [650, 540], [680, 1250], [-40, 1270]], 120), '#f4f1ff', { shade: 0.1, lw: 6 });
   pl.line([[40, 700], [90, 1100]], 4, 'rgba(42,34,48,0.18)');
   drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'dot', lid: 0.5, brow: 'worried', mouth: 'small', fx: ['sweat'], look: 0.5, hair: 2, bags: 1,
-    armL: armTo(X, shY, s, phx - 140, phy + 150, [0, -3]), armR: armTo(X, shY, s, phx + 130, phy + 170, [0, -3]) }, { frame: boilFrame(t) });
+    armL: armTo(X, shY, s, phx - 120, phy + 90, [0, -3]), armR: armTo(X, shY, s, phx - 120, phy + 90, [0, -3]) }, { frame: boilFrame(t) });
   const hc = headOf(X, Y, s);
   faceGlow(hc, 'rgba(255,170,215,0.65)', 200, 20);
   // blanket up to the chest
@@ -121,11 +121,10 @@ function still1(t) {
   for (const [x, y, w, r, k] of [[1000, 1010, 110, -0.25, 0], [760, 860, 130, 0.3, 1], [880, 780, 130, -0.5, 2], [700, 640, 130, 0.4, 0], [940, 620, 120, 0.6, 1], [820, 520, 120, -0.3, 2], [1010, 760, 100, 0.8, 0], [620, 840, 110, -0.7, 1]]) card(x, y, w, r, k);
   sparkle(560, 560, 34); sparkle(1000, 480, 28, '#fff7a8'); sparkle(640, 1010, 24);
   // falling onto his chest and the blanket
-  card(470, 1190, 150, -0.3, 0); card(440, 1330, 170, 0.25, 1);
-  pileRow(560, 1060, 1300, 1560, 9, 170, 260); pileRow(20, 330, 1470, 1560, 3, 160, 220);
+  card(700, 1380, 150, -0.3, 0); card(330, 1440, 160, 0.25, 1);
+  pileRow(600, 1060, 1400, 1560, 8, 170, 250); pileRow(20, 330, 1470, 1560, 3, 160, 220);
   ctx.save(); ctx.fillStyle = '#e63946'; ctx.strokeStyle = INK; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(955, 880, 56, 0, 7); ctx.fill(); ctx.stroke(); ctx.restore(); text('47', 955, 884, 56, '#fff');
-  // hands holding the phone, in front of the blanket
-  for (const [hx, hy] of [[phx - 120, phy + 215], [phx + 120, phy + 225]]) { ctx.fillStyle = '#e2ac84'; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.ellipse(hx, hy, 50, 36, 0, 0, 7); ctx.fill(); ctx.stroke(); }
+  ctx.fillStyle = '#e2ac84'; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.ellipse(phx - 120, phy + 90, 46, 34, 0.3, 0, 7); ctx.fill(); ctx.stroke();   // hand on the phone edge
   // sweat drops, clear of the pillow
   { const dp = spen(t, 31); drop(dp, 140, 700, 22, 0.3); drop(dp, 90, 860, 18, -0.2); drop(dp, 520, 1010, 20, 0.2); }
   // nothing under the caption plate: plain blanket strip
@@ -168,23 +167,23 @@ function still2(t) {
 function still3(t) {
   SEED = 33; room(t, true);
   const s = 17, X = 320, hc0 = 920, Y = hc0 + 80 * s, shY = Y - 60 * s;
-  const phx = 800, phy = 1200, pw = 360, ph = 560;
+  const phx = 770, phy = 1390, pw = 330, ph = 490;
   drawCharacter(ctx, 'steve', X, Y, s, { expr: 'deadpan', lid: 0.55, mouth: 'line', look: 0.7, hair: 2, bags: 1, fx: ['gloom', 'sweat'],
-    armL: armTo(X, shY, s, phx - pw / 2 - 20, phy + 150, [0, -3]), armR: armTo(X, shY, s, phx - pw / 2 - 20, phy + 150, [0, -3]) }, { frame: boilFrame(t) });
+    armL: armTo(X, shY, s, phx - pw / 2 + 5, phy + 40, [0, -3]), armR: armTo(X, shY, s, phx - pw / 2 + 5, phy + 40, [0, -3]) }, { frame: boilFrame(t) });
   const hc = headOf(X, Y, s); faceGlow(hc, 'rgba(255,225,235,0.35)', 200, 40);
   const bp = spen(t, 15);
-  bp.part(roundPoly([[-60, 1330], [300, 1300], [640, 1320], [1140, 1340], [1140, 1930], [-60, 1930]], 60), '#7fa7d9', { shade: 0.12, lw: 6 });
+  bp.part(roundPoly([[-60, 1530], [300, 1520], [640, 1540], [1140, 1530], [1140, 1930], [-60, 1930]], 60), '#7fa7d9', { shade: 0.12, lw: 6 });
   glowBlob(phx, phy - 60, 480, 'rgba(255,215,235,0.4)');
   phoneAt(phx, phy, pw, ph, 0.05, (w, h) => {
     // Grandma bubble (received, left) then Steve's sent glittery rose (right) with Sent ✓
     ctx.fillStyle = '#e8eaf4'; ctx.strokeStyle = INK; ctx.lineWidth = 4; ctx.beginPath(); ctx.roundRect(-w / 2 + 22, -h / 2 + 36, w - 70, 190, 26); ctx.fill(); ctx.stroke();
     text('Grandma', -w / 2 + 100, -h / 2 + 66, 26, '#6a3b8a', 'Fredoka');
     ctx.font = '600 36px Fredoka'; ctx.fillStyle = INK; ctx.textAlign = 'center';
-    text('Steve? Are you', -12, -h / 2 + 120, 38); text('okay? \u{1F64F}', -12, -h / 2 + 170, 38);
+    text('Steve? Are you', -12, -h / 2 + 122, 32); text('okay? \u{1F64F}', -12, -h / 2 + 166, 32);
     card(w / 2 - 125, 62, 150, 0.06, 0, false); ctx.save(); ctx.translate(0, 0); ctx.restore();
     text('Sent ✓', w / 2 - 100, h / 2 - 50, 34, '#3a8a4a');
   });
-  for (const [hx, hy] of [[phx - pw / 2 + 10, phy + ph / 2 + 10], [phx + pw / 2 + 5, phy + ph / 2 + 25]]) { ctx.fillStyle = '#e2ac84'; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.ellipse(hx, hy, 52, 38, 0, 0, 7); ctx.fill(); ctx.stroke(); }
+  ctx.fillStyle = '#e2ac84'; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.ellipse(phx - pw / 2 + 5, phy + 40, 46, 34, 0.3, 0, 7); ctx.fill(); ctx.stroke();   // hand on the phone edge
   title(); plate('steve', ['…Good morning.'], ['morning']);
 }
 const STILLS = [still1, still2, still3];
