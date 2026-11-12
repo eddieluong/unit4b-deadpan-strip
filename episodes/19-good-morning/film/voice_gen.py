@@ -23,8 +23,8 @@ TAKES = {
 SPEED = json.load(open(os.path.join(HERE, 'speeds.json'))) if os.path.exists(os.path.join(HERE, 'speeds.json')) else {}
 # script order (id, pause_after) from script.md. 4b silent 0.8 + ping 0.3 + "Mom added you" held 1.2 folded after s4 (+0.2);
 # 6 / 6b: tap + ping + notification 1.0 each; 8: 0.3 + silent beat 8b 1.0 (+ Grandma ping) -> 1.3; punch pause 0.7
-ORDER = [('s1', .3), ('s2', .3), ('s3', .3), ('s4', 2.5), ('s6', 1.0), ('s6b', 1.0), ('s7', .2), ('s8', 1.3), ('s9', .7), ('s10', 0)]
-ABS = {}; FILM_TOTAL = None
+ORDER = [('s1', .3), ('s2', .3), ('s3', .3), ('s4', 1.8), ('s6', .8), ('s6b', .8), ('s7', .2), ('s8', 1.0), ('s9', .7), ('s10', 0)]   # timing option B (owner, 2026-11-12)
+ABS = {}; END_HOLD = 2.0   # picture hold after the last word (button + loop push-in), film total = voice end + END_HOLD
 CHOICE = json.load(open(os.path.join(HERE, 'choice.json'))) if os.path.exists(os.path.join(HERE, 'choice.json')) else {}  # id -> seed override
 def rms(x, hop=240):
     n = len(x) // hop; return np.sqrt((x[:n*hop].reshape(n, hop)**2).mean(1) + 1e-12)
@@ -108,7 +108,7 @@ if __name__ == '__main__':
         for i, p in order:
             t = ABS.get(i, t)
             d = len(ys[i]) / SR; tl.append({'id': i, 'start': round(t, 3), 'end': round(t + d, 3), 'speed': SPEED.get(i, 1.0)}); t += d + p
-        total = tl[-1]['end']; punch = [x for x in tl if x['id'] == 's9'][0]['start']
+        total = tl[-1]['end'] + END_HOLD; punch = [x for x in tl if x['id'] == 's9'][0]['start']
         buf = np.zeros(int((total + .3) * SR))
         for x in tl: y = ys[x['id']]; s0 = int(x['start'] * SR); buf[s0:s0 + len(y)] += y
         sf.write(os.path.join(OUT, name), buf, SR); return tl, total, punch
