@@ -1,9 +1,12 @@
-# Tập 9 — Good Morning  (episode 18, v1 for gate 1; owner picked idea A + test (a), 2026-11-09)
+# Tập 10 — Good Morning  (episode 19; script OK'd 2026-11-09 as Tập 9, shelved, picked for Tập 10 on 2026-11-12)
 
 **Real problem:** the family group chat floods your phone with glittery "Good morning" pictures at 6 A.M. every day,
 and you can't leave: someone always adds you back. Works on Zalo, Viber, WhatsApp, Messenger (no brand shown).
 **Base (same as Tập 8):** 25–30 s, universal topic, burned-in captions every line, full-bleed panel, face ≥ 25 %.
-**Variable (test a):** post at 07:00–08:00 VN, the only Short that day. Nothing else changes.
+**Variable (Tập 10 test, DIAGNOSIS §4C):** auto-dubbing OFF at upload. Nothing else changes vs Tập 8–9. Posting slot:
+set after the Tập 9 48 h post-mortem (keep 07:00–08:00 VN only if Tập 9 beat Tập 8).
+**Tập 9 lesson (timing, no new variable):** ElevenLabs speech ran ~19.4 s for ~38 words, so plan ~4–5 s of picture holds
+(frame 1 before the first word, the silent beats, the button) to reach ~27 s with the punch at ~78 %.
 **Tập 8 lesson applied (no new variable, just the existing rule):** the premise must read in the first second. Line 1
 names the problem out loud from 0.0 s ("family group chat"), the title says it too, and the image is the problem itself.
 **Title line (inside the panel, top):** "POV: the family group chat at 6 A.M."
