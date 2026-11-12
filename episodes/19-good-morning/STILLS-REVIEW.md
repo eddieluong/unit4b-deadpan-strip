@@ -36,3 +36,12 @@ Kept: head ~27 % of frame, blank half-lidded face, Grandma "Steve? Are you okay?
 | R2-1 | HOOK | The two hands sat on a sun card at the bottom, far from the phone, which floated. | on-model (arms via cast_stick arms()), logic | Bottom hands deleted. Steve's arm is drawn by arms() from the shoulder to the phone's left edge; the hand touches the edge. Cards moved off the arm path; the 47 badge and the rose screen stay readable. |
 | R2-2 | PUNCH | Two skin ovals at the phone's bottom corners had no arms. | on-model, logic | Phone moved in front of his chest/right; blanket lowered so the shoulder and hoodie show; one arm drawn by arms() with the hand on the phone edge. Grandma text 32 px so it fits; "Sent ✓" and the flat face are clear. |
 | R2-3 | CLIMAX | OK as is. | | Unchanged. |
+
+---
+# Round 3 (v4 -> v5), 2026-11-12 (owner: move one notch)
+
+| # | Still | Problem | Fix |
+|---|---|---|---|
+| R3-1 | CLIMAX | Steve's torso was a plain mustard column. | Torso patched for this call only (lib untouched): shoulders ~10 units wide, taper to the waist, flared hem, two side fold lines, a hem line; same mustard, ink outline, pose and arms (arms() via armTo) unchanged. |
+| R3-2 | HOOK + PUNCH | Phone hands were plain skin ovals. | New gripHand(): palm, three finger capsules curling over the phone's left edge, a thumb across the bezel; same skin #e2ac84 and ink. Still attached to the arms() arm. In the hook the hand is drawn after the pillow/blanket, so it reads in front of the pillow. |
+Remaining: the hook arm line is still thin where it crosses the white pillow (readable); climax pillow hands are still plain ovals (not in scope).

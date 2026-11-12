@@ -89,6 +89,14 @@ function phoneAt(x, y, w, h, rot, screen) {
   screen && screen(w, h); ctx.restore();
 }
 
+// A hand gripping a phone's left edge: palm behind the edge, three finger tips curling over it, thumb across the bezel.
+function gripHand(x, y, rot, dir) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.fillStyle = '#e2ac84'; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.beginPath(); ctx.ellipse(0, 0, 46, 34, 0, 0, 7); ctx.fill(); ctx.stroke();
+  for (const [fy, len] of [[-18, 34], [-2, 38], [14, 34]]) { ctx.beginPath(); ctx.roundRect(14, fy - 8, len, 16, 8); ctx.fill(); ctx.stroke(); }   // fingers over the edge
+  ctx.beginPath(); ctx.moveTo(-8, 26); ctx.quadraticCurveTo(18, 38, 40, 22); ctx.quadraticCurveTo(22, 30, -4, 14); ctx.closePath(); ctx.fill(); ctx.stroke();   // thumb
+  ctx.restore();
+}
 // ---------- STILL 1 · HOOK ----------
 function still1(t) {
   SEED = 7; room(t, true);
@@ -124,7 +132,7 @@ function still1(t) {
   card(700, 1380, 150, -0.3, 0); card(330, 1440, 160, 0.25, 1);
   pileRow(600, 1060, 1400, 1560, 8, 170, 250); pileRow(20, 330, 1470, 1560, 3, 160, 220);
   ctx.save(); ctx.fillStyle = '#e63946'; ctx.strokeStyle = INK; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(955, 880, 56, 0, 7); ctx.fill(); ctx.stroke(); ctx.restore(); text('47', 955, 884, 56, '#fff');
-  ctx.fillStyle = '#e2ac84'; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.ellipse(phx - 120, phy + 90, 46, 34, 0.3, 0, 7); ctx.fill(); ctx.stroke();   // hand on the phone edge
+  gripHand(phx - 120, phy + 90, 0.3, 1);   // hand gripping the phone edge, over the pillow and blanket
   // sweat drops, clear of the pillow
   { const dp = spen(t, 31); drop(dp, 140, 700, 22, 0.3); drop(dp, 90, 860, 18, -0.2); drop(dp, 520, 1010, 20, 0.2); }
   // nothing under the caption plate: plain blanket strip
@@ -141,8 +149,21 @@ function still2(t) {
   const pcx = 540, pcy = 1470;
   glowBlob(pcx, pcy, 700, 'rgba(255,120,190,0.6)');
   // Steve leaning over the bed, both arms straight down onto the pillow
+  // shirt shape: patch the torso part for this one call (shoulders, taper, hem, side folds, hem line)
+  const _part = VPen.prototype.part; let shirtDone = false;
+  VPen.prototype.part = function (pts, color, o) {
+    if (!shirtDone && color === CAST.steve.color) {
+      shirtDone = true;
+      _part.call(this, roundPoly([[-6.8, 63], [6.8, 63], [10.5, 59], [8.6, 46], [9.6, 37], [-9.6, 37], [-8.6, 46], [-10.5, 59]], 2.2), color, o);
+      this.line([[-6, 55], [-4.6, 47], [-5.2, 40]], this.lw * 0.45); this.line([[6.2, 54], [5, 46], [5.6, 40]], this.lw * 0.45);
+      this.line([[-9, 39.5], [0, 38.6], [9, 39.5]], this.lw * 0.4);
+      return;
+    }
+    return _part.call(this, pts, color, o);
+  };
   drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'pinpoint', brow: 'worried', mouth: 'O', fx: ['sweat', 'gloom'], look: 0, hair: 2, bags: 1, lean: 0,
     armL: armTo(X, shY, s, pcx - 200, pcy - 60, [-8, 0]), armR: armTo(X, shY, s, pcx + 200, pcy - 60, [8, 0]) }, { frame: boilFrame(t) });
+  VPen.prototype.part = _part;
   const hc = headOf(X, Y, s); faceGlow(hc, 'rgba(255,140,200,0.4)', 0, 150);
   // mattress/blanket hides his legs
   const bp = spen(t, 16);
@@ -183,7 +204,7 @@ function still3(t) {
     card(w / 2 - 125, 62, 150, 0.06, 0, false); ctx.save(); ctx.translate(0, 0); ctx.restore();
     text('Sent ✓', w / 2 - 100, h / 2 - 50, 34, '#3a8a4a');
   });
-  ctx.fillStyle = '#e2ac84'; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.ellipse(phx - pw / 2 + 5, phy + 40, 46, 34, 0.3, 0, 7); ctx.fill(); ctx.stroke();   // hand on the phone edge
+  gripHand(phx - pw / 2 + 5, phy + 40, 0.3, 1);   // hand gripping the phone edge
   title(); plate('steve', ['…Good morning.'], ['morning']);
 }
 const STILLS = [still1, still2, still3];
