@@ -169,7 +169,7 @@ small (156); two Shorts on one day may have split the test audience. IG gives ~1
 
 ## Tập 9 — One Percent  (posted 2026-11-11 07:00–08:00 VN, `Tap09-one-percent.mp4`, ~27 s)
 Title `When your phone is at 1% and the cable won't reach. #shorts` (title A) · thumbnail A. YouTube https://youtube.com/shorts/I65fHa7wqSw.
-NOT posted on Facebook/Instagram (no reel found on either, read 17 Nov).
+Not on Facebook. Instagram posted late, 2026-11-17 ~11:13 VN: https://www.instagram.com/unit4bcomedy/reel/Df1C7u9hMHZ/
 Test (DIAGNOSIS-2026-11 §4C): Tập 8 base + posting slot 07:00–08:00 VN, one Short that day.
 **Read 17 Nov (~6 days, `channel/analytics-2026-11-17.md`):** YouTube 1,431 views (9x Tập 8), stayed 47.2 % (target 50 %,
 near miss; best since Tập 6), AVD 0:20 (~74 % viewed, target 70 %, PASS — first pass), 0 subs, Shorts feed ~95 %,
