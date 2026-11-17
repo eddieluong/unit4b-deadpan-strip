@@ -166,7 +166,7 @@ function plate(id, lines, stress = []) {
 const CAPS = {   // id: [speaker, lines, stress, hold after voice end]
   s1: ['steve', ['Two MINUTES.'], ['MINUTES'], 0.3], s2: ['snuggles', ['He said that an HOUR ago.'], ['HOUR'], 0.3],
   s3: ['steve', ['Why is he going LEFT?'], ['LEFT'], 0.3], s4: ['steve', ['Fine. I’ll WAIT.'], ['WAIT'], 0.3],
-  s5: ['steve', ['It’s STILL two.'], ['STILL'], 0.3], s7: ['steve', ['FOOD!'], ['FOOD'], 0.25],
+  s5: ['steve', ['It’s STILL two.'], ['STILL'], 0.0], s7: ['steve', ['FOOD!'], ['FOOD'], 0.25],
   s8: ['nana', ['It’s still WARM, dear.'], ['WARM'], 0.3], s9: ['steve', ['…Enjoy.'], ['Enjoy'], 1.2],
   s10: ['snuggles', ['So he ordered AGAIN.'], ['AGAIN'], 1.9],
 };
@@ -269,7 +269,9 @@ function tableW(t, o = {}) {
   if (o.stubble) stubbleDots(o.stubble, X, hcy);
   drool(X + 20, hcy + 6.8 * s, 62 + 12 * Math.sin(t * 2.3));
   const flap = (o.flap || 0) * Math.sin(t * 21);
-  napkin(X, hcy + 15 * s - 6 + (o.napDy || 0), 250, 1.25, flap);
+  napkin(X, hcy + 15 * s - 6 + (o.napDy || 0), 250, 1.25, flap + (o.napRot || 0));
+  if (o.knot) { const kx = X, ky = hcy + 15 * s + 10; ctx.save(); ctx.translate(kx, ky + (o.napDy || 0) * 0.3); ctx.rotate(o.knotRot || 0); outline(() => ctx.ellipse(0, 0, 38, 30, 0, 0, 7), '#fffaf0', 6); ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(-14, -6); ctx.lineTo(14, 8); ctx.moveTo(14, -6); ctx.lineTo(-14, 8); ctx.stroke(); ctx.restore(); }
+  if (o.tug) { ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 7; ctx.lineCap = 'round'; for (const [dx, dy, a] of [[-120, -10, 2.6], [120, -10, 0.55], [-90, 50, 2.0], [90, 50, 1.1]]) { ctx.beginPath(); ctx.moveTo(X + dx, hcy + 15 * s + dy); ctx.lineTo(X + dx + 50 * Math.cos(a), hcy + 15 * s + dy + 50 * Math.sin(a) * 0.6); ctx.stroke(); } ctx.restore(); }
   const tp = spen(m, 3);
   tp.part(roundPoly([[-1300, 1250], [2400, 1250], [2400, 3300], [-1300, 3300]], 12), '#8e3b46', { shade: 0.1, lw: 6 });
   ctx.save(); ctx.fillStyle = 'rgba(255,240,220,0.13)'; for (let i = -9; i < 18; i++) ctx.fillRect(i * 140 - 20, 1262, 70, 2000); ctx.restore();
@@ -348,12 +350,12 @@ function roll(x, y, k = 1, rot = 0) { ctx.save(); ctx.translate(x, y); ctx.rotat
 function sleepW(t, o = {}) {
   const m = onTwos(t); bgFill('#2b2036', '#4a2f3a'); glowBlob(540, 900, 700, 'rgba(255,90,70,0.16)');
   const wake = o.wake || 0, br = Math.sin(t * 2.6) * (1 - wake);
-  const s = 15, X = 290, hc0 = 760 - 170 * wake, Y = hc0 + 80 * s;
+  const s = 15, X = 290, hc0 = 650 - 140 * wake, Y = hc0 + 80 * s;
   const lift = eo(wake);   // head leaves the basket
   drawCharacter(ctx, 'steve', X + 30 * (1 - lift), Y + 100 * (1 - lift), s, { eyes: lift > 0.5 ? 'wide' : 'closed', lid: 0, brow: lift > 0.5 ? 'raised' : undefined, mouth: lift > 0.5 ? 'O' : 'wobble', hair: 0, bags: 1, fx: ['sweat'], lean: 14 * (1 - lift) + 6, tilt: 62 * (1 - lift) - 6, headDy: br * 0.6 - 2 * (1 - lift) }, { frame: boilFrame(m) });
   const hx = X + 30 * (1 - lift) + 6 * Math.sin(0) , hy = hc0 + 100 * (1 - lift);
   // phone glow on his cheek
-  glowBlob(820, 1210, 360, 'rgba(255,70,60,0.35)');
+  if (!lift) glowBlob(X + 255, hc0 + 130, 330, 'rgba(255,70,60,0.42)');
   // table + basket in front of the body
   const tp = spen(m, 3); tp.part(roundPoly([[-1300, 1110], [2400, 1110], [2400, 3300], [-1300, 3300]], 12), '#8e3b46', { shade: 0.1, lw: 6 });
   ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.fillRect(-1300, 1110, W + 2600, 14);
@@ -406,11 +408,13 @@ function runW(t) {
   p.part(roundPoly([[rugX - 330, 1600], [rugX + 330, 1600], [rugX + 380, 1720], [rugX - 380, 1720]], 4), '#b84a4a', { shade: false, lw: 5 });
   // Steve: crouch -> jump -> land + sprint -> skid
   const s = 11, G = 1520; let x, y, lean, sy = 1, arm = 'up', face = { eyes: 'wide', lid: 0, mouth: 'wide', brow: 'raised' };
-  if (t < 14.0) { const k = seg(t, 13.85, 14.0); x = 200; y = G; lean = -10 * k; sy = 0.92; arm = 'down'; face = { eyes: 'wide', lid: 0, mouth: 'wide', brow: 'raised' }; }
-  else if (t < 14.3) { const k = seg(t, 14.0, 14.3); x = lerp(200, 470, eio(k)); y = G - 220 * Math.sin(Math.PI * k); lean = 14; sy = 1.06; arm = 'up'; }
-  else if (t < 14.55) { const k = seg(t, 14.3, 14.55); x = lerp(470, 640, k); y = G - 40 * Math.abs(Math.sin(k * 6)); lean = 16; arm = 'wide'; }
-  else { const k = seg(t, 14.55, 14.85); x = lerp(640, 760, eo(k)) - 40 * (1 - k) * 0; y = G; lean = lerp(16, -12, eo(k)); arm = 'surrender'; face = { eyes: 'wide', lid: 0, mouth: 'O', brow: 'raised' }; }
-  if (t >= 14.85) { const k = seg(t, 14.85, 15.09); x = 760; y = G; lean = -6; arm = 'down'; face = { eyes: 'wide', lid: 0, mouth: 'grin', brow: 'raised' }; }
+  const cyc = Math.floor(t * 12) % 3, ARM = ['up', 'wide', 'surrender'];
+  if (t < 14.0) { const k = seg(t, 13.85, 14.0); x = 200; y = G; lean = -10 * k; sy = 0.9; arm = 'down'; }
+  else if (t < 14.25) { const k = seg(t, 14.0, 14.25); x = lerp(200, 400, eio(k)); y = G - 230 * Math.sin(Math.PI * k); lean = 14; sy = 1.08; arm = 'up'; }
+  else if (t < 14.6) { const k = seg(t, 14.25, 14.6); x = lerp(400, 650, k); y = G - 60 * (cyc === 1 ? 1 : cyc === 2 ? 0.3 : 0); lean = 18 + 3 * cyc; arm = ARM[cyc]; sy = cyc === 1 ? 1.05 : 0.97; }
+  else { const k = seg(t, 14.6, 14.85); x = lerp(650, 770, eo(k)); y = G; lean = lerp(18, -14, eo(k)); arm = 'surrender'; face = { eyes: 'wide', lid: 0, mouth: 'O', brow: 'raised' }; }
+  if (t >= 14.85) { x = 770; y = G; lean = -6; arm = 'down'; face = { eyes: 'wide', lid: 0, mouth: 'grin', brow: 'raised' }; }
+  if (t > 14.25 && t < 14.6) { ctx.save(); ctx.strokeStyle = 'rgba(255,240,220,0.8)'; ctx.lineWidth = 8; ctx.lineCap = 'round'; for (let i = 0; i < 5; i++) { const ly = 700 + i * 170, o = (t * 9 + i * 0.37) % 1; ctx.beginPath(); ctx.moveTo(x - 160 - 200 * o, ly); ctx.lineTo(x - 360 - 200 * o, ly); ctx.stroke(); } ctx.restore(); }
   const mm = m; ctx.save(); ctx.translate(x, y); ctx.scale(1 / sy, sy); ctx.translate(-x, -y);
   drawCharacter(ctx, 'steve', x, y, s, { ...face, hair: 1, bags: 1, fx: [], lean, tilt: lean * 0.4, arm }, { frame: boilFrame(mm) }); ctx.restore();
   // napkin bib flies off at the launch
@@ -451,11 +455,11 @@ function steveHall(t, hx, hy, s, th, o = {}) {   // Steve half out of his own do
     armL: handLocal(P, knob), armR: { hand: [6 + 2 * Math.sin(t * 2.1), -14], bend: [0, 2] } }, { frame: boilFrame(m) });
   const nk = neckOf(P); napkin(nk[0], nk[1] - 4, 250, s / 15.5, th + sway + (o.flap || 0) * Math.sin(t * 17)); fist(knob[0] + 6, knob[1] - 4, 0.42);
 }
-function sideDoor(t) { const sd = spen(onTwos(t), 5); sd.part([[-30, 40], [105, 130], [105, 1490], [-30, 1720]], '#8a5a44', { shade: 0.1, lw: 6 }); ctx.fillStyle = '#e8c84a'; ctx.beginPath(); ctx.arc(80, 1170, 16, 0, 7); ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = 4; ctx.stroke(); }
+function sideDoor(t, sw = 1) { const sd = spen(onTwos(t), 5); const q = 1 - 0.0; if (sw < 1) { ctx.fillStyle = '#ffe2a0'; ctx.fillRect(-30, 40, 135, 1680); } sd.part([[-30 - 100 * (1 - sw), 40], [105 - 100 * (1 - sw) * 0, 130], [105, 1490], [-30 - 100 * (1 - sw), 1720]], '#8a5a44', { shade: 0.1, lw: 6 }); ctx.fillStyle = '#e8c84a'; ctx.beginPath(); ctx.arc(80, 1170, 16, 0, 7); ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = 4; ctx.stroke(); }
 
 // 7b: empty hall, Nana's door closed
 function emptyHallW(t) {
-  hallW(t, { door: 0 }); sideDoor(t);
+  hallW(t, { door: 0 }); sideDoor(t, seg(t, 15.09, 15.3));
   const k1 = seg(t, 15.09, 15.5), face = t < 15.55 ? { eyes: 'wide', lid: 0, mouth: 'grin', brow: 'raised' } : t < 15.95 ? { eyes: 'dot', lid: 0.1, mouth: 'smile', brow: 'raised' } : t < 16.3 ? { eyes: 'dot', lid: 0.3, mouth: 'line', brow: 'worried' } : { eyes: 'dot', lid: 0.45, mouth: 'flat_down', brow: 'worried' };
   const look = t < 15.45 ? lerp(0.9, -0.9, eio(k1)) : kf(t, [[15.45, -0.9], [15.85, 0.9], [16.2, 0.9]]);
   steveHall(t, 330, 1000, 15, 0.12, { face: { ...face, look }, tilt: kf(t, [[15.09, -2], [15.45, -9], [15.85, 4], [16.3, -2]]) });
@@ -467,28 +471,28 @@ function nanaHallW(t, o = {}) {   // S2 composition, animated; o.dx = whip-pan o
   glowBlob(NX, 1000, 420, 'rgba(255,220,150,0.5)'); nanaAct(t, NX, NY, ns, { lift: seg(t, 16.75, 17.2), chew: seg(t, 17.3, 17.5), rot: 0.07 + 0.015 * Math.sin(t * 2.4) });
   sideDoor(t); steveHall(t, 330, 1000, 15, 0.12, { face: { eyes: 'dot', lid: 0.15, mouth: 'small', brow: 'raised', look: 0.9 }, tilt: -5 });
 }
-function punchW(t, o = {}) {   // S3 composition: Steve close, Nana behind waves
-  hallW(t, { doorX: 880, doorW: 300, doorTop: 620, lx: 820, ly: 330, sconceY: 140 });
-  const NX = 860, NY = 1420, ns = 9.4; glowBlob(NX, 1000, 420, 'rgba(255,220,150,0.5)');
+function punchW(t, o = {}) {   // S3 composition: Steve close, Nana behind waves (fully in frame)
+  hallW(t, { doorX: 800, doorW: 280, doorTop: 640, lx: 800, ly: 330, sconceY: 140 });
+  const NX = 800, NY = 1420, ns = 7.4; glowBlob(NX, 1000, 420, 'rgba(255,220,150,0.5)');
   nanaAct(t, NX, NY, ns, { rot: -0.05, wave: seg(t, 20.5, 20.8), chew: 1 - seg(t, 20.5, 20.7) });
-  const s = 23, th = 0.1, P = placeSteve(350, 800, s, th), nod = seg(t, 20.5, 20.62) * (1 - seg(t, 20.62, 20.95)), flutter = Math.sin(t * 14) * 0.03;
+  const s = 19, th = 0.1, P = placeSteve(300, 860, s, th), nod = seg(t, 20.5, 20.62) * (1 - seg(t, 20.62, 20.95)), flutter = Math.sin(t * 14) * 0.03;
   const lid = blink(t, 0.72, 100) + (t > 21.9 && t < 22.02 ? 0.28 : 0);
   drawCharacter(ctx, 'steve', P.X, P.Y, s, { expr: 'dead_inside', lid, brow: undefined, mouth: 'line', fx: ['gloom'], look: 0, hair: 0, bags: 1, lean: th * 180 / Math.PI, tilt: -9 + 4 * nod, headDy: -1.5 - 0.9 * nod + 0.35 * Math.sin(t * 1.9) }, { frame: boilFrame(onTwos(t)) });
   const nk = neckOf(P); napkin(nk[0], nk[1] - 4, 250, s / 15.5, th + flutter);
-  { const dp = spen(onTwos(t), 31), dy = 18 * ((t * 0.7) % 1); drop(dp, 585, 740 + dy, 26, 0.3); }
+  { const dp = spen(onTwos(t), 31), dy = 18 * ((t * 0.7) % 1); drop(dp, 530, 790 + dy, 24, 0.3); }
 }
 
 // ---------- button: phone + Steve's hostage smile ----------
 function rateW(t, o = {}) {
   bgFill('#2b2036', '#4a2f3a'); const stars = o.stars ?? 0, again = o.again ?? 0, tapAt = o.tapAt, red = o.red ?? 0;
-  ctx.save(); ctx.translate(540, 860); phoneBody(0, 0, 940, 780, -0.02, (w, h) => {
+  ctx.save(); ctx.translate(570, 650); phoneBody(0, 0, 900, 700, -0.02, (w, h) => {
     if (red > 0) { ctx.fillStyle = '#f6f7fc'; ctx.fillRect(-w / 2, -h / 2, w, h); ctx.save(); ctx.translate(0, -160); ctx.scale(0.8, 0.8); scooter(0, 0, 1); ctx.restore(); badge(t, true); return; }
-    scooter(0, -260, 0.55, 1); text('Rate your rider', 0, -150, 76, INK);
+    scooter(0, -250, 0.5, 1); text('Rate your rider', 0, -150, 70, INK);
     for (let i = 0; i < 5; i++) { const on = t >= (o.starT?.[i] ?? 1e9), q = on ? seg(t, o.starT[i], o.starT[i] + 0.25) : 0; star(-300 + i * 150, -20, 58 * (on ? 1 + 0.3 * Math.sin(Math.PI * q) : 1), on ? '#ffc61a' : '#e3e3ea'); }
-    const ak = seg(t, o.againT ?? 1e9, (o.againT ?? 1e9) + 0.3); if (ak > 0) { ctx.save(); ctx.translate(0, 210); ctx.scale(0.5 + 0.5 * eb(ak), 0.5 + 0.5 * eb(ak)); ctx.fillStyle = RED; ctx.beginPath(); ctx.roundRect(-330, -70, 660, 140, 44); ctx.fill(); ctx.lineWidth = 7; ctx.strokeStyle = INK; ctx.stroke(); text('Order again', 0, 4, 80, '#fff6dc'); ctx.restore(); }
+    const ak = seg(t, o.againT ?? 1e9, (o.againT ?? 1e9) + 0.3); if (ak > 0) { ctx.save(); ctx.translate(0, 190); ctx.scale(0.5 + 0.5 * eb(ak), 0.5 + 0.5 * eb(ak)); ctx.fillStyle = RED; ctx.beginPath(); ctx.roundRect(-330, -70, 660, 140, 44); ctx.fill(); ctx.lineWidth = 7; ctx.strokeStyle = INK; ctx.stroke(); text('Order again', 0, 4, 80, '#fff6dc'); ctx.restore(); }
   }); ctx.restore();
   const hostage = { eyes: 'dot', lid: 0, brow: 'worried', mouth: 'grin', fx: ['sweat'], look: 0.2 }, hollow = { eyes: 'dot', lid: 0.45, brow: 'worried', mouth: 'small', fx: ['gloom', 'sweat'], look: 0 };
-  drawCharacter(ctx, 'steve', 330, 1450 + 80 * 11, 11, { ...(red > 0 ? hollow : hostage), hair: 0, bags: 1, headDy: 0.35 * Math.sin(t * 1.9) + (red > 0 ? 0 : 0.5 * Math.sin(t * 14)), tilt: -3 }, { frame: boilFrame(onTwos(t)) });
+  drawCharacter(ctx, 'steve', 400, 1360 + 80 * 14, 14, { ...(red > 0 ? hollow : hostage), hair: 0, bags: 1, headDy: 0.35 * Math.sin(t * 1.9) + (red > 0 ? 0 : 0.5 * Math.sin(t * 14)), tilt: -3 }, { frame: boilFrame(onTwos(t)) });
   if (tapAt) { const [tx, ty, t0] = tapAt; const q = t - t0; if (q > -0.3 && q < 0.5) { thumb(lerp(1160, tx, eo(seg(t, t0 - 0.3, t0 - 0.03))), lerp(2100, ty, eo(seg(t, t0 - 0.3, t0 - 0.03))), q > 0 && q < 0.15 ? 1 : 0, -0.5); if (q > 0 && q < 0.35) { ctx.save(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 8; ctx.globalAlpha = 1 - q / 0.35; ctx.beginPath(); ctx.arc(tx, ty, 30 + 120 * q, 0, 7); ctx.stroke(); ctx.restore(); } } }
 }
 
@@ -507,10 +511,12 @@ function build() {
     [3.9, t => { cam(kf(t, [[3.9, 1.0], [4.8, 1.08]]), 540, 1100, () => candleMeltW(t)); }],
     // 5 · s3: map, rider U-turn
     [4.8, t => { cam(kf(t, [[4.8, 1.0], [5.5, 1.04], [5.7, 1.1], [6.7, 1.02]]), 540, 980, () => mapW(t), 0, ...shake(t, t > 5.62 && t < 5.8 ? 7 : 0, 40)); }],
-    // 6 · s4: "Fine. I'll WAIT." cutlery thumps, napkin flaps, chin up
-    [6.7, t => { const k = seg(t, 7.2, 7.5); cam(kf(t, [[6.7, 1.0], [7.1, 1.04], [8.95, 1.1]]), 540, 900, () => tableW(t, { headDy: 1.4 * eo(k) * (1 - 0.0), tilt: -3 * eo(k), flap: t > 7.3 && t < 8.4 ? 0.06 * (1 - seg(t, 7.3, 8.4)) : 0, bang: [7.4, 8.1], jig: 0.4, lid: 0.3, face: { brow: 'angry', mouth: 'line' }, candleH: 80 }), 0, ...shake(t, 4 * Math.max(0, Math.sin(Math.PI * seg(t, 7.4, 8.1) * 2)), 40)); }],
+    // 6 · s4: he TIES the napkin bib (knot tug), sits up straight, chin up, cutlery thumps
+    [6.7, t => { const k = seg(t, 7.2, 7.5), tk = seg(t, 6.85, 7.35), wob = Math.sin(t * 38) * (1 - tk) * 0.08;
+      cam(kf(t, [[6.7, 1.0], [7.3, 1.12], [8.95, 1.22]]), 540, kf(t, [[6.7, 940], [8.95, 820]]), () => tableW(t, { headDy: 1.6 * eo(k) + 0.8 * Math.sin(Math.PI * tk), tilt: -4 * eo(k), napDy: 60 * (1 - eo(tk)), napRot: 0.35 * (1 - eo(tk)) + wob, knot: tk > 0.85, knotRot: wob * 3, tug: t > 6.9 && t < 7.3 && Math.floor(t * 20) % 2 === 0,
+        flap: t > 7.5 && t < 8.4 ? 0.05 * (1 - seg(t, 7.5, 8.4)) : 0, bang: [7.5, 8.2], jig: 0.4, lid: 0.28, face: { brow: 'angry', mouth: 'line' }, candleH: 78 }), 0, ...shake(t, 4 * Math.max(0, Math.sin(Math.PI * seg(t, 7.5, 8.2) * 2)), 40)); }],
     // 7 · s5: stubble pops, cobweb on the fork, the spider waves
-    [8.95, t => { const sk = seg(t, 9.2, 9.5); cam(kf(t, [[8.95, 1.05], [10.9, 1.35]]), kf(t, [[8.95, 620], [10.9, 800]]), kf(t, [[8.95, 900], [10.9, 800]]), () => tableW(t, { stubble: eo(sk), web: seg(t, 9.0, 9.9), spider: seg(t, 9.4, 10.1), lid: 0.62, face: { brow: 'worried', mouth: 'wobble' }, candleH: 62 })); }],
+    [8.95, t => { const sk = seg(t, 9.2, 9.5); cam(kf(t, [[8.95, 1.05], [10.9, 1.35]]), kf(t, [[8.95, 620], [10.9, 800]]), kf(t, [[8.95, 900], [10.9, 800]]), () => tableW(t, { knot: true, tilt: 2, stubble: eo(sk), web: seg(t, 9.0, 9.9), spider: seg(t, 9.4, 10.1), lid: 0.62, face: { brow: 'worried', mouth: 'wobble' }, candleH: 44 })); }],
     // 8 · 5b: asleep in the bread basket, the cat steals a roll (silent)
     [10.9, t => { cam(kf(t, [[10.9, 1.0], [12.75, 1.1]]), 600, 1000, () => sleepW(t, { wake: seg(t, 13.2, 13.6) })); }],
     // 9 · beat 6: "Your order has arrived!" (ping) over the sleeper; head lifts under the card
@@ -524,13 +530,13 @@ function build() {
     // 13 · push-in on Nana (bag, drumstick, steam)
     [18.0, t => { cam(kf(t, [[18.0, 1.06], [19.3, 1.3]]), kf(t, [[18.0, 600], [19.3, 700]]), kf(t, [[18.0, 1000], [19.3, 1000]]), () => nanaHallW(t, { door: 1 })); }],
     // 14 · hold on Steve, then s9 punch: "...Enjoy." (Nana behind waves)
-    [19.3, t => { cam(kf(t, [[19.3, 1.0], [20.5, 1.07], [21.8, 1.07], [23.0, 1.14]]), 460, 880, () => punchW(t), 0, 2.2 * Math.sin(t * 2.2), 0); }],
-    // 15 · button a: rate your rider, five stars, hostage smile
-    [23.0, t => { cam(kf(t, [[23.0, 1.0], [24.65, 1.06]]), 540, 960, () => rateW(t, { starT: [23.45, 23.65, 23.85, 24.05, 24.25], againT: 24.35, tapAt: t < 24.5 ? [-300 + 4 * 150 + 540 + 0, 860 - 20, 24.2] : [540, 860 + 210, 24.75] })); }],
-    // 16 · tap "Order again" -> phone shows 2 MIN
-    [24.65, t => { cam(kf(t, [[24.65, 1.06], [25.8, 1.3]]), 540, 960, () => rateW(t, { starT: [-1, -1, -1, -1, -1], againT: -1, tapAt: t < 25.2 ? [540, 860 + 210, 24.8] : undefined, red: t > 25.0 ? 1 : 0 })); }],
+    [19.3, t => { cam(kf(t, [[19.3, 1.0], [20.5, 1.06], [23.0, 1.2]], t2 => t2), 480, 900, () => punchW(t), 0, 2.2 * Math.sin(t * 2.2), 0); }],
+    // 15 · button a: rate your rider, stars pop one by one, big hostage smile
+    [23.0, t => { cam(kf(t, [[23.0, 1.0], [24.65, 1.04]]), 540, 960, () => rateW(t, { starT: [23.4, 23.62, 23.84, 24.06, 24.28], againT: 24.4, tapAt: [890, 700, 24.28] })); }],
+    // 16 · finger taps the EDGE of "Order again" -> phone shows 2 MIN
+    [24.65, t => { cam(kf(t, [[24.65, 1.04], [25.8, 1.2]]), 560, 900, () => rateW(t, { starT: [-1, -1, -1, -1, -1], againT: -1, tapAt: t < 25.2 ? [885, 905, 24.8] : undefined, red: t > 25.0 ? 1 : 0 })); }],
     // 17 · loop: back at the table, push-in settles exactly on frame 1
-    [25.8, t => { cam(kf(t, [[25.8, 0.84], [27.0, 1.0]], eio), 540, 960, () => tableW(t - 25.8 + 0.0, {})); }],
+    [25.8, t => { cam(kf(t, [[25.8, 0.84], [27.0, 1.0]], eio), 540, 960, () => tableW(t - 25.9, {})); }],
   ];
 }
 
