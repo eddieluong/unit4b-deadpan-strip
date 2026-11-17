@@ -5,7 +5,7 @@ per-line dB trim (`GAIN` in the script), auto-pick (better ASR, else tighter; pu
 Voices (sweetkurt workspace, current `voice_id`): Steve `LOYCqPiwanfdLVO55I4W`, Nana `24qXy78DXDNKGKMxVGhR`, Snuggles `nPczCjzI2devNBz1zQrb` (Brian). Plain mode, no clone.
 Takes: `steve` (s1,s3,s4,s5,s9; stability 0.35), `steve_peak` (s7 alone; stability 0.0, the only one), `nana` (speed 0.9), `snuggles`.
 Rebuild: `HF_HUB_OFFLINE=1 ~/lemo-opuscar/.venv/bin/python film/voice_gen.py`. Alternates: `film/voice/<id>_t<seed>.wav`.
-Preview: `film/out/voice_preview.mp3` (-14 LUFS, two-pass loudnorm, silent beats = silence, no ping sfx).
+Preview: `film/out/voice_preview.mp3` (measured -15.2 LUFS, TP -1.7 dBFS, two-pass loudnorm to -14 limited by the peak ceiling, silent beats = silence, no ping sfx).
 
 | Line | Voice | Pick (seed) | Dur (s) | Whisper match | LUFS | Note |
 |---|---|---|---|---|---|---|
