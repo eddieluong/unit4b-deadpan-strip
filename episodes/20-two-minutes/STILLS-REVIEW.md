@@ -21,3 +21,9 @@ Checked against script.md, QA.md (Glance test, faces, text), CAST.md, Tập 10 r
 - S1 face is ~ 27 % only if hair is counted; the face circle alone is ~ 22 %.
 - Nana is small (~ 9 % of frame height-wise) in S3; her wave reads but is secondary. Nana's bag arm is a plain stick (no grip detail).
 - Phone has no screen glare / pulse (motion comes later).
+
+---
+# Round 2 (Opus review, small fixes only)
+- S1: phone now reads as a phone (dark bezel, side camera pill, light screen, scooter icon, red badge only behind "2 MIN"); white plate rim visible around and below it; sleeves in mustard run from behind the phone up to the fists on knife and fork. Phone still ~ 30 % of frame.
+- S2/S3: bigger takeaway bag (twisted handles, white receipt sticker with lines, cup lid and straw peeking out); doormat flattened to the floor in perspective; S3 "4A" sign moved to the upper right, clear of hair and sweat drop.
+- Remaining: S1 sleeves only show their forearm part (shoulders hidden behind the phone).
