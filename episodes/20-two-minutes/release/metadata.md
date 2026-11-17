@@ -2,6 +2,7 @@
 
 File: `episodes/20-two-minutes/release/Tap11-two-minutes.mp4` (27.0 s, 1080x1920, 4,971,104 bytes = under the 10 MB extension limit; render v2 approved by the owner; punch "…Enjoy." at 20.5 s = 75.9 %, -14.0 LUFS) ·
 Thumbnails: `thumb_A.png`, `thumb_B.png`, `thumb_C.png`, contact sheet `thumbsheet.png` (source `episodes/20-two-minutes/film/thumb.js`, run `node thumb.mjs . && python3 thumbsheet.py` in `film/`; scene code copied from `stills.js`).
+**Owner pick (2026-11-17): title A + thumbnail A.** YouTube private draft + IG Reel requested the same day; owner publishes YT in the 07:00–08:00 VN slot.
 Role in the plan: **glance-hook test** (PERFORMANCE "3-Short test result"). Variable = frame 1 is one giant "2 MIN" badge + Steve's hollow face, readable in 0.2 s without reading. Everything else as Tập 10 (auto-dubbing OFF, 25–30 s, captions, face size). Target: stayed ≥ 50 % (Tập 9 47.2 %, Tập 10 28.1 %).
 
 ## Thumbnails (Short cover, 1080x1920; feed views never see it, it matters for the channel page and search)
