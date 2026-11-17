@@ -37,6 +37,7 @@ and exits non-zero on a failure. Run it, then do the rest by eye on a contact sh
 
 ### Script
 - [ ] **Hook in 1.5 s:** frame 1 is the strangest or most telling image (cold open with the outcome is allowed and often best), plus an on-screen title line ("POV: …").
+- [ ] **Glance test (Tập 8–10 result):** frame 1 is understood in 0.2 s WITHOUT reading: one big number/icon (e.g. "1%") next to Steve's face. A chat screen or line of text to read is not a hook (Tập 10 stayed 28 % vs Tập 9 47 %).
 - [ ] **The hook asks, the punch answers:** if the cold open shows an outcome, the cause must stay hidden until the punch.
 - [ ] **Retention map:** list every 2–3 s window and what is new in it; any window with nothing new gets cut.
 - [ ] **One joke, 25–30 s by default (40 s max).** Punchline at 70–85 %. After it: one button at most (≤ 4 s), then out or loop.

@@ -166,3 +166,40 @@ target 70 %, MISS; = Tập 6), 1 like, 1 comment, +1 sub, Shorts feed 96.2 %, Vi
 FB 41 views (drop at 0:02). IG 1,705 views, 13 likes, 1 save. **Lesson:** the shorter cut lifted % viewed vs Tập 7
 (39 → 57 %) but not above Tập 6; the full-bleed/bigger-face notch did NOT lift stayed (31.5 % vs 46.8 %). Sample is
 small (156); two Shorts on one day may have split the test audience. IG gives ~11x the YouTube views.
+
+## Tập 9 — One Percent  (posted 2026-11-11 07:00–08:00 VN, `Tap09-one-percent.mp4`, ~27 s)
+Title `When your phone is at 1% and the cable won't reach. #shorts` (title A) · thumbnail A. YouTube https://youtube.com/shorts/I65fHa7wqSw.
+NOT posted on Facebook/Instagram (no reel found on either, read 17 Nov).
+Test (DIAGNOSIS-2026-11 §4C): Tập 8 base + posting slot 07:00–08:00 VN, one Short that day.
+**Read 17 Nov (~6 days, `channel/analytics-2026-11-17.md`):** YouTube 1,431 views (9x Tập 8), stayed 47.2 % (target 50 %,
+near miss; best since Tập 6), AVD 0:20 (~74 % viewed, target 70 %, PASS — first pass), 0 subs, Shorts feed ~95 %,
+Vietnam 75 %. Retention: steady decline, no cliff. **Lesson:** frame 1 = one number everybody reads in 0.2 s ("1%" + cable)
+gives the best stayed; the morning VN slot brought views but a VN-heavy audience.
+
+## Tập 10 — Good Morning  (published 2026-11-12, `Tap10-good-morning.mp4`, 26.96 s)
+Title `When Mom adds you back to the family group chat. #shorts` (title B) · thumbnail A. YouTube https://youtube.com/shorts/drgy_WCVgPo
+(uploaded file CRF 29) · Facebook https://www.facebook.com/reel/960206003552750/ · Instagram https://www.instagram.com/unit4bcomedy/reel/Dfqb36JO5Ze/
+(FB/IG 2026-11-13 ~08:15 VN). Voices: original Voice Design voices copied to the sweetkurt ElevenLabs workspace.
+Test: Tập 8 base + auto-dubbing OFF. Punch at 21.0 s (77.9 %).
+**Read 17 Nov (~5 days):** YouTube 1,485 views (#1 Short), stayed 28.1 % (MISS, lowest of the three), AVD 0:21 (80.7 % viewed,
+PASS, best ever), 8 likes, 0 subs, Shorts feed ~95 %, Vietnam 43 % / US 19 % (most global audience so far).
+Retention: sharp early drop, then flat. FB 239 views, avg watch 4 s (15 %), 0 reactions. IG 2,484 views (100 % non-followers),
+43 likes, 9 shares, 2 saves, 1 comment. **Lesson:** people who stay watch to the end (story works), but frame 1
+(group chat at 6 A.M.) needs reading before it lands, so most swipe. Auto-dub OFF coincides with the first real non-VN audience.
+
+## 3-Short test result (Tập 8–10, read 2026-11-17)
+| | Tập 8 base | Tập 9 + 07–08 VN slot | Tập 10 + auto-dub OFF |
+|---|---|---|---|
+| YT views | 159 | 1,431 | 1,485 |
+| Stayed (≥ 50 %) | 31.9 % ✗ | 47.2 % ✗ (close) | 28.1 % ✗ |
+| % viewed (≥ 70 %) | ~57 % ✗ | ~74 % ✓ | 80.7 % ✓ |
+| Vietnam share | 58 % | 75 % | 43 % (US 19 %) |
+| IG views | 1,711 | not posted | 2,484 |
+- **Keep:** 25–30 s base (story holds people: 74–81 % viewed); auto-dubbing OFF; one Short per day (Tập 8 shared its day with Tập 7 and got 159).
+- **Bottleneck = the first second.** Stayed is the only metric still failing. Best hook = one instantly readable number/icon on the
+  phone + Steve's face (Tập 9). Text-to-read hooks (Tập 10 group chat, Tập 8 dots) lose 70 %.
+- **Slot:** 07–08 VN raised views but skewed VN; not enough data to call. Keep it fixed so the hook is the only variable.
+- **Platforms:** IG gives the most views every time (1.7–2.5K, all non-followers); FB is weak (4 s avg). Post every Short on IG.
+- **Subs:** 0 from ~3,000 YouTube views. Not a test goal yet; revisit after stayed ≥ 50 %.
+- **Next test (Tập 11):** variable = "glance hook": frame 1 shows one big number/icon on a phone + Steve's face reacting, readable
+  without reading words; everything else as Tập 10.
