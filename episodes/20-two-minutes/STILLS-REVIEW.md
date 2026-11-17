@@ -27,3 +27,12 @@ Checked against script.md, QA.md (Glance test, faces, text), CAST.md, Tập 10 r
 - S1: phone now reads as a phone (dark bezel, side camera pill, light screen, scooter icon, red badge only behind "2 MIN"); white plate rim visible around and below it; sleeves in mustard run from behind the phone up to the fists on knife and fork. Phone still ~ 30 % of frame.
 - S2/S3: bigger takeaway bag (twisted handles, white receipt sticker with lines, cup lid and straw peeking out); doormat flattened to the floor in perspective; S3 "4A" sign moved to the upper right, clear of hair and sweat drop.
 - Remaining: S1 sleeves only show their forearm part (shoulders hidden behind the phone).
+
+---
+# Round 3 (owner notes)
+Owner: "khung hình nhìn chưa ổn lắm". Picks: (1) phone covers Steve, (2) staging flat, (3) expressions.
+One notch each, rest kept (colours, captions, bag, 4A, plate):
+1. S1: phone shrunk to ~ 21 % of frame, tilted and propped on the plate; Steve's shoulders, napkin bib, stick arms to the fists on knife/fork and the table edge are visible; face stays ~ 27 %. "2 MIN" still legible in the 20 % copy.
+2. S2/S3: hallway now has perspective (side walls, ceiling, converging floor lines, skewed door opening, wall sconce). S2: Steve half out of his own door, body leaning toward her, hand on the doorknob. Nana leans cosily, hip out, front slipper forward. S3: closer camera, Steve's head tilted and slumped, Nana one notch bigger with drumstick mid-wave and motion ticks.
+3. Expressions: S1 starving (dark sunken bags, mouth open, drool, stomach squiggles); S2 hope collapsing (raised brows, small mouth); S3 dead inside (half lids, flat mouth, tilt).
+Open: Steve's lean makes his lower body a slanted mustard block (S2/S3); S3 "4A" sign is partly behind Nana's beehive; wave ticks are small.

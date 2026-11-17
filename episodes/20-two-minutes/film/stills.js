@@ -69,8 +69,8 @@ function drumstick(x, y, rot, sz = 1) {   // grip end at (x,y), meat towards -y
   ctx.fillStyle = '#f6efe0'; ctx.beginPath(); ctx.ellipse(28, -178, 14, 11, 0, 0, 7); ctx.fill(); ctx.stroke();   // bitten edge
   ctx.restore();
 }
-function napkin(x, y, w, k = 1) {   // bib tied round the neck at (x,y)=top centre
-  ctx.save(); ctx.translate(x, y); ctx.scale(k, k);
+function napkin(x, y, w, k = 1, rot = 0) {   // bib tied round the neck at (x,y)=top centre
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(k, k);
   outline(() => { ctx.moveTo(-w / 2, 0); ctx.quadraticCurveTo(0, 38, w / 2, 0); ctx.lineTo(w * 0.42, 240); ctx.lineTo(-w * 0.42, 240); ctx.closePath(); }, '#fffaf0', 6);
   ctx.save(); ctx.clip(); ctx.fillStyle = 'rgba(214,70,70,0.55)';
   for (let i = -4; i < 5; i++) ctx.fillRect(i * 60 - 14, 0, 28, 260); for (let j = 0; j < 5; j++) ctx.fillRect(-w, 30 + j * 56, 2 * w, 28); ctx.restore();
@@ -89,67 +89,86 @@ function candle(x, y, h, t) {
   outline(() => { ctx.ellipse(x, y - h - 34, 7, 14, 0, 0, 7); }, '#fff6b0', 0.1);
 }
 
+
+// place a leaning Steve so his head centre is at (hx,hy); returns body origin + helpers (lean th in radians, clockwise)
+function placeSteve(hx, hy, sc, th) { return { X: hx - 42 * sc * Math.sin(th), Y: hy + 38 * sc + 42 * sc * Math.cos(th), sc, th }; }
+function neckOf(P) { const { X, Y, sc, th } = P; return [X + 27 * sc * Math.sin(th) * -1 * -1, Y - 38 * sc - 27 * sc * Math.cos(th)]; }
+function handLocal(P, T) {   // arm pose that reaches world point T despite the lean
+  const { X, Y, sc, th } = P, px = X, py = Y - 38 * sc, vx = T[0] - px, vy = T[1] - py;
+  const ux = vx * Math.cos(th) + vy * Math.sin(th), uy = -vx * Math.sin(th) + vy * Math.cos(th);
+  const shY = Y - 60 * sc; return { hand: [ux / sc, (shY - (py + uy)) / sc], bend: [0, 4] };
+}
+function drool(x, y, len) { ctx.save(); ctx.strokeStyle = INK; ctx.fillStyle = '#d9f0ff'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(x - 7, y); ctx.lineTo(x - 5, y + len); ctx.arc(x, y + len, 9, Math.PI, 0, true); ctx.lineTo(x + 7, y); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore(); }
+function squiggle(x, y, w, dir = 1) { ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 7; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); ctx.moveTo(x, y); for (let i = 1; i <= 5; i++) ctx.lineTo(x + dir * (i * w / 5), y + (i % 2 ? -16 : 16)); ctx.stroke(); ctx.restore(); }
+
 // ---------- STILL 1 · HOOK (glance test) ----------
 function still1(t) {
   SEED = 5;
   const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#2b2036'); g.addColorStop(1, '#4a2f3a'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-  const p = spen(t, 3);
-  // table top
-  p.part(roundPoly([[-60, 900], [1140, 900], [1140, 1930], [-60, 1930]], 20), '#8e3b46', { shade: 0.1, lw: 6 });
-  ctx.save(); ctx.fillStyle = 'rgba(255,240,220,0.13)'; for (let i = 0; i < 9; i++) ctx.fillRect(i * 140 - 20, 900, 70, 1030); ctx.restore();
-  const s = 19, X = 540, hc0 = 625, Y = hc0 + 80 * s;
-  candle(905, 920, 100, t);
-  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'dot', lid: 0.55, brow: 'worried', mouth: 'line', fx: ['gloom', 'sweat'], look: 0, hair: 0, bags: 1, arm: 'down' }, { frame: boilFrame(t) });
-  const hc = headOf(X, Y, s); faceGlow(hc, 'rgba(255,120,90,0.45)', 0, 260);
-  // empty plate under the phone: clear white rim + well
+  const s = 19, X = 540, hc0 = 625, Y = hc0 + 80 * s, shY = Y - 60 * s;
+  glowBlob(540, 700, 600, 'rgba(255,170,90,0.18)');
+  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'dot', lid: 0.45, brow: 'worried', mouth: 'small', fx: ['gloom', 'sweat'], look: 0, hair: 0, bags: 1,
+    armL: armTo(X, shY, s, 120, 800, [0, 5]), armR: armTo(X, shY, s, 960, 800, [0, 5]) }, { frame: boilFrame(t) });
+  // extra dark sunken bags + drool
+  { const hc = headOf(X, Y, s); faceGlow(hc, 'rgba(255,120,90,0.4)', 0, 260);
+    ctx.save(); ctx.strokeStyle = 'rgba(60,30,50,0.55)'; ctx.lineWidth = 12; ctx.lineCap = 'round';
+    for (const ex of [-1, 1]) { ctx.beginPath(); ctx.arc(X + ex * 7.2 * s, hc0 + 6 * s, 58, 0.25 * Math.PI, 0.75 * Math.PI); ctx.stroke(); } ctx.restore();
+    drool(X + 20, hc0 + 6.8 * s, 70); }
+  napkin(X, hc0 + 15 * s - 6, 250, 1.25);
+  // table top edge (hides his lap) with cloth drape
+  const tp = spen(t, 3);
+  tp.part(roundPoly([[-60, 1250], [1140, 1250], [1140, 1930], [-60, 1930]], 12), '#8e3b46', { shade: 0.1, lw: 6 });
+  ctx.save(); ctx.fillStyle = 'rgba(255,240,220,0.13)'; for (let i = 0; i < 9; i++) ctx.fillRect(i * 140 - 20, 1262, 70, 670); ctx.restore();
+  ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.fillRect(0, 1250, W, 16);
+  candle(985, 1245, 90, t);
+  squiggle(280, 1110, 80, -1); squiggle(800, 1110, 80, 1); squiggle(300, 1170, 70, -1); squiggle(780, 1170, 70, 1);   // stomach growl
+  // empty plate with a clear white rim, phone propped on it
   ctx.save(); ctx.shadowColor = 'rgba(0,0,0,0.45)'; ctx.shadowBlur = 24; ctx.shadowOffsetY = 12;
-  outline(() => { ctx.ellipse(540, 1480, 545, 235, 0, 0, 7); }, '#fbfaf5', 8); ctx.restore();
-  outline(() => { ctx.ellipse(540, 1495, 440, 175, 0, 0, 7); }, '#e8e5db', 4);
-  // arms: sleeves from the shoulders (behind the phone) up to fists holding the knife and fork
-  for (const [hx, sx] of [[115, 1], [965, -1]]) {
-    const pts = [[540 - sx * 150 * -1 * -1, 0]];
-    ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    const path = () => { ctx.beginPath(); ctx.moveTo(540 + (hx < 540 ? -150 : 150), 925); ctx.quadraticCurveTo(hx < 540 ? 80 : 1000, 975, hx, 800); };
-    ctx.strokeStyle = INK; ctx.lineWidth = 36; path(); ctx.stroke(); ctx.strokeStyle = '#e2b23c'; ctx.lineWidth = 24; path(); ctx.stroke(); ctx.restore();
-  }
-  knife(115, 855, 160); fist(115, 805); fork(965, 855, 160); fist(965, 805);
-  // phone (dark bezel, notch, light screen) propped on the plate; red badge only behind the text
-  const px = 540, py = 1255, pw = 960, ph = 650; glowBlob(px, py, 760, 'rgba(255,90,70,0.3)');
-  ctx.save(); ctx.translate(px, py); const q = spen(0.1, 9);
-  q.part(roundPoly([[-pw / 2, -ph / 2], [pw / 2, -ph / 2], [pw / 2, ph / 2], [-pw / 2, ph / 2]], 64), '#1b1f33', { shade: 0.08, lw: 7 });
-  ctx.fillStyle = '#f6f7fc'; ctx.beginPath(); ctx.roundRect(-pw / 2 + 38, -ph / 2 + 30, pw - 76, ph - 60, 34); ctx.fill();
-  ctx.fillStyle = '#1b1f33'; ctx.beginPath(); ctx.roundRect(-pw / 2 + 38, -34, 20, 68, 10); ctx.fill();   // notch / camera pill on the left edge
-  ctx.fillStyle = '#d9dcec'; ctx.beginPath(); ctx.roundRect(pw / 2 - 38 - 14, -60, 6, 120, 3); ctx.fill();
-  // scooter icon (no logo)
-  ctx.save(); ctx.translate(0, -208); ctx.strokeStyle = INK; ctx.fillStyle = INK; ctx.lineWidth = 11; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  outline(() => { ctx.ellipse(540, 1520, 520, 175, 0, 0, 7); }, '#fbfaf5', 8); ctx.restore();
+  outline(() => { ctx.ellipse(540, 1530, 420, 130, 0, 0, 7); }, '#e8e5db', 4);
+  knife(120, 850, 160); fist(120, 800); fork(960, 850, 160); fist(960, 800);
+  const px = 540, py = 1385, pw = 800, ph = 520; glowBlob(px, py, 600, 'rgba(255,90,70,0.25)');
+  ctx.save(); ctx.translate(px, py); ctx.rotate(-0.045); const q = spen(0.1, 9);
+  q.part(roundPoly([[-pw / 2, -ph / 2], [pw / 2, -ph / 2], [pw / 2, ph / 2], [-pw / 2, ph / 2]], 56), '#1b1f33', { shade: 0.08, lw: 7 });
+  ctx.fillStyle = '#f6f7fc'; ctx.beginPath(); ctx.roundRect(-pw / 2 + 32, -ph / 2 + 26, pw - 64, ph - 52, 30); ctx.fill();
+  ctx.fillStyle = '#1b1f33'; ctx.beginPath(); ctx.roundRect(-pw / 2 + 32, -30, 18, 60, 9); ctx.fill();
+  ctx.save(); ctx.translate(0, -160); ctx.scale(0.8, 0.8); ctx.strokeStyle = INK; ctx.fillStyle = INK; ctx.lineWidth = 11; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
   for (const wx of [-62, 62]) { ctx.beginPath(); ctx.arc(wx, 30, 24, 0, 7); ctx.stroke(); }
   ctx.beginPath(); ctx.moveTo(-62, 30); ctx.lineTo(-30, 30); ctx.lineTo(0, -4); ctx.lineTo(40, -4); ctx.lineTo(62, 30); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(40, -4); ctx.lineTo(28, -40); ctx.lineTo(50, -40); ctx.stroke(); ctx.beginPath(); ctx.roundRect(-92, -34, 62, 40, 8); ctx.fill(); ctx.restore();
-  ctx.fillStyle = '#e8262f'; ctx.beginPath(); ctx.roundRect(-400, -100, 800, 290, 60); ctx.fill(); ctx.lineWidth = 8; ctx.strokeStyle = INK; ctx.stroke();
-  ctx.lineJoin = 'round'; ctx.lineWidth = 18; ctx.font = '600 270px Fredoka'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  ctx.strokeText('2 MIN', 0, 55); ctx.fillStyle = '#fff6dc'; ctx.fillText('2 MIN', 0, 55);
+  ctx.fillStyle = '#e8262f'; ctx.beginPath(); ctx.roundRect(-310, -75, 620, 240, 52); ctx.fill(); ctx.lineWidth = 8; ctx.strokeStyle = INK; ctx.stroke();
+  ctx.lineJoin = 'round'; ctx.lineWidth = 16; ctx.font = '600 225px Fredoka'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.strokeText('2 MIN', 0, 48); ctx.fillStyle = '#fff6dc'; ctx.fillText('2 MIN', 0, 48);
   ctx.restore();
   { const dp = spen(t, 31); drop(dp, 150, 520, 26, 0.3); drop(dp, 905, 440, 22, -0.2); }
   title(); plate('steve', ['Two MINUTES.'], ['MINUTES']);
 }
 
-// ---------- hallway (stills 2 + 3) ----------
+// ---------- hallway in perspective (stills 2 + 3) ----------
 function hall(t, doorX, doorW, doorTop, floorY, lx = doorX - doorW / 2 - 10, ly = doorTop - 94) {
+  const FL = 110, FR = 970;   // far wall spans FL..FR; side walls recede to the viewer
   const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#d9b98f'); g.addColorStop(1, '#c79c70'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-  ctx.save(); ctx.fillStyle = 'rgba(150,60,70,0.12)'; for (let x = 20; x < W; x += 120) ctx.fillRect(x, 0, 52, floorY); ctx.restore();   // wallpaper stripes
   const p = spen(t, 3);
-  p.part(roundPoly([[-40, floorY], [1120, floorY], [1120, 1940], [-40, 1940]], 6), '#7a5a4a', { shade: 0.1, lw: 6 });
-  ctx.save(); ctx.strokeStyle = 'rgba(42,34,48,0.35)'; ctx.lineWidth = 4; for (let i = 0; i < 8; i++) { ctx.beginPath(); ctx.moveTo(i * 150 - 40, floorY); ctx.lineTo(i * 260 - 300, 1930); ctx.stroke(); } ctx.restore();
-  // open door: lit interior, frame, door leaf swung
-  p.part(roundPoly([[doorX - doorW / 2 - 24, doorTop - 24], [doorX + doorW / 2 + 24, doorTop - 24], [doorX + doorW / 2 + 24, floorY], [doorX - doorW / 2 - 24, floorY]], 6), '#6a3f33', { shade: 0.1, lw: 6 });
+  p.part(roundPoly([[FL, 190], [FR, 190], [FR, floorY], [FL, floorY]], 2), '#dcbc92', { shade: false, lw: 5 });
+  ctx.save(); ctx.fillStyle = 'rgba(150,60,70,0.12)'; for (let x = FL + 10; x < FR; x += 110) ctx.fillRect(x, 190, 48, floorY - 190); ctx.restore();
+  p.part([[-20, 20], [FL, 190], [FL, floorY], [-20, floorY + 150]], '#b98f68', { shade: false, lw: 5 });          // left wall
+  p.part([[1100, 20], [FR, 190], [FR, floorY], [1100, floorY + 150]], '#a9815d', { shade: false, lw: 5 });         // right wall
+  p.part([[-20, -20], [1100, -20], [1100, 20], [FR, 190], [FL, 190], [-20, 20]], '#efe3cf', { shade: false, lw: 5 }); // ceiling
+  p.part([[-20, floorY + 150], [FL, floorY], [FR, floorY], [1100, floorY + 150], [1100, 1950], [-20, 1950]], '#7a5a4a', { shade: 0.1, lw: 5 });
+  ctx.save(); ctx.strokeStyle = 'rgba(42,34,48,0.35)'; ctx.lineWidth = 4;
+  for (let i = -3; i <= 9; i++) { const x0 = FL + i * 110; ctx.beginPath(); ctx.moveTo(x0, floorY); ctx.lineTo(540 + (x0 - 540) * 2.7, 1950); ctx.stroke(); } ctx.restore();
+  // wall sconce on the right wall
+  glowBlob(1040, 470, 260, 'rgba(255,225,150,0.55)'); outline(() => { ctx.moveTo(1010, 440); ctx.lineTo(1070, 430); ctx.lineTo(1070, 520); ctx.lineTo(1010, 510); ctx.closePath(); }, '#ffe9a8', 5);
+  // open door (opening slightly skewed in perspective), lit interior, frame, leaf swung toward the viewer
+  const L = doorX - doorW / 2, R = doorX + doorW / 2;
+  p.part([[L - 24, doorTop - 24], [R + 24, doorTop - 4], [R + 24, floorY - 18], [L - 24, floorY]], '#6a3f33', { shade: 0.1, lw: 6 });
   const ig = ctx.createLinearGradient(0, doorTop, 0, floorY); ig.addColorStop(0, '#ffe2a0'); ig.addColorStop(1, '#ffc674');
-  ctx.fillStyle = ig; ctx.fillRect(doorX - doorW / 2, doorTop, doorW, floorY - doorTop);
-  p.part(roundPoly([[doorX + doorW / 2, doorTop], [doorX + doorW / 2 + 150, doorTop + 40], [doorX + doorW / 2 + 150, floorY - 30], [doorX + doorW / 2, floorY]], 4), '#8a5a44', { shade: 0.1, lw: 6 });
-  ctx.fillStyle = '#e8c84a'; ctx.beginPath(); ctx.arc(doorX + doorW / 2 + 28, floorY * 0.62 + doorTop * 0.38, 12, 0, 7); ctx.fill();
+  ctx.fillStyle = ig; ctx.beginPath(); ctx.moveTo(L, doorTop); ctx.lineTo(R, doorTop + 22); ctx.lineTo(R, floorY - 22); ctx.lineTo(L, floorY); ctx.fill();
+  p.part([[R, doorTop + 22], [R + 150, doorTop + 70], [R + 150, floorY - 60], [R, floorY - 22]], '#8a5a44', { shade: 0.1, lw: 6 });
+  ctx.fillStyle = '#e8c84a'; ctx.beginPath(); ctx.arc(R + 28, (doorTop + floorY) / 2 + 20, 12, 0, 7); ctx.fill();
   outline(() => { ctx.roundRect(lx - 60, ly - 36, 120, 72, 14); }, '#f4efe4', 5); text('4A', lx, ly + 2, 46, INK);
-  // flat welcome mat in perspective (wider at the front edge), thin stripes
-  p.part(roundPoly([[doorX - doorW / 2 + 20, floorY + 8], [doorX + doorW / 2 - 20, floorY + 8], [doorX + doorW / 2 + 50, floorY + 66], [doorX - doorW / 2 - 50, floorY + 66]], 4), '#b84a4a', { shade: false, lw: 5 });
-  ctx.save(); ctx.strokeStyle = 'rgba(255,230,200,0.6)'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(doorX - doorW / 2 + 4, floorY + 26); ctx.lineTo(doorX + doorW / 2 - 4, floorY + 26); ctx.moveTo(doorX - doorW / 2 - 14, floorY + 46); ctx.lineTo(doorX + doorW / 2 + 14, floorY + 46); ctx.stroke(); ctx.restore();
+  p.part(roundPoly([[L + 20, floorY + 8], [R - 20, floorY + 8], [R + 50, floorY + 66], [L - 50, floorY + 66]], 4), '#b84a4a', { shade: false, lw: 5 });
+  ctx.save(); ctx.strokeStyle = 'rgba(255,230,200,0.6)'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(L + 4, floorY + 26); ctx.lineTo(R - 4, floorY + 26); ctx.moveTo(L - 14, floorY + 46); ctx.lineTo(R + 14, floorY + 46); ctx.stroke(); ctx.restore();
 }
 function bag(x, y, k = 1) {   // takeaway bag hanging from (x,y): cup lid + straw peeking out, receipt sticker, twisted handles
   ctx.save(); ctx.translate(x, y); ctx.scale(k, k); ctx.strokeStyle = INK; ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
@@ -164,48 +183,56 @@ function bag(x, y, k = 1) {   // takeaway bag hanging from (x,y): cup lid + stra
   ctx.strokeStyle = INK; ctx.lineWidth = 7; ctx.beginPath(); ctx.moveTo(-46, 30); ctx.bezierCurveTo(-46, -34, 0, -40, 0, 0); ctx.bezierCurveTo(0, -40, 46, -34, 46, 30); ctx.stroke();   // handles
   ctx.restore();
 }
-function nanaDraw(t, X, Y, s, hands) {
-  drawCharacter(ctx, 'nana', X, Y, s, { expr: 'happy', mouth: 'smile', eyes: 'happy', fx: ['blush'], ...hands }, { frame: boilFrame(t) });
-  // dressing gown over the dress: pink quilted robe, belt, fluffy collar
-  const sc = s;
-  outline(() => { ctx.moveTo(X - 3 * sc, Y - 56 * sc); ctx.lineTo(X + 3 * sc, Y - 56 * sc); ctx.lineTo(X + 15 * sc, Y - 8 * sc); ctx.lineTo(X - 15 * sc, Y - 8 * sc); ctx.closePath(); }, '#f2a6c6', 5);
-  ctx.save(); ctx.strokeStyle = 'rgba(42,34,48,0.35)'; ctx.lineWidth = 3; for (const dx of [-8, 0, 8]) { ctx.beginPath(); ctx.moveTo(X + dx * sc, Y - 40 * sc); ctx.lineTo(X + dx * sc * 1.4, Y - 9 * sc); ctx.stroke(); } ctx.restore();
-  outline(() => { ctx.rect(X - 11 * sc, Y - 32 * sc, 22 * sc, 5 * sc); }, '#fff1f5', 4);
-  outline(() => { ctx.ellipse(X, Y - 55 * sc, 6 * sc, 2.6 * sc, 0, 0, 7); }, '#fff1f5', 4);
+function nanaScene(t, X, Y, s, rot, hands, props) {   // whole-body cosy lean around the feet, hip out, front foot forward
+  ctx.save(); ctx.translate(X, Y); ctx.rotate(rot); ctx.translate(-X, -Y);
+  drawCharacter(ctx, 'nana', X, Y, s, { expr: 'happy', mouth: 'smile', eyes: 'happy', fx: ['blush'], tilt: -6, ...hands }, { frame: boilFrame(t) });
+  outline(() => { ctx.moveTo(X - 3 * s, Y - 56 * s); ctx.lineTo(X + 3 * s, Y - 56 * s); ctx.lineTo(X + 13 * s, Y - 36 * s); ctx.lineTo(X + 19.5 * s, Y - 20 * s); ctx.lineTo(X + 16 * s, Y - 8 * s); ctx.lineTo(X - 15 * s, Y - 8 * s); ctx.closePath(); }, '#f2a6c6', 5);
+  ctx.save(); ctx.strokeStyle = 'rgba(42,34,48,0.35)'; ctx.lineWidth = 3; for (const dx of [-8, 0, 8]) { ctx.beginPath(); ctx.moveTo(X + dx * s, Y - 40 * s); ctx.lineTo(X + dx * s * 1.4, Y - 9 * s); ctx.stroke(); } ctx.restore();
+  outline(() => { ctx.rect(X - 11 * s, Y - 32 * s, 24 * s, 5 * s); }, '#fff1f5', 4);
+  outline(() => { ctx.ellipse(X, Y - 55 * s, 6 * s, 2.6 * s, 0, 0, 7); }, '#fff1f5', 4);
+  outline(() => { ctx.ellipse(X - 6 * s, Y + 6, 4.2 * s, 1.8 * s, 0, 0, 7); }, '#6a4a7a', 5);   // front slipper
+  props && props();
+  ctx.restore();
 }
 
 // ---------- STILL 2 · beat 8 ----------
 function still2(t) {
-  SEED = 9; hall(t, 705, 330, 640, 1450);
-  const ns = 8.6, NX = 705, NY = 1450, nshY = NY - 52 * 0.9 * ns;
-  // Nana: left arm (screen left) holds the bag, right arm lifts the drumstick to her smile
+  SEED = 9; hall(t, 770, 330, 650, 1400);
+  const ns = 8.4, NX = 770, NY = 1410, nshY = NY - 52 * 0.9 * ns;
   glowBlob(NX, 1000, 420, 'rgba(255,220,150,0.5)');
-  nanaDraw(t, NX, NY, ns, { armL: armTo(NX, nshY, ns * 0.9, NX - 150, nshY + 150, [0, -2]), armR: armTo(NX, nshY, ns * 0.9, NX + 105, nshY - 20, [3, -3]) });
-  bag(NX - 150, nshY + 150, 0.95); fist(NX - 150, nshY + 154, 0.42);
-  drumstick(NX + 105, nshY + 40, 0.28, 0.82); fist(NX + 105, nshY - 18, 0.4);
-  // steam from the food
-  ctx.save(); ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.lineWidth = 6; ctx.lineCap = 'round'; for (const dx of [-14, 8, 30]) { ctx.beginPath(); ctx.moveTo(NX + 130 + dx, nshY - 160); ctx.bezierCurveTo(NX + 150 + dx, nshY - 190, NX + 112 + dx, nshY - 215, NX + 134 + dx, nshY - 250); ctx.stroke(); } ctx.restore();
-  // Steve in the foreground-left with the napkin bib, looking across the hall
-  const s = 16, X = 235, hc0 = 1010, Y = hc0 + 80 * s, shY = Y - 60 * s;
-  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'dot', lid: 0.5, brow: 'worried', mouth: 'line', fx: ['sweat'], look: 0.9, hair: 0, bags: 1 }, { frame: boilFrame(t) });
-  napkin(X, hc0 + 15 * s - 4, 250, 1.05);
-  { const dp = spen(t, 31); drop(dp, 430, 880, 22, 0.3); }
-  title(); plate('nana', ['It’s still WARM, dear.'], ['WARM']);
+  nanaScene(t, NX, NY, ns, 0.07, { armL: armTo(NX, nshY, ns * 0.9, NX - 150, nshY + 150, [0, -2]), armR: armTo(NX, nshY, ns * 0.9, NX + 100, nshY - 25, [3, -3]) }, () => {
+    bag(NX - 150, nshY + 150, 0.95); fist(NX - 150, nshY + 154, 0.42);
+    drumstick(NX + 100, nshY + 35, 0.28, 0.82); fist(NX + 100, nshY - 23, 0.4);
+    ctx.save(); ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.lineWidth = 6; ctx.lineCap = 'round'; for (const dx of [-14, 8, 30]) { ctx.beginPath(); ctx.moveTo(NX + 125 + dx, nshY - 165); ctx.bezierCurveTo(NX + 145 + dx, nshY - 195, NX + 107 + dx, nshY - 220, NX + 129 + dx, nshY - 255); ctx.stroke(); } ctx.restore();
+  });
+  // Steve half out of his own door (left edge), twisted toward her, hand on the doorknob
+  const sd = spen(t, 5); sd.part([[-30, 40], [105, 130], [105, 1490], [-30, 1720]], '#8a5a44', { shade: 0.1, lw: 6 });
+  ctx.fillStyle = '#e8c84a'; ctx.beginPath(); ctx.arc(80, 1170, 16, 0, 7); ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = 4; ctx.stroke();
+  const s = 15, th = 0.2, P = placeSteve(395, 1010, s, th), knob = [84, 1170];
+  drawCharacter(ctx, 'steve', P.X, P.Y, s, { eyes: 'dot', lid: 0.1, brow: 'raised', mouth: 'small', fx: ['sweat'], look: 0.9, hair: 0, bags: 1, lean: th * 180 / Math.PI, tilt: -5,
+    armL: handLocal(P, knob), armR: { hand: [6, -14], bend: [0, 2] } }, { frame: boilFrame(t) });
+  const nk = neckOf(P); napkin(nk[0], nk[1] - 4, 250, s / 15.5, th); fist(knob[0] + 6, knob[1] - 4, 0.42);
+  { const dp = spen(t, 31); drop(dp, 590, 900, 22, 0.3); }
+  title(); plate('nana', ['It\u2019s still WARM, dear.'], ['WARM']);
 }
 
 // ---------- STILL 3 · beat 9 punch ----------
 function still3(t) {
-  SEED = 12; hall(t, 840, 300, 610, 1450, 985, 440);
-  const ns = 8.2, NX = 850, NY = 1450, nshY = NY - 52 * 0.9 * ns;
-  glowBlob(NX, 1000, 400, 'rgba(255,220,150,0.5)');
-  nanaDraw(t, NX, NY, ns, { armL: armTo(NX, nshY, ns * 0.9, NX - 120, nshY + 140, [0, -2]), armR: armTo(NX, nshY, ns * 0.9, NX + 105, nshY - 150, [5, -3]) });
-  bag(NX - 120, nshY + 140, 0.9); fist(NX - 120, nshY + 144, 0.38);
-  drumstick(NX + 105, nshY - 130, 0.3, 0.8); fist(NX + 105, nshY - 150, 0.38);
-  const s = 21, X = 360, hc0 = 790, Y = hc0 + 80 * s, shY = Y - 60 * s;
-  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'dot', lid: 0.6, brow: undefined, mouth: 'line', fx: ['gloom', 'sweat'], look: 0.3, hair: 0, bags: 1 }, { frame: boilFrame(t) });
-  napkin(X, hc0 + 15 * s - 4, 300, 1.35);
-  { const dp = spen(t, 31); drop(dp, 700, 640, 26, 0.3); }
-  title(); plate('steve', ['…Enjoy.'], ['Enjoy']);
+  SEED = 12; hall(t, 880, 300, 620, 1400, 700, 480);
+  const ns = 9.4, NX = 860, NY = 1420, nshY = NY - 52 * 0.9 * ns;
+  glowBlob(NX, 1000, 420, 'rgba(255,220,150,0.5)');
+  nanaScene(t, NX, NY, ns, -0.05, { armL: armTo(NX, nshY, ns * 0.9, NX - 130, nshY + 150, [0, -2]), armR: armTo(NX, nshY, ns * 0.9, NX + 115, nshY - 170, [5, -3]) }, () => {
+    bag(NX - 130, nshY + 150, 0.9); fist(NX - 130, nshY + 154, 0.4);
+    ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 6; ctx.lineCap = 'round';   // wave motion arcs
+    for (const a of [-2.3, -1.7, -1.1, -0.5]) { ctx.beginPath(); ctx.moveTo(NX + 125 + Math.cos(a) * 85, nshY - 250 + Math.sin(a) * 85); ctx.lineTo(NX + 125 + Math.cos(a) * 125, nshY - 250 + Math.sin(a) * 125); ctx.stroke(); }
+    ctx.restore();
+    drumstick(NX + 115, nshY - 150, 0.4, 0.86); fist(NX + 115, nshY - 170, 0.4);
+  });
+  const s = 23, th = 0.1, P = placeSteve(350, 800, s, th);
+  drawCharacter(ctx, 'steve', P.X, P.Y, s, { expr: 'dead_inside', lid: 0.72, brow: undefined, mouth: 'line', fx: ['gloom'], look: 0, hair: 0, bags: 1, lean: th * 180 / Math.PI, tilt: -9, headDy: -1.5 }, { frame: boilFrame(t) });
+  const nk = neckOf(P); napkin(nk[0], nk[1] - 4, 250, s / 15.5, th);
+  { const dp = spen(t, 31); drop(dp, 585, 740, 26, 0.3); }
+  title(); plate('steve', ['\u2026Enjoy.'], ['Enjoy']);
 }
 const STILLS = [still1, still2, still3];
 function render(i) {
