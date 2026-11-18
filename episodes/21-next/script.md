@@ -1,5 +1,7 @@
 # Tập 12 — On Empty  (episode 21; topic 1 "On Empty", motorbike, picked by the owner 2026-11-18)
 
+**Owner OK (2026-11-18, gate 1):** "OK, giữ Since Tuesday, kết A, giọng Ted": punch "…Since TUESDAY?" (try the flat question + flat statement takes), button A ("It's FINE." + needle back on E, loop), attendant voice = Ted's voice (unseen stranger).
+
 **Real problem:** the fuel light is on, the needle is on E, and you decide you can make it. On a motorbike (owner's pick): the everyday
 vehicle for most of the audience; works in any country (no brand, no currency, no real place).
 **Base (kept from Tập 10/11):** 25–30 s, burned-in captions every line, full-bleed panel, face ≥ 25 %, auto-dubbing OFF,
