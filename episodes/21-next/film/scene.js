@@ -124,7 +124,7 @@ function snail(t, x, y, k, o = {}) {   // shell + body + two eyestalks. o.wave: 
   ctx.fillStyle = '#e8b98a'; ctx.beginPath(); ctx.moveTo(-110, 0); ctx.bezierCurveTo(-120, -26, 100, -24, 118, -6); ctx.bezierCurveTo(130, 6, 118, 12, 100, 12); ctx.lineTo(-100, 12); ctx.closePath(); ctx.fill(); ctx.stroke();   // foot/body
   ctx.fillStyle = '#c9772e'; ctx.beginPath(); ctx.arc(-20, -62, 62, 0, 7); ctx.fill(); ctx.stroke();
   ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(-20, -62, 36, 0.6, 5.2); ctx.stroke(); ctx.beginPath(); ctx.arc(-20, -62, 14, 1.2, 5.8); ctx.stroke();
-  const w = o.wave ? 0.5 * Math.sin(t * 14) : 0;
+  const w = o.wave ? 0.75 * Math.sin(t * 10) : 0;
   for (const [sx0, a] of [[92, -0.15], [112, 0.12 + w]]) { ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(sx0, -6); ctx.lineTo(sx0 + 22 * Math.sin(a) + 12, -60 - 14 * Math.cos(a)); ctx.stroke();
     ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(sx0 + 22 * Math.sin(a) + 12, -66 - 14 * Math.cos(a), 12, 0, 7); ctx.fill(); ctx.stroke(); ctx.fillStyle = INK; ctx.beginPath(); ctx.arc(sx0 + 22 * Math.sin(a) + 12 + (o.look ? -5 : 3), -66 - 14 * Math.cos(a), 4.5, 0, 7); ctx.fill(); }
   ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(122, -2, 7, 0.2, 2.6); ctx.stroke();   // little smile
@@ -225,8 +225,8 @@ function pushUp(t) {
   fist(840, 1400, 0.6); fist(900, 1360, 0.6);
   for (const [x0, per, off] of [[1000, 0.7, 0], [900, 0.9, 0.3], [1090, 0.6, 0.5]]) sweatDrip(t, x0 - 60, 700, per, off, 24, 380);
   // wet footprints / sweat trail dots behind him are on the road; the snail slides past in the foreground
-  const sx = kf(t, [[12.7, -380], [14.0, 1250]], x => x), sy = 1830;
-  snail(t, sx, sy, 0.95, { look: t > 13.4, wave: false });
+  const sx = kf(t, [[12.7, -330], [13.1, 150], [14.0, 700]], x => x), sy = 1850;
+  snail(t, sx, sy, 1.9, { look: t > 13.15, wave: false });
   ctx.restore();
 }
 // H · 6 peak: station 3, he collapses onto the pump and hugs it (still 2, animated)
@@ -291,7 +291,7 @@ function roadBehind(t) {
   ctx.save(); ctx.strokeStyle = '#fff6dc'; ctx.lineWidth = 12; ctx.lineCap = 'round'; ctx.setLineDash([60, 46]); ctx.beginPath(); ctx.moveTo(540, hz + 10); ctx.lineTo(540, 1500); ctx.stroke(); ctx.restore();
   glowBlob(540, 640, 520, 'rgba(255,230,170,0.5)');
   for (let i = 0; i < 9; i++) { const k = 1 - i / 9, y = hz + 40 + (1 - k * k) * 900, r = 7 + 30 * (1 - k * k) * 1.0; ctx.fillStyle = 'rgba(70,110,150,0.75)'; ctx.beginPath(); ctx.ellipse(540 + (i % 2 ? 14 : -14) * (1 - k), y, r * 1.3, r * 0.55, 0, 0, 7); ctx.fill(); }
-  snail(t, 560, hz + 62, 0.2, { wave: true, look: true });
+  snail(t, 520, hz + 520, 1.0, { wave: true, look: true });
   // back of the helmet, bottom-left
   ctx.save(); ctx.translate(330, 1930); const hs = 1.0; ctx.fillStyle = '#f4efe4'; ctx.strokeStyle = INK; ctx.lineWidth = 9; ctx.beginPath(); ctx.arc(0, 0, 400 * hs, Math.PI, 0); ctx.closePath(); ctx.fill(); ctx.stroke();
   ctx.save(); ctx.clip(); ctx.fillStyle = '#d9423e'; ctx.fillRect(-34, -440, 68, 440); ctx.fillStyle = 'rgba(42,34,48,0.14)'; ctx.beginPath(); ctx.ellipse(-180, -80, 90, 260, 0, 0, 7); ctx.fill(); ctx.restore(); ctx.restore();
@@ -316,7 +316,7 @@ function punch(t) {
 }
 // M · button a: he rides off past the station, left
 function rideOff(t) {
-  forecourt(onTwos(t), 1180); const q = seg(t, 22.0, 23.1), x = lerp(640, -900, q * q * 1.0);
+  forecourt(onTwos(t), 1180); const q = seg(t, 22.0, 23.0), x = lerp(640, -420, q * q);
   const p = spen(onTwos(t), 9, 5); p.part([[-20, 1180], [1100, 1180], [1100, 1950], [-20, 1950]], '#b9b4aa', { shade: 0.1, lw: 5 });
   pump(onTwos(t), 620, 330, 330, 880, '0.12');
   bike(t, x, 1640, 0.98, { spin: -t * 11 * q, snug: { ...SNUG, tail: 0.7 }, ride: { face: { mouth: 'line', lid: 0.35, brow: 'raised', look: -0.8 } } });
@@ -364,13 +364,13 @@ function build() {
     // 12 · 7b (silent): the gauge, tap, needle to F
     [17.9, t => { cam(kf(t, [[17.9, 1.0], [19.0, 1.05]]), 540, 980, () => tapF(t)); }],
     // 13 · 7c (silent): the road behind him, the snail waves
-    [19.0, t => { cam(kf(t, [[19.0, 1.0], [19.7, 1.1]]), 540, 900, () => roadBehind(t)); }],
+    [18.8, t => { cam(kf(t, [[18.8, 1.0], [19.7, 1.1]]), 540, 900, () => roadBehind(t)); }],
     // 14 · face hold 0.7 s (blink, drip), then s8a punch
     [19.7, t => { cam(kf(t, [[19.7, 1.0], [22.0, 1.07]], t2 => t2), 480, 1000, () => punch(t)); }],
     // 15 · button a: rides off
     [22.0, t => { rideOff(t); }],
     // 16 · button b + loop: needle drops back to E, glance, "It's FINE.", push-in = frame 1
-    [23.0, t => { loopDash(t); }],
+    [22.7, t => { loopDash(t); }],
   ];
 }
 
