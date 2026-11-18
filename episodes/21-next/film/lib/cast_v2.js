@@ -224,7 +224,7 @@ export function face(pen, p, F) {
       pen.dot(lx + rx * 0.32, ey + ry * 0.36, rx * 0.36, rx * 0.36, WHITE);
       pen.dot(lx - rx * 0.32, ey - ry * 0.42, rx * 0.16, rx * 0.16, WHITE);
     };
-    switch (p.eyes) {
+    switch ((sx > 0 && p.eyeR) || p.eyes) {
       case 'wide': case 'pinpoint': {
         pen.part(ellipsePts(ex, ey, rx * 1.75, ry * 1.4, 28), WHITE, { shade: 0.1, lw: lw * 0.75 });
         const pr = p.eyes === 'wide' ? rx * 0.62 : rx * 0.3, px = ex + look * 0.6;

@@ -18,3 +18,12 @@ Checks: face width S1 ~ 36 %, S2 ~ 33 %, S3 ~ 45 %; gauge ~ 35 % of S1; nothing 
 - S2 hug is a lean plus wrap, not a full bear hug; the "3.86" display is clipped by the helmet ("3" half hidden).
 - S3 attendant is small (~ 8 % of width) and the seat-closing reads only from the open flap; the dash gauge on the scooter is tiny (F visible, not legible at phone size).
 - Steve's stick legs run into the bottom 20 % in S2/S3 (unimportant content only).
+
+## Round 3 (coordinator notes, one round only)
+| Still | Issue | Fix |
+|---|---|---|
+| S1 hook | Face read as a calm smile | Layout and dial kept. Clenched-teeth grin, right eye twitch-squinted (new `eyeR` pose key), left lid half, raised tense brows, one big sweat drop from the helmet |
+| S2 climax | Did not read as a hug; basket floated | Steve slumped on one knee (custom `legPts`), cheek on the pump, both arms wrapped round it, happy-squeezed eyes, open grin, joy tears, sweat patches. Roll -0.08 plus low horizon. Pump display moved up, clear of the helmet. Basket moved onto the steering column with a bracket, scooter parked behind-left |
+| S3 punch | Too wide and static, tiny attendant | Chest-up close-up, head about 50 % width, left of centre, torso runs off the bottom (no legs). Attendant about 22 % width behind the scooter, holding the open seat, brim enlarged. Dash gauge dropped. Fixed attendant arms pass redrawing his body over the scooter. Ghost "8.88" dimmed so 0.12 reads |
+
+Doubts left: S2 arms are long (a stretched stick hug); S1 grimace leans slightly angry, soften the brows if the owner wants less intensity.

@@ -135,8 +135,8 @@ function scooter(t, x, y, k, o = {}) {
   ctx.restore();
   if (o.seat) {   // under-seat compartment: dark mouth, tank neck full to the brim
     p.part(roundPoly([[-10, -330], [330, -332], [320, -352], [-6, -352]], 4), DARK, { shade: false, lw: 5 });
-    p.part(ellipsePts(120, -350, 70, 15, 24), '#f2b632', { shade: false, lw: 5 });
-    p.part(ellipsePts(120, -354, 54, 9, 24), '#ffd980', { shade: false, lw: 3 });
+    p.part(ellipsePts(120, -350, 100, 24, 24), '#f2b632', { shade: false, lw: 5 });
+    p.part(ellipsePts(120, -354, 80, 14, 24), '#ffd980', { shade: false, lw: 3 });
   }
   // floorboard + leg shield + fender
   p.part(roundPoly([[-260, -150], [-20, -150], [-20, -215], [-260, -215]], 10), BODY, { shade: 0.14, lw: 6 });
@@ -156,7 +156,8 @@ function scooter(t, x, y, k, o = {}) {
     ctx.fillStyle = '#e8262f'; ctx.font = '600 22px Fredoka'; ctx.textAlign = 'center'; ctx.fillText('F', 30, -26 + 0); ctx.restore();
   }
   // front basket with Snuggles
-  const bx0 = -560, bx1 = -380, by0 = -345, by1 = -215;
+  const bx0 = -500, bx1 = -320, by0 = -345, by1 = -215;
+  p.line([[bx1 - 40, by1 - 8], [-285, -300]], 12, '#6b6f7a'); p.line([[bx1 - 6, by0 + 50], [-292, -400]], 10, '#6b6f7a');   // bracket clamps the basket to the steering column
   if (o.snug) {
     drawCharacter(ctx, 'snuggles', (bx0 + bx1) / 2 - 4, by1 + 8, 5.6, o.snug, { frame: boilFrame(t) });
   }
@@ -178,7 +179,7 @@ function pump(t, x, y, w, h, digits, o = {}) {
   const dy = y + 0.17 * h, dh = 0.17 * h;
   p.part(roundPoly([[x + 26, dy], [x + w - 26, dy], [x + w - 26, dy + dh], [x + 26, dy + dh]], 10), '#1b2a22', { shade: false, lw: 6 });
   glowBlob(x + w / 2, dy + dh / 2, w * 0.7, 'rgba(120,255,150,0.28)');
-  ctx.save(); ctx.font = `600 ${Math.min(dh * 0.86, (w - 80) / 2.6)}px Fredoka`; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillStyle = 'rgba(125,255,154,0.25)'; ctx.fillText('8.88', x + w - 44, dy + dh * 0.52);
+  ctx.save(); ctx.font = `600 ${Math.min(dh * 0.86, (w - 80) / 2.6)}px Fredoka`; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillStyle = 'rgba(125,255,154,0.10)'; ctx.fillText('8.88', x + w - 44, dy + dh * 0.52);
   ctx.shadowColor = '#7dff9a'; ctx.shadowBlur = 24; ctx.fillStyle = '#9bffb4'; ctx.fillText(digits, x + w - 44, dy + dh * 0.52); ctx.restore();
   // lower panel + buttons
   p.part(roundPoly([[x + 26, dy + dh + 40], [x + w - 26, dy + dh + 40], [x + w - 26, dy + dh + 40 + 0.12 * h], [x + 26, dy + dh + 40 + 0.12 * h]], 8), '#c9ced6', { shade: 0.1, lw: 5 });
@@ -207,11 +208,14 @@ function forecourt(t, hz) {
 // generic attendant: nameless adult in a plain cap and plain uniform. (x, y) = feet, s = unit
 function attendant(t, x, y, s, o = {}) {
   const p = spen(t, 55, 5), SK = '#a8714a', UNI = '#7e8794', CAP = '#3f5a78';
+  const armsOnly = o.part === 'arms';
+  if (!armsOnly) {
   ctx.fillStyle = 'rgba(0,0,0,0.16)'; ctx.beginPath(); ctx.ellipse(x, y + 4, 22 * s, 4 * s, 0, 0, 7); ctx.fill();
   p.part(roundPoly([[x - 10 * s, y], [x - 3 * s, y], [x - 4 * s, y - 40 * s], [x - 12 * s, y - 40 * s]], 2), '#2f3340', { shade: 0.1, lw: 5 });
   p.part(roundPoly([[x + 3 * s, y], [x + 10 * s, y], [x + 12 * s, y - 40 * s], [x + 4 * s, y - 40 * s]], 2), '#2f3340', { shade: 0.1, lw: 5 });
   p.part(roundPoly([[x - 17 * s, y - 38 * s], [x + 17 * s, y - 38 * s], [x + 15 * s, y - 80 * s], [x - 15 * s, y - 80 * s]], 6), UNI, { shade: 0.15, lw: 6 });   // plain shirt
   p.part(roundPoly([[x - 15 * s, y - 80 * s], [x - 2 * s, y - 80 * s], [x, y - 73 * s], [x + 2 * s, y - 80 * s], [x + 15 * s, y - 80 * s], [x + 6 * s, y - 84 * s], [x - 6 * s, y - 84 * s]], 1.5), '#a3acb8', { shade: false, lw: 4 });   // collar
+  }
   const hnd = o.hand || [x + 30 * s, y - 50 * s];
   if (o.part === 'arms') {
   p.line([[x - 14 * s, y - 76 * s], [x - 20 * s, y - 62 * s], [hnd[0] - 2 * s, hnd[1]]], 15, UNI);
@@ -243,11 +247,11 @@ function still1(t) {
   glowBlob(540, 640, 520, 'rgba(255,230,170,0.5)');
   // Steve, close-up, helmet on
   const s = 13, X = 540, hc0 = 610, Y = hc0 + 80 * s, shY = Y - 60 * s;
-  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'dot', lid: 0.15, brow: 'worried', mouth: 'smile', fx: ['sweat'], look: 0, hair: 0, bags: 1,
+  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'dot', eyeR: 'squint', lid: 0.3, brow: 'raised', mouth: 'teeth', fx: ['sweat'], look: 0, hair: 0, bags: 1,
     armL: armTo(X, shY, s, 118, 1010, [0, 5]), armR: armTo(X, shY, s, 962, 1010, [0, 5]) }, { frame: boilFrame(t) });
   const hc = headOf(X, Y, s);
   helmet([hc[0], hc[1]], s);
-  { const dp = spen(t, 31); drop(dp, 345, 560, 22, 0.25); drop(dp, 738, 520, 24, -0.2); drop(dp, 318, 700, 18, 0.1); drop(dp, 770, 690, 20, 0); drop(dp, 700, 330, 18, 0.2); }
+  { const dp = spen(t, 31); drop(dp, 345, 560, 22, 0.25); drop(dp, 738, 520, 24, -0.2); drop(dp, 318, 700, 18, 0.1); drop(dp, 770, 690, 20, 0); drop(dp, 700, 330, 18, 0.2); drop(dp, 705, 470, 46, 0.12); }
   // handlebar, mirrors, grips
   const hp = spen(t, 8, 6);
   for (const sx of [-1, 1]) { hp.line([[540 + sx * 360, 1010], [540 + sx * 420, 700]], 16, '#2a2230'); hp.part(ellipsePts(540 + sx * 430, 665, 62, 46, 24), '#33333f', { shade: false, lw: 6 }); ctx.fillStyle = 'rgba(190,225,245,0.9)'; ctx.beginPath(); ctx.ellipse(540 + sx * 430, 665, 46, 32, 0, 0, 7); ctx.fill(); }
@@ -259,51 +263,55 @@ function still1(t) {
   title();
 }
 
-// ---------- STILL 2 · CLIMAX "I MADE IT!" ----------
+// ---------- STILL 2 · CLIMAX "I MADE IT!" (hug) ----------
 function still2(t) {
   SEED = 9;
-  const hz = 1380;
-  // camera roll for a diagonal, dynamic feel (content only; title + panel stay level)
-  ctx.save(); ctx.translate(540, 960); ctx.rotate(-0.06); ctx.scale(1.14, 1.14); ctx.translate(-540, -960);
+  const hz = 1460;
+  // low camera + roll: diagonal, heroic (content only; title + panel stay level)
+  ctx.save(); ctx.translate(540, 960); ctx.rotate(-0.08); ctx.scale(1.14, 1.14); ctx.translate(-540, -960);
   forecourt(t, hz);
-  // sunburst of triumph behind Steve's head
-  ctx.save(); ctx.translate(560, 760); for (let i = 0; i < 18; i++) { ctx.rotate(Math.PI * 2 / 18); ctx.fillStyle = 'rgba(255,245,200,0.34)'; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(1000, -60); ctx.lineTo(1000, 60); ctx.closePath(); ctx.fill(); } ctx.restore();
-  // scooter, Snuggles in the front basket, left side, facing left; Steve's legs overlap its rear
-  scooter(t, 600, 1595, 0.8, { snug: { eyes: 'wide', lid: 0, mouth: 'line', look: 0.8, tail: 0.5, arm: 'down' } });
-  // pump (right)
-  pump(t, 690, 560, 360, 1040, '3.86');
-  // Steve: collapsed across the pump, hugging it, head big
-  const s = 11.5, th = 0.42, P = placeSteve(565, 850, s, th);
-  drawCharacter(ctx, 'steve', P.X, P.Y, s, { eyes: 'happy', lid: 0, brow: 'raised', mouth: 'wide', fx: ['sweat'], look: 0, hair: 0, bags: 1, lean: th * 180 / Math.PI, tilt: 10,
-    armL: handLocal(P, [975, 1110]), armR: handLocal(P, [790, 1290]) }, { frame: boilFrame(t) });
+  ctx.save(); ctx.translate(690, 1040); for (let i = 0; i < 18; i++) { ctx.rotate(Math.PI * 2 / 18); ctx.fillStyle = 'rgba(255,245,200,0.34)'; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(1100, -60); ctx.lineTo(1100, 60); ctx.closePath(); ctx.fill(); } ctx.restore();
+  // scooter parked behind-left of him, facing left, Snuggles clamped in the front basket
+  scooter(t, 470, 1385, 0.6, { snug: { eyes: 'wide', lid: 0, mouth: 'line', look: 0.8, tail: 0.5, arm: 'down' } });
+  // pump (right): display well above his head
+  pump(t, 600, 430, 360, 1010, '3.86');
+  // Steve: slumped on one knee against the pump, cheek on it, both arms wrapped round it
+  const s = 9.6, th = 0.85, GY = 1632, P = { X: 0, Y: GY, sc: s, th };
+  P.X = 660 - 42 * s * Math.sin(th); P.Y = GY - 0 * s;
+  const hy = GY - 38 * s - 42 * s * Math.cos(th); P.Y = GY;
+  ctx.fillStyle = 'rgba(0,0,0,0.16)'; ctx.beginPath(); ctx.ellipse(520, 1436, 320, 24, 0, 0, 7); ctx.fill();
+  const sh = bodyPt(P, 0, 60);
+  drawCharacter(ctx, 'steve', P.X, P.Y, s, { eyes: 'happy', lid: 0, brow: 'raised', mouth: 'grin', fx: ['sweat', 'tears_small'], look: 0, hair: 0, bags: 0, lean: th * 180 / Math.PI, tilt: 8, noShadow: true,
+    legPts: [[[0, 38], [17, 25], [-11, 22.6], [-15, 24.6]], [[0, 38], [23, 35], [21, 22.6], [28, 22.4]]],
+    armL: handLocal(P, [948, 1000]), armR: handLocal(P, [953, 1195]) }, { frame: boilFrame(t) });
   wetShirt(P);
   const hc = bodyPt(P, 0, 80);
-  helmet([hc[0] + 6, hc[1] - 4], s, th + 0.12);
-  fist(975, 1110, 0.5); fist(795, 1290, 0.5);
-  { const dp = spen(t, 31); drop(dp, 365, 720, 24, 0.3); drop(dp, 700, 600, 20, -0.3); drop(dp, 560, 1130, 22, 0); drop(dp, 310, 980, 20, 0.2); drop(dp, 450, 1320, 22, 0); }
+  helmet([hc[0] + 4, hc[1] - 2], s, th + 0.08);
+  fist(948, 1000, 0.55); fist(953, 1195, 0.55);
+  { const dp = spen(t, 31); drop(dp, 520, 800, 24, 0.3); drop(dp, 840, 800, 20, -0.3); drop(dp, 560, 1180, 22, 0); drop(dp, 400, 960, 20, 0.2); drop(dp, 840, 1280, 22, 0); }
   ctx.restore();
   title();
 }
 
-// ---------- STILL 3 · PUNCH "...Since TUESDAY?" ----------
+// ---------- STILL 3 · PUNCH "...Since TUESDAY?" (close-up) ----------
 function still3(t) {
   SEED = 12;
   const hz = 1330;
   forecourt(t, hz);
-  glowBlob(780, 760, 520, 'rgba(255,240,190,0.5)');
-  // pump far right, display "0.12"
-  pump(t, 770, 520, 320, 1000, '0.12');
-  // scooter behind Steve (front towards the left), seat open; the attendant stands behind it and lowers the seat
-  attendant(t, 850, 1470, 5.6, { dx: -6, part: 'body' });
-  scooter(t, 700, 1520, 0.7, { seat: 0.65, gauge: true });
-  attendant(t, 850, 1470, 5.6, { hand: [873, 1130], dx: -6, part: 'arms' });
-  // Steve close-up, dripping, flat, half lids, tiny head tilt
-  const s = 15.5, th = 0.06, P = placeSteve(320, 790, s, th);
-  drawCharacter(ctx, 'steve', P.X, P.Y, s, { expr: 'dead_inside', lid: 0.62, brow: undefined, mouth: 'line', fx: ['sweat'], look: 0, hair: 0, bags: 1, lean: th * 180 / Math.PI, tilt: -8, headDy: -1 }, { frame: boilFrame(t) });
+  glowBlob(800, 600, 520, 'rgba(255,240,190,0.5)');
+  // pump top-right, display "0.12"
+  pump(t, 700, 340, 340, 1000, '0.12');
+  // scooter mid-ground (right), seat open, tank full to the brim; the attendant behind it lowers the seat
+  attendant(t, 930, 1480, 6.4, { dx: -6, part: 'body' });
+  scooter(t, 800, 1480, 0.7, { seat: 0.65 });
+  attendant(t, 930, 1480, 6.4, { hand: [962, 1110], dx: -6, part: 'arms' });
+  // Steve chest-up, face ~50 % of the width, slightly left; torso runs off the bottom, no legs
+  const s = 18, th = 0.04, P = placeSteve(400, 1150, s, th);
+  drawCharacter(ctx, 'steve', P.X, P.Y, s, { expr: 'dead_inside', lid: 0.62, brow: undefined, mouth: 'line', fx: ['sweat'], look: 0, hair: 0, bags: 1, lean: th * 180 / Math.PI, tilt: -8, headDy: -1, noShadow: true, legPts: [] }, { frame: boilFrame(t) });
   wetShirt(P, 1);
   const hc = bodyPt(P, 0, 79);
   helmet([hc[0] - 2, hc[1] - 2], s, th - 0.14);
-  { const dp = spen(t, 31); drop(dp, 215, 720, 26, 0.2); drop(dp, 440, 960, 22, 0); drop(dp, 150, 1000, 20, 0.1); drop(dp, 520, 700, 20, 0); }
+  { const dp = spen(t, 31); drop(dp, 160, 960, 28, 0.2); drop(dp, 600, 1330, 24, 0); drop(dp, 130, 1250, 22, 0.1); drop(dp, 640, 900, 22, 0); }
   title();
 }
 const STILLS = [still1, still2, still3];

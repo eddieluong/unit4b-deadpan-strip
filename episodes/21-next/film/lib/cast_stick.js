@@ -103,7 +103,7 @@ function pivot(pen, [lx, ly], deg, fn) {
 export function drawCharacter(ctx, id, x, y, scale, pose = {}, opt = {}) {
   const C = CAST[id], p = resolvePose(C, pose), hand = (opt.style ?? 'hand') === 'hand';
   const pen = new VPen(ctx, x, y, scale, { lw: opt.lw ?? Math.max(2.4, scale * 0.95), hand, frame: opt.frame ?? 0, seed: opt.seed ?? id.length * 13 });
-  shadow(ctx, x, y, C.kind === 'cat' ? 18 : 12, scale);
+  if (!p.noShadow) shadow(ctx, x, y, C.kind === 'cat' ? 18 : 12, scale);
   if (p.sit && C.kind !== 'cat') { pen.sit = 15; pen.y += pen.sit * scale; }   // pose.sit: seated on something ~22 units high
   ({ steve: drawSteve, nana: drawNana, penny: drawPenny, ted: drawTed, cat: drawCat })[C.kind](pen, C, p, opt.frame ?? 0);
 }
@@ -111,7 +111,7 @@ export function drawCharacter(ctx, id, x, y, scale, pose = {}, opt = {}) {
 // Sweaty Steve — spiky black hair, a mustard hoodie on a stick body. The sweat drop is his whole personality.
 function drawSteve(pen, C, p) {
   const hy = 80 + (p.headDy || 0), r = 15;
-  legs(pen, 38);
+  if (p.legPts) p.legPts.forEach(l => pen.line(l, pen.lw)); else legs(pen, 38);   // legPts: custom leg polylines (local units), [] = none
   pivot(pen, [0, 38], p.lean || 0, () => {
     pen.part(roundPoly([[-6.5, 62], [6.5, 62], [8, 37], [-8, 37]], 2.5), C.color, { shade: 0.18 });
     pen.part(roundPoly([[-8, 65], [8, 65], [6, 61], [-6, 61]], 2), C.color, { shade: 0.3 });
