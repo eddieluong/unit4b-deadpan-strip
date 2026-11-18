@@ -2,7 +2,7 @@
 
 File: `episodes/21-next/release/Tap12-on-empty.mp4` (26.5 s, 1080x1920, 5,779,685 bytes; owner-approved render v2; punch "…Since TUESDAY?" after the pump stops at 0.12) ·
 Thumbnails: `thumb_A.png`, `thumb_B.png`, `thumb_C.png`, contact sheet `thumbsheet.png` (also `film/thumbs/thumbs_sheet.png`; source `episodes/21-next/film/thumb.js`, run `node thumb.mjs . && python3 thumbsheet.py` in `film/`; scene code copied from `stills.js` + `scene.js`).
-**Owner pick:** (pending)
+**Owner pick (2026-11-18):** "A + A, đăng lên YouTube nháp và IG luôn": thumbnail A, title A.
 Role in the plan: **glance hook on a non-phone object** (needle on E + blinking pump icon + sweaty face; Tập 11's glance-hook test continued). Everything else as Tập 10/11 (auto-dubbing OFF, 25–30 s, captions, face size, one Short that day). Target: stayed ≥ 50 % (Tập 9 47.2 %, Tập 10 28.1 %; Tập 11 result pending).
 
 ## Thumbnails (Short cover, 1080x1920; feed views never see it, it matters for the channel page and search)
