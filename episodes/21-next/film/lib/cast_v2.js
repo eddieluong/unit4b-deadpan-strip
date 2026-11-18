@@ -293,6 +293,12 @@ function mouth(pen, cx, cy, kind = 'line', k = 1, ink = INK) {
       pen.clipTo(path, () => { pen.fill(P(rrectPts(0, 0.2, 11, 2.6, 0.6, 3)), WHITE); pen.dot(cx, cy - 5 * k, 3 * k, 1.8 * k, TONGUE); });
       pen.stroke(path, lw * 0.85, ink); break;
     }
+    case 'strain': {   // forced calm: teeth showing in a strained smile (corners lifted)
+      const g = P([...curve([-5.4, 0.7], [0, 0.2], [5.4, 0.7]), ...curve([5.4, 0.7], [0, -5.6], [-5.4, 0.7]).slice(1)]);
+      const path = pen.part(g, WHITE, { shade: false, stroke: null });
+      pen.clipTo(path, () => { L([[-5, -1.6], [5, -1.6]], lw * 0.4); for (const x of [-2.6, 0, 2.6]) L([[x, 0.8], [x, -3.4]], lw * 0.4); });
+      pen.stroke(path, lw * 0.85, ink); break;
+    }
     case 'teeth': S(rrectPts(0, 0, 11, 4.8, 2, 4), WHITE); L([[-5, 0], [5, 0]], lw * 0.5); for (const x of [-2.6, 0, 2.6]) L([[x, 2], [x, -2]], lw * 0.5); break;
     case 'tongue': L(curve([-4, 0.6], [0, -1.6], [4, 0.6])); S([[0.6, -0.4], [3.4, -0.2], ...curve([3.4, -0.2], [3.4, -4.6], [2, -4.4]).slice(1), ...curve([2, -4.4], [0.6, -4.2], [0.6, -0.4]).slice(1)], TONGUE); break;
     case 'evil': {

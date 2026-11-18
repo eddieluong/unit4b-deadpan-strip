@@ -42,11 +42,16 @@ function bodyPt(P, lx, ly) {
   const { X, Y, sc, th } = P, vx = lx * sc, vy = -(ly - 38) * sc;
   return [X + vx * Math.cos(th) - vy * Math.sin(th), Y - 38 * sc + vx * Math.sin(th) + vy * Math.cos(th)];
 }
-// soaked shirt: dark wet patches + drips on the torso, clipped to the torso
+// opaque torso base: the hand-drawn fill slips off the ink at large scale, so lay a solid fill under the character first
+function torsoBase(P) {
+  const pts = [[-6.5, 62], [6.5, 62], [8, 37], [-8, 37]].map(([a, b]) => bodyPt(P, a, b));
+  ctx.save(); ctx.fillStyle = '#f2b632'; ctx.beginPath(); pts.forEach((q, i) => i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.closePath(); ctx.fill(); ctx.restore();
+}
+// soaked shirt: solid darker wet patches + drips on the torso, clipped to the torso
 function wetShirt(P, amt = 1) {
-  const pts = [[-8.4, 63], [8.4, 63], [8.4, 36], [-8.4, 36]].map(([a, b]) => bodyPt(P, a, b));
+  const pts = [[-5.6, 61], [5.6, 61], [7, 38], [-7, 38]].map(([a, b]) => bodyPt(P, a, b));
   ctx.save(); ctx.beginPath(); pts.forEach((q, i) => i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.closePath(); ctx.clip();
-  ctx.fillStyle = 'rgba(150,88,0,0.42)';
+  ctx.fillStyle = '#d9a026';
   for (const [lx, ly, rx, ry] of [[-2, 52, 7, 9], [3, 44, 6, 7], [0, 60, 9, 4]]) { const c = bodyPt(P, lx, ly); ctx.beginPath(); ctx.ellipse(c[0], c[1], rx * P.sc * amt, ry * P.sc * amt, P.th, 0, 7); ctx.fill(); }
   ctx.restore();
 }
@@ -231,6 +236,15 @@ function attendant(t, x, y, s, o = {}) {
   p.line([[hx - 3 * s, hy + 11 * s], [hx + 6 * s, hy + 11 * s]], 5, INK);
 }
 
+// fuel nozzle held in the attendant's hand (hx, hy), spout pointing down-left into the tank neck, short hose looping to the pump
+function nozzle(t, hx, hy) {
+  const p = spen(t, 77, 5);
+  ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 30; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(hx + 18, hy - 46); ctx.bezierCurveTo(hx + 80, hy - 90, hx + 90, hy - 200, hx + 40, hy - 260); ctx.stroke();
+  ctx.strokeStyle = '#4b4f5b'; ctx.lineWidth = 17; ctx.stroke(); ctx.restore();   // hose up toward the pump (right of frame)
+  p.part(roundPoly([[hx - 48, hy + 64], [hx - 44, hy + 20], [hx - 70, hy + 4], [hx - 66, hy - 4], [hx - 26, hy - 34], [hx + 40, hy - 52], [hx + 52, hy - 26], [hx + 28, hy - 8], [hx + 6, hy + 4], [hx + 4, hy + 62]], 8), '#d9423e', { shade: false, lw: 5 });   // body: grip + head
+  p.part(roundPoly([[hx - 66, hy + 4], [hx - 96, hy + 72], [hx - 108, hy + 134], [hx - 98, hy + 138], [hx - 84, hy + 74], [hx - 52, hy + 12]], 4), '#c3c8d0', { shade: false, lw: 4 });   // spout
+  p.part(roundPoly([[hx - 28, hy + 14], [hx - 6, hy + 14], [hx - 12, hy + 56], [hx - 28, hy + 58]], 4), '#2a2230', { shade: false, lw: 4 });   // trigger
+}
 let SEED = 1;
 // ---------- STILL 1 · HOOK (glance test) ----------
 function still1(t) {
@@ -247,7 +261,7 @@ function still1(t) {
   glowBlob(540, 640, 520, 'rgba(255,230,170,0.5)');
   // Steve, close-up, helmet on
   const s = 13, X = 540, hc0 = 610, Y = hc0 + 80 * s, shY = Y - 60 * s;
-  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'dot', eyeR: 'squint', lid: 0.3, brow: 'raised', mouth: 'teeth', fx: ['sweat'], look: 0, hair: 0, bags: 1,
+  drawCharacter(ctx, 'steve', X, Y, s, { eyes: 'dot', eyeR: 'squint', lid: 0.3, brow: 'raised', mouth: 'strain', fx: ['sweat'], look: 0, hair: 0, bags: 1,
     armL: armTo(X, shY, s, 118, 1010, [0, 5]), armR: armTo(X, shY, s, 962, 1010, [0, 5]) }, { frame: boilFrame(t) });
   const hc = headOf(X, Y, s);
   helmet([hc[0], hc[1]], s);
@@ -274,20 +288,20 @@ function still2(t) {
   // scooter parked behind-left of him, facing left, Snuggles clamped in the front basket
   scooter(t, 470, 1385, 0.6, { snug: { eyes: 'wide', lid: 0, mouth: 'line', look: 0.8, tail: 0.5, arm: 'down' } });
   // pump (right): display well above his head
-  pump(t, 600, 430, 360, 1010, '3.86');
+  pump(t, 600, 430, 360, 1010, '0.00');
   // Steve: slumped on one knee against the pump, cheek on it, both arms wrapped round it
   const s = 9.6, th = 0.85, GY = 1632, P = { X: 0, Y: GY, sc: s, th };
   P.X = 660 - 42 * s * Math.sin(th); P.Y = GY - 0 * s;
   const hy = GY - 38 * s - 42 * s * Math.cos(th); P.Y = GY;
   ctx.fillStyle = 'rgba(0,0,0,0.16)'; ctx.beginPath(); ctx.ellipse(520, 1436, 320, 24, 0, 0, 7); ctx.fill();
-  const sh = bodyPt(P, 0, 60);
+  torsoBase(P);
   drawCharacter(ctx, 'steve', P.X, P.Y, s, { eyes: 'happy', lid: 0, brow: 'raised', mouth: 'grin', fx: ['sweat', 'tears_small'], look: 0, hair: 0, bags: 0, lean: th * 180 / Math.PI, tilt: 8, noShadow: true,
     legPts: [[[0, 38], [17, 25], [-11, 22.6], [-15, 24.6]], [[0, 38], [23, 35], [21, 22.6], [28, 22.4]]],
-    armL: handLocal(P, [948, 1000]), armR: handLocal(P, [953, 1195]) }, { frame: boilFrame(t) });
+    armL: handLocal(P, [912, 1012]), armR: handLocal(P, [916, 1186]) }, { frame: boilFrame(t) });
   wetShirt(P);
   const hc = bodyPt(P, 0, 80);
   helmet([hc[0] + 4, hc[1] - 2], s, th + 0.08);
-  fist(948, 1000, 0.55); fist(953, 1195, 0.55);
+  fist(912, 1012, 0.55); fist(916, 1186, 0.55);
   { const dp = spen(t, 31); drop(dp, 520, 800, 24, 0.3); drop(dp, 840, 800, 20, -0.3); drop(dp, 560, 1180, 22, 0); drop(dp, 400, 960, 20, 0.2); drop(dp, 840, 1280, 22, 0); }
   ctx.restore();
   title();
@@ -305,8 +319,10 @@ function still3(t) {
   attendant(t, 930, 1480, 6.4, { dx: -6, part: 'body' });
   scooter(t, 800, 1480, 0.7, { seat: 0.65 });
   attendant(t, 930, 1480, 6.4, { hand: [962, 1110], dx: -6, part: 'arms' });
+  nozzle(t, 962, 1110);
   // Steve chest-up, face ~50 % of the width, slightly left; torso runs off the bottom, no legs
   const s = 18, th = 0.04, P = placeSteve(400, 1150, s, th);
+  torsoBase(P);
   drawCharacter(ctx, 'steve', P.X, P.Y, s, { expr: 'dead_inside', lid: 0.62, brow: undefined, mouth: 'line', fx: ['sweat'], look: 0, hair: 0, bags: 1, lean: th * 180 / Math.PI, tilt: -8, headDy: -1, noShadow: true, legPts: [] }, { frame: boilFrame(t) });
   wetShirt(P, 1);
   const hc = bodyPt(P, 0, 79);
