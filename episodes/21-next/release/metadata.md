@@ -72,3 +72,5 @@ Suggestions NOT applied (repo rules win):
 - Brand/logo for recognition: house rule, none.
 - 15-second hook script, end screens, Test & Compare: script approved; Test & Compare is not offered for Shorts.
 - Changing posting time, length or captions: would confound the glance-hook test.
+
+**Uploaded (2026-11-18, 16:34 VN):** YouTube private draft https://youtube.com/shorts/YvQWOU4B67Q (title A, description, 18 tags, playlist "Steve vs. Everyday Machines", saved Private; Languages tab showed no dub drafts at upload time, re-check after processing; kids/altered/thumbnail/publish left to owner; Studio showed kids = "not made for kids" pre-set; first upload tab hung once, draft recovered, no duplicate) · IG Reel https://www.instagram.com/unit4bcomedy/reel/Df4MWjWhrgi/ (crop Original, FB toggle off, caption from IG block)
