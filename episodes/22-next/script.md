@@ -114,3 +114,14 @@ Int 4 |                           6
 - Row 5b had an unresolved "(or water?)" note. Fixed: one drop on his temple.
 - Word count recounted: 25 words (not 27).
 - Checked, no change: 6 muttered lines, one peak, punch at 76 %, modesty (curtain from the chest down), no cat reveal, not in BANK.
+
+## Timing after voice (2026-11-19, replaces "Rough timing" for the render)
+The ElevenLabs reads are slower than the beat plan. At speed 1.15 (s1, s2, s3, s5) and 1.05 (s5b), speech is 17.7 s and s7 ends at 19.6 s.
+Decision (coordinator): retime the picture to the voice instead of cutting approved words.
+| Beat | Time |
+|---|---|
+| s1–s7 (voice/timeline.json) | 0.0–19.6 |
+| 8 flush (gap 0.4 after s7) | 20.0–21.6 |
+| 8b punch cut + hold | 22.0–24.0 (≈ 79 % of 28 s) |
+| 9 button + loop | 24.2–28.0 |
+Total ≈ 28 s, still inside the 25–30 s base; punch inside 70–85 %.

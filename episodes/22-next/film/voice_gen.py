@@ -1,4 +1,4 @@
-"""Tap 12 On Empty voice: one ElevenLabs call per line x 2 seeds, trimmed, per-line speed, fades, timeline.
+"""Tap 13 Perfect voice: one ElevenLabs call per line x 2 seeds, trimmed, per-line speed, fades, timeline.
   ELEVENLABS_API_KEY from env only.  HF_HUB_OFFLINE=1 ~/lemo-opuscar/.venv/bin/python voice_gen.py
 Writes voice/<id>.wav (+ <id>_t<seed>.wav), voice/timeline.json, voice/preview.wav, voice/take_<id>_<seed>.wav (raw)."""
 import json, os, re, io, difflib, subprocess, urllib.request
@@ -11,21 +11,19 @@ VID = {k: _EL[k]['voice_id'] for k in ('steve', 'snuggles', 'ted')}
 def st(stab, style, sp=1.0): return {'stability': stab, 'similarity_boost': 0.85, 'style': style, 'use_speaker_boost': True, 'speed': sp}
 # id: (voice, text with tag, settings)
 LINES = {
- 's1':  ('steve', "[forced calm, flat] It's FINE.", st(.35, .3)),
- 's2':  ('snuggles', "[dry, noir] He's been on E since TUESDAY.", st(.5, .35)),
- 's3':  ('steve', "[sniffy, dismissive] Too EXPENSIVE.", st(.35, .3)),
- 's4':  ('steve', "[dismissive, flat] Too LONG.", st(.35, .3)),
- 's5':  ('steve', "[sly, whispering] Downhill... FREE.", st(.35, .3)),
- 's6':  ('steve', "[joyful, shouting] I MADE IT!", st(.0, .5)),
- 's7':  ('ted', "[flat, polite] It's FULL, sir.", st(.6, .2)),
- 's8a': ('steve', "[flat, deadpan, quiet] ...Since TUESDAY?", st(.4, .3)),
- 's8b': ('steve', "[flat, deadpan, quiet] ...Since Tuesday.", st(.4, .3)),
- 's9':  ('steve', "[forced calm, flat, low] It's FINE.", st(.4, .25)),
+ 's1':  ('steve', "[careful, shivering, quiet] Okay. Just a LITTLE warmer.", st(.4, .3)),
+ 's2':  ('snuggles', "[dry, noir narrator, flat] Two settings. ICE... and lava.", st(.5, .35)),
+ 's3':  ('steve', "[strained calm, through teeth] That's LAVA.", st(.35, .3)),
+ 's4':  ('steve', "[flat, defeated] ...And that's the ARCTIC.", st(.4, .3)),
+ 's5':  ('steve', "[focused whisper] Just. One. HAIR.", st(.35, .3)),
+ 's5b': ('steve', "[held-breath whisper] Easy... easy...", st(.35, .3)),
+ 's6':  ('steve', "[bliss, warm, not shouted] Ohhh... PERFECT.", st(.25, .45)),
+ 's7':  ('snuggles', "[hushed dread, whisper] Nobody MOVE.", st(.5, .3)),
 }
-SPEED = json.load(open(os.path.join(HERE, 'speeds.json'))) if os.path.exists(os.path.join(HERE, 'speeds.json')) else {}
-GAIN = {'s1': -3, 's2': -1.5, 's3': -2, 's4': -3, 's5': -3.5, 's6': 0, 's7': -1.5, 's8a': -4, 's8b': -4, 's9': -4.5}
-# (id, pause_after) from script.md: 5 .3+5b 1.2; 7 .6+7b .8+7c .6; punch pause .7
-def order(punch): return [('s1', .2), ('s2', .3), ('s3', .2), ('s4', .3), ('s5', 1.5), ('s6', .2), ('s7', 2.0), (punch, .7), ('s9', 0)]
+SPEED = {'s1': 1.15, 's2': 1.15, 's3': 1.15, 's4': .95, 's5': 1.15, 's5b': 1.05, 's6': .9, 's7': .9}
+GAIN = {'s1': -3, 's2': -1.5, 's3': -2, 's4': -3, 's5': -3.5, 's5b': -4, 's6': 0, 's7': -3}
+# pauses after, from script.md
+def order(punch=None): return [('s1', .2), ('s2', .3), ('s3', .2), ('s4', .3), ('s5', .2), ('s5b', .4), ('s6', .3), ('s7', 0)]
 END_HOLD = 0.0
 CHOICE = json.load(open(os.path.join(HERE, 'choice.json'))) if os.path.exists(os.path.join(HERE, 'choice.json')) else {}
 norm = lambda w: re.sub(r'[^a-z0-9]', '', w.lower())
@@ -72,16 +70,16 @@ if __name__ == '__main__':
         pick = CHOICE.get(i, pick); ys[i] = finish(i, trim(sf.read(os.path.join(OUT, f'take_{i}_{pick}.wav'))[0]))
         rep[i] = {'seed': pick, 'asr': {str(s): round(c[s][1], 2) for s in c}, 'dur_raw': {str(s): round(len(c[s][0])/SR, 2) for s in c}, 'f0_hz': round(f0(ys[i]))}
     out = {}
-    for punch in ('s8a', 's8b'):
+    for punch in ('main',):
         t, tl = 0.0, []
         for i, p in order(punch):
             d = len(ys[i])/SR; tl.append({'id': i, 'start': round(t, 3), 'end': round(t+d, 3), 'speed': SPEED.get(i, 1.0)}); t += d+p
-        total = tl[-1]['end'] + END_HOLD; ps = [x for x in tl if x['id'] == punch][0]['start']
+        total = tl[-1]['end'] + END_HOLD; ps = tl[-1]['start']
         buf = np.zeros(int((total+.3)*SR))
         for x in tl: y = ys[x['id']]; s0 = int(x['start']*SR); buf[s0:s0+len(y)] += y
         sf.write(os.path.join(OUT, f'voice_mix_{punch}.wav'), buf, SR)
         out[punch] = {'lines': tl, 'voice_end': tl[-1]['end'], 'punch_start': ps, 'punch_pct_of_voice_end': round(100*ps/total, 1), 'vo_sum': round(sum(len(ys[x['id']])/SR for x in tl), 2)}
-    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', os.path.join(OUT, 'voice_mix_s8a.wav'), '-af', 'loudnorm=I=-14:TP=-1.5:LRA=7', '-ar', str(SR), '-ac', '1', os.path.join(OUT, 'preview.wav')], check=True)
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', os.path.join(OUT, 'voice_mix_main.wav'), '-af', 'loudnorm=I=-14:TP=-1.5:LRA=7', '-ar', str(SR), '-ac', '1', os.path.join(OUT, 'preview.wav')], check=True)
     json.dump({'variants': out, 'picks': rep}, open(os.path.join(OUT, 'timeline.json'), 'w'), indent=1)
     for i in ys: print(i, round(len(ys[i])/SR, 2), rep[i])
     for k, v in out.items(): print(k, 'vo_sum', v['vo_sum'], 'voice_end', round(v['voice_end'], 2), 'punch', round(v['punch_start'], 2), v['punch_pct_of_voice_end'], '%')

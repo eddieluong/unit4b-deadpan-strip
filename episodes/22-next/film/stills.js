@@ -158,11 +158,12 @@ function cap(X, Y, s, melted = false, col = '#bfe8f0') {
     p.line([[-17, hy + 7.4], [-9, hy + 6.7], [0, hy + 7.4], [9, hy + 6.7], [17, hy + 7.4]], p.lw * 0.9, '#7ab4c0');   // elastic band
     ctx.save(); ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.lineWidth = Math.max(5, s * 0.8); ctx.lineCap = 'round'; const a = p.T([-8, hy + 17]), b = p.T([-3, hy + 19.4]); ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); ctx.restore();
   } else {   // melted flat: a limp pancake slumped over the crown, sagging past the temples
-    const pts = [[-21, hy + 2], [-19.5, hy + 8], [-14, hy + 12.6], [-6, hy + 14.6], [1, hy + 15], [9, hy + 14], [16, hy + 10.5], [20.5, hy + 5], [22, hy - 4], [20.6, hy - 11], [17.6, hy - 11.6], [16, hy - 5], [13.6, hy + 2], [9, hy + 5.4], [4, hy + 3.6], [-1, hy + 6.6], [-6.4, hy + 4.4], [-9.4, hy + 1.2], [-12, hy - 4.4], [-15, hy - 9], [-18.4, hy - 6.4], [-20.4, hy - 2]];
+    const pts = [[-23, hy + 1], [-21, hy + 9], [-15, hy + 14], [-6, hy + 15.6], [2, hy + 16], [10, hy + 15], [18, hy + 11], [23, hy + 4], [25, hy - 6], [25.6, hy - 17], [22.6, hy - 21], [20, hy - 12], [17.4, hy - 4], [13.6, hy + 2], [9, hy + 5.4], [4, hy + 3.6], [-1, hy + 6.6], [-6.4, hy + 4.4], [-9.4, hy + 1.2], [-12.4, hy - 5.4], [-15.6, hy - 12], [-19, hy - 9], [-21.4, hy - 3]];
     p.part(roundPoly(pts, 2.5, 3), col, { shade: 0.12 });
     p.line([[-10, hy + 13], [-2, hy + 14.6]], p.lw * 0.6, '#7ab4c0');
     const drip = (x, y, len) => { const q = [[x - 1.7, y + 1], [x + 1.7, y + 1], [x + 1.4, y - len * 0.7], [x, y - len], [x - 1.4, y - len * 0.7]]; ctx.fillStyle = col; ctx.beginPath(); q.map(v => p.T(v)).forEach((v, i) => i ? ctx.lineTo(v[0], v[1]) : ctx.moveTo(v[0], v[1])); ctx.fill(); p.outline(q, true, p.lw * 0.7); };
-    drip(-15, hy - 8.6, 10); drip(-18.6, hy - 6, 6.5); drip(19, hy - 11.2, 9);
+    drip(-15.6, hy - 11, 11); drip(-19.2, hy - 8.4, 7); drip(-22, hy - 1.4, 5); drip(23, hy - 19.6, 11); drip(25, hy - 8, 6.5);
+    ctx.save(); ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = Math.max(5, s * 0.8); ctx.lineCap = 'round'; for (const [x0, y0, x1, y1] of [[-12, hy + 11.6, -4, hy + 13.6], [8, hy + 12.4, 14, hy + 10], [23, hy - 4, 24, hy - 12]]) { const A = p.T([x0, y0]), B = p.T([x1, y1]); ctx.beginPath(); ctx.moveTo(A[0], A[1]); ctx.lineTo(B[0], B[1]); ctx.stroke(); } ctx.restore();
   }
 }
 
