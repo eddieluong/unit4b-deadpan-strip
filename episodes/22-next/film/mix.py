@@ -1,4 +1,4 @@
-"""Mix for 19 On Empty (Tap 12): voice_mix + synthesised sfx + light pluck bed (-8 dB under voice). Run: ~/lemo-opuscar/.venv/bin/python mix.py -> out/mix.wav"""
+"""Mix for 22 Perfect (Tap 13): voice_mix + synthesised sfx (flush, tink, steam, ice) + light pluck bed (-8 dB under voice), music cut dead at the flush. Run: ~/lemo-opuscar/.venv/bin/python mix.py -> out/mix.wav"""
 import json, os, sys, subprocess
 import numpy as np, soundfile as sf
 from scipy.signal import resample_poly
@@ -44,8 +44,30 @@ def chirp():
     d = 0.16; n = tt(d); f = 3200 + 900 * np.sin(2 * np.pi * 18 * n); return S.norm(np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.pi * n / d)) * 0.5
 def led(): return S.norm(tone(1100, 1100, 0.07, 28)) * 0.6
 G = {'blip': (blip, .22), 'twang': (twang, .6), 'scrape': (scrape, .5), 'clack': (clack, .5), 'thud': (thud, .8), 'spark': (spark, .5), 'ding': (ding, .5), 'whoosh': (whoosh, .45), 'pop': (pop, .8), 'power': (power, .55), 'led': (led, .4), 'ping': (ping, .55), 'ping_soft': (ping_soft, .4), 'chirp': (chirp, .3)}
+N = lambda d: np.resize(S.noise(d), len(tt(d)))
+def flush():   # loud centred toilet flush through the wall: rush + gurgle swell, ~1.7 s
+    d = 1.7; n = tt(d); r = S.bp(N(d), 200, 4500) * (1 - np.exp(-n * 25)) * np.exp(-np.maximum(n - 0.5, 0) * 1.8)
+    g = S.lp(N(d), 500) * (0.6 + 0.4 * np.sin(2 * np.pi * 7 * n)) * np.exp(-n * 1.2)
+    return S.norm(r + 0.8 * g)
+def tink(): n = tt(0.5); return S.norm((np.sin(2 * np.pi * 3100 * n) + 0.6 * np.sin(2 * np.pi * 4650 * n) + 0.3 * np.sin(2 * np.pi * 6900 * n)) * np.exp(-n * 16))
+def hiss(): d = 0.9; return S.norm(S.bp(N(d), 2500, 9000) * S.env_exp(d, 0.1)) * 0.8
+def steam_hiss(d): n = tt(d); return S.norm(S.bp(N(d), 2000, 8500) * (0.75 + 0.25 * np.sin(2 * np.pi * 0.7 * n)) * np.minimum(1, n * 8) * np.minimum(1, (d - n) * 6))
+def shower(d): n = tt(d); return S.norm(S.bp(N(d), 1200, 7000) * np.minimum(1, n * 4))
+def pipe_tick(): d = 0.25; n = tt(d); return S.norm(tone(520, 380, d, 22) + S.bp(N(d), 600, 2500) * np.exp(-n * 40) * 0.5)
+def tick(): d = 0.08; n = tt(d); return S.norm(tone(2600, 2000, d, 60)) * 0.6
+def squeak(): n = tt(0.16); return S.norm(np.sin(2 * np.pi * np.cumsum(1500 + 900 * n / 0.16) / SR) * np.sin(np.pi * n / 0.16))
+def rattle(): d = 2.0; n = tt(d); return S.norm(S.bp(N(d), 150, 900) * (0.5 + 0.5 * np.sign(np.sin(2 * np.pi * 14 * n))) * np.linspace(0.2, 1, len(n)))
+def crackle(): 
+    d = 1.5; x = np.zeros(int(d * SR)); t = 0.0
+    while t < d - 0.05:
+        c = S.click(0.7 + 0.5 * np.random.rand(), 0.8); s0 = int(t * SR); x[s0:s0 + len(c)] += c[:len(x) - s0]; t += 0.03 + 0.12 * np.random.rand()
+    return S.norm(S.hp(x, 1500))
+def snap(): d = 0.3; n = tt(d); return S.norm(S.hp(N(d), 1500) * np.exp(-n * 25) + tone(2500, 900, d, 20) * 0.5)
+G.update({'flush': (flush, 1.0), 'tink': (tink, .7), 'hiss': (hiss, .5), 'pipe_tick': (pipe_tick, .6), 'tick': (tick, .35), 'squeak': (squeak, .35), 'rattle': (rattle, .45), 'crackle': (crackle, .6), 'snap': (snap, .5)})
 for e in EV:
     fn, g = G[e['n']]; F(fn(), e['t'], g)
+for a0, a1 in ev.get('shower', []): F(shower(a1 - a0), a0, 0.07)
+for a0, a1 in ev.get('hiss', []): F(steam_hiss(a1 - a0), a0, 0.5)
 def taps(d):
     x = np.zeros(int(d * SR)); t = 0.0
     while t < d - 0.05:
