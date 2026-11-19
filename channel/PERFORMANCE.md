@@ -203,3 +203,19 @@ Retention: sharp early drop, then flat. FB 239 views, avg watch 4 s (15 %), 0 re
 - **Subs:** 0 from ~3,000 YouTube views. Not a test goal yet; revisit after stayed ≥ 50 %.
 - **Next test (Tập 11):** variable = "glance hook": frame 1 shows one big number/icon on a phone + Steve's face reacting, readable
   without reading words; everything else as Tập 10.
+
+## Early read (2026-11-19 ~09:00 browser time) — Tập 11 + Tập 12  (NOT the 48 h post-mortem)
+Source: Studio → Analytics → Overview/Engagement, "since published". Browser clock is US-Pacific-like; VN = +15 h.
+| | Tập 11 Two Minutes Away (`WKid9QlPxWs`) | Tập 12 On Empty (`YvQWOU4B67Q`) |
+|---|---|---|
+| Published (Studio) | 17 Nov 15:48 (~18 Nov 06:48 VN) | 18 Nov 16:39 (~19 Nov 07:39 VN), public |
+| Age at read | ~41 h | ~16 h |
+| Views | 2.9K (2,940 in 48 h) | 1.1K |
+| Stayed / Swiped | 43.2 % / 56.8 % (Tập 9: 47.2, Tập 10: 28.1) | 26.7 % / 73.3 % (early, small sample) |
+| AVD | 0:21 | 0:21 (dashboard avg % viewed 78.6 %) |
+| Likes / subs | 18 / +4 | 11 / 0 |
+| Traffic | Shorts feed 2.8K, search 93, other 45 | not enough data yet |
+| Geo | Vietnam 38 %, US 32 %, Philippines 7 %; female 35–44 | not enough data yet |
+- Comments, avg % viewed (Tập 11) and retention curve not available yet (Studio: retention processing up to 2 days).
+- Tập 11 is the best Short so far (2.9K views, first subs, US share 32 %); stayed 43.2 % is still under 50 % but 2nd best.
+- Tập 12 stayed 26.7 % is the weakest so far, but only ~1.1K views / 16 h; re-read at 48 h before drawing a lesson.
