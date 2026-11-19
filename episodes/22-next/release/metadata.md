@@ -34,8 +34,9 @@ Who flushes in YOUR house while you shower? Name them.
 
 ## Facebook Reel (as the UNIT 4B Page, optional) / Instagram Reel (crop: Original)
 ```
-POV: the shower has 2 settings: ice and lava. Steve finds the perfect one. 🚿 Who flushes in YOUR house while you shower? Name them. #relatable #comedy #animation #shower
+POV: the shower has 2 settings: ice and lava. Steve finds the perfect one. 🚿 Who flushes in YOUR house while you shower? Name them. ▶️ More on YouTube: youtube.com/@unit4bcomedy (link in bio) #relatable #comedy #animation #shower
 ```
+Rule from Tập 13 on (owner, 2026-11-19): every IG caption carries the YouTube line before the hashtags; the clickable link lives in the IG bio.
 
 ## Pinned comment (post as @unit4bcomedy after publishing, then pin)
 `Who flushes in YOUR house while you shower? Name them.`

@@ -113,4 +113,5 @@ Turn on two-factor authentication on all four before the first post.
 - Facebook: the account may be acting as another Page; switch to UNIT 4B (facebook.com/unit4bcomedy → Switch) and
   check "What's on your mind, UNIT 4B?" before creating the Reel.
 - Instagram web: pick Original in the crop step (default is 1:1); decline the notifications prompt.
+- Every IG caption (from Tập 13, owner 2026-11-19): add `▶️ More on YouTube: youtube.com/@unit4bcomedy (link in bio)` before the hashtags; the clickable YouTube link lives in the IG bio.
 - Upload files must be < 10 MB for the browser tool: re-encode the release copy (x264 CRF 27).
