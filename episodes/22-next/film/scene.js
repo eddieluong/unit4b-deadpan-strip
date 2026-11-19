@@ -18,7 +18,7 @@ const talking = (id, t) => { const l = LN[id]; return !!l && t >= l.start && t <
 const chat = (t, hz = 10) => Math.floor(t * hz) % 2 === 0;
 const hex = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16));
 const mix = (a, b, k) => '#' + hex(a).map((v, i) => Math.round(lerp(v, hex(b)[i], clamp01(k))).toString(16).padStart(2, '0')).join('');
-const tintAll = (rgba) => { ctx.save(); ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = rgba; ctx.fillRect(0, 0, W, H); ctx.restore(); };
+const tintAll = (rgba) => { ctx.save(); ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = rgba; ctx.fillRect(-2400, -2400, 6400, 6800); ctx.restore(); };
 const bell = (t, a, b) => Math.sin(Math.PI * seg(t, a, b));   // 0 → 1 → 0
 
 // ---------- captions (bottom plate; never over the faces; none during the punch and the button) ----------
@@ -124,7 +124,7 @@ function pose(t) {   // Steve's face by time → [steve pose, skin colour, extra
   let p = { eyes: 'dot', lid: 0.15, brow: 'worried', mouth: 'line', look: 0.2, fx: [] }, skin = SK.n;
   if (t < 5.6) { p.mouth = chat(t, t < 2.5 ? 10 : 6) ? 'teeth' : 'line'; p.look = t > 2.5 ? -0.6 : 0.2; }
   else if (t < 7.6) { p = { eyes: 'dot', lid: 0.3, brow: 'worried', mouth: talking('s3', t) ? (chat(t, 9) ? 'strain' : 'small') : 'strain', look: 0, fx: ['sweat'] }; skin = mix(SK.n, '#f06a4a', 0.55 * seg(t, 5.6, 5.8)); }
-  else if (t < 9.5) { p = { eyes: 'dot', lid: 0.5, brow: 'worried', mouth: talking('s4', t) ? (chat(t, 9) ? 'small' : 'line') : (chat(t, 9) ? 'teeth' : 'line'), look: 0, fx: [] }; skin = mix(SK.n, '#8fb8e8', 0.6 * seg(t, 7.6, 7.9)); }
+  else if (t < 9.5) { p = { eyes: 'dot', lid: 0.5, brow: 'worried', mouth: talking('s4', t) ? (chat(t, 9) ? 'small' : 'line') : (chat(t, 16) ? 'teeth' : 'line'), look: 0, fx: [] }; skin = mix(SK.n, '#8fb8e8', 0.6 * seg(t, 7.6, 7.9)); }
   else if (t < 14.7) { p = { eyes: 'dot', lid: t < 12.3 ? 0.1 : 0.0, brow: undefined, mouth: (talking('s5', t) || talking('s5b', t)) ? (chat(t, 7) ? 'small' : 'line') : 'line', look: -0.9, fx: [] }; }
   else if (t < 20.0) { p = { eyes: 'happy', brow: undefined, mouth: talking('s6', t) ? (chat(t, 7) ? 'smile' : 'small') : 'smile', look: 0, fx: ['blush'] }; }
   else if (t < 22.0) { p = { eyes: t < 20.06 ? 'happy' : 'wide', lid: 0, brow: 'raised', mouth: 'smile', look: 0, fx: [] }; }
@@ -148,6 +148,7 @@ function room(t, o = {}) {
   const phase = t < 5.6 ? 'cold' : t < 7.6 ? 'lava' : t < 9.5 ? 'arctic' : t < 14.9 ? 'calm' : t < 20.0 ? 'gold' : t < 22.0 ? 'flush' : t < 24.4 ? 'punch' : 'ice';
   wall(t, 1700, 1700);
   ctx.save(); ctx.beginPath(); ctx.rect(1100, 0, 1400, 2000); ctx.clip(); ctx.translate(1080, 0); wall(t, 1700, 1700); ctx.restore();   // wall continues past the frame (close shots on the right)
+  for (const dx of [0, 1080]) { ctx.save(); ctx.beginPath(); ctx.rect(0, -1800, 2500, 1800); ctx.clip(); ctx.translate(dx, -1800); wall(t, 1700, H); ctx.restore(); }   // wall continues above the frame (pipe shot)
   { const p = spen(t, 81, 6); p.part([[1080, 354], [2400, 354], [2400, 426], [1080, 426]], '#b8764a', { shade: 0.22, lw: 7 }); }
   showerHead(t, 440, 215);
   // pipe: ticks (4.3), rattles (17.9→20), jumps on both flushes; the NEXT DOOR sign swings with it
@@ -177,7 +178,7 @@ function room(t, o = {}) {
   } else {
     armTube([[290, 1060], [260, 1100], [250, 1150]], 40, skin, 35); armTube([[590, 1060], [620, 1100], [630, 1150]], 40, skin, 36);
   }
-  const shiver = (phase === 'cold' || phase === 'arctic') ? 3 * Math.sin(t * 58) : (phase === 'lava' && t < 6.3 ? 5 * Math.sin(t * 50) : 0);
+  const shiver = (phase === 'cold' || phase === 'arctic') ? (phase === 'arctic' && t > 8.0 ? 5 : 3) * Math.sin(t * 58) : (phase === 'lava' && t < 6.3 ? 5 * Math.sin(t * 50) : 0);
   const hdy = (phase === 'punch' ? 0.35 * Math.sin(t * 7) : 0);
   ctx.save(); ctx.translate(shiver, 0);
   steve(XS, YS, 12, { ...p, headDy: hdy, tilt: (phase === 'flush' ? 0 : gold ? 2.5 * Math.sin(t * 3.2) : phase === 'punch' ? 1.2 * Math.sin(t * 5) : 0) }, skin, melt);
@@ -189,10 +190,10 @@ function room(t, o = {}) {
   if (phase === 'cold' || phase === 'arctic') {
     const g = phase === 'arctic' ? seg(t, 7.7, 8.4) : (t < 2.5 ? 0.6 : 0.4);
     const np = spen(t, 19, 5), nose = ellipsePts(440, 826, 15, 11, 16); void np;
-    icicle(432, 836, 14 + 36 * g, 16); icicle(468, 836, 10 + 20 * g, 12);
+    const nk = phase === 'arctic' ? eb(seg(t, 7.9, 8.07)) : g; icicle(432, 836, 14 + 56 * nk, 18); icicle(468, 836, 10 + 30 * nk, 14);
     if (phase === 'arctic') {
-      icicle(372, 750, 40 * seg(t, 7.85, 8.2), 14); icicle(508, 750, 46 * seg(t, 7.95, 8.3), 14); icicle(400, 750, 28 * seg(t, 8.05, 8.4), 11); icicle(480, 750, 30 * seg(t, 8.1, 8.4), 11);   // eyebrows
-      const sd = seg(t, 7.8, 8.2); ctx.save(); ctx.fillStyle = '#fff'; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.ellipse(440, 568, 96 * sd, 30 * sd, 0, Math.PI, 0); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();
+      icicle(372, 748, 78 * eb(seg(t, 8.1, 8.25)), 20); icicle(400, 748, 52 * eb(seg(t, 8.12, 8.27)), 15); icicle(508, 748, 86 * eb(seg(t, 8.3, 8.45)), 20); icicle(480, 748, 54 * eb(seg(t, 8.32, 8.47)), 15);   // eyebrows
+      const sd = eb(seg(t, 8.5, 8.7)); ctx.save(); ctx.fillStyle = '#fff'; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.ellipse(440, 572, 120 * sd, 46 * sd, 0, Math.PI, 0); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();
       const sf = seg(t, 8.3, 8.9); if (sf > 0 && sf < 1) snowflake(448, 700 + 110 * sf, 22, 4);
       if (t > 8.8) snowflake(448, 812, 20, 4);
     }
@@ -228,17 +229,23 @@ function room(t, o = {}) {
   // duck: floats up at 15.0, squeaks at 15.9, jolts on the flush, deflates at the punch
   if (t >= 15.0 && t < 22.0) {
     const rise = eo(seg(t, 15.0, 15.8)), sq = t > 15.9 && t < 16.1 ? 1 + 0.18 * Math.sin((t - 15.9) * 31) : 1;
-    ctx.save(); ctx.translate(705, lerp(1140, 955, rise) + 8 * Math.sin(t * 3.5)); ctx.scale(sq, 1 / sq); duck(0, 0, 0.9, false, -0.18 + 0.06 * Math.sin(t * 3)); ctx.restore();
+    ctx.save(); ctx.translate(705, lerp(1140, 955, rise) + (1100 - 955) * eio(seg(t, 17.0, 18.9)) * (t >= 17.0 ? 1 : 0) + 8 * Math.sin(t * 3.5) * (1 - seg(t, 17.0, 18.9))); ctx.scale(sq, 1 / sq); duck(0, 0, 0.9, false, -0.18 + 0.06 * Math.sin(t * 3)); ctx.restore();
   } else if (t >= 22) { const sag = seg(t, 22, 24.2); duck(705, 1088 + 10 * sag, 0.9, true, 0.1 + 0.12 * sag + 0.02 * Math.sin(t * 9)); }
   screen(t, 20, 1120, 770, 1700);
   toilet(t, 790, 1070, 1390, 1700);
   // Snuggles
   const sx = 925, sy = 1385; let sp = { eyes: 'dot', lid: 0.15, look: -0.9, mouth: 'line', tilt: -9, tail: 0.5 * Math.sin(t * 3) }, flat = false, snx = 0;
-  if (t >= 2.5 && t < 5.3) { sp.tail = Math.sin(t * 7) * 0.9; sp.tilt = -9 + 2 * Math.sin(t * 4); }
+  if (t >= 2.5 && t < 5.3) {
+    const fl = (a) => Math.sin(Math.PI * seg(t, a, a + 0.3)) * Math.sin((t - a) * 26);   // quick tail flick
+    sp.tail = 0.25 * Math.sin(t * 3) + 1.5 * fl(2.8) + 1.5 * fl(3.55);
+    const turn = eio(seg(t, 3.0, 3.6)) - eio(seg(t, 4.3, 4.8));   // small head turn toward the shower, then back
+    sp.tilt = -9 - 7 * turn + 1.5 * Math.sin(t * 4); sp.look = -0.9 - 0.1 * turn;
+    const bl = Math.sin(Math.PI * seg(t, 3.15, 3.85)); sp.lid = 0.15 + 0.8 * Math.pow(bl, 0.7); }
   if (t >= 13.4 && t < 14.9) { sp = { eyes: 'wide', lid: 0, look: -0.9, mouth: 'line', tilt: -9 - 6 * eo(seg(t, 13.4, 13.9)), tail: 0.2 + 0.4 * Math.sin(t * 9) }; snx = -22 * eo(seg(t, 13.4, 13.9)); }
   if (t >= 17.87 && t < 22.0) { flat = true; sp = { eyes: 'wide', lid: 0, look: -0.9, mouth: 'line', tilt: -4, tail: 0.15 * Math.sin(t * 30) }; }
   if (t >= 22) { flat = true; sp = { eyes: 'pinpoint', lid: 0, look: -0.9, mouth: 'line', tail: 0.2 + 0.15 * Math.sin(t * 14), tilt: t > 23.2 ? -3 : 0 }; }
-  snuggles(sx + snx, sy, 7.6, sp, flat);
+  const hideSn = (t >= 1.0 && t < 2.5) || (t >= 4.0 && t < 5.5) || (t >= 17.0 && t < 19.0) || (t >= 7.7 && t < 10.8) || (t >= 20.0 && t < 22.0) || (t >= 25.0 && t < 26.0);   // out of shot where the camera would cut him in half
+  if (!hideSn) snuggles(sx + snx, sy, 7.6, sp, flat);
   // paw tap on the ice
   if (t >= 25.9) { const tp = seg(t, 25.9, 26.25), hit = t > 26.2 ? Math.exp(-(t - 26.2) * 12) : 0, ext = tp < 1 ? eio(tp) : 1;
     const tipx = lerp(800, 650, ext) - 18 * hit, tipy = lerp(1270, 1120, ext); ctx.save(); const pw = spen(t, 130, 5); pw.tube([[870, 1330], [lerp(840, 740, ext), lerp(1300, 1190, ext)], [tipx, tipy]], 34, '#6a6c80');
@@ -291,9 +298,9 @@ function build() {
     // 3 · Snuggles on the toilet lid, tail flick (s2)
     [2.5, t => { cam(kf(t, [[2.5, 1.85], [4.0, 2.0]]), 945, 1200, () => room(t)); }],
     // 4 · the pipe + NEXT DOOR sign ticks once
-    [4.0, t => { cam(kf(t, [[4.0, 1.25], [5.5, 1.45]]), kf(t, [[4.0, 1085], [5.5, 1090]]), 760, () => room(t)); }],
+    [4.0, t => { cam(kf(t, [[4.0, 1.4], [5.5, 1.5]]), kf(t, [[4.0, 1010], [5.5, 1020]]), 625, () => room(t)); }],
     // 5 · LAVA blast (s3): flat on the tiles, steam burst, cap balloons
-    [5.5, t => { cam(kf(t, [[5.5, 1.0], [7.7, 1.14]]), 440, 900, () => room(t), 0, ...shake(t, t < 6.4 ? 7 : 0, 41)); }],
+    [5.5, t => { cam(kf(t, [[5.5, 1.0], [7.7, 1.06]]), kf(t, [[5.5, 562], [7.7, 596]]), 900, () => room(t), 0, ...shake(t, t < 6.4 ? 7 : 0, 41)); }],
     // 6 · ARCTIC (s4): icicles pop in, snowdrift, snowflake
     [7.7, t => { cam(kf(t, [[7.7, 1.25], [9.5, 1.0]]), 440, 850, () => room(t)); }],
     // 7 · loupe pops into his eye (s5), push to the face
@@ -301,19 +308,19 @@ function build() {
     // 8 · macro: tweezers on the pointer, it creeps a hair (s5 + s5b)
     [10.8, t => { cam(kf(t, [[10.8, 2.7], [13.4, 3.5]]), 185, 840, () => room(t)); }],
     // 9 · Snuggles leans in too, eyes wide
-    [13.4, t => { cam(kf(t, [[13.4, 1.55], [14.9, 1.9]]), 880, 1180, () => room(t)); }],
+    [13.4, t => { cam(kf(t, [[13.4, 1.55], [14.9, 1.9]]), 1020, kf(t, [[13.4, 1235], [14.9, 1215]]), () => room(t)); }],
     // 10 · PEAK (s6): golden light, halo, the duck pops up
-    [14.9, t => { cam(kf(t, [[14.9, 1.0], [17.0, 1.13]]), 440, 900, () => room(t)); }],
+    [14.9, t => { cam(kf(t, [[14.9, 1.0], [17.0, 1.06]]), kf(t, [[14.9, 562], [17.0, 596]]), 900, () => room(t)); }],
     // 11 · push-in on the pipe (s7): the rattle shakes the sign
-    [17.0, t => { cam(kf(t, [[17.0, 1.15], [19.0, 1.8]]), 790, 480, () => room(t)); }],
+    [17.0, t => { cam(kf(t, [[17.0, 1.4], [19.0, 1.8]]), kf(t, [[17.0, 1010], [19.0, 990]]), kf(t, [[17.0, 625], [19.0, 640]]), () => room(t)); }],
     // 12 · Snuggles' ears go flat
-    [19.0, t => { cam(kf(t, [[19.0, 1.5], [20.0, 1.75]]), 900, 1160, () => room(t)); }],
+    [19.0, t => { cam(kf(t, [[19.0, 1.5], [20.0, 1.75]]), 990, kf(t, [[19.0, 1255], [20.0, 1235]]), () => room(t)); }],
     // 13 · FLUSH (20.0): eyes snap open, smile frozen, the pipe bounces, camera kick
-    [20.0, t => { cam(kf(t, [[20.0, 1.0], [20.12, 1.35], [22.0, 1.5]], eo), 450, 830, () => room(t), 0, ...shake(t, 6 * Math.exp(-(t - 20) * 2), 45)); }],
+    [20.0, t => { cam(kf(t, [[20.0, 1.0], [20.12, 1.35], [22.0, 1.5]], eo), 480, 830, () => room(t), 0, ...shake(t, 6 * Math.exp(-(t - 20) * 2), 45)); }],
     // 14 · PUNCH 22.0–24.0: hard cut to red; steam plumes, one blink, duck sags (no caption)
-    [22.0, t => { cam(kf(t, [[22.0, 1.0], [24.0, 1.12]], t2 => t2), 440, 850, () => room(t)); }],
+    [22.0, t => { cam(kf(t, [[22.0, 1.0], [24.0, 1.06]], t2 => t2), kf(t, [[22.0, 562], [24.0, 596]], t2 => t2), 850, () => room(t)); }],
     // 15 · second FLUSH: pointer snaps to ICE, the pipe jumps
-    [24.0, t => { cam(kf(t, [[24.0, 1.0], [25.0, 1.06]]), 520, 800, () => room(t), 0, ...shake(t, t > 24.2 ? 6 * Math.exp(-(t - 24.2) * 2) : 0, 45)); }],
+    [24.0, t => { cam(kf(t, [[24.0, 1.0], [25.0, 1.06]]), kf(t, [[24.0, 562], [25.0, 590]]), 800, () => room(t), 0, ...shake(t, t > 24.2 ? 6 * Math.exp(-(t - 24.2) * 2) : 0, 45)); }],
     // 16 · ice crackles over him until he is a block
     [25.0, t => { cam(kf(t, [[25.0, 1.0], [26.0, 1.5]]), 440, 850, () => room(t)); }],
     // 17 · Snuggles taps the block: tink
