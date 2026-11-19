@@ -1,5 +1,7 @@
 # Tập 13 — Perfect  (episode 22; idea 1 "Perfect", picked by the owner 2026-11-19: "1, làm luôn")
 
+**Owner OK (2026-11-19, gate 1):** "OK, 1 giữ, 2 đóng băng, 3 chỉ tiếng xả": punch stays wordless; button = second flush freezes him into ice (loop); neighbour = flush sound only, never seen or heard.
+
 **Real problem:** the shower has two settings, freezing and scalding. You fine-tune it to the millimetre, and then someone flushes.
 - Works in every country.
 - No brand, no place.
