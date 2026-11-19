@@ -2,7 +2,7 @@
 
 File: `episodes/22-next/release/Tap13-perfect.mp4` (28.0 s, 1080x1920, 8,038,871 bytes; render v2; punch: wordless boiled-red cut at 22.0 s = 78.6 % after the neighbour's flush) ·
 Thumbnails: `thumb_A.png`, `thumb_B.png`, `thumb_C.png`, contact sheet `thumbsheet.png` (also `film/thumbs/thumbs_sheet.png`; source `episodes/22-next/film/thumb.js`, run `node thumb.mjs . && python3 thumbsheet.py` in `film/`; scene code copied from `stills.js`, the approved look).
-**Owner pick:** pending.
+**Owner pick (2026-11-19):** "A + A, đăng lên YouTube nháp và IG luôn": thumbnail A, title A.
 Role in the plan: **glance hook on a non-phone object, made bigger and simpler** (the ICE/LAVA dial fills ≥ 40 % of frame 1, plus a two-tone Steve face; the Tập 11/12 glance-hook test continued). Everything else as Tập 10–12 (auto-dubbing OFF, 25–30 s, captions, face size, one Short that day). Target: stayed ≥ 50 % (Tập 9 47.2 %, Tập 10 28.1 %; Tập 11 and 12 results pending/see PERFORMANCE.md).
 
 ## Thumbnails (Short cover, 1080x1920; feed views never see it, it matters for the channel page and search)
@@ -72,3 +72,5 @@ Suggestions NOT applied (repo rules win):
 - Brand/logo for recognition: house rule, none.
 - 15-second hook script, end screens, Test & Compare: script approved; Test & Compare is not offered for Shorts.
 - Changing posting time, length or captions: would confound the glance-hook test.
+
+**Uploaded (2026-11-19, 14:34 VN):** YouTube private draft https://youtube.com/shorts/duCN4f0Yn8k (title A, description, 18 tags, playlist "Steve vs. Everyday Machines", saved Private; Languages tab shows no dub drafts at upload time, re-check after processing; kids/altered/thumbnail/publish left to owner) · IG Reel https://www.instagram.com/unit4bcomedy/reel/Df6jbM3MX_v/ (crop Original, FB toggle off, caption from IG block)
