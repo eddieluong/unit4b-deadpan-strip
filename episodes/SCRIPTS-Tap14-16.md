@@ -10,7 +10,7 @@
 **Folders after OK:** `episodes/23-next`, `24-next`, `25-next` (BANK rows 23–25).
 
 **Base kept (all three):**
-- 25–30 s; punch at 70–85 %; button ≤ 4 s.
+- 25–30 s; punch at 70–85 %; button ≤ 3 s.
 - Captions on; face ≥ 25 %; zero lore; auto-dub OFF.
 - One peak (int. 4); 5–8 muttered lines.
 - Music cut at the punch.
