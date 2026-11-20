@@ -57,7 +57,7 @@
 | 6 | Steve | in-scene | CLOSE! Close! CLOSE! | rage (PEAK) | 4 | close | 0.2 | he stabs the CLOSE DOOR button; it pops off and bounces | stabbing hand, the button flies, camera shake |
 | 7 | — | silent | — | dawning | 1 | — | 0.8 | Steve stands up; the bag moves off the panel; every button clicks OFF one by one; he looks at the bag, then at the camera | click-click-click as the lights go out; a slow push-in on his face |
 | 8 | Old lady (Nana design, nameless) | in-scene | Every MORNING, young man. | flat (PUNCH) | 1 | morning | 0.7 | DING, G: the doors open on a crowd of grumpy neighbours waiting; the old lady at the front, arms folded | the crowd's heads turn in sync; hold on Steve's face |
-| 9 | — | silent | — | — | 1 | — | — | button (≤ 4 s): he shuffles out; the crowd squeezes in; a big man's backpack presses the panel; every button lights; the doors close | the lights pop on; push-in on the lit panel → frame 1 (loop) |
+| 9 | — | silent | — | — | 1 | — | — | button (≤ 3 s, cut on motion, no end hold: Tập 11 lost viewers in the last ~2 s): he shuffles out; the crowd squeezes in; a big man's backpack presses the panel; every button lights; the doors close | the lights pop on; push-in on the lit panel → frame 1 (loop) |
 
 **Muttered lines (5):** 1, 3, 4, 6 (Steve), plus the old lady's punch. Snuggles VO: row 2.
 
@@ -110,7 +110,7 @@ Int 4 |                          6
 | 6 | Steve | in-scene | Come… ON! | effort (PEAK) | 4 | on | 0.2 | on the floor, the jar between his knees, a full-body twist; he spins round on the floor instead; then POP: the lid flies off and ricochets | spin, the lid ricochets off the fridge, Steve lies flat holding the open jar up like a trophy |
 | 7 | — | silent | — | dawning | 1 | — | 0.8 | he looks in: pickles; he looks at the toast; cut to the jam jar behind the toaster: same gingham lid | slow pan from the pickles to the jam jar; one blink |
 | 8 | Snuggles | VO | He doesn't even LIKE pickles. | flat (PUNCH) | 1 | like | 0.6 | hold on Steve lying on the floor, the open pickle jar on his chest | one pickle rolls out onto his tie; hold |
-| 9 | — | silent | — | — | 1 | — | — | button (≤ 4 s): Steve grips the jam jar; it creaks and doesn't move; his face goes red again | push-in on the jar and his face = frame 1 (loop) |
+| 9 | — | silent | — | — | 1 | — | — | button (≤ 3 s, cut on motion, no end hold: Tập 11 lost viewers in the last ~2 s): Steve grips the jam jar; it creaks and doesn't move; his face goes red again | push-in on the jar and his face = frame 1 (loop) |
 
 **Muttered lines (5):** 1, 3, 4, 6 (Steve). Snuggles VO: 2 and 8 (punch).
 
@@ -169,7 +169,7 @@ Int 4 |                       6
 | 7 | Snuggles | VO | Then he plugged in… the REST. | dread | 1 | rest | 0.4 | 30 strings daisy-chained into one power strip; the whole house is covered; an inflatable reindeer inflates; the strip sparks | the camera pulls back to the street: his house glows; the strip fizzes |
 | 8 | — | sfx | *CLUNK* | — | — | — | 0.6 | the whole street goes black, every house; one dog barks | hard cut to black; only Steve's eyes and teeth visible |
 | 8b | Steve | in-scene | …Merry Christmas, everybody. | flat (PUNCH) | 1 | everybody | 0.7 | in the dark, only his eyes; a neighbour's window opens across the street (a silhouette) | blink; the window bangs shut |
-| 9 | — | silent | — | — | 1 | — | — | button (≤ 4 s): by torchlight he packs the lights away "neatly" by stomping them into the box → they knot into the giant ball | push-in on the knot = frame 1 (loop) |
+| 9 | — | silent | — | — | 1 | — | — | button (≤ 3 s, cut on motion, no end hold: Tập 11 lost viewers in the last ~2 s): by torchlight he packs the lights away "neatly" by stomping them into the box → they knot into the giant ball | push-in on the knot = frame 1 (loop) |
 
 **Muttered lines (5):** 1, 3, 4, 6, 8b (Steve). Snuggles VO: 2, 7.
 
