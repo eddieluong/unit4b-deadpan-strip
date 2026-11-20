@@ -1,5 +1,7 @@
 # Tập 14 — Every Floor · release metadata (draft 2026-11-20)
 
+**Owner pick (2026-11-20):** "OK, A + B, đăng nháp YouTube và IG luôn": thumbnail A, title B (`POV: you’re late and the elevator hits every floor #shorts`).
+
 File: `episodes/23-next/release/Tap14-every-floor.mp4` (final render by the other agent; check duration/size before upload) ·
 Thumbnails: `thumb_A.png`, `thumb_B.png`, `thumb_C.png`, contact sheet `thumbsheet.png` (also `film/thumbs/`; source `episodes/23-next/film/thumb.js`, run `node thumb.mjs . && python3 thumbsheet.py` in `film/`; scene code copied from `stills.js`, the approved look; text replaces the title pill).
 Role in the plan: **glance hook on a non-phone object** (a giant panel with ALL 16 buttons lit fills ≥ 40 % of frame 1, plus a sweaty face), new punch shape (self-inflicted cause reveal, then a stranger's reframing line). Everything else as Tập 10–13 (auto-dubbing OFF, 25–30 s, captions, face size, one Short that day, button ≤ 3 s).
@@ -43,7 +45,7 @@ POV: you’re late and the elevator stops at every floor. Nobody is there. Nobod
 
 ## Upload settings
 - **Auto-dubbing: OFF** (channel-level; check the Languages tab shows no drafts).
-- Posting slot: **07:00–08:00 VN**, the only Short that day (planned 22/11). Note the exact publish time.
+- Posting slot: **tonight 20/11, ~19:00–20:00 VN** (owner calendar 20→24/11), the only Short that day. Note the exact publish time.
 - Order: YouTube first, then Instagram (FB optional). Playlist "Steve vs. Everyday Machines", captions as burned in, 5 hashtags.
 - Made-for-kids and altered/synthetic declarations and the publish click are the OWNER's. The thumbnail is set by hand in Studio.
 
@@ -62,3 +64,5 @@ Suggestions NOT applied (repo rules and DIAGNOSIS win):
 - Open-mouth shock face, arrows/circles, brand/logo: house look is the stills style; none.
 - Changing time/length/captions: would confound the glance-hook test.
 Conflicts: none with QA.md (nothing in the bottom 20 %, faces readable at 150 px); the "lift" vs "elevator" word is a note, not a rule conflict.
+
+**Uploaded (2026-11-20, 09:30 VN):** YouTube private draft https://youtube.com/shorts/UocJIKLmPso (title B, description, 16 tags, playlist "Steve vs. Everyday Machines", saved Private, uploaded the crf27 file because the tool limit is 10 MB; Languages tab shows no dub drafts; kids/altered/thumbnail/publish left to owner) · IG Reel NOT posted (Instagram signed out in browser sweetkurt)
