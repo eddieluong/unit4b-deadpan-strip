@@ -1,3 +1,5 @@
+**Superseded 2026-11-20 by the owner:** 5 Shorts, one per day, 20→24/11: Tập 14 Every Floor 20/11 (tonight, ~19–20 h VN, since the 07–08 slot had passed), Tập 15 The Lid 21/11, Tập 16 One Bulb 22/11, Tập 17 Mosquito 23/11, Tập 18 One Screw 24/11 (scripts in `episodes/SCRIPTS-Tap17-18.md`). Tập 13 went public on 19/11.
+
 # Plan: Tập 14–16, one Short per day (Opus, 2026-11-20; waiting for the owner's OK)
 
 ## Calendar (07:00–08:00 VN, one Short per day)

@@ -1,5 +1,7 @@
 # Tập 14–16: scripts for gate 1 (Opus, 2026-11-20; owner asked "lên kịch bản luôn")
 
+**Owner OK (2026-11-20, gate 1):** "20-24 luôn có cả hôm nay, 1 Every Morning, 2 OK pickles, 3 OK". The schedule is 5 Shorts, 20→24/11 (owner picked "5 video, 20→24"): Tập 14 tonight 20/11, Tập 15 on 21, Tập 16 on 22, Tập 17–18 (new scripts) on 23 and 24.
+
 **Plan:** `channel/PLAN-Tap14-16.md`.
 
 **Posting:** one Short per day, 07–08 VN:
