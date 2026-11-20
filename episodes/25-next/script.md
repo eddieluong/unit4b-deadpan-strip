@@ -1,5 +1,7 @@
 **Owner OK (2026-11-20, gate 1):** "3 OK" (street blackout, cartoon logic, accepted)
 
+**Owner OK (2026-11-20, gate 2):** "OK cả 3, giữ cà vạt" (stills OK; Steve keeps the tie).
+
 ## Tập 16 — One Bulb  (24/11)
 **Real problem:** you untangle the holiday lights for an hour, and they don't light.
 

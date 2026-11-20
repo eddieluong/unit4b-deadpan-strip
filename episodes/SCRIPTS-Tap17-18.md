@@ -1,5 +1,7 @@
 # Tập 17–18: scripts for gate 1 (Opus, 2026-11-20; owner: "5 video, 20→24")
 
+**Owner OK (2026-11-20, gate 1):** "17 slipper, 18 important" (Tập 17 punch "We're gonna need a bigger SLIPPER."; Tập 18 punch "…That one was IMPORTANT.").
+
 **Posting:**
 - Tập 17: 23/11
 - Tập 18: 24/11

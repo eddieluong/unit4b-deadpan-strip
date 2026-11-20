@@ -1,5 +1,7 @@
 **Owner OK (2026-11-20, gate 1):** "2 OK pickles" (The Lid replaces Six O'Clock; punch = Snuggles VO "He doesn't even LIKE pickles.")
 
+**Owner OK (2026-11-20, gate 2):** "OK cả 3, giữ cà vạt" (stills OK; Steve keeps the tie).
+
 ---
 
 ## Tập 15 — The Lid  (23/11)

@@ -1,5 +1,7 @@
 **Owner OK (2026-11-20, gate 1):** "1 Every Morning" (punch "Every MORNING, young man.")
 
+**Owner OK (2026-11-20, gate 2):** "OK cả 3, giữ cà vạt" (stills OK; Steve keeps the tie).
+
 ---
 
 ## Tập 14 — Every Floor  (22/11)
