@@ -65,4 +65,4 @@ Suggestions NOT applied (repo rules and DIAGNOSIS win):
 - Changing time/length/captions: would confound the glance-hook test.
 Conflicts: none with QA.md (nothing in the bottom 20 %, faces readable at 150 px); the "lift" vs "elevator" word is a note, not a rule conflict.
 
-**Uploaded (2026-11-20, 09:30 VN):** YouTube private draft https://youtube.com/shorts/UocJIKLmPso (title B, description, 16 tags, playlist "Steve vs. Everyday Machines", saved Private, uploaded the crf27 file because the tool limit is 10 MB; Languages tab shows no dub drafts; kids/altered/thumbnail/publish left to owner) · IG Reel NOT posted (Instagram signed out in browser sweetkurt)
+**Uploaded (2026-11-20, 09:30 VN):** YouTube private draft https://youtube.com/shorts/UocJIKLmPso (title B, description, 16 tags, playlist "Steve vs. Everyday Machines", saved Private, uploaded the crf27 file because the tool limit is 10 MB (YouTube only); Languages tab shows no dub drafts; kids/altered/thumbnail/publish left to owner) · IG Reel https://www.instagram.com/unit4bcomedy/reel/Df8webDhEcE/ (full-quality 15.5 MB file picked by owner, crop Original, FB toggle off, caption from IG block)
