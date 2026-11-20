@@ -219,3 +219,22 @@ Source: Studio → Analytics → Overview/Engagement, "since published". Browser
 - Comments, avg % viewed (Tập 11) and retention curve not available yet (Studio: retention processing up to 2 days).
 - Tập 11 is the best Short so far (2.9K views, first subs, US share 32 %); stayed 43.2 % is still under 50 % but 2nd best.
 - Tập 12 stayed 26.7 % is the weakest so far, but only ~1.1K views / 16 h; re-read at 48 h before drawing a lesson.
+
+## 48 h post-mortem (read 2026-11-20 ~08:36 VN) — Tập 11 + Tập 12 (Tập 12 at ~40 h)
+Source: Studio → Analytics, read by a Sonnet agent; conclusions by Opus. **Correction:** Studio's clock shows VN time (it read 20 Nov 8:36 AM at 08:36 VN). The "+15 h" note in the early read above is wrong. Tập 11 went public 17 Nov 15:48 VN and Tập 12 18 Nov 16:39 VN, both outside the 07–08 slot.
+| | Tập 11 Two Minutes Away (`WKid9QlPxWs`) | Tập 12 On Empty (`YvQWOU4B67Q`) |
+|---|---|---|
+| Age at read | ~65 h (48 h numbers where shown) | ~40 h |
+| Views | 1,662 in 48 h; 3,065 total (typical marker ~1.6K) | 1,154 |
+| Stayed / swiped | **43.5 %** / 56.5 % | **26.7 %** / 73.3 % |
+| AVD / % viewed | 0:21 / 75 % | 0:21 / not shown yet |
+| Retention curve | starts ~115–120 %, smooth decline: ~60–70 % at 0:13, 45–50 % at 0:25, harder drop in the last ~2 s; no early cliff, no loop rewatch bump | not ready |
+| Likes / comments / subs | 18 / 1 ("whats the website u use to make the animation?") / +4 | 11 / 0 / 0 |
+| Traffic (48 h) | Shorts feed 1.5K, search 74, other 31 | Shorts feed 1.1K, search 46, other 5 |
+| Geography | VN 30 %, US 28 %, PH 11 % | **VN 98 %** |
+| IG views (profile grid) | 2,071 | 2,625 |
+- Tập 13 Perfect (`duCN4f0Yn8k`) is public since 19 Nov (time to be noted), 1,835 views at the read; IG 2,272. Its 48 h read is due ~21 Nov.
+- **Lesson 1, glance hook (supports the hypothesis, confounded):** "2 MIN" filled frame 1 (43.5 %); the fuel gauge needs a beat to read (26.7 %). Tập 12 was also shown almost only to VN viewers (98 %), so geography confounds it. Keep the variable. Tập 13 (a giant ICE/LAVA dial) is the next check.
+- **Lesson 2, the ending:** Tập 11 has a smooth curve with no cliff, but the loop got no rewatch bump and people leave in the last ~2 s. Keep buttons ≤ 3 s and cut on motion, not on a hold (applied to Tập 14–16 scripts).
+- **Lesson 3, slot:** both went public ~16:00 VN, not 07–08. The posting time isn't fixed in practice, so note the exact time for every Short. For Tập 14–16 we use 07–08 VN.
+- Shares not collected (Studio Advanced mode errored).
