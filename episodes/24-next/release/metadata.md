@@ -53,3 +53,5 @@ POV: the jar won't open. Towel. Rubber band. Hot water. A knife. 🫙 Which tric
 - Alternative punch "…I wanted the jam." exists only as an idea; the approved punch is unchanged.
 - 15.6 MB full file vs 6.4 MB crf27 file: use crf27 if a 10 MB limit applies.
 - Music mutes from 17.0 s so the narrator punch reads clean; check on a phone speaker.
+
+**Uploaded (2026-11-25, 13:36 VN):** YouTube private draft https://youtube.com/shorts/L3TQvlXZ6i4 (title A, description, 12 tags, playlist "Steve vs. Everyday Machines", language English, full-quality file picked by the owner, "Saved as private"; kids/altered/thumbnail A/publish left to owner; publish slot 26/11) · IG Reel https://www.instagram.com/unit4bcomedy/reel/DgJ5j1_ttN-/ (shared 25/11 on owner's OK "Share ngay bây giờ", full file, crop Original, FB toggle off, caption from IG block)
