@@ -13,7 +13,7 @@
 3. **Tập 14 YT draft:** ask whether to swap in the full file.
 
 ## Where things stand (from git, 25/11)
-- **Tập 14:** YouTube private draft UocJIKLmPso holds the crf27 file. The IG Reel is up. Whether the owner published it on 20/11 is not recorded.
+- **Studio check (25/11, Opus, Shorts tab):** Tập 13 "shower" **Public 19/11**, 3,010 views; Tập 14 "elevator" **Public 20/11**, 2,332 views (published from the crf27 file, so swapping the file is no longer possible; first step 3 is dropped). Tập 15–18 not on Studio (not uploaded). Channel UCfFgYzIDT28afga2jynBbKQ; Studio needs Chrome profile sweetkurt.
 - **Tập 15–18:** rendered, QA passed and committed (04ec865), gate 3 OK (thumbnail A + recommended title). Not uploaded. Their slots (21–24/11) have passed.
 - **Overdue reads:** Tập 13 (7 d), Tập 14 (48 h) and the glance-hook test for Tập 13–16. Its result decides what Tập 19 tests.
 
