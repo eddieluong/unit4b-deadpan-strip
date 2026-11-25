@@ -55,3 +55,5 @@ POV: the jar won't open. Towel. Rubber band. Hot water. A knife. 🫙 Which tric
 - Music mutes from 17.0 s so the narrator punch reads clean; check on a phone speaker.
 
 **Uploaded (2026-11-25, 13:36 VN):** YouTube private draft https://youtube.com/shorts/L3TQvlXZ6i4 (title A, description, 12 tags, playlist "Steve vs. Everyday Machines", language English, full-quality file picked by the owner, "Saved as private"; kids/altered/thumbnail A/publish left to owner; publish slot 26/11) · IG Reel https://www.instagram.com/unit4bcomedy/reel/DgJ5j1_ttN-/ (shared 25/11 on owner's OK "Share ngay bây giờ", full file, crop Original, FB toggle off, caption from IG block)
+
+**Published (2026-11-25, ~15:20 VN):** YouTube **Public** https://youtube.com/shorts/L3TQvlXZ6i4. The owner published a day early (slot was 26/11) at the owner's request "publish tập 15 luôn đi". Uploaded thumbnail (A) confirmed in Studio. 48 h read due ~27/11 15:00, 7 d read due ~02/12.

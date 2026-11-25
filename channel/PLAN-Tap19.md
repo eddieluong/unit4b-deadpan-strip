@@ -9,7 +9,7 @@
 
 ## First steps in the new session (before step 0)
 1. **Gate 3 for Tập 15–18** (sheet `channel/sheets/thumbs_Tap15-18.png`): DONE. **Owner (2026-11-25):** "OK, lấy mặc định A + tiêu đề đề xuất" (thumbnail A + the recommended title in each `release/metadata.md`).
-2. **Uploads:** DONE 25/11 (YT drafts 15 L3TQvlXZ6i4, 16 bQW9hGL-Rr4, 17 LeHZC-TlUFE, 18 0_26ejDitfQ; IG 15 shared, 16–18 scheduled 27–29/11 19:00; BANK rows 24–27). Owner publishes YT 26–29/11 one per day. Was: a YT private draft + IG Reel for each, with the full-quality file. Copy it to `~/Videos/UNIT4B/` and have the owner pick it in the dialog. Fix the posting slot in each metadata.md, and add BANK rows 24–27.
+2. **Uploads:** DONE 25/11 (YT drafts 15 L3TQvlXZ6i4, 16 bQW9hGL-Rr4, 17 LeHZC-TlUFE, 18 0_26ejDitfQ; IG 15 shared, 16–18 scheduled 27–29/11 19:00; BANK rows 24–27). Tập 15 YT published early, 25/11 ~15:20 (owner). Owner publishes 16–18 on 27–29/11, one per day. Was: a YT private draft + IG Reel for each, with the full-quality file. Copy it to `~/Videos/UNIT4B/` and have the owner pick it in the dialog. Fix the posting slot in each metadata.md, and add BANK rows 24–27.
 3. **Tập 14 YT draft:** ask whether to swap in the full file.
 
 ## Where things stand (from git, 25/11)
