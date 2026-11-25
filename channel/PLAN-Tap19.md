@@ -14,7 +14,7 @@
 
 ## Where things stand (from git, 25/11)
 - **Tập 14:** YouTube private draft UocJIKLmPso holds the crf27 file. The IG Reel is up. Whether the owner published it on 20/11 is not recorded.
-- **Tập 15–18:** rendered, QA passed and committed (04ec865), waiting for gate 3 (video, thumbnail, title). Not uploaded. Their slots (21–24/11) have passed.
+- **Tập 15–18:** rendered, QA passed and committed (04ec865), gate 3 OK (thumbnail A + recommended title). Not uploaded. Their slots (21–24/11) have passed.
 - **Overdue reads:** Tập 13 (7 d), Tập 14 (48 h) and the glance-hook test for Tập 13–16. Its result decides what Tập 19 tests.
 
 ## Steps and models
@@ -35,7 +35,5 @@
 | 12 | Publish, declarations, cover | **owner** | — |
 | 13 | Commit/push/fsck + Notion after each step; BANK row | Opus | — |
 
-## Open for the owner (one message)
-1. **Tập 15–18:** gate 3 is still open. Should those go out first (one per day from 26/11), with Tập 19 after them (~30/11)? Or does Tập 19 jump the queue?
-2. **Cadence:** keep one Short per day, or go back to every 2–3 days now that the 5-day run is done?
-3. **Session:** run this plan in a new Opus session (recommended: this one is very long), using this file as the hand-off.
+## Open for the owner
+All answered on 2026-11-25 (see the owner OK at the top and first step 1). Next: first step 2 (uploads) in the new session.
