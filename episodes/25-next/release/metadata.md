@@ -61,3 +61,5 @@ loudness      -14.0 LUFS, true peak -2.5 dB (target -14 ±0.5, <= -1.2)
 RESULT PASS
 ```
 Notes: hook checked on the 0.5 s sheet (frame 1 = knot + face). Risk: cartoon-logic blackout and a Christmas theme (non-Christmas viewers); the film has a Christmas title line so it will age after December.
+
+**Uploaded (2026-11-25, 14:2x VN):** YouTube private draft https://youtube.com/shorts/bQW9hGL-Rr4 (title B, description, 16 tags, playlist "Steve vs. Everyday Machines", language English, full-quality file picked by the owner, "Saved as private"; kids/altered/thumbnail A/publish left to owner; publish slot 27/11) · IG Reel **scheduled** for Fri 27/11 19:00 VN (owner: "Hẹn giờ 27/11"; full file, crop Original, FB toggle off, caption from IG block; reel URL appears after it goes live)
