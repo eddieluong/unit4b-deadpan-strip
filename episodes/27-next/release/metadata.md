@@ -63,3 +63,5 @@ POV: you built the whole wardrobe and there is ONE screw left over. It's fine. I
 Recommended: thumbnail A + title B.
 Suggestions NOT applied (repo rules win): 70-char search titles and 5 title variants; long entity descriptions, chapters, links, translated metadata, end screens, Test & Compare; exactly 3 hashtags (house pattern 5); open-mouth shock face, arrows, brand/logo; changes to length or captions that would confound the glance-hook test.
 Conflicts: none with QA.md.
+
+**Uploaded (2026-11-25, ~15:00 VN):** YouTube private draft https://youtube.com/shorts/0_26ejDitfQ (title B, description, 16 tags, playlist "Steve vs. Everyday Machines", language English, full-quality file picked by the owner, saved Private; kids/altered/thumbnail A/publish left to owner; publish slot 29/11) · IG Reel **scheduled** for Sun 29/11 19:00 VN (full file, crop Original, FB toggle off, caption from IG block; reel URL appears after it goes live)
