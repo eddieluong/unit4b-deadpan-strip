@@ -1,5 +1,7 @@
 # Tập 15 — The Lid · release metadata (draft 2026-11-20)
 
+**Owner pick (2026-11-25, gate 3):** "OK, lấy mặc định A + tiêu đề đề xuất": thumbnail A, title `POV: the jar won't open #shorts`.
+
 Files: `episodes/24-next/release/Tap15-the-lid.mp4` (25.5 s, 15.6 MB, full quality) and `Tap15-the-lid-crf27.mp4` (6.4 MB, use if an upload hits the 10 MB limit).
 Thumbnails: `thumb_A.png`, `thumb_B.png`, `thumb_C.png`, sheet `thumbsheet.png` (source `film/thumb.js`; run `node thumb.mjs . && python3 thumbsheet.py` in `film/`). QA sheets: `Tap15-sheet.png` (2 s), `Tap15-sheet-0.5s.png`.
 Render facts (re-rendered after Opus framing fixes: camera clamped to the canvas with zoom >= 1, so no paper edge; the 17.0-17.9 s look shot re-framed so Steve's face stays fully in frame until the pan leaves him; voice and timing unchanged): 25.5 s, punch (Snuggles VO "He doesn't even LIKE pickles.") at 20.465 s = 80.3 %, -14.0 LUFS, true peak -2.9 dB, QA PASS. Music muted from 17.0 s.

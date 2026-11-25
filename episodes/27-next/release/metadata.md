@@ -1,5 +1,7 @@
 # Tập 18 — One Screw · release metadata (draft 2026-11-20)
 
+**Owner pick (2026-11-25, gate 3):** "OK, lấy mặc định A + tiêu đề đề xuất": thumbnail A, title `POV: you built it and one screw is left over #shorts`.
+
 Files: `Tap18-one-screw.mp4` (28.6 s, 11.9 MB), `Tap18-one-screw-crf27.mp4` (4.5 MB, for the 10 MB upload tool), `Tap18-sheet.png` (2 s), `Tap18-sheet-0.5s.png`, thumbnails `thumb_A/B/C.png` + `thumbsheet.png` (source `film/thumbsheet.py`, `film/thumb.mjs`; set the cover by hand in Studio).
 Role: glance hook on a non-phone object (a giant screw in an open palm + a worried face), new punch shape: a silent visual collapse, then a flat understatement. No brand or store name. Steve keeps the tie.
 

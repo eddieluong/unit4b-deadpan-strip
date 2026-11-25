@@ -8,7 +8,7 @@
 - **Where:** run this plan in a NEW Opus session.
 
 ## First steps in the new session (before step 0)
-1. **Gate 3 for Tập 15–18** (sheet `channel/sheets/thumbs_Tap15-18.png`): the owner has not yet given picks. Ask once whether to take the defaults (thumbnail A + the recommended title in each `release/metadata.md`).
+1. **Gate 3 for Tập 15–18** (sheet `channel/sheets/thumbs_Tap15-18.png`): DONE. **Owner (2026-11-25):** "OK, lấy mặc định A + tiêu đề đề xuất" (thumbnail A + the recommended title in each `release/metadata.md`).
 2. **Uploads:** a YT private draft + IG Reel for each, with the full-quality file. Copy it to `~/Videos/UNIT4B/` and have the owner pick it in the dialog. Fix the posting slot in each metadata.md, and add BANK rows 24–27.
 3. **Tập 14 YT draft:** ask whether to swap in the full file.
 

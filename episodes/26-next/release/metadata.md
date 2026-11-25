@@ -1,5 +1,7 @@
 # UNIT 4B · Tập 17 "Mosquito" — metadata
 
+**Owner pick (2026-11-25, gate 3):** "OK, lấy mặc định A + tiêu đề đề xuất": thumbnail A, title `POV: 3 AM and one mosquito in your room #shorts`.
+
 File: `episodes/26-next/release/Tap17-mosquito.mp4` (17.3 MB, full) · `Tap17-mosquito-crf27.mp4` (7.3 MB) · 27.5 s · punch "We're gonna need a bigger SLIPPER." at 22.7 s (82.5 %) · -14.0 LUFS
 Thumbnails: `thumb_A/B/C.png` + `thumbsheet.png` (recommended A "3 AM.") · Sheets: `Tap17-sheet.png`, `Tap17-sheet-0.5s.png`
 

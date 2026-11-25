@@ -1,5 +1,7 @@
 # Tập 16 — One Bulb · release metadata (draft 2026-11-20)
 
+**Owner pick (2026-11-25, gate 3):** "OK, lấy mặc định A + tiêu đề đề xuất": thumbnail A, title `POV: the Christmas lights are one giant knot #shorts`.
+
 Files: `Tap16-one-bulb.mp4` (17.2 MB, full quality) · `Tap16-one-bulb-crf27.mp4` (6.7 MB, for the 10 MB upload tool) · sheets `Tap16-sheet.png` (2 s), `Tap16-sheet-0.5s.png` · thumbnails `thumb_A/B/C.png`, `thumbsheet.png` (source `film/thumb.mjs` + `film/thumbsheet.py`, frames from scene.js with title and captions off).
 Role in the plan: glance hook on a non-phone object (a giant knot of lights ≥ 40 % of frame 1 plus Steve's sweaty face), self-inflicted cause reveal (he plugged in the whole 200-bulb pile, power strip "MAX 3 STRINGS"), cartoon-logic blackout, flat punch, button loops to frame 1. Steve keeps the tie.
 Runtime 25.6 s, punch 20.8 s (81.2 %), -14.0 LUFS.
