@@ -53,3 +53,5 @@ first 1.8 s   -17.3 dBFS (aim above about -30)
 loudness      -14.0 LUFS, true peak -2.3 dB (target -14 ±0.5, <= -1.2)
 RESULT PASS
 ```
+
+**Uploaded (2026-11-25, ~14:30 VN):** YouTube private draft https://youtube.com/shorts/LeHZC-TlUFE (title A, description, 12 tags, playlist "Steve vs. Everyday Machines", language English, full-quality file picked by the owner, saved Private; kids/altered/thumbnail A/publish left to owner; publish slot 28/11) · IG Reel **scheduled** for Sat 28/11 19:00 VN (same rule as Tập 16; full file, crop Original, FB toggle off, caption from IG block; reel URL appears after it goes live)
